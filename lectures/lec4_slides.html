@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Analysing Data" />
+  <title>From research questions to statistics</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="https:\\mivalek.github.io\slides_files\css\slides.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<div class="banner"><div class = "header msc"><a href="/">Analysing<strong>data</strong></a></div></div>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">From research questions to statistics</h1>
+    <h2 class="author">Analysing Data</h2>
+    <h3 class="date"><a href="./lec4.html">Click for handout</a></h3>
+</section>
+
+<section id="before-we-begin" class="slide level2">
+<h2>Before we begin</h2>
+<style>
+:root {
+--theme-col: #b38ed2;
+--hover-col: #ADD28E;
+}
+</style>
+<p>Any questions about last week’s content?</p>
+</section>
+<section id="today" class="slide level2">
+<h2>Today</h2>
+<ul>
+<li>Conceptual, operational &amp; statistical hypothesis</li>
+<li>Null Hypothesis Significance testing</li>
+<li><i>p</i>-values</li>
+</ul>
+</section>
+<section id="hypothesis" class="slide level2">
+<h2>Hypothesis</h2>
+<ul>
+<li>Statement about something in the world
+<ul>
+<li>Often in terms of differences or relationships between things/people/groups</li>
+</ul></li>
+<li>Must be testable – it must be possible for the data to either support or disconfirm a hypothesis</li>
+<li>Should be about a single thing</li>
+</ul>
+</section>
+<section id="levels-of-hypothesis" class="slide level2">
+<h2>Levels of hypothesis</h2>
+<ul>
+<li><em>Conceptual</em> – Expressed in normal language on the level of concepts/constructs</li>
+<li><em>Operational</em> – Restates a conceptual hypothesis in terms of how constructs are measured in a given study</li>
+<li><em>Statistical</em> – Translates an operational hypothesis into language of mathematics</li>
+</ul>
+</section>
+<section id="conceptual-hypotheses" class="slide level2">
+<h2>Conceptual hypotheses</h2>
+<ul>
+<li class="fragment"><strong>Good hypothesis:</strong> <i>“The recent observed rising trend in global temperatures on Earth is primarily driven by human-produced greenhouse gas emissions.”</i></li>
+</ul>
+<p> </p>
+<ul>
+<li class="fragment"><strong>Bad hypothesis:</strong> <i>“Homœopathic products can cure people, but sometimes they make them worse before they make them better, and the effect is only apparent subjectively with respect to some vague ‘holistic’ notions rather than a specific well-defined and testable set of criteria.”</i></li>
+</ul>
+</section>
+<section id="from-research-question-to-conceptual-hypothesis" class="slide level2">
+<h2>From research question to conceptual hypothesis</h2>
+<ul>
+<li>Let’s say we’re interested in factors predicting <a href="https://en.wikipedia.org/wiki/Sport_climbing" target="_blank">sport climbing</a> performance</li>
+<li><em>Research question: </em>Are there morphological characteristics that predispose some people to be better at climbing?</li>
+<li>We have a hunch that having relatively long arms might be beneficial</li>
+<li><em>Conceptual hypothesis: </em>Climbers have relatively longer arms than non-climbers</li>
+</ul>
+</section>
+<section id="operationalisation" class="slide level2">
+<h2>Operationalisation</h2>
+<ul>
+<li>To be able to formulate a hypothesis in statistical terms, we first need to get from the conceptual level to the level of measurement</li>
+<li><strong>Operationalisation</strong> is the process of defining variables in terms of how they are measured
+<ul>
+<li>The <em>concept</em> of intelligence can be operationalised as total score on <a href="https://en.wikipedia.org/wiki/Raven%27s_Progressive_Matrices" target="_blank">Raven’s Progressive Matrices</a></li>
+<li>The <em>concept</em> of cognitive inhibition can be operationalised as (some measure of) performance on the <a href="https://en.wikipedia.org/wiki/Stroop_effect" target="_blank">Stroop test</a>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="ape-index" class="slide level2">
+<h2>Ape index</h2>
+<ul>
+<li>The <a href="https://en.wikipedia.org/wiki/Ape_index" target="_blank">ape index</a> (AI) compares a person’s arm span to their height
+<ul>
+<li>Positive AI means, that your arm span is larger then your height</li>
+<li>165 cm (5′5″) tall person with arm span of 167 cm has an ape index of +2</li>
+</ul></li>
+</ul>
+</section>
+<section id="section" class="slide level2" data-background="pics/ape.jpg">
+<h2> </h2>
+<p><br><br><br><br><br><br>                        <b><a href="https://www.youtube.com/watch?v=nJhPmvJaz7c" target="_blank">Ashima Shiraishi</a></b><br>                        155 cm tall<br>                        Ape index +10 cm</p>
+</section>
+<section id="operational-hypotheses" class="slide level2">
+<h2>Operational hypotheses</h2>
+<ul>
+<li><em>Conceptual hypothesis: </em>Climbers have relatively longer arms than non-climbers</li>
+</ul>
+<p> </p>
+<ul>
+<li><em>Operational hypothesis: </em>Elite climbers have, on average, a higher ape index than general population</li>
+</ul>
+</section>
+<section id="statistical-hypotheses" class="slide level2">
+<h2>Statistical hypotheses</h2>
+<ul>
+<li>Translation of operational hypothesis to the language of maths</li>
+<li>Deals with specific values (or ranges of values) of population parameters
+<ul>
+<li>Mean of a given population can be hypothesised do be of a given value</li>
+<li>We can hypothesise a difference in means between two populations</li>
+</ul></li>
+</ul>
+</section>
+<section id="statistical-hypothesis" class="slide level2">
+<h2>Statistical hypothesis</h2>
+<ul>
+<li><em>Operational hypothesis: </em>Elite climbers have, on average, a higher ape index than general population</li>
+</ul>
+<p> </p>
+<ul>
+<li><em>Statistical hypothesis: </em><span class="math inline">\(\mu_{AI\_climb} &gt; \mu_{AI\_gen}\)</span></li>
+</ul>
+</section>
+<section id="remember" class="slide level2">
+<h2>Remember</h2>
+<ul>
+<li>We are interested in <em>population parameters</em></li>
+<li>However, we cannot measure them</li>
+<li>We can <em>estimate</em> them based on <em>sample statistics</em></li>
+</ul>
+</section>
+<section id="testing-hypotheses" class="slide level2">
+<h2>Testing hypotheses</h2>
+<ul>
+<li>So we measure a climber and a non-climber and compare them to test our hypothesis</li>
+</ul>
+<ul>
+<li class="fragment">We find that the climber has a higher AI than the non-climber</li>
+<li class="fragment">Hypothesis confirmed; we happy</li>
+<li class="fragment">We happy?</li>
+<li class="fragment">No, the individuals might not be representative of the populations</li>
+</ul>
+</section>
+<section id="problem-with-samples" class="slide level2">
+<h2>Problem with samples</h2>
+<ul>
+<li>We need to collect a larger sample</li>
+<li>However, the principled problem remains – sample mean might not capture <span class="math inline">\(\mu\)</span> accurately</li>
+</ul>
+</section>
+<section id="problem-with-samples-1" class="slide level2">
+<h2>Problem with samples</h2>
+<p><img data-src="pics/samp1.png" height="400" /></p>
+</section>
+<section id="problem-with-samples-2" class="slide level2">
+<h2>Problem with samples</h2>
+<p><img data-src="pics/samp2.png" height="400" /></p>
+</section>
+<section id="problem-with-samples-3" class="slide level2">
+<h2>Problem with samples</h2>
+<p><img data-src="pics/samp_1_small.gif" height="400" /></p>
+</section>
+<section id="the-bigger-the-better" class="slide level2">
+<h2>The bigger, the better!</h2>
+<ul>
+<li>There are statistical fluctuations; they get less important as <em>N</em> get bigger</li>
+<li>Means converge to the true value of μ as <em>N</em> increases</li>
+<li>CIs get exponentially smaller with <em>N</em>; statistical power increases</li>
+<li>False positives (and negatives!) happen</li>
+</ul>
+</section>
+<section id="decisions-decisions" class="slide level2">
+<h2>Decisions, decisions</h2>
+<ul>
+<li>How do we decide that a difference/effect in our sample actually exists in population?</li>
+</ul>
+<ul>
+<li class="fragment">One possible way is using <strong>Null Hypothesis Significance Testing</strong> (NHST)</li>
+</ul>
+<ul>
+<li class="fragment">There is strong criticism of this approach</li>
+<li class="fragment">It is, nonetheless, very widely used</li>
+<li class="fragment">Alternatives exist!</li>
+</ul>
+</section>
+<section id="nhst" class="slide level2">
+<h2>NHST</h2>
+<ol type="1">
+<li>Formulate a research hypothesis (from conceptual to statistical)</li>
+<li>Formulate the null hypothesis</li>
+<li>Choose appropriate test statistic</li>
+<li>Define the probability distribution of the test statistic under the null hypothesis</li>
+<li>Gather and analyse (<em>enough</em>) data – calculate sample test statistic</li>
+<li>Get the probability of the value you got under the null hypothesis</li>
+<li>If the observed value is <em>likely under the null</em>, <strong>retain the null</strong></li>
+<li>If it is <em>unlikely under the null</em>, <strong>reject the null</strong> in favour of research hypothesis, celebrate!</li>
+</ol>
+</section>
+<section id="hypotheses" class="slide level2">
+<h2>Hypotheses</h2>
+<ul>
+<li>Back to climbers and ape index</li>
+<li>Rather than a directional hypotheses (climbers have longer arms than non-climbers), it’s more useful to formulate hypothesis of <em>some</em> difference or effect</li>
+<li><em>Statistical hypothesis: </em><span class="math inline">\(\mu_{AI\_climb} \ne \mu_{AI\_gen}\)</span></li>
+</ul>
+</section>
+<section id="the-null-hypothesis" class="slide level2">
+<h2>The null hypothesis</h2>
+<ul>
+<li>Negation of the statistical hypothesis</li>
+<li>Very often about no difference/effect (but not necessarily)</li>
+<li><em>Statistical (alternative) hypothesis: </em><span class="math inline">\(H_1:\mu_{AI\_climb} \ne \mu_{AI\_gen}\)</span></li>
+<li><em>Null hypothesis: </em><span class="math inline">\(H_0:\mu_{AI\_climb} = \mu_{AI\_gen}\)</span></li>
+</ul>
+</section>
+<section id="test-statistic" class="slide level2">
+<h2>Test statistic</h2>
+<ul>
+<li>Mathematical expressions of what we’re measureing</li>
+<li>Many available test statistics, useful for different scenarios</li>
+<li>For now, let’s just take simple difference <span class="math inline">\(D = \bar{AI}_{climb}-\bar{AI}_{gen}\)</span></li>
+<li><strong>If null hypothesis is true</strong>, we’d expect <span class="math inline">\(D=0\)</span>, <i>i.e.</i>, no difference between climbers’ and non-climbers’ AI</li>
+</ul>
+</section>
+<section id="distribution-of-test-statistic-under-h0" class="slide level2">
+<h2>Distribution of test statistic under <i>H</i><sub>0</sub></h2>
+<ul>
+<li>Even if true difference in population (<span class="math inline">\(\Delta\)</span>; delta) is zero <span class="math inline">\(D\)</span> <em>can be non-zero in sample</em> (here <em>N</em> = 30)</li>
+<li>For simplicity, assume <span class="math inline">\(AI_{gen}\)</span> is normally distributed in population with <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\sigma=1\)</span></li>
+</ul>
+</section>
+<section id="distribution-of-test-statistic-under-h0-1" class="slide level2">
+<h2>Distribution of test statistic under <i>H</i><sub>0</sub></h2>
+<ul>
+<li>Even if true difference in population (<span class="math inline">\(\Delta\)</span>; delta) is zero <span class="math inline">\(D\)</span> <em>can be non-zero in sample</em> (here <em>N</em> = 30)</li>
+<li>For simplicity, assume <span class="math inline">\(AI_{gen}\)</span> is normally distributed in population with <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\sigma=1\)</span></li>
+</ul>
+<p><img data-src="pics/no_diff1.png" height="350" /></p>
+</section>
+<section id="distribution-of-test-statistic-under-h0-2" class="slide level2">
+<h2>Distribution of test statistic under <i>H</i><sub>0</sub></h2>
+<ul>
+<li>Even if true difference in population (<span class="math inline">\(\Delta\)</span>; delta) is zero <span class="math inline">\(D\)</span> <em>can be non-zero in sample</em> (here <em>N</em> = 30)</li>
+<li>For simplicity, assume <span class="math inline">\(AI_{gen}\)</span> is normally distributed in population with <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\sigma=1\)</span></li>
+</ul>
+<p><img data-src="pics/no_diff2.png" height="350" /></p>
+</section>
+<section id="distribution-of-test-statistic-under-h0-3" class="slide level2">
+<h2>Distribution of test statistic under <i>H</i><sub>0</sub></h2>
+<ul>
+<li>Even if true difference in population (<span class="math inline">\(\Delta\)</span>; delta) is zero <span class="math inline">\(D\)</span> <em>can be non-zero in sample</em> (here <em>N</em> = 30)</li>
+<li>For simplicity, assume <span class="math inline">\(AI_{gen}\)</span> is normally distributed in population with <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\sigma=1\)</span></li>
+</ul>
+<p><img data-src="pics/no_diff_1_small.gif" height="350" /></p>
+</section>
+<section id="distribution-of-test-statistic-under-h0-4" class="slide level2">
+<h2>Distribution of test statistic under <i>H</i><sub>0</sub></h2>
+<ul>
+<li>Expected value of <i>D</i> under <i>H</i><sub>0</sub> is 0</li>
+</ul>
+<ul>
+<li class="fragment">More often than not <i>D</i> will not be equal to 0 in sample</li>
+<li class="fragment">Small departures from 0 are common, large ones are rare</li>
+<li class="fragment">Distribution of test statistic is dependent on <em>N</em>!</li>
+</ul>
+<p><img data-src="pics/no_diff3.png" height="350" /></p>
+</section>
+<section id="distribution-of-test-statistic-under-alternative-hypothesis" class="slide level2">
+<h2>Distribution of test statistic under alternative hypothesis</h2>
+<ul>
+<li><i>H</i><sub>1</sub> is true, test statistics is not centred around zero</li>
+<li>Sometimes, a null result can still be observed (false negative; Type II error)</li>
+</ul>
+</section>
+<section id="distribution-of-test-statistic-under-alternative-hypothesis-1" class="slide level2">
+<h2>Distribution of test statistic under alternative hypothesis</h2>
+<ul>
+<li><i>H</i><sub>1</sub> is true, test statistics is not centred around zero</li>
+<li>Sometimes, a null result can still be observed (false negative; Type II error)</li>
+</ul>
+<p><img data-src="pics/diff1.png" height="350" /></p>
+</section>
+<section id="distribution-of-test-statistic-under-alternative-hypothesis-2" class="slide level2">
+<h2>Distribution of test statistic under alternative hypothesis</h2>
+<ul>
+<li><i>H</i><sub>1</sub> is true, test statistics is not centred around zero</li>
+<li>Sometimes, a null result can still be observed (false negative; Type II error)</li>
+</ul>
+<p><img data-src="pics/diff2.png" height="350" /></p>
+</section>
+<section id="distribution-of-test-statistic-under-alternative-hypothesis-3" class="slide level2">
+<h2>Distribution of test statistic under alternative hypothesis</h2>
+<ul>
+<li><i>H</i><sub>1</sub> is true, test statistics is not centred around zero</li>
+<li>Sometimes, a null result can still be observed (false negative; Type II error)</li>
+</ul>
+<p><img data-src="pics/diff_1_small.gif" height="350" /></p>
+</section>
+<section id="probability-of-test-statistic-under-h0" class="slide level2">
+<h2>Probability of test statistic under <i>H</i><sub>0</sub></h2>
+<ul>
+<li>Once we know what the distribution of our test statistic is, we can assess the probability of getting any given observed value <em>or a more extreme value</em> of <i>D</i></li>
+</ul>
+<p><img data-src="pics/nhst1.png" height="400" /></p>
+</section>
+<section id="probability-of-test-statistic-under-h0-1" class="slide level2">
+<h2>Probability of test statistic under <i>H</i><sub>0</sub></h2>
+<ul>
+<li>Once we know what the distribution of our test statistic is, we can assess the probability of getting any given observed value <em>or a more extreme value</em> of <i>D</i></li>
+</ul>
+<p><img data-src="pics/nhst1.gif" height="400" /></p>
+</section>
+<section id="probability-of-test-statistic-under-h0-2" class="slide level2">
+<h2>Probability of test statistic under <i>H</i><sub>0</sub></h2>
+<ul>
+<li>Once we know what the distribution of our test statistic is, we can assess the probability of getting any given observed value <em>or a more extreme value</em> of <i>D</i></li>
+</ul>
+<p><img data-src="pics/nhst2.gif" height="400" /></p>
+</section>
+<section id="gather-data-and-calculate-the-test-statistic" class="slide level2">
+<h2>Gather data and calculate the test statistic</h2>
+<ul>
+<li>Say we collected AI measurements from 30 climbers and 30 non-climbers</li>
+<li>We calculated the mean difference, <em>D</em> = 0.47</li>
+</ul>
+</section>
+<section id="calculate-probability-of-observed-statistic-under-h0" class="slide level2">
+<h2>Calculate probability of observed statistic under <i>H</i><sub>0</sub></h2>
+<p> </p>
+<p> </p>
+<p><img data-src="pics/nhst3.gif" height="400" /></p>
+</section>
+<section id="the-p-value" class="slide level2">
+<h2>The <i>p</i>-value</h2>
+<p>The <em>p</em>-value is the probability of getting a test statistic <em>at least as extreme</em> as the one observed <em>if the null hypothesis is really true</em></p>
+<ul>
+<li class="fragment">Tells us how likely our data are <em>if there is no difference/effect in population</em></li>
+<li class="fragment"><strong>Does not</strong> tell us the probability of <i>H</i><sub>0</sub> or <i>H</i><sub>1</sub> being true</li>
+<li class="fragment"><strong>Does not</strong> tell us the probability of our data happening “by chance alone”</li>
+</ul>
+</section>
+<section id="decision" class="slide level2">
+<h2>Decision</h2>
+<ul>
+<li>So we have
+<ul>
+<li>Data</li>
+<li>Test statistic</li>
+<li>Distribution of test statistic</li>
+<li><em>p</em>(test_stat) under <i>H</i><sub>0</sub></li>
+</ul></li>
+</ul>
+<ul>
+<li class="fragment">What now?</li>
+</ul>
+</section>
+<section id="decision-1" class="slide level2">
+<h2>Decision</h2>
+<ul>
+<li>We <em>reject</em> <i>H</i><sub>0</sub> and <em>accept</em> <i>H</i><sub>1</sub> if we judge our result to be unlikely under <i>H</i><sub>0</sub></li>
+</ul>
+<p> </p>
+<ul>
+<li>We <em>retain</em> <i>H</i><sub>0</sub> if we judge the result to be likely under it</li>
+</ul>
+</section>
+<section id="how-likely-is-likey-enough" class="slide level2">
+<h2>How likely is likey enough?</h2>
+<ul>
+<li>This is an <strong>arbitrary</strong> choice!</li>
+<li>Commonly used <em>significance levels</em> are
+<ul>
+<li>5% (.05; most common)</li>
+<li>1% (.01)</li>
+<li>0.1% (.001)</li>
+</ul></li>
+<li>If <em>p</em>-value is less than our chosen significance level, we call the result <em>statistically significant</em> (sufficienly unlikely under <i>H<sub>0</sub></i>)</li>
+<li><strong>Significance level must be chosen before results are analysed!</strong></li>
+</ul>
+</section>
+<section id="what-about-the-ape-index" class="slide level2">
+<h2>What about the ape index?</h2>
+<ul>
+<li class="fragment">We found a mean difference in AI between climbers and non-climbers of 0.47</li>
+<li class="fragment">This statistic has an associated <em>p</em>-value = .093</li>
+<li class="fragment">Under the most common significance level in psychology (.05), this is <strong>not a statistically significant</strong> difference</li>
+<li class="fragment">We thus <em>retain</em> the null hypothesis and report not having found a difference – our hypothesis was not supported by the data</li>
+</ul>
+</section>
+<section id="take-home-message" class="slide level2">
+<h2>Take-home message</h2>
+<ul>
+<li><strong>Hypotheses</strong> should be clearly formulated, <em>testable</em>, and <em>operationalised</em></li>
+<li><strong>Statistical hypotheses</strong> are statements about values of some parameters</li>
+<li><strong>Null hypothesis</strong> (usually, parameter is equal to 0) is the one we test (in NHST framework)</li>
+<li>We can only observe <em>samples</em>, but we are interested in <em>populations</em></li>
+<li>Due to sampling error, we can find a relationship in sample even if one doesn’t exist in population</li>
+<li><strong>NHST</strong> is one way of deciding if sample result holds in population – understanding it is crucial!</li>
+</ul>
+</section>
+<section id="see-you-in-the-practicals" class="slide level2 center seeyou" data-background="pics/end2.jpg">
+<h2>See you in the practicals :)</h2>
+</section>
+    </div>
+  </div>
+
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: false,
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'none', // none/fade/slide/convex/concave/zoom
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1000,
+        height: 750,
+        // Factor of the display size that should remain empty around the content
+        margin: 0,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/search/search.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('h2:not(.author)').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+	$('h1.title').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+});
+
+var f = (function() {
+	// get scale
+	var element = document.querySelector('.slides');
+	var scaleX = element.getBoundingClientRect().width / element.offsetWidth;
+	var bottom = $(".present > .slide-title").offset().top + ($(".present > .slide-title").outerHeight() * scaleX);
+	
+	$(":root")[0].style.setProperty('--header-height', Math.floor(bottom) + 'px');
+});
+
+window.addEventListener( 'load', f);
+$(window).resize(f);
+Reveal.addEventListener( 'slidechanged', f);
+Reveal.addEventListener( 'overviewshown', function() {
+	$('.banner').addClass( "overview" );
+} );
+Reveal.addEventListener( 'overviewhidden', function() {	
+	$('.banner').removeClass( "overview" );
+});
+Reveal.addEventListener( 'overviewhidden', f);
+
+
+</script>
+
+  </body>
+</html>

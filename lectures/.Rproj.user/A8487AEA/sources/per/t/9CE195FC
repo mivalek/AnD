@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1571758329976.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4109187760",
+    "id" : "9CE195FC",
+    "lastKnownWriteTime" : 1571758289,
+    "last_content_update" : 1571758289,
+    "path" : "N:/teaching/analysing_data/lectures/lec2.Rmd",
+    "project_path" : "lec2.Rmd",
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

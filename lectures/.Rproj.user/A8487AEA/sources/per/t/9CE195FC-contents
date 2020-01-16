@@ -1,0 +1,71 @@
+---
+title: "Going meta"
+author: "Analysing Data"
+---
+
+## Today
+
+- The normal distribution
+- Samlpling
+- Sampling distribution
+- Central Limit Theorem
+- Standard error
+
+## The shape of things
+
+### Recap on distributions
+
+- Numerically speaking, the number of observations per each value of a variable
+- Which values occur more often and which less often
+- Graphically speaking, it is the shape formed by the bars of a bar chart/histogram
+
+```{r}
+set.seed(1234)
+library(tidyverse)
+library(cowplot)
+theme_set(theme_cowplot())
+
+df <- tibble(eye_col = sample(c("Brown", "Blue", "Green", "Gray"), 555,
+                        replace = T, prob = c(.55, .39, .04, .02)),
+             age = rnorm(length(eye_col), 20, .65))
+
+p1 <- df %>%
+  ggplot(aes(x = eye_col)) +
+  geom_bar(fill = c("skyblue4", "chocolate4", "slategray", "olivedrab")) +
+  labs(x = "Eye colour", y = "Count")
+
+p2 <- df %>%
+  ggplot(aes(x = age)) +
+  geom_histogram(fill = "white", color = "black") +
+  stat_density(aes(y = ..density.. * 80), geom = "line", color = "darkred", lwd = 1) +
+  labs(x = "Age (years)", y = "Count")
+  
+plot_grid(p1, p2)
+```
+
+## Known distributions
+
+- Some shapes are "algebraically tractable", *e.g.,* there is a maths formula to draw the line
+- We can use them for statistics
+
+```{r}
+df <- tibble(x = seq(0, 10, length.out = 100),
+             norm = dnorm(scale(x), sd = .5),
+             chi = dchisq(x, df = 2) * 2,
+             t = dt(scale(x), 5, .5),
+             beta = (dbeta(x / 10, .5, .5) / 4) - .15)
+
+cols <- c("#E69F00", "#56B4E9", "#009E73", "#CC79A7")
+df %>%
+  ggplot(aes(x = x)) +
+  geom_line(aes(y = norm), color = cols[1], lwd = 1) +
+  geom_line(aes(y = chi), color = cols[2], lwd = 1) +
+  geom_line(aes(y = t), color = cols[3], lwd = 1) +
+  geom_line(aes(y = beta), color = cols[4], lwd = 1) +
+  labs(x = "x", y = "Density")
+```
+
+## The normal distribution
+
+- AKA The bell curve
+- The one you **need to** understand
