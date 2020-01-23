@@ -1,0 +1,99 @@
+---
+title: 'Practical 6: Measures of Association'
+author: "Dr Jennifer Mankin"
+date: "10/01/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+# Study 1: Do Children Imitate Robots?
+
+
+
+## Task 1: Import Data
+
+First, save the data file from [Week 6 on Canvas](https://canvas.sussex.ac.uk/courses/9242/pages/week-6), `imitation.csv`, to the `data` folder on your N: drive. Then, run the following code to import and get a look at the data.
+
+``` {r}
+nao <- read_csv("../data/imitation.csv")
+nao
+summary(nao)
+```
+Note that all of the data types are listed as `<dbl>`, which means R thinks they are regular numbers. This is why the `summary()` command is producing quartiles, means, etc. However, these are actually codes for different conditions, the means and quartiles are not helpful here. We will have to tell R this and name the levels of the factors so we can remember which is which.
+
+## Task 2: Clean and Prepare the Data File
+
+This dataset contains five variables: `id`, `condition`, `sex`, `phase`, and `oi.score`. We will only need some of these variables and conditions. Edit the following code chunk to:
+
+* Keep only cases where:
+  * `phase` was equal to 3
+  * `oi.score` was either 0 or 1
+  * `condition` was either 1 or 2
+* Keep only the `condition`, `sex`, and `oi.score` variables
+* Change all variables into factors and name them:
+  * For `condition`, 1 is human and 2 is robot
+  * For `sex`, 1 is male and 0 is female
+  * For `oi.score`, 1 is "over-imitated", 2 is "did not over-imitate"
+* Save in a new file called `nao_1`
+
+```{r}
+
+nao_1 <- nao %>% 
+  filter(phase == 3, oi.score %in% c(0,1), condition %in% c(1,2)) %>% 
+  select(condition, sex, oi.score) %>% 
+  mutate(condition = factor(condition, levels = 1:2, labels = c("human", "robot")), sex = factor(sex, levels = 0:1, labels = c("male", "female")), oi.score = factor(oi.score, levels = 0:1, labels = c("did not over-imitate", "over-imitated")))
+
+summary(nao_1)
+
+```
+We can now see that the `summary()` function simply gives us the counts for each level of each variable.
+
+### Hint: See the following tutorials for help:
+
+* [Creating factors and assigning labels (section "Factor variables")](http://milton-the-cat.rocks/learnr/r/discovr_01/#section-data-types)
+* [Selecting variables and filtering cases](http://milton-the-cat.rocks/learnr/r/discovr_01/#section-tibbles)
+
+## Task 3: Visualise the Data
+
+We can now get an idea of what patterns of association there might be by visualising the data in a graph. Here, we have count data. This means that each case codes whether something did or did not happen - here, whether the child over-imitated or not - and we can count how many times this happened in different circumstances. Here, we want a graph to show how many times the children over-imitated or did not, when they had a human or a robot model.
+
+Edit the code chunk below to create a *bar chart* of the counts in each combination of `condition` and `oi.score`. Here, `condition` should be on the x-axis and `oi.score` should be in different colours.
+
+```{r}
+nao_bar <- ggplot(nao_1, aes(x = condition, fill = oi.score)) +
+  geom_bar(stat="count", position = position_dodge())
+nao_bar
+```
+
+### Optional Task: A Nice Graph
+
+The graph in Task 3 is not very good. Use the examples in the R Cookbook to change the labels and colours.
+
+* [Modifying the Text of Legend Titles and Labels](http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/#modifying-the-text-of-legend-titles-and-labels)
+
+#### Example Nice Graph
+
+``` {r}
+nao_bar <- ggplot(nao_1, aes(x = condition, fill = oi.score)) +
+  geom_bar(stat="count", position = position_dodge()) +
+    ylab("Count") +
+  scale_x_discrete(name = "Type of Demonstrator", labels = c("Human", "Robot")) +
+  scale_fill_grey(name = "Over-Imitation", labels = c("Did Not Over-Imitate", "Over-Imitated"))
+nao_bar
+```
+
+## Task 4: Run the Analysis
+
+We can see from the graph that children over-imitated much more for a robot model than a human model. That is, the graph suggests that there may be a difference in whether children over-imitated or not, depending on whether they saw a human or a robot demonstrator. Our statistical test will investigate whether there is an *association* between the type of demonstrator (`condition`) and over-imitation behaviour (`oi.score`).
+
+Edit the code chunk below to run the analysis.
+
+```{r}
+CrossTable(nao_1$condition, nao_1$oi.score)
+
+nao_test
+```
+## task 5: Writeup

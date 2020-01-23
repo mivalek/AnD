@@ -1,0 +1,64 @@
+---
+title: "Analysing Data Lecture 5: Measures of Association"
+author: "Dr Jennifer Mankin"
+date: "24/02/2020"
+output: 
+  html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(kableExtra)
+library(tidyverse)
+```
+
+## Overview of the Next Weeks
+
+* Today: Statistical Models and Measures of Association
+* Week 6: Comparing Two Means
+* Week 7: Lab Report Writing
+* Week 8: The Linear Model
+
+## Overview of Today's Topics
+
+* Review of Important Ideas
+  + Continuous vs Categorical Data
+  + Correlational vs Experimental Designs
+
+* Statistical Models
+  + Why do we do statistical tests?
+  + What is a "statistical model"?
+  
+* Tests of Association
+  + What can we learn from these tests?
+  + Continuous Data: Correlation coefficient *r*
+  + Frequency Data: Chi-squared test $x^2$
+
+## Review of Important Ideas
+
+* Data can be measured in many ways
+  + Continuous, categorial, ratio, ordinal...
+* The kind of data you have can have a big impact on your analysis and  interpret the results
+
+## Types of data measurements
++ **Continuous**: a matter of *degree*; answers the question "How much?"
+  - Typically a score or measurement
+  - Examples: a mark on a quiz, height in centimeters, number of seconds to press a key
+  - Remember: if it makes sense to have a *mean*, then you likely have continuous data!
++ **Categorical**: a matter of *membership*; answers the question "Which one?"
+  - Typically a group or label
+  - Examples: which practical group you're in, alive vs. dead, control vs experimental condition in a study
+  - Remember: membership in any given category is binary. You're either in a category or you're not!
+
+
+## Pop quiz!
+
+Which of the following are **categorical** variables? Which are **continuous** variables? How do you know?
+
+## Correlational vs Experimental Designs
+
+## 
+
+## Frequency Data: Chi-squared test
+
+DATA: AUTISM DIAGNOSIS IN WOMEN VS MEN

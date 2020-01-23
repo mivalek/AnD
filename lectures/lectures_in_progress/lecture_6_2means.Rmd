@@ -1,0 +1,41 @@
+---
+title: "Analysing Data Lecture 6: Comparing Two Means"
+author: "Dr Jennifer Mankin"
+date: "02/03/2020"
+output: 
+  html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(kableExtra)
+library(tidyverse)
+```
+
+## Overview of the Next Weeks
+
+* Week 5: Statistical Models and Measures of Association
+* Today: Comparing Two Means
+* Week 7: Lab Report Writing
+* Week 8: The Linear Model
+
+## Overview of Today's Topics
+
+* Review of Important Ideas
+  + Why do we do statistical tests?
+  + What is a "statistical model"?
+  + Correlational vs experimental design
+  
+* Comparing Two Means
+  + What do we want to know?
+  + Correlational design: 
+
+## Review of Important Ideas
+
+* Why do we do statistical tests?
+* What is a "statistical model"?
+* Correlational vs experimental design
+
+## Comparing Two Means
+
+

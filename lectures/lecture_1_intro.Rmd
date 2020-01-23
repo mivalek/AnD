@@ -1,0 +1,321 @@
+---
+title: "Lecture 1: Introduction"
+subtitle: "Analysing Data, Spring 2020"
+author: "Dr Jennifer Mankin"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(kableExtra)
+library(tidyverse)
+```
+
+## Welcome to Analysing Data!
+
+* Overview of the Module
+  + Summary of topics and lectures
+  + Format and assessments
+* Data and Science
+  + Data for this term: gender and sexuality
+  + What makes good science?
+* Welcome BACK to R
+  + What you can do so far
+  + What you will be able to do
+  + Tips for success
+
+## Overview: Topics and Lecturers
+
+Find a complete list of all topics for each week [on Canvas](https://canvas.sussex.ac.uk/courses/9242/assignments/syllabus)!
+
+* Part 1: Fundamentals of Statistical Inference
+  + Lecturer: [Dr Milan Valasek](http://www.sussex.ac.uk/profiles/489434/dropin)
+  + Sampling, distributions, estimates, hypothesis testing
+* Part 2: Basic Statistical Models
+  + Lecturer: [Dr Jennifer Mankin](http://www.sussex.ac.uk/profiles/351056/dropin)
+  + Measures of association, the linear model
+* Part 3: Next Steps
+  + Lecturer: [Dr Rebecca Atkinson](http://www.sussex.ac.uk/profiles/363651/dropin)
+  + Expanding the linear model, the big picture
+
+## Overview: Format
+
+* Lectures
+  + One hour each week
+  + Concepts, demonstrations, ideas, etc.
+  
+* Practicals
+  + Two hours each week
+  + Hands-on application of statistical concepts in R
+
+## Overview: Attendance
+
+You are required to attend your scheduled practical session. We will **not** arrange ad-hoc swaps for practicals. 
+
+If you have a consistent timetabling clash, you must email [the UG Office](psychology-ug@sussex.ac.uk) to change your timetable.
+
+## Overview: Assessments
+
+Assessment             | Length             | Weight | Due
+-----------------------| ------------------ | ------ | ----------
+In-Class Quizzes       | Best 8 of 10       | 20%    | Every week
+Lab Report             | 2000 words         | 20%    | Week 9
+Research Participation | 16 credits/8 hours | 10%    | Week 12
+Unseen Exam            | 2 hours/50 MCQs    | 50%    | A2 Exams
+
+## Assessments: Quizzes
+
+* As last semester, each week you will have a tutorial to complete before your practical class
+* Every week, you will have a **marked quiz** on the lecture and tutorial
+  * 7 questions (multiple choice, fill in the blank, simple calculations, etc.)
+  * 7 minutes to complete (9 minutes with extra time)
+  * 10 quizzes total, in every week **except this week**
+    * Practice quiz in all practicals this week!
+* Your final quiz mark is the mean of your best 8 out of 10 total quiz scores
+  
+## Assessments: Lab Report
+
+* Last term you wrote a report on one of two research questions:
+  * Red: Does colour influence attractiveness?
+  * Green: Does social status drive environmentally conscious decisions?
+  
+* This term, you will write a report on experimental data testing one of these two research questions
+  * You can freely choose the same or a different study as last term
+
+## Assessments: Lab Report
+
+* You will submit an RMarkdown document that includes:
+  + Brief Participants and Design sections
+  + A results section presenting your analysis, with a graph
+  + A Discussion section evaluating the implications, limitations, future directions etc.
+
+* See [Lab Report Information and Resources](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0) on Canvas
+
+## Assessments: Professional Log
+
+* As last term, you must complete 16 credits (4 hours) of research participation via [SONA](https://sussexpsychology.sona-systems.com/Default.aspx?ReturnUrl=%2f)
+  + At least 25% (4 credits/1 hour) of these credits must be gained through in-person studies
+
+* See [SONA information and FAQs](https://canvas.sussex.ac.uk/courses/9242/pages/research-participation-module-credits-scheme) on Canvas
+
+## Assessments: Unseen Exam
+
+* In the A2 Spring assessment period, you will have a two-hour multiple-choice exam
+* More detail on this near the end of term!
+
+# Data and Science
+
+* Data for this term: Gender and sexuality
+* What makes good science?
+
+# Gender and Sexuality
+
+* Both are often represented as simple (?) categories
+* Important to understand!
+    + Huge impact on how people perceive, treat, think about themselves and others
+* "The living world is a **continuum** in each and every one of its aspects." - Kinsey et al. (1948, p. 639)
+* This semester we will look at these constructs in some depth
+
+## Operationalising Gender
+
+* Gender very often represented as a **categorical variable** in psychology
+  + Usually binary (two categories): "male" and "female" (sometimes with "other")
+  + Also confounded with [biological sex](https://www.scientificamerican.com/article/beyond-xx-and-xy-the-extraordinary-complexity-of-sex-determination/)
+* Is this binary really representative of what gender is really like?
+* What **is** gender really like? How can we measure it?
+  + In short: complicated (*very* complicated)
+
+## Operationalising Sexuality
+
+* Like gender, sexual orientation is often presented as categories
+  + More complex here: *which* categories?
+  + "Traditional": heterosexual, homosexual, bisexual, asexual
+  + What about: pansexual, demisexual, andro/gynesexual, etc.?
+* Additionally complicated by **romantic** orientation and other factors
+* It seems there are the same number of categories as there are humans!
+
+## Operationalising Sexuality: the Kinsey Scale
+
+Rating | Description
+------ | ------------------------------------------------------------------
+  0    | Exclusively heterosexual
+  1	   | Predominantly heterosexual, only incidentally homosexual
+  2    | Predominantly heterosexual, but more than incidentally homosexual
+  3    | Equally heterosexual and homosexual
+  4    | Predominantly homosexual, but more than incidentally heterosexual
+  5    | Predominantly homosexual, only incidentally heterosexual
+  6    | Exclusively homosexual
+  X    | No socio-sexual contacts or reactions
+
+## Gender and Sexuality Questionnaire
+
+* We have posted questionnaire on Canvas about gender and sexuality
+* In the practicals, we will look at patterns in this data
+  + Are these constructs best measured as categories? As scales? Which ones?
+  + How do the responses relate to each other?
+* Ethical considerations:
+  + Participation is **strictly voluntary**
+    - Absolutely no impact on you, your mark, or anything else
+  + All responses will be entirely anonymous
+  + Please complete **by Friday the 31st**!
+
+# What makes good science?
+
+* Validity
+  + Are we actually measuring what we think we're measuring?
+* Reliability
+  + Do we get consistent/reproducible results using this measurement?
+* Reproducibility and the Scientific Method
+  + How can we be confident that what we believe is the truth?
+
+## Validity
+
+* Are we actually measuring what we think we're measuring?
+* Fundamental distinction between a construct and its measurement
+  + e.g. Academic ability vs marks earned
+* A more complicated and difficult question than you might think!
+  + We **only** have access to the measurement - not to the construct
+
+## Reliability
+
+* Do we get consistent/reproducible results using this measurement?
+  + Using a meter stick to measure a person's height - very reliable!
+
+## Reliability and Validity Together
+
+* Consider general intelligence and IQ tests
+  + Reliability: do you score (about) the same number each time you take an IQ test?
+  + Validity: If you have an IQ of 110 and your friend has an IQ of 105, are you 4.5% cleverer than they are?
+
+## Replication and the Scientific Method
+
+* How can we be confident that what we believe is the truth?
+* You can be *confident* - but you can **never be sure**!
+* Science never proves - only gives evidence
+
+### The Scientific Method
+
+* Make an observation or propose a theory
+* Create a disproveable hypothesis
+* Design a test of the hypothesis and predict what will happen
+* Run the test and obtain data
+* Interpret the data
+* Reach a conclusion and generate more hypotheses
+
+### Lessons from the Scientific Methods
+
+* Things that are too good to be true usually are!
+* Beware of claims that fit exactly with what you expected, or wanted
+* Don't believe **anything** without evidence
+  + Always look at the evidence for yourself
+
+### The Replication Crisis
+
+* Take two minutes to talk to the person next to you:
+  + What is the "replication crisis" in Psychology?
+  + Why has it happened?
+  + What can we do about it?
+
+### The Replication Crisis
+
+* What is the "replication crisis" in Psychology?
+  + Findings from famous, well-known studies do not replicate
+    - i.e. when someone else tries to run the same study (usually with a larger and more diverse sample), they do not get the same results as the original
+    - Example: [Power posing](https://www.youtube.com/watch?v=r7dWsJ-mEyI) (see [this blog post](https://statmodeling.stat.columbia.edu/2017/10/18/beyond-power-pose-using-replication-failures-better-understanding-data-collection-analysis-better-science/) for more)
+    - Example: [Ego depletion](http://www.slate.com/articles/health_and_science/cover_story/2016/03/ego_depletion_an_influential_theory_in_psychology_may_have_just_been_debunked.html?via=gdpr-consent) (see [this article](https://www.theatlantic.com/science/archive/2018/11/psychologys-replication-crisis-real/576223/) for more)
+    
+### The Replication Crisis
+
+* Why has it happened?
+* A very good question with many possible answers and no definitive ones!
+* Some contributing factors:
+  + Poor understanding of methods and statistics
+  + Pressure to publish novel and exciting results
+  + Poor research design
+  + Consistent use of very specialised, ungeneralisable (e.g. [WEIRD](https://psmag.com/social-justice/joe-henrich-weird-ultimatum-game-shaking-up-psychology-economics-53135)) participants
+  
+### The Replication Crisis
+
+* What can we do about it? So glad you asked!
+  + Design thoughtful, thorough, well-researched, meaningful experiments
+  + Pre-register (plan ahead) study and analysis
+  + Report and publish **all** results, regardless of the results
+  + Make data and analyses openly available
+    - Often by writing clear, helpful R scripts!
+
+# Welcome Back to R!
+
+## What you can do so far in R
+
+* Use R and RStudio
+* Create projects and Markdown files
+* Read in data and view tibbles
+* Use functions to choose, group, and summarise data
+* Use the pipe operator (`%>%`) with tidy data and `tidyverse` functions
+* Create and interpret frequency distributions with `ggplot2`
+* Format and knit Markdown files with images, links, etc.
+
+## Lost in tRanslation
+
+* R is complicated but working hard at it **will pay off**
+  + Transferable skills for (many!!!) future jobs
+  + Programming/data management skills are in [high demand](https://royalsociety.org/news/2019/05/data-science-skills-shortages/)
+
+* Think of learning R as learning to speak another language
+  * You can already say some basic phrases in R
+  * This term we will keep building your grammar and vocabulary
+
+## Translate this!
+
+How can you read this code?
+
+```{r, echo = TRUE, eval = FALSE}
+data_summary <- data %>% 
+  group_by(gender) %>% 
+  summarise(n = n())
+```
+
+* A: Make a new object, `data_summary`, by taking `data`, grouping it by `group`, and then summarising the number of n's in the data
+* B: Make a new object, `data_summary`, by taking `data`, grouping it by `gender`, and then summarising the number of cases
+* C: Make a new object, `data`, by summarising the total number of cases and then grouping by `gender`
+
+## What you will be able to do
+
+* Create tables graphs of data
+* Describe estimates and measures of variance
+* Perform statistical tests for measuring associations and predicting results
+* Produce clean, professional summary reports, including graphs and statistical results
+
+# Tips for Success
+
+1. Practice practice practice!
+2. Get help!
+3. Don't give up!
+
+## Tip 1: Practice practice practice!
+
+* The more you use R, the easier it will be
+* Try lots of different tasks with the data you have
+  * Quiz yourself!
+* Try out other [online learning resources for R](https://canvas.sussex.ac.uk/courses/9242/pages/r-resources) to get more practice
+
+## Tip 2: Get help!
+
+* Work through tutorials and practicals with friends on the module and problem-solve together
+* Use the resources on the [Reading List](https://canvas.sussex.ac.uk/courses/9242/external_tools/328) for solutions and ideas
+* Search for help online - there are countless videos, blogs, Twitter feeds, etc. to help you!
+* Come to lecturer drop-in hours and/or R Helpdesk [(times posted on Canvas)](https://canvas.sussex.ac.uk/courses/9242) to ask questions
+
+## Tip 3: Don't get discouraged!
+
+* Think of R as a logic puzzle to solve
+* Set yourself (or look for) tasks and games
+* You will get better with practice if you keep at it!
+
+# Looking Ahead
+
+* For this week, you will have a **practice quiz** in your practical session
+  + You can take the practice quiz as many times as you like
+  + Next week's marked quiz will be on the same questions!
+* Please complete the Gender and Sexuality Questionnaire on Canvas
+  + We will use this data for the practicals, so the more people who do it the better!
+* See you in the practicals!
