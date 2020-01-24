@@ -65,12 +65,13 @@ Unseen Exam            | 2 hours/50 MCQs    | 50%    | A2 Exams
 ## Assessments: Quizzes
 
 * As last semester, each week you will have a tutorial to complete before your practical class
-* Every week, you will have a **marked quiz** on the lecture and tutorial
-  * 7 questions (multiple choice, fill in the blank, simple calculations, etc.)
+* Every week, you will have a **marked quiz** at the start of the practical
+  * 7 questions (MCQ, fill in the blank, simple calculations, etc.)
   * 7 minutes to complete (9 minutes with extra time)
   * 10 quizzes total, in every week **except this week**
     * Practice quiz in all practicals this week!
-* Your final quiz mark is the mean of your best 8 out of 10 total quiz scores
+* Your final quiz mark is the mean of your best 8 out of 10 quiz scores
+  + Lowest two marks dropped automatically (including 0s)
   
 ## Assessments: Lab Report
 
@@ -85,8 +86,9 @@ Unseen Exam            | 2 hours/50 MCQs    | 50%    | A2 Exams
 
 * You will submit an RMarkdown document that includes:
   + Brief Participants and Design sections
-  + A results section presenting your analysis, with a graph
+  + A Results section presenting your analysis, with a graph
   + A Discussion section evaluating the implications, limitations, future directions etc.
+  + References
 
 * See [Lab Report Information and Resources](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0) on Canvas
 
@@ -148,7 +150,7 @@ Rating | Description
 
 ## Gender and Sexuality Questionnaire
 
-* We have posted questionnaire on Canvas about gender and sexuality
+* We have posted a questionnaire on Canvas about gender and sexuality for you to complete
 * In the practicals, we will look at patterns in this data
   + Are these constructs best measured as categories? As scales? Which ones?
   + How do the responses relate to each other?
@@ -179,12 +181,13 @@ Rating | Description
 
 * Do we get consistent/reproducible results using this measurement?
   + Using a meter stick to measure a person's height - very reliable!
+  + Asking a random passerby to guess how tall a person is - not very reliable!
 
 ## Reliability and Validity Together
 
 * Consider general intelligence and IQ tests
   + Reliability: do you score (about) the same number each time you take an IQ test?
-  + Validity: If you have an IQ of 110 and your friend has an IQ of 105, are you 4.5% cleverer than they are?
+  + Validity: If you have an IQ of 110 and your friend has an IQ of 105, are you 4.8% cleverer than they are?
 
 ## Replication and the Scientific Method
 
@@ -204,8 +207,8 @@ Rating | Description
 ### Lessons from the Scientific Methods
 
 * Things that are too good to be true usually are!
-* Beware of claims that fit exactly with what you expected, or wanted
-* Don't believe **anything** without evidence
+* Be skeptical of claims that fit exactly with what you expected, or wanted
+* Better yet: be skeptical of **everything**!
   + Always look at the evidence for yourself
 
 ### The Replication Crisis
@@ -219,14 +222,14 @@ Rating | Description
 
 * What is the "replication crisis" in Psychology?
   + Findings from famous, well-known studies do not replicate
-    - i.e. when someone else tries to run the same study (usually with a larger and more diverse sample), they do not get the same results as the original
+    - "Doesn't replicate": when someone else tries to run the same study (usually with a larger and more diverse sample), they do not get the same results as the original
     - Example: [Power posing](https://www.youtube.com/watch?v=r7dWsJ-mEyI) (see [this blog post](https://statmodeling.stat.columbia.edu/2017/10/18/beyond-power-pose-using-replication-failures-better-understanding-data-collection-analysis-better-science/) for more)
     - Example: [Ego depletion](http://www.slate.com/articles/health_and_science/cover_story/2016/03/ego_depletion_an_influential_theory_in_psychology_may_have_just_been_debunked.html?via=gdpr-consent) (see [this article](https://www.theatlantic.com/science/archive/2018/11/psychologys-replication-crisis-real/576223/) for more)
     
 ### The Replication Crisis
 
 * Why has it happened?
-* A very good question with many possible answers and no definitive ones!
+* A very good question!
 * Some contributing factors:
   + Poor understanding of methods and statistics
   + Pressure to publish novel and exciting results
@@ -238,7 +241,7 @@ Rating | Description
 * What can we do about it? So glad you asked!
   + Design thoughtful, thorough, well-researched, meaningful experiments
   + Pre-register (plan ahead) study and analysis
-  + Report and publish **all** results, regardless of the results
+  + Report and publish **all** results
   + Make data and analyses openly available
     - Often by writing clear, helpful R scripts!
 
@@ -280,7 +283,7 @@ data_summary <- data %>%
 
 ## What you will be able to do
 
-* Create tables graphs of data
+* Create tables and graphs of data
 * Describe estimates and measures of variance
 * Perform statistical tests for measuring associations and predicting results
 * Produce clean, professional summary reports, including graphs and statistical results
@@ -315,7 +318,6 @@ data_summary <- data %>%
 
 * For this week, you will have a **practice quiz** in your practical session
   + You can take the practice quiz as many times as you like
-  + Next week's marked quiz will be on the same questions!
 * Please complete the Gender and Sexuality Questionnaire on Canvas
   + We will use this data for the practicals, so the more people who do it the better!
 * See you in the practicals!
