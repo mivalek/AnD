@@ -1,0 +1,400 @@
+---
+title: "Tutorial 2: R Markdown refresher"
+author: "Analysing Data"
+output:
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Welcome to the first Analysing Data tutorial!
+This week, we will go through the basics of **R Markdown** (Rmd) again to help you refresh your memory of this extremely versatile and powerful tool for writing reproducible documents of all sorts and formats.
+We promise you that once you get the hang of it, you will never again want to use your ordinary word processor/text editor for writing essays, coursework, papers, or even presentations or your CV.
+In fact, all the teaching materials in this module, from the lecture slides to the practicals, have been written in Rmd.
+
+By the end of this tutorial you will know:
+
+  - a little about markup languages
+  - basic text formatting using R Markdown
+  - how to use the powerful integration of `R` and text editing that R Markdown offers
+  - how to write HTML, Word, and OpenOffice files purely in RStudio
+
+\ 
+
+# So what is R Markdown?
+
+Well, it is a language - or a system - for telling computers how to process and format text.
+Unlike the more familiar [WYSIWYG](https://en.wikipedia.org/wiki/WYSIWYG "What you see is what you get") word processors/text editors, R Markdown (as well as other [markup languages](https://en.wikipedia.org/wiki/Markup_language)) uses plain text symbols for all formatting.
+In other words, there is no highlighting text and then clicking on a **B** icon to make it **bold**.
+What you do instead, that is something you already know. But to help your recollection, read on...
+
+You might be thinking "why on Earth should I be learning this when I can just use the text editor on my computer?!".
+That is a good question and the answer to it is that, when it comes to Rmd, its integration with RStudio makes it an incredibly useful tool for writing documents that include the results of a statistical analysis or data visualisations.
+
+
+\ 
+
+# Getting things ready
+
+The best way to learn how R markdown (and programming languages really) works is to compare the source and the output and notice the relationships between the two.
+So let's do that and take a look at what the Rmd version of this lab sheet looks like.
+
+## Task 1
+
+Go to the [Analysing Data canvas page](https://canvas.sussex.ac.uk/courses/9242/pages/week-2) and download the Week 2 Tutorial Rmd.
+Save the file in your R project folder[^1].
+
+[^1]: If you have not created a neat folder structure for this course (and all others too!) yet, now is the time to do it. If you need help on how to create R projects, [click here](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-working-in-rstudio)
+
+R markdown files have the .Rmd extension after their names though it is possible that your computer is set up to hide file extensions (a setting we would encourage you to change).
+This file type should be automatically associated with RStudio on your computer.
+If your computer offers you a selection of programs to open the file in, just choose RStudio and tick the "always use this app/program to open files of this type" box, if there is one.
+
+\ 
+
+Now, unless you have a two-screen setting where you can put windows side-by-side, you will have to frequently switch between your web browser and RStudio.
+To save time, here is a handy shortcut: Press <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) or <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS)[^2] to switch between the two most recently viewed windows.
+If you hold down the first of the two keys, you can toggle all currently open windows by pressing <kbd>Tab</kbd> multiple times.
+
+[^2]: As for Linux, the shortcut depends on your system configuration.
+Though, if you are using Linux, you probably know how it works.
+
+## Task 2
+
+Open the tut_02_Rmd_intro.Rmd file (in RStudio) and try out switching between your browser and RStudio using the key shortcut.
+
+\ 
+
+# R Markdown basics
+
+Before we delve into the nitty-gritty of Rmd, let's remind ourselves how to do some basic formatting you know from your text editor by comparing this section of the lab sheet and its corresponding Rmd file:
+
+# This is level 1 heading (main heading)
+
+## This is level 2 heading (subheading)
+
+### This is level 3 heading
+
+#### And so on...
+
+\ 
+
+- Single dash and space after a blank line creates an unordered list (bullet points).
+    - Lists can be nested by indenting using *at least three* spaces (or two <kbd>&#8633; Tab</kbd>s).
+        - Deeper and deeper... (at least three more spaces!)
+- This is *italics*.
+- This is _also italics_.
+- This is **boldface**.
+- This is __also boldface__ (two underscores).
+- This is ~~strikethrough~~.
+- This is `monospace` (backticks -- not apostrophes! -- are usually right above <kbd>&#8633; Tab</kbd>).
+
+\ 
+
+1. This is an ordered list
+1. It is numbered
+    a. Nested elements can be ordered
+    a. Just use the letter "a" for second level
+    
+\ 
+
+A single line break
+doesn't do anything.
+
+More than one line break...
+
+
+
+
+...creates a new paragraph.
+
+The \\ (there is an important blank space after it!) is a non-breaking space; any two words separated by it will be forced\ to\ stay\ on\ the\ same\ line\ and will not be split over two lines.
+
+\ 
+
+\ 
+
+Here, we use it to create a gap between paragraphs by inserting two empty lines.
+
+\ 
+
+And most importantly for the Rmd-`R` integration:
+
+```{r basic_chunk}
+# This is an R code chunk
+# Here you can write code and R will run it when you generate your document
+# and display the output below
+6 * 7
+```
+
+\ 
+
+Any `R` code can also be evaluated in-line like this: 2 + 3 = `r 2 + 3`.
+
+\ 
+
+\ 
+
+Feel free to take a moment to make sure you understand the relationship between the R Markdown notation and the resulting output.
+For a quick reference guide to Rmd, see this cool [cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf).
+
+\ 
+
+# Rmd read-along
+
+OK, now that you know the very basics, let's look at the .Rmd file step-by-step.
+
+The first thing to realise is that an .Rmd file is just a *plain text* file (such as .txt files, if you're familiar).
+You could open it in Notepad, MS Word, or OpenOffice[^3] and would basically see the same thing as in RStudio.
+The only reason for the special .Rmd extension is for RStudio to know to put all the nice colours in to aid readability and offer you options associated with R Markdown, such as the option to actually generate a document from the file.
+So don't go away thinking there's some magic going on here:
+There are just text files.
+
+[^3]: Other text editors are available but now that you know about Rmd, you won't be needing any of them.
+
+With that out of the way, keep reading the document in your browser but let's scroll all the way up in the .Rmd file.
+There, you can see this header:
+
+```
+---
+title: "Tutorial 2: R Markdown refresher"
+author: "Analysing Data"
+output:
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+---
+```
+
+For reasons you don't need to worry about, this header is written in a different markup language called YAML (Yet Another Markup Language -- no kiddin'!).
+Here, you provide the title of the document, the output format, and many other general [options](https://bookdown.org/yihui/rmarkdown/html-document.html).
+
+In our document, we set the title and author and define the output to be a HTML notebook.
+HTML[^4] file is the kind of file websites are made up of, which is why we can easily put it online like this.
+
+[^4]: HyperText Markup Language -- there we go again...
+
+The `theme` parameter indented under `html_document` specifies what the document looks like.
+While you can customise the aesthetics of your documents to your heart's delight, some nice and smart people have provided us with several basic themes that, in our view, look pretty neat.
+If you want to know what's on offer, just look up something like "R markdown html theme gallery".
+
+We can use the `highlight` parameter to pick different colour schemes for highlighting code in code chunks.
+Again, there are several ready made highlighting schemes.
+Searching for "R markdown highlight gallery" should help you see what these highlights look like.
+
+The other arguments manipulate options for displaying the table of contents (toc).
+We will talk about these in more detail in the practicals.
+
+While there's a host of options you can play around with, it is a good idea to **always include** at least the title and output.
+
+\ 
+
+OK, next, there is the setup code chunk.
+It gets generated automatically by RStudio when you create a new .Rmd file (more on that later) and is there to set a very basic default "code chunk option" `echo=TRUE`.
+This option tells RStudio to create the output file with the code chunks visible.
+Changing it to `echo=FALSE` will create a document with code not displayed.
+You can specify other default options if you wish but that's another topic best saved for the practicals.
+
+Notice two further things about the chunk:
+
+  - It is named (`setup`) -- Naming chunks doesn't really do anything but it can be helpful when diagnosing code errors and it's kind of tidy.
+  - There are further chunk options; in this case `include=FALSE`. This particular option makes the code chunk get evaluated but shows neither the code nor its output in the final document. In other words, it executes the code *quietly* in the background.
+
+Taken together, the last two paragraphs mean that there are two ways of setting code chunk options:
+
+1. *Globally* -- Just like the code inside of the first chunk does. Once set like this, the options will apply to all subsequent code chunks.
+2. *Locally* -- Inside the `{r, ...}` bit at the top of each chunk. These options will apply only to the given code chunk.
+
+
+There are, again, lots of useful options you can set and, using local options, you can change the behaviour of each individual chunk regardless of what the default---global---setting is.
+A comprehensive and by no means necessary list can be found in this [R markdown reference guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf "Are you going to check all links for hidden messages now?").
+
+\ 
+
+The code chunk below illustrates this rather nicely. Despite setting `echo` to `TRUE` in global options in the first chunk, this one sets it to `FALSE`.
+This means that, for this chunk only, the code will get executed and its output displayed but the code chunk itself will not show up in the final document.
+Let's see:
+
+```{r, echo=FALSE}
+sentence <- "Here, output gets included in the document but the code does not because the \"echo\" option is set locally to FALSE!"
+cat(sentence)
+```
+
+With respect to the actual contents of the second chunk, don't worry about it too much.
+The message to take away is that you can set many chunk options that govern their behaviour and the way they are displayed *either globally for all chunks or locally for a single chunk*.
+
+\ 
+
+The rest of the .Rmd file should be fairly readable, especially with the benefit of knowing the markdown syntax for text formatting we talked about above.
+Remember that, by comparing the .Rmd with the generated document, you can always figure out how to do things you haven't explicitly been taught (*e.g.,* writing in ^superscript^ or in ~subscript~).
+
+Perhaps the only slightly puzzling looking bits are the `<kbd>` tags and the links to other websites.
+As for the former, we included them only to make they various keys (Ctrl, Cmd, Tab) look a little bit like the actual keys.
+In other words, that's just aesthetics.
+With respect to links to websites, it is not immediately important for you to know how to include these links (AKA hyperlinks, or URLs) so feel free to skip the next section.
+
+\ 
+
+----------------------------------------------------------
+
+## A short aside on URLs in R Markdown
+
+The anatomy of URL markdown (again, that's links to you and me) is pretty straightforward.
+If you want to display the actual URL and make it "clickable", put the address inside < >:
+
+<https://www.some.site> (not an actual website)
+
+If you want to link to a website using custom text, this is how you do it (the bit in quotes is optional):
+
+[text you want to make "clickable"](URL "mouseover info") (also doesn't work)
+
+By default, links open in the same tab which can be annoying. To make a link open in a new tab, add `{target="_blank"}` after the ()s:
+
+[Actual example (opens in new tab)](https://giphy.com/gifs/l0NhZ0aUSE8fXag12/html5 "Mind = blown"){target="_blank"} -- hover over this with your mouse for a moment to see the mouseover info appear.
+
+------------------------------------------------------------
+
+\ 
+
+# Code chunks
+
+Let's talk a little more about code chunks (and in-line code), since they are the main reason why Rmd is so useful when it comes to reports of statistical analyses.
+For one, they are great for creating tables and figures.
+As a basic demonstration, we can create a simple *histogram*.
+Again, at this point, you don't have to worry about understanding the code itself.
+The important bit is that, once you know how to create fancy plots and tables, you can create them directly in your .Rmd file to put them in your paper/report/presentation:
+
+```{r histogram}
+library(ggplot2) # load the ggplot2 package
+qplot(rnorm(1000), xlab = "Value", ylab = "Frequency") # basic quick histogram
+```
+
+That's pretty cool, isn't it?
+What's arguably even cooler is the fact, that you can incorporate code in the actual body text.
+Let's say we have a chunk of code that runs some analysis, for example takes the mean age of our sample.
+
+```{r}
+# create a made up sequence of numbers and pretend they are the ages of our participants
+age <- c(34, 22, 26, 25, 43,19, 19, 20, 33, 27, 27, 26, 54)
+# calculate their mean, rounded to 2 decimal places
+mean_age <- round(mean(age), digits = 2)
+```
+
+With Rmd, we don't really even have to know what the value of the mean is when writing the results.
+We can simply use in-line code to have RStudio generate a document that say that the mean age was `r mean_age`.
+
+For the time being, don't worry about how this is actually done.
+We will cover that later in depth.
+For now, simply rejoice in the fact that it *can* be done ;).
+
+This feature has a very useful consequence:
+You can write a document in such a way that, if something about your data or analysis changes, you can simply edit the code in the appropriate chunks, re-generate the output file and all the values will get updated.
+Imagine having to redo a table of 40, 50, 100 numbers -- that's an awfully tedious task and it's prone to human error.
+With a proper use of R Markdown you will never have to do it!
+Imagine how many hours of work that will save you (trust us, it's a lot).
+How amazing is that?
+
+\ 
+
+# Generating documents
+
+Now that you have an understanding of the basics of Rmd along with some nifty tricks and can read the source file, let's talk about how to generate output from the .Rmd's.
+
+The simplest way of turning the source into output is using the pre-defined shortcuts.
+
+## Task 3
+
+Press <kbd>Ctrl</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>&#8984; Command</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>K</kbd> (Mac OS) to turn generate a HTML version of this document.
+
+Hopefully, it all went well and a nicely formatted HTML file popped up on your screen.
+If it didn't you may have to first run all the code in the chunks to make it available to `R` for generating the output document.
+
+There are several ways of doing this but the easiest is, once again, with a shortcut.
+
+## Task 4
+
+Press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd> (Windows/Linux) or <kbd>&#8984; Command</kbd> + <kbd>Alt</kbd> + <kbd>R</kbd> (Mac OS) to run all chunks in this .Rmd file.
+
+## Task 5
+
+Wait a few seconds for `R` to execute your command and then try creating the HTML document again.
+
+The first time you generate a document like this, it can take a while for `R` to install and run all the tools necessary to produce your output.
+After a moment, the result should pop out in RStudio's internal viewer.
+Take a minute to marvel at your creation!
+
+\ 
+
+...
+
+\ 
+
+OK, that's plenty now!
+Close the viewer window and check your project folder.
+Therein, you should find a file called "tut_02_Rmd_intro.html".
+This is your actual output.
+If you open it, it should appear in your default web browser because HTML files are the stuff websites are made from.
+
+\ 
+
+Next, let's test the editability feature we have so lauded above!
+Check the value of the mean of the age variable.
+In the original file, it should be 28.85.
+
+## Task 6
+
+Try changing some numbers in the `age` variable in the corresponding code chunk and re-generate the file to convince yourself that the mean age will get updated automatically.
+
+Lo and behold, the value is `r ifelse(mean_age == 28.85, paste0("**still** ", mean_age, "... (seriously, change it to something else!)"), paste0("now ", mean_age, "! Neat..."))`
+
+\ 
+
+Now, let's imagine you don't want a HTML file but a .doc (Word document).
+In order to get that, you need to change the YAML header so that it reads *exactly* `output: word_document`.
+You will also need to comment out all the lines below about toc (table of contents) because the word document option doesn't understand these.
+To comment out a section of text, highlight it and press <kbd>Ctrl</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>C</kbd> (Windows/Linux) or <kbd>&#8984; Command</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>C</kbd> (Mac OS)
+
+## Task 7
+
+Generate a Word document from your .Rmd file.
+If you don't have MS Office installed on your computer but are using OpenOffice, change the header to `output: odt_document`.
+
+The header should end up looking like this:
+
+```
+---
+title: "Tutorial 2: R Markdown refresher"
+author: "Analysing Data"
+output: word_document
+  # html_document:
+  #   theme: flatly
+  #   highlight: tango
+  #   toc: true
+  #   toc_depth: 2
+  #   toc_float:
+  #     collapsed: false
+---
+```
+
+\ 
+
+Well done!
+
+\ 
+
+That is all we have in store for you for this tutorial.
+We suggest you go over what you learnt today to help you consolidate your R Markdown knowledge even further.
+
+See you soon!
