@@ -1,0 +1,156 @@
+---
+title: "R Markdown refresher"
+author: "Milan Val&aacute;&scaron;ek"
+date: "`r format(Sys.Date(), '%A, %d %B %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    number_sections: true
+    theme: spacelab
+    highlight: pygments
+    code_folding: show
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- It is worth loading all the packages you will need at the beginning of your file! -->
+
+```{r packages, include = F}
+library(tidyverse)
+library(kableExtra)
+```
+
+```{r}
+n <- 100 # sample size
+# let's create us some data
+my_data <- tibble(
+  id = sample(x = 1000:1999, # numbers we're sampling from
+               # how many numbers are we drawing? (n defined in 1st line of code)
+              size = n),
+  age = sample(x = 18:22,
+               size = n,
+               # n is larger than number of things we're sampling from so we need
+               # sample with replacement
+               replace = TRUE),
+  eye_col = sample(c("blue", "green", "grey", "brown"),
+                   size = n,
+                   replace = TRUE,
+                   # probabilities of sampling each colour
+                   prob = c(.3, .12, .09, .49))
+)
+my_data
+```
+
+# Introduction
+
+> “And his eyes have all the seeming of a demon's that is dreaming”
+>
+> ― *Edgar Allan Poe, The Raven*
+
+We open our introduction with a quote from a particularly hackneyed work of 19^th^ Century gothic poetry, in the hope of conjuring the appearance that our topic of choice -- the exploration of eye colour in humans -- is culturally relevant *as well as* scientifically interesting.[^1]
+In reality, however, it is neither.
+
+
+[^1]: The reader would be pardoned in thinking the first sentence woefully overwrought but, in our defence, we would like to note that it is written exactly in the style of someone who would choose to lead into their introduction with a quote from [*The Raven*](https://en.wikisource.org/wiki/The_Works_of_the_Late_Edgar_Allan_Poe/Volume_2/The_Raven "Nevermore")
+
+Now that we have successfully composed the first paragraph, which no-one in their right mind would ever read, let's move on to an unnecessarily broad review of the topic starting by **lifting a couple of paragraphs wholesale from Wikipedia** without even citing it as a source.
+
+## The human eye
+
+The human eye is an organ that reacts to light and allows vision.
+Rod and cone cells in the retina allow conscious light perception and vision including colour differentiation and the perception of depth.
+The human eye can differentiate between about 10 million colours and is possibly capable of detecting a single photon.
+The eye is part of the sensory nervous system.
+
+Similar to the eyes of other mammals, the human eye's non-image-forming photosensitive ganglion cells in the retina receive light signals which affect adjustment of the size of the pupil, regulation and suppression of the hormone melatonin and entrainment of the body clock.
+
+The organ has the following parts:
+
+  - Cornea
+  - Sclera
+    - Pupil
+    - Lens
+  - Iris
+  - Retina
+  - Probably many more but what do we know!
+
+
+# Method {.tabset .tabset-pills}
+
+## Participants
+
+Data from `r nrow(my_data)` participants were collected (*M*~Age~ = `r my_data %>% pull(age) %>% mean(na.rm = T) %>% round(2)`, *SD*~Age~ = 1.46).
+## Materials
+
+Participants' eye colour was measured using the Martin-Schulz scale (there would be citation here were we not too lazy to dig it up).
+
+## Procedure
+
+Nothing here...
+
+## Analysis
+
+...nope!
+
+# Results
+
+## Descriptive statistics
+
+The descriptive statistics for eye colour are summarised in Table 1 and visualised in Fig. 1. Obviously, providing the same piece of information twice is completely redundant but hey, we have to fill the word limit somehow!
+
+```{r tab1}
+my_data %>%
+  group_by(eye_col) %>%
+  summarise(n = n(), # n() counts cases per each level of group (eye_col)
+            m_age = mean(age, na.rm = T),
+            sd_age = sd(age, na.rm = T)) %>%
+  kable(col.names = c("Eye colour", # name columns of table
+                      "*N*", # we can use markdown for formatting
+                      "*M*~Age~",
+                      "*SD*~Age~"),
+        # Tables should have captions
+        caption = "Table 1. Descriptive statistics of the sample by eye colour",
+        digits = 3) %>%
+  kable_styling(full_width = FALSE) # for nicer formatting
+```
+
+```{r fig1, fig.height=3, fig.width=4, fig.cap="*Fig.* 1  Age by eye colour. Error bars represent &plusmn;1 *SD*"}
+my_data %>%
+  group_by(eye_col) %>%
+  summarise(n = n(),
+            m_age = mean(age, na.rm = T),
+            sd_age = sd(age, na.rm = T)) %>%
+  # if plotting variables in ggplot, we have to put them in aes()
+  ggplot(aes(x = eye_col, # x-axis
+             y = m_age, # y-axis
+             fill = eye_col)) + # colour in bars chart according to levels of eye_col
+  geom_bar(stat = "identity") + # plot bars with heights identical to m_age
+  geom_errorbar(aes(ymin = m_age - sd_age, # bottom of errorbars
+                    ymax = m_age + sd_age), # top of errorbars
+                width = .2) + # width of horizontal lines of errorbats
+  labs(x = "", y = "Age in years") + # give plot nicer labels
+  guides(fill = FALSE) + # remove legend for fill (eye_col)
+  theme_classic() + # simple clean theme
+  # pick our own colour scheme, one colour for each level of eye_col
+  scale_fill_manual(values = c("steelblue", "chocolate", "seagreen", "grey40"))
+```
+
+# Discussion
+
+In this study, we set out to explore the colour of the human iris.
+We found that people's eyes differ in their pigmentation.
+So... That was useful!
+
+\ 
+
+\ 
+
+And fun...
+
+
+

@@ -1,0 +1,105 @@
+---
+title: "Code chunk options"
+author: "Analysing Data"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: false
+    number_sections: true
+    theme: darkly
+---
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, include = F}
+library(tidyverse)
+```
+
+
+## `echo=`
+
+The `echo=` chunk option governs the *rendering* of the `R` code inside a chunk.
+By default, it is set to `TRUE` (or `T`).
+If it is `TRUE`, the code inside of the chunk gets printed -- or *echoed* -- in the knitted document.
+For instance, the code in the following chunk will appear:
+
+```{r }
+my_data <- tibble(
+  score = rnorm(n = 1000,
+                mean = 100,
+                sd = 15))
+```
+
+`echo=FALSE` hides the code but produces the output
+
+```{r , fig.height=3, fig.width=6, message=F, echo=F, fig.align='center'}
+my_data %>%
+  ggplot(aes(x = score)) +
+  geom_histogram(fill = "#ff450088", colour = "black") +
+  theme_classic()
+```
+
+
+## `eval=`
+
+The `eval=` chunk option governs the *evaluation* of the `R` code inside a chunk.
+By default, it is set to `TRUE` (or `T`).
+If it is set to `FALSE`, the code will appear but will not get run and so any code dependent on objects in this code chunk will fail.
+
+```{r data, eval=F}
+my_data2 <- tibble(
+  score = rnorm(n = 1000,
+                mean = 100,
+                sd = 15))
+```
+
+
+Now there is not `my_data2` object and so the plot cannot be generated
+
+```{r histogram, fig.height=3, fig.width=6, message=F, error=T, fig.align='center'}
+my_data2 %>%
+  ggplot(aes(x = score)) +
+  geom_histogram(fill = "#ff450088", colour = "black") +
+  theme_classic()
+```
+
+## `include=`
+
+The `include=` chunk option cahnges whether or not both code and output should be included.
+By default, it is set to `TRUE` (or `T`).
+If it is `TRUE`, both code *and* output (plots, tables, *etc*) will be printed in the knitted document.
+For instance, here, both code chunks and the plot appear:
+
+<!-- ## `eval=` -->
+
+<!-- The `eval=` chunk option governs the *evaluation* of the `R` code inside a chunk. -->
+<!-- By default, it is set to `TRUE` (or `T`). -->
+<!-- If it is `TRUE`, the code inside of the chunk will get run by RStudio everytime the document is knitted. -->
+<!-- For instance, the code in the following chunk will be evaluated: -->
+
+<!-- ## `echo=` -->
+
+<!-- The `echo=` chunk option governs the *rendering* of the `R` code inside a chunk. -->
+<!-- By default, it is set to `TRUE` (or `T`). -->
+<!-- If it is `TRUE`, the code inside of the chunk gets printed -- or *echoed* -- in the knitted document. -->
+<!-- For instance, the code in the following chunk will appear: -->
+
+```{r, include=T}
+my_data <- tibble(
+  score = rnorm(n = 1000,
+                mean = 100,
+                sd = 15))
+```
+
+
+But when `eval=` is set to `FALSE` none of it will be there.
+
+```{r , fig.height=3, fig.width=6, message=F, include=F, fig.align='center'}
+my_data %>%
+  ggplot(aes(x = score)) +
+  geom_histogram(fill = "#ff450088", colour = "black") +
+  theme_classic()
+```

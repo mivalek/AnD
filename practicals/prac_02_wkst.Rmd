@@ -1,0 +1,374 @@
+---
+title: "R Markdown again"
+subtitle: "Practical 2"
+author: "Analysing Data"
+---
+
+# Guided part
+
+## Today's Goals
+
+- Consolidate what you've learnt about R Markdown
+- Closer look at code chunk options
+- Further YAML arguments for customised documents
+- Rmd tricks
+- First steps towards writing papers/reports
+
+## Setup
+
+Just like last time, before we start, make sure to:
+
+- Log into OneDrive and Canvas
+- Open RStudio via the Software Hub
+- Open the Analysing Data project file
+- Open the worksheet
+- Download the R Markdown file into your r_docs folder in your R project
+<!-- - Run the first (setup) code chunk -->
+
+## Rmd code chunks
+
+### Chunk options
+
+- Code chunks are blocks of `R` code fenced off using
+
+<pre><code>
+&#96;&#96;&#96;{r [optional label], [chunk options]}
+
+[some R code]
+
+&#96;&#96;&#96;
+</code></pre>
+
+The labels are completely arbitrary and it is up to you whether or not you use them.
+The benefit of naming code chunks using labels is that, if there is an error in your code in one of the chunks, `R` will tell you the label of the offending chunk.
+
+Chunk options are basically arguments to the function that formats the chunks when your document is knitted. You can use them to change the look of the chunk's result. Different options are useful for different things so it is a good idea to have an understanding of what the options do. Let's look at the three most commonly used
+    
+### `echo=`
+
+This option determines whether or not the code (not the output!) gets printed in the knitted document.
+By default, it is set to `TRUE` for all chunks.
+If you don't want the code to be visible, just change the option to `FALSE`.
+
+![](pics/echo.png)
+
+### `eval=`
+
+The `eval=` option decides whether or not `R` will run the code in the chunk.
+If `TRUE` (default value), the code gets *evaluated*. But if you change it to `FALSE` for a given chunk, none of the commands within that chunk will get executed.
+In the picture below on the left side, the code used to create `my_data` does not get evaluated.
+This has a knock-on effect on the subsequent chunk.
+As there is no `my_data`, we get an error when trying to use this object to plot the histogram.
+
+![](pics/eval.png)
+
+
+### `include=`
+
+This option determines whether **both code and output** appear in the knitted document.
+It does not change evaluation, though: regardless of its value, the code gets executed by `R`.
+But, if the option is set to `FALSE` this will happen *quietly* in the background and there will be no record of this happening in the knitted document.
+
+![](pics/include.png){height="530px"}
+
+### Usage
+
+- `include=F`
+    - For code whose output you never want to show
+    - <i>e.g.,</i> `library()` calls, data processing and analysis code, or setup chunks
+- `echo=F`
+    - When you want output but not the code
+    - <i>e.g.,</i> plots and tables
+- `eval=F`; `echo=T`
+    - When you want to demonstrate code but don't want to run it (rarely)
+
+### Setting options **globally**
+
+- The setup chunk that gets put into every new Rmd file can be edited to set global options
+- You can just change/add the `echo=`, `eval=`, `include=`, and other options
+
+<pre><code>
+&#96;&#96;&#96;{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, include = FALSE)
+&#96;&#96;&#96;
+</code></pre>
+
+### Setting options **locally**
+
+- Any *individual* code chunk can be given its own options
+- This **overrides any global options**
+- Even if `echo=` is set globally to `FALSE`, the following chunk gets echoed in the knitted document
+
+<pre><code>
+&#96;&#96;&#96;{r demo_chunk, echo=T}
+my_data <- tibble(
+  score = rnorm(n = 1000,
+                mean = 100,
+                sd = 15))
+&#96;&#96;&#96;
+</code></pre>
+
+\ 
+
+## Using the YAML header
+
+YAML header is the bit at the very top of your .Rmd file, fenced off by a couple of `---`s.
+It is used to set title, subtitle, date, author name, format of the knitted document, and various meta-data.
+Thus far, we have been using `html_document` in its default form as our output format.
+Let's have a look at how to change the look of our HTML document.
+
+### `html_document:` options
+
+Output format can be modified using options set inside the YAML header.
+When using HTML document, the `html_document:` bit must be on a *new, indented* line, followed by a colon `:`.
+Any options we then want to set must be also on a new line and indented.
+The whole thing looks like this:
+
+```
+---
+title: "Code chunk options"
+author: "Analysing Data"
+output:
+  html_document:
+    option_1: some_value
+    option_2: some_value
+---
+```
+Let's look at a few options now.
+
+\ 
+
+#### The `toc: true` option
+
+We can enable a table of contents (toc) by setting the option to `true`.
+Notice that YAML uses small letters for `true`, unlike `R`.
+It also uses the colon to pass values to arguments, and not `=` like `R` does.
+Finally, YAML really cares about the new lines and indentations, so pay attention to those things too!
+
+```
+---
+title: "Code chunk options"
+author: "Analysing Data"
+output:
+  html_document:
+    toc: true
+---
+```
+
+The resulting HTML document now has a table of contents right underneath the header.
+You can click on an individual heading to navigate to that particular section of the document.
+Handy, isn't it?
+
+
+<div class="iframe"><iframe src="https://mivalek.github.io/adata/misc/code_chunks_toc.html"></iframe></div>
+
+\ 
+
+#### The `toc_float: true` option
+
+Setting `toc_float` to `true` puts the table of contents on the side of the file and keeps it there as we scroll down the document.
+Try it below!
+
+```
+---
+title: "Code chunk options"
+author: "Analysing Data"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+```
+
+<div class="iframe"><iframe src="https://mivalek.github.io/adata/misc/code_chunks_float.html"></iframe></div>
+
+`toc` must be set to `true` in order for `toc_float` to take effect!
+
+\ 
+
+#### The `number_sections: true` option
+
+Sometimes, we may want our section headings to be numbered.
+There's an option for that too:
+
+```
+---
+title: "Code chunk options"
+author: "Analysing Data"
+output:
+  html_document:
+    number_sections: true
+---
+```
+
+See the result:
+
+<div class="iframe"><iframe src="https://mivalek.github.io/adata/misc/code_chunks_num.html"></iframe></div>
+
+The reason why the headings are numbered 0.1 *etc.* is that, in this particular .Rmd, we didn't use any level 1 (`#`) headings and started with level 2 headings (`##`). Only headings after and including the first level 1 heading are numbered 1. Anything before is the section 0.
+
+\ 
+
+#### The `theme:` option
+
+Sometimes, you might want to customise the look of your document.
+Since doing this requires knowledge of a completely different language (CSS), we will not be covering this.
+However, there are several [readymade themes](https://www.datadreaming.org/post/r-markdown-theme-gallery/) you can choose from using the `theme` option:
+
+```
+---
+title: "Code chunk options"
+author: "Analysing Data"
+output:
+  html_document:
+    theme: darkly
+---
+```
+
+Using the `darkly` theme turns everything a little goth:
+
+<div class="iframe"><iframe src="https://mivalek.github.io/adata/misc/code_chunks_theme.html"></iframe></div>
+
+\ 
+
+\ 
+
+## Take-home message
+
+- Chunk options can change whether or not:
+  - Code chunks get *echoed*
+  - Code gets *evaluated*
+  - Code and output are *included*
+- There are further options [(see here)](https://yihui.org/knitr/options/#chunk-options)
+- There are many YAML options to customise the formatting of the document, <i>e.g.</i>:
+  - Table of contents, including float
+  - Numbering of sections
+  - Themes
+- Many other YAML options [(see here)](https://bookdown.org/yihui/bookdown/yaml-options.html)
+
+That's all for the guided bit.
+Let's move on to individual tasks!
+
+\ 
+
+\ 
+
+# Worksheet
+
+`r task()`If you haven't done so yet, download the Rmd for this week's practical (prac_02_Rmd.Rmd) into your R project folder.
+
+`r task()`Open [this link](https://mivalek.github.io/adata/prac/prac_02_Rmd.html){target="_blank"} and read the document.
+
+This is a little tongue-in-cheek paper (well, by far not a complete paper) but, silly as it may be, it does have the proper structure of a piece of academic writing:
+
+- Introduction
+- Method
+    - Participants
+    - Materials
+    - Procedure
+    - Analysis
+- Results
+- Discussion
+
+In the following weeks, we will learn how to write the Method, Results, and Discussion sections.
+We will be practicing exactly what you will need to submit for your lab report assessment so stay tuned!
+
+`r task()`In the .Rmd, change the title to "Silly paper" and author to your name.
+
+Notice the special characters in Milan's surname and how they appear in the .Rmd file.
+These weird bunches of characters beginning with an [ampersand](https://en.wikipedia.org/wiki/Ampersand), `&`[^1] and ending with a semi-colon, `;` are so-called "HTML entities".
+Every letter or symbol that is not in the basic character set has an associated HTML entity.
+For instance, the accent on &aacute; in Milan's name is called an "acute" accent, which is why the HTML entity for an "a" with an acute accent is called <code>&amp;aacute;</code>.
+If you know what the character's name is, you can easily look it up.
+You can also find nice reference charts, such as [this one](https://dev.w3.org/html5/html-author/charref).
+
+[^1]: Fun fact: the ampersand symbol "&" comes from a ligature of the latin word *et* [and].
+In some fonts, the character still vaguely resembles Et.
+
+<div class="warn">
+HTML entities can only be used with HTML and Word output documents.
+If you want to knit into PDF, they will not work.
+Instead, you have to use a different kind of markup language called LaTeX.
+Without going into details, here is a [list of characters](https://en.wikibooks.org/wiki/LaTeX/Special_Characters) and their LaTeX codes
+</div>
+
+`r task()`Disable numbering of sections.
+
+**Hint: **You can always check if anything you did worked by knitting the document (<kbd>Ctrl</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>K</kbd> on Windows/Linux or <kbd>&#8984; Command</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>K</kbd> on Mac OS).
+
+
+`r task()`As you can see in the knitted file, there is a button to the upper right of every chunk that allows you to hide/show the code. Disable this option.
+
+**Hint: **You might have to delete (or comment out) something from the YAML header...
+
+`r task()`Look at the quote from *The Raven* and the footnote after the first sentence and notice how they are created in R Markdown.
+Chances are the knowledge will come in handy at some point.
+
+`r task()`Set `echo=` to `FALSE` **globally** and knit the file to see the changes.
+
+**Hint: **It's done in the `setup` chunk.
+
+`r task()`The list of parts of the eye is misaligned. Make all items on the list the same level of indentation.
+
+
+`r task()`Something has gone wrong with the `## Materials` section.
+
+Look at the Rmd file and how the markdown got knitted in the document.
+The Materials subsection didn't get created and the heading is still somewhere under participants.
+Can you fix this?
+
+`r task()`Table 1 is rounded to three digits. Change it to two digits.
+
+`r task()`Make the plot bigger and knit the file to see all your changes.
+
+**Hint: **You can manipulate the height and the width of the figure independently.
+Look at the corresponding code chunk.
+
+\ 
+
+
+<font size="+4">**Very well done!**</font>
+
+Today, you have revisited and expanded your knowledge of R Markdown.
+You learnt how to manipulate code chunk output and how to change default HTML document options in the YAML header.
+That is all for today, unless you're a keen bean, in which case carry on to some more challenging but all the more rewarding tasks!
+
+\ 
+
+# Extra tasks for the brave and keen
+
+```{r, include=F}
+tsk <- 1
+```
+
+
+`r task()`Change your name to include special characters. If your name doesn't have any, pick some for funsies -- it's metal time!
+
+`r task()`Looks at how date is specified in the YAML header.
+
+As you can see, we can include `R` code in YAML, provided it's in an inline code chunk (<code>&#96;r ...&#96;</code>) and surrounded by quotes.
+
+`r subtask()`Run the `Sys.Date()` command *in your console* to see what it does.
+
+`r subtask()`Check out documentation for `format()` by typing `?format.POSIXct` in the console and pressing Enter.
+
+Scroll down until you come across a list of these weird `%a`, `%A`, ... strings.
+Read what the ones we used in the date YAML field and see how they translate into how the date is displayed in the knitted file.
+
+`r subtask()`Get the date to appear in the DD/MM/YYYY format.
+
+`r task()`Comment out (<kbd>Ctrl</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>C</kbd> on Windows/Linux or <kbd>&#8984; Command</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>C</kbd> on Mac OS) the `df_print` line in the YAML header, knit the document and see what happens with the way the data set is printed towards the beginning of the file.
+
+`r task()`While the tabs under the Method section are pretty cool, they're not really fit for a paper/report.
+Can you make the subsections appear as they usually do?
+
+**Hint: **There is something unusual in the bit of the Rmd file where the Methods section gets created.
+
+\ 
+
+\ 
+
+<font size="+4">**You are amazing!**</font>
+
+\ 
+

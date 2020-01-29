@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Analysing Data" />
+  <title>R Markdown again</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="https:\\mivalek.github.io\slides_files\css\slides.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<div class="banner"><div class = "header msc"><a href="/">Analysing<strong>data</strong></a></div></div>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">R Markdown again</h1>
+  <h1 class="subtitle">Practical 2</h1>
+    <h2 class="author">Analysing Data</h2>
+</section>
+
+<section id="todays-goals" class="slide level2">
+<h2>Today’s Goals</h2>
+<style>
+:root {
+--theme-col: #b38ed2;
+--hover-col: #ADD28E;
+}
+</style>
+<ul>
+<li>Consolidate what you’ve learnt about R Markdown</li>
+<li>Closer look at code chunk options</li>
+<li>Further YAML arguments for customised documents</li>
+<li>Rmd tricks</li>
+<li>First steps towards writing papers/reports</li>
+</ul>
+</section>
+<section id="setup" class="slide level2">
+<h2>Setup</h2>
+<p>Just like last time, before we start, make sure to:</p>
+<ul>
+<li>Log into OneDrive and Canvas</li>
+<li>Open RStudio via the Software Hub</li>
+<li>Open the Analysing Data project file</li>
+<li>Open the worksheet</li>
+<li>Download the R Markdown file into your r_docs folder in your R project <!-- - Run the first (setup) code chunk --></li>
+</ul>
+</section>
+<section id="question-time" class="slide level2">
+<h2>Question time</h2>
+<ul>
+<li>Any questions about last weeks’ content before quiz?</li>
+</ul>
+</section>
+<section id="week-2-quiz" class="slide level2">
+<h2>Week 2 quiz</h2>
+<ul>
+<li>7 (9) minutes</li>
+<li><strong>Marked</strong></li>
+<li>Phones face down / away</li>
+<li>No talking</li>
+<li>Only physical calculator / desktop app allowed</li>
+</ul>
+</section>
+<section id="week-2-quiz-1" class="slide level2">
+<h2>Week 2 quiz</h2>
+<script src="https://mivalek.github.io/slides_files/js/quiz_timer.js"></script>
+<div class="quiz">
+<p id="timer" onclick="quizTimer(7); this.onclick=null">
+Get ready
+</p>
+</div>
+</section>
+<section id="rmd-code-chunks" class="slide level2">
+<h2>Rmd code chunks</h2>
+</section>
+<section id="chunk-options" class="slide level2">
+<h2>Chunk options</h2>
+<ul>
+<li>Blocks of <code>R</code> code fenced off using</li>
+</ul>
+<pre><code>
+&#96;&#96;&#96;{r [optional label], [chunk options]}
+
+[some R code]
+
+&#96;&#96;&#96;
+</code></pre>
+<ul>
+<li>Labels are arbitrary</li>
+<li>Options change the look of the chunk’s result
+<ul>
+<li>Different options are useful for different things</li>
+<li>We will only look at the three most commonly used</li>
+</ul></li>
+</ul>
+</section>
+<section id="echo" class="slide level2">
+<h2><code>echo=</code></h2>
+<p><img data-src="../pics/echo.png" height="550" /></p>
+</section>
+<section id="eval" class="slide level2">
+<h2><code>eval=</code></h2>
+<p><img data-src="../pics/eval.png" height="550" /></p>
+</section>
+<section id="include" class="slide level2">
+<h2><code>include=</code></h2>
+<p><img data-src="../pics/include.png" height="530" /></p>
+</section>
+<section id="usage" class="slide level2">
+<h2>Usage</h2>
+<ul>
+<li><code>include=F</code>
+<ul>
+<li>For code whose output you never want to show</li>
+<li><i>e.g.,</i> <code>library()</code> calls, data processing and analysis code, or setup chunks</li>
+</ul></li>
+<li><code>echo=F</code>
+<ul>
+<li>When you want output but not the code</li>
+<li><i>e.g.,</i> plots and tables</li>
+</ul></li>
+<li><code>eval=F</code>; <code>echo=T</code>
+<ul>
+<li>When you want to demonstrate code but don’t want to run it (rarely)</li>
+</ul></li>
+</ul>
+</section>
+<section id="setting-options-globally" class="slide level2">
+<h2>Setting options <strong>globally</strong></h2>
+<ul>
+<li>The setup chunk that gets put into every new Rmd file can be edited to set global options</li>
+<li>You can just change/add the <code>echo=</code>, <code>eval=</code>, <code>include=</code>, and other options</li>
+</ul>
+<pre><code>
+&#96;&#96;&#96;{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, include = FALSE)
+&#96;&#96;&#96;
+</code></pre>
+</section>
+<section id="setting-options-locally" class="slide level2">
+<h2>Setting options <strong>locally</strong></h2>
+<ul>
+<li>Any <em>individual</em> code chunk can be given its own options</li>
+<li>This <strong>overrides any global options</strong></li>
+<li>Even if <code>echo=</code> is set globally to <code>FALSE</code>, the following chunk gets echoed in the knitted document</li>
+</ul>
+<pre><code>
+&#96;&#96;&#96;{r demo_chunk, echo=T}
+my_data <- tibble(
+  score = rnorm(n = 1000,
+                mean = 100,
+                sd = 15))
+&#96;&#96;&#96;
+</code></pre>
+</section>
+<section id="using-the-yaml-header" class="slide level2">
+<h2>Using the YAML header</h2>
+</section>
+<section id="html_document-options" class="slide level2">
+<h2><code>html_document:</code> options</h2>
+<ul>
+<li>Output format can be modified using options</li>
+<li>To do that, <code>html_document:</code> must be on a <em>new, indented</em> line, followed by a colon <code>:</code></li>
+<li>Further options must be also on a new line and indented</li>
+</ul>
+<pre><code>---
+title: &quot;Code chunk options&quot;
+author: &quot;Analysing Data&quot;
+output:
+  html_document:
+    option_1: some_value
+    option_2: some_value
+---</code></pre>
+</section>
+<section id="toc-true-option" class="slide level2">
+<h2><code>toc: true</code> option</h2>
+<pre><code>---
+title: &quot;Code chunk options&quot;
+author: &quot;Analysing Data&quot;
+output:
+  html_document:
+    toc: true
+---</code></pre>
+<iframe class="stretch" data-src="https://mivalek.github.io/adata/misc/code_chunks_toc.html">
+</iframe>
+</section>
+<section id="toc_float-true-option" class="slide level2">
+<h2><code>toc_float: true</code> option</h2>
+<pre><code>---
+title: &quot;Code chunk options&quot;
+author: &quot;Analysing Data&quot;
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---</code></pre>
+<iframe class="stretch" data-src="https://mivalek.github.io/adata/misc/code_chunks_float.html">
+</iframe>
+</section>
+<section id="number_sections-true-option" class="slide level2">
+<h2><code>number_sections: true</code> option</h2>
+<pre><code>---
+title: &quot;Code chunk options&quot;
+author: &quot;Analysing Data&quot;
+output:
+  html_document:
+    number_sections: true
+---</code></pre>
+<iframe class="stretch" data-src="https://mivalek.github.io/adata/misc/code_chunks_num.html">
+</iframe>
+</section>
+<section id="theme-option" class="slide level2">
+<h2><code>theme:</code> option</h2>
+<pre><code>---
+title: &quot;Code chunk options&quot;
+author: &quot;Analysing Data&quot;
+output:
+  html_document:
+    theme: darkly
+---</code></pre>
+<iframe class="stretch" data-src="https://mivalek.github.io/adata/misc/code_chunks_theme.html">
+</iframe>
+</section>
+<section id="take-home-message" class="slide level2">
+<h2>Take-home message</h2>
+<ul>
+<li>Chunk options can change whether or not:
+<ul>
+<li>Code chunks get <em>echoed</em></li>
+<li>Code gets <em>evaluated</em></li>
+<li>Code and output are <em>included</em></li>
+</ul></li>
+<li>There are further options <a href="https://yihui.org/knitr/options/#chunk-options">(see here)</a></li>
+<li>There are many YAML options to customise the formatting of the document, <i>e.g.</i>:
+<ul>
+<li>Table of contents, including float</li>
+<li>Numbering of sections</li>
+<li>Themes</li>
+</ul></li>
+<li>Many other YAML options <a href="https://bookdown.org/yihui/bookdown/yaml-options.html">(see here)</a></li>
+</ul>
+</section>
+<section id="over-to-you" class="slide level2">
+<h2>Over to you</h2>
+<p><a href="prac_02_wkst.html#worksheet">Click here for today’s tasks</a></p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: false,
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'none', // none/fade/slide/convex/concave/zoom
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1000,
+        height: 750,
+        // Factor of the display size that should remain empty around the content
+        margin: 0,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/search/search.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('h2:not(.author)').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+	$('h1.title').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+});
+
+var f = (function() {
+	// get scale
+	var element = document.querySelector('.slides');
+	var scaleX = element.getBoundingClientRect().width / element.offsetWidth;
+	var bottom = $(".present > .slide-title").offset().top + ($(".present > .slide-title").outerHeight() * scaleX);
+	
+	$(":root")[0].style.setProperty('--header-height', Math.floor(bottom) + 'px');
+});
+
+window.addEventListener( 'load', f);
+$(window).resize(f);
+Reveal.addEventListener( 'slidechanged', f);
+Reveal.addEventListener( 'overviewshown', function() {
+	$('.banner').addClass( "overview" );
+} );
+Reveal.addEventListener( 'overviewhidden', function() {	
+	$('.banner').removeClass( "overview" );
+});
+Reveal.addEventListener( 'overviewhidden', f);
+
+
+</script>
+
+  </body>
+</html>
