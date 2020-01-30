@@ -1840,7 +1840,7 @@ author: &quot;Russell Bell&quot;
 <div id="task-4" class="section level3">
 <h3>Task 4</h3>
 <p>Disable numbering of sections.</p>
-<p><strong>Hint: </strong>You can always check if anything you did worked by knitting the document (<kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>K</kbd> on Windows/Linux or <kbd>⌘ Command</kbd> + <kbd>⇧ Shift</kbd> + <kbd>K</kbd> on Mac OS).</p>
+<p><strong>Hint: </strong>You can always check if anything you did worked by knitting the document (<kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>K</kbd> on Windows/Linux or <kbd>⌘ Command</kbd> + <kbd>⇧ Shift</kbd> + <kbd>K</kbd> on Mac OS).</p>
 <div class="solText">
 <p>You can either delete the <code>number_sections: true</code> line or just comment it out:</p>
 <pre>
@@ -1918,18 +1918,31 @@ knitr::opts_chunk$set(echo = <font color="red">FALSE</font>)
 </div>
 <div id="task-9" class="section level3">
 <h3>Task 9</h3>
-<p>Something has gone wrong with the <code>## Materials</code> section.</p>
-<p>Look at the Rmd file and how the markdown got knitted in the document. The Materials subsection didn’t get created and the heading is still somewhere under participants. Can you fix this?</p>
-<div class="solText&gt;
-There is an empty line missing between the end of the " Participants" section and the "Materials" heading. You need to insert it: ``` ## Participants Data from &#96;r nrow(my_data)&#96; participants were collected (*M*~Age~="`r" my_data %>% pull(age) %&gt;% mean(na.rm = T) %&gt;% round(2)`, *SD*~Age~ = 1.46).
-
-## Materials
-```
+<p>Edit the .Rmd file on line 87, so that the value of the standard deviation of age (<em>SD</em><sub>Age</sub>) is knitted <em>programmatically</em>. By that we mean using code so that you don’t have to type in the value yourself.</p>
+<p><strong>Hint: </strong>Just like the other numbers in the sentence…</p>
+<div class="solText">
+<pre><code>Data from `r nrow(my_data)` participants were collected (*M*~Age~ = `r my_data %&gt;% pull(age) %&gt;% mean(na.rm = T) %&gt;% round(2)`, *SD*~Age~ = <font color="red">`r my_data %&gt;% pull(age) %&gt;% sd(na.rm = T) %&gt;% round(2)`</font>).</code></pre>
 </div>
 <p> </p>
 </div>
 <div id="task-10" class="section level3">
 <h3>Task 10</h3>
+<p>Something has gone wrong with the <code>## Materials</code> section.</p>
+<p>Look at the Rmd file and how the markdown got knitted in the document. The Materials subsection didn’t get created and the heading is still somewhere under participants. Can you fix this?</p>
+<div class="solText">
+<p>There is an empty line missing between the end of the “Participants” section and the “Materials” heading. You need to insert it:</p>
+<pre><code>
+## Participants
+
+Data from `r nrow(my_data)` participants were collected (*M*~Age~ = `r my_data %&gt;% pull(age) %&gt;% mean(na.rm = T) %&gt;% round(2)`, *SD*~Age~ = 1.46).
+
+## Materials
+</code></pre>
+</div>
+<p> </p>
+</div>
+<div id="task-11" class="section level3">
+<h3>Task 11</h3>
 <p>Table 1 is rounded to three digits. Change it to two digits.</p>
 <div class="solText">
 <p>Number of digits is an argument of the <code>kable()</code> function in the <code>tab1</code> chunk. Just change it to <code>2</code>:</p>
@@ -1945,8 +1958,8 @@ There is an empty line missing between the end of the " Participants" section an
 </div>
 <p> </p>
 </div>
-<div id="task-11" class="section level3">
-<h3>Task 11</h3>
+<div id="task-12" class="section level3">
+<h3>Task 12</h3>
 <p>Make the plot bigger and knit the file to see all your changes.</p>
 <p><strong>Hint: </strong>You can manipulate the height and the width of the figure independently. Look at the corresponding code chunk.</p>
 <div class="solText">
@@ -1977,7 +1990,7 @@ my_data %&gt;%
 <pre>
 <code>---
 title: &quot;Silly paper&quot;
-author: &quot;Ru<font color="red">$$</font>ell Bell&quot;
+author: &quot;Ru<font color="red">&amp;dollar;&amp;dollar;</font>ell Bell&quot;
 ...[header truncated]...
 ---</code>
 </pre>
@@ -2023,7 +2036,7 @@ date: &quot;`r format(Sys.Date(), <font color="red">&#39;%d/%m/%Y&#39;</font>)`&
 </div>
 <div id="task-3-1" class="section level3">
 <h3>Task 3</h3>
-<p>Comment out (<kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>C</kbd> on Windows/Linux or <kbd>⌘ Command</kbd> + <kbd>⇧ Shift</kbd> + <kbd>C</kbd> on Mac OS) the <code>df_print</code> line in the YAML header, knit the document and see what happens with the way the data set is printed towards the beginning of the file.</p>
+<p>Comment out (<kbd>Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>C</kbd> on Windows/Linux or <kbd>⌘ Command</kbd> + <kbd>⇧ Shift</kbd> + <kbd>C</kbd> on Mac OS) the <code>df_print</code> line in the YAML header, knit the document and see what happens with the way the data set is printed towards the beginning of the file.</p>
 <div class="solText">
 <p>This YAML option changes the way data frames (and tibbles) are printed in the knitted file. Just see for yourself!</p>
 <pre>
