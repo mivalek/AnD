@@ -275,6 +275,18 @@ We will be practicing exactly what you will need to submit for your lab report a
 
 `r task()`In the .Rmd, change the title to "Silly paper" and author to your name.
 
+<div class="solText">
+Just edit the frist 2 lines of the YAML header to, for example:
+
+```
+---
+title: "Silly paper"
+author: "Russell Bell"
+...[header truncated]...
+---
+```
+</div>
+
 Notice the special characters in Milan's surname and how they appear in the .Rmd file.
 These weird bunches of characters beginning with an [ampersand](https://en.wikipedia.org/wiki/Ampersand), `&`[^1] and ending with a semi-colon, `;` are so-called "HTML entities".
 Every letter or symbol that is not in the basic character set has an associated HTML entity.
@@ -296,20 +308,80 @@ Without going into details, here is a [list of characters](https://en.wikibooks.
 
 **Hint: **You can always check if anything you did worked by knitting the document (<kbd>Ctrl</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>K</kbd> on Windows/Linux or <kbd>&#8984; Command</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>K</kbd> on Mac OS).
 
+<div class="solText">
+You can either delete the `number_sections: true` line or just comment it out:
+
+<pre>
+<code>---
+...[header truncated]...
+    toc_float: true
+    <font color="red"># number_sections: true</font>
+    theme: spacelab
+...[header truncated]...
+---</code>
+</pre>
+</div>
 
 `r task()`As you can see in the knitted file, there is a button to the upper right of every chunk that allows you to hide/show the code. Disable this option.
 
 **Hint: **You might have to delete (or comment out) something from the YAML header...
 
+<div class="solText">
+Again, either delete the `code_folding: show` line or just comment it out. Changing the option to `hide` will result in the code being folded by default but still accessible with the buttons.
+
+<pre>
+<code>---
+...[header truncated]...
+    highlight: pygments
+    <font color="red"># code_folding: show</font>
+    df_print: paged
+---</code>
+</pre>
+</div>
+
 `r task()`Look at the quote from *The Raven* and the footnote after the first sentence and notice how they are created in R Markdown.
 Chances are the knowledge will come in handy at some point.
+
+<div class="solText">
+Block quotes are formatted using a `>` followed by a blank space (see the .Rmd file)
+
+To create a footnote, put <code>&lsqb;^1]</code> immediately after the word where you want the number ot appear and then, in a paragraph of its own, put
+
+<code>&lsqb;^1]: Your actual footnote.</code>
+</div>
 
 `r task()`Set `echo=` to `FALSE` **globally** and knit the file to see the changes.
 
 **Hint: **It's done in the `setup` chunk.
 
+<div class="solText">
+Change the `setup` chunk to:
+
+<pre>
+<code>&#96;&#96;&#96;{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = <font color="red">FALSE</font>)
+&#96;&#96;&#96;</code>
+</pre>
+</div>
+
 `r task()`The list of parts of the eye is misaligned. Make all items on the list the same level of indentation.
 
+<div class="solText">
+For the items to appear at the same level of the list, they must be all aligned in the .Rmd file
+
+<pre>
+<code>The organ has the following parts:
+
+  - Cornea
+  - Sclera
+  <font color="red">- Pupil
+  - Lens</font>
+  - Iris
+  - Retina
+  - Probably many more but what do we know!
+</code>
+</pre>
+</div>
 
 `r task()`Something has gone wrong with the `## Materials` section.
 
@@ -317,12 +389,54 @@ Look at the Rmd file and how the markdown got knitted in the document.
 The Materials subsection didn't get created and the heading is still somewhere under participants.
 Can you fix this?
 
+<div class="solText>
+There is an empty line missing between the end of the "Participants" section and the "Materials" heading. You need to insert it:
+
+```
+## Participants
+
+Data from &#96;r nrow(my_data)&#96; participants were collected (*M*~Age~ = &#96;r my_data %>% pull(age) %>% mean(na.rm = T) %>% round(2)&#96;, *SD*~Age~ = 1.46).
+
+## Materials
+```
+</div>
+
 `r task()`Table 1 is rounded to three digits. Change it to two digits.
+
+
+
+<div class="solText">
+Number of digits is an argument of the `kable()` function in the `tab1` chunk. Just change it to `2`:
+
+<pre>
+<code>&#96;&#96;&#96;{r tab1}
+...[code truncated]...
+&Tab;# Tables should have captions
+    caption = "Table 1. Descriptive statistics of the sample by eye colour",
+    <font color="red">digits = 2)</font> %>%
+  kable_styling(full_width = FALSE) # for nicer formatting
+&#96;&#96;&#96;</code>
+</pre>
+</div>
 
 `r task()`Make the plot bigger and knit the file to see all your changes.
 
+
 **Hint: **You can manipulate the height and the width of the figure independently.
 Look at the corresponding code chunk.
+
+<div class="solText">
+Looking at the `fig1` chunk, `fig.height=` and `fig.width=` are chunk options that set figure dimensions. You can experiment with different values and see what results they yield.
+
+<pre>
+<code>&#96;&#96;&#96;{r fig1, <font color="red">fig.height=4, fig.width=5,</font> fig.cap="&ast;Fig.&ast; 1  Age by eye colour. Error bars represent &amp;plusmn;1 &ast;SD&ast;"}
+my_data %>%
+  group_by(eye_col) %>%
+  summarise(n = n(),
+  ...[code truncated]...
+&#96;&#96;&#96;</code>
+</pre>
+</div>
 
 \ 
 
@@ -344,6 +458,18 @@ tsk <- 1
 
 `r task()`Change your name to include special characters. If your name doesn't have any, pick some for funsies -- it's metal time!
 
+<div class="solText">
+Just include HTML entities of the characters you want, for example:
+
+<pre>
+<code>---
+title: "Silly paper"
+author: "Ru<font color="red">&dollar;&dollar;</font>ell Bell"
+...[header truncated]...
+---</code>
+</pre>
+</div>
+
 `r task()`Looks at how date is specified in the YAML header.
 
 As you can see, we can include `R` code in YAML, provided it's in an inline code chunk (<code>&#96;r ...&#96;</code>) and surrounded by quotes.
@@ -357,12 +483,62 @@ Read what the ones we used in the date YAML field and see how they translate int
 
 `r subtask()`Get the date to appear in the DD/MM/YYYY format.
 
+<div class="solText">
+We need the `%d` for day number, `%m` for month number, and `%Y` (upper case) for full year. Don't forget to include the slashes (/) and put everything in quotes!
+
+```{r, include=solution}
+format(Sys.Date(), '%d/%m/%Y')
+```
+
+To put this command into the YAML header, you need to write it as:
+
+<pre>
+<code>---
+title: "Silly paper"
+author: "Ru&apm;dollar;&amp;dollar;ell Bell"
+date: "&#96;r format(Sys.Date(), <font color="red">'%d/%m/%Y'</font>)&#96;"
+...[header truncated]...
+---</code>
+</pre>
+
+Notice that the entire command after `date:` is in double quotes and so the `'%d/%m/%Y'` string **must** be in single quotes.
+</div>
+
 `r task()`Comment out (<kbd>Ctrl</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>C</kbd> on Windows/Linux or <kbd>&#8984; Command</kbd> + <kbd>&#8679; Shift</kbd> + <kbd>C</kbd> on Mac OS) the `df_print` line in the YAML header, knit the document and see what happens with the way the data set is printed towards the beginning of the file.
+
+<div class="solText">
+This YAML option changes the way data frames (and tibbles) are printed in the knitted file. Just see for yourself!
+
+<pre>
+<code>---
+...[header truncated]...
+    highlight: pygments
+    code_folding: show
+    <font color="red"># df_print: paged</font>
+---</code>
+</pre>
+</div>
 
 `r task()`While the tabs under the Method section are pretty cool, they're not really fit for a paper/report.
 Can you make the subsections appear as they usually do?
 
 **Hint: **There is something unusual in the bit of the Rmd file where the Methods section gets created.
+
+<div class="solText">
+It's this bit right here:
+
+<pre>
+<code>  - Probably many more but what do we know!
+
+
+&num; Method <font color="red">{.tabset .tabset-pills}</font>
+
+&num;&num; Participants</code>
+</pre>
+
+Delete it and see what the knitted document looks like.
+</div>
+
 
 \ 
 
