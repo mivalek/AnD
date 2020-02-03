@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580150083769.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CEBF6208",
+    "lastKnownWriteTime" : 1580150441,
+    "last_content_update" : 1580150441815,
+    "path" : "~/AnD/practicals/practical_guided_template.Rmd",
+    "project_path" : "practicals/practical_guided_template.Rmd",
+    "properties" : {
+        "cursorPosition" : "40,0",
+        "scrollLine" : "22"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580120417741.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "534228802",
+    "id" : "4AEFE773",
+    "lastKnownWriteTime" : 1579884585,
+    "last_content_update" : 1579884585,
+    "path" : "~/AnD/practicals/practical_1_wkst.Rmd",
+    "project_path" : "practicals/practical_1_wkst.Rmd",
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

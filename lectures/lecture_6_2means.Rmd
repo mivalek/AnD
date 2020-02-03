@@ -1,0 +1,252 @@
+---
+title: 'Lecture 6: Two Means'
+author: "Dr Jennifer Mankin"
+date: "25/01/2020"
+output: html_document
+---
+
+```{r}
+library(weights)
+report.p <- function(x){
+  p <- x$p.value
+  p.rep <- ifelse(p > .001, paste0(" = ", rd(p, 3)), "< .001")
+  print(p.rep)
+}
+```
+
+
+# Overview: Two Means
+
+* Study design
+  + Defining variables
+  + What question are we asking?
+* Statistical analysis
+  + Student's t-test
+  + Under the hood: drawing lines
+* Two means in R
+  + Welcome to `lm()`!
+  + Getting and interpreting results
+
+## Study design
+
+* 
+
+## Statistical analysis
+
+
+
+## Two means in R
+
+* Welcome to `lm()`!
+* Getting and interpreting results
+
+### Welcome to `lm()`!
+
+* Today's new function is a very important one
+  + We will use it for the rest of the term and...
+  + It will be very important next year as well!
+* What does it do?
+  + Creates a **l**inear **m**odel -> `lm()`
+  + A statistical model that looks like a line
+* How does the linear model work?
+  + Much more next week!
+
+### Basic Anatomy of `lm()`
+
+* `lm(outcome ~ predictor, data = data)`
+* Translation: 
+  + Create a linear model modelling the relationship between
+  + An outcome and a predictor
+  + Using the data in `data`
+* **Try it**: write down the command to predict `attract` from `colour` in our `elliot` data
+
+### Anatomy of `lm()`
+
+`lm(attract ~ colour, data = elliot)`
+
+* Create a linear model that models
+* Attractiveness score based on colour group
+* Using the data `elliot`
+
+### What will this model actually do?
+
+`attract ~ colour`
+
+* `attract` is a **continuous** variable: each participant's mean score on three rating scales of attractiveness
+* `colour` is a **categorical** variable: whether each participant saw the `red` condition or the `white` condition
+  + Independent: each participant saw only one of the two
+
+### What will this model actually do?
+
+`attract ~ colour`
+
+1. Group participants by `colour`
+2. Calculate the mean `attract` score for each `colour` group
+3. Create a linear model that captures the **difference in those means**
+
+## Let's have a look!
+
+```{r, echo = F}
+attract_w <- rnorm(2000, mean = 4, sd = 0.5)
+attract_r <- rnorm(2000, mean = 7, sd = 0.5)
+attract <- c(attract_w,attract_r)
+elliot <- tibble(
+  colour = factor(rep(c("white", "red"), each = 2000)),
+  attract = attract
+)
+
+elliot_sum <- elliot %>% 
+  group_by(colour) %>% 
+  summarise(
+    mean = mean(attract),
+    sd = sd(attract)
+  )
+
+elliot_diff <- elliot_sum$mean[elliot_sum$colour == "red"] - elliot_sum$mean[elliot_sum$colour == "white"]
+
+ggplot(elliot, aes(attract, fill = colour)) + 
+   geom_histogram(alpha = 0.5, aes(y = ..density..), position = 'identity')
+
+# Creating point plot with CIs
+ggplot(elliot, aes(x = colour, y = attract, fill = colour)) + 
+  stat_summary(fun.data = "mean_cl_normal") # doesn't work atm but might at work!
+
+```
+
+## A closer look
+
+* The mean of the `white` group is `r elliot_sum %>% filter(colour == "white") %>% pull("mean") %>% round(2)`
+* The mean of the `red` group is `r elliot_sum %>% filter(colour == "red") %>% pull("mean") %>% round(2)`
+* The difference in means is *M*~red~ - *M*~white~ = `r elliot_sum$mean[elliot_sum$colour == "red"] %>% round(2)` - `r elliot_sum$mean[elliot_sum$colour == "white"]` = `r (elliot_sum$mean[elliot_sum$colour == "red"] - elliot_sum$mean[elliot_sum$colour == "white"]) %>% round(2)`
+
+### `attract ~ colour`
+
+* Are these means **different**?
+  + Yes: the `colour` groups have different means of `attract`
+  + Furthermore: there was, on average, a difference of 3 rating points
+  + Translation: women who saw the red border rated the man's attractiveness higher than those who saw the white border
+* Are these means different **enough**?
+  + How big of a difference is big enough to be meaningful?
+  + How big of a difference is big enough to be **significant**?
+* Do answer this question, we need to create a model that captures the relationship between `colour` and `attract`
+
+### `attract ~ colour`
+
+Our model will give us two important things:
+
+* An **estimate** of the relationship between `colour` and `attract`
+  + Here: the difference between the means in the white and red groups
+* The **probability** of finding a difference in means of this size (or greater) occuring if seeing a white or red border has no effect on attractiveness
+  + i.e., if the null hypothesis is true
+
+### Model and Results
+
+Let's run the model and see what it is telling us
+
+* This is a lot! For now, focus on "Coefficients"
+
+```{r}
+elliot_m <- lm(attract ~ colour, data = elliot)
+summary(elliot_m)
+```
+
+### Model and Results: **Estimates**
+
+* `Intercept` tells us the predicted value of `attract` when `colour` is 0
+  + R picks a baseline (0-coded) category for us
+  + Here, `red` is the baseline because it comes first alphabetically
+  + This value is familiar: it's the mean of the `red` group
+
+```{r, echo = F}
+elliot_m <- lm(attract ~ colour, data = elliot)
+summary(elliot_m)
+```
+
+### Model and Results: **Estimates**
+
+* `colourwhite` tells us how the mean of `attract` changes when the colour changes from `red` to `white`
+  - Here: a change from `red` to `white` corresponds to a drop of about 3 rating points on average
+  + This value is familiar: it's the difference between means
+
+```{r, echo = F}
+elliot_m <- lm(attract ~ colour, data = elliot)
+summary(elliot_m)
+```
+
+### Model and Results: **Probabilities**
+
+* New information: the **probability** of finding a difference in means this big (or bigger) if border colour has no effect on attractiveness
+  + This is our *p*-value, given under `Pr(>|t|)`
+  + We can see that both are smaller than .0000000000000002
+  + More helpfully: look at the signif. codes
+
+```{r, echo = F}
+elliot_m <- lm(attract ~ colour, data = elliot)
+summary(elliot_m)
+```
+
+### Model and Results: **Probabilities**
+
+* What does this (extremely small!) probability tell us?
+* Let's imagine that if we tested every woman in the world (the whole population), the **real** difference in the means would be 0
+  + That is: border colour actually makes no difference
+  + In other words, the null hypothesis is true
+* If that were true, the probability that we would find a difference in mean attractiveness as big as this one is extremely small!
+
+### Model and Results: **Probabilities**
+
+* The probability that we would get this result if the null hypothesis is true is very small
+* We conclude that it's unlikely the null hypothesis is true
+* The alternative is that border colour **does** affect attractiveness
+* So, we have evidence that the relationship between colour and attractiveness is **significant**
+
+### Interpreting Significance
+
+* In psychology, *p* < .05 is considered "significant"
+* There's nothing magical about this number!
+  + *p* < .05 is about 1 in 20
+  + Changes depends on discipline and precision
+* Significance does not "prove" anything!
+  + Remember: we only ever gather and evaluate evidence
+* Use alongside other ways to quantify differences (e.g. CIs, effect sizes)
+
+### Model and Results: **Probabilities**
+
+* Where does this probability come from anyway?
+* Explain the t-distribution here somehow
+
+### The Other Way Round: T-Tests
+
+* Let's try asking for a t.test() instead of an lm()
+  + Note: exactly the same specification as with `lm()`
+
+```{r}
+elliot_t <- t.test(attract ~ colour, data = elliot)
+elliot_t
+```
+
+### The Other Way Round: T-Tests
+
+* The `t.test()` output gives us some other useful information
+  + Confidence Interval bounds: `r elliot_t$conf.int[1] %>% round(2)` and `r elliot_t$conf.int[2] %>% round(2)`
+    - These are CIs around the difference in the means
+    - Narrow CIs mean our estimate of the difference is pretty close to the likely population difference
+  
+```{r, echo = F}
+t.test(attract ~ colour, data = elliot)
+```
+
+### Reporting a t-test
+
+"An independent samples t-test revealed that participants who saw the white border (*M* = `r elliot_t$estimate[2] %>% round(2)`) rated the target male's attractiveness much lower than those who saw the red border (*M* = `r elliot_t$estimate[1] %>% round(2)`) (*t*(`r elliot_t$parameter %>% round(2)`) = `r elliot_t$statistic %>% round(2)`, *p* `r report.p(elliot_t)`)."
+
+### T-test or linear model?
+
+* It's (essentially) the same thing with different names!
+* Typically reported as a "t-test" when this is the only comparison
+* Can be reported as an LM when there are more predictors
+
+### Other types of t-tests
+
+* One-sample
+* Paired samples

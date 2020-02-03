@@ -1,0 +1,41 @@
+---
+title: "Butterflies"
+author: "Dr Jennifer Mankin"
+date: "25/01/2020"
+output: html_document
+---
+
+```{r setup, include = F}
+library(tidyverse)
+library(ggplot2)
+```
+
+
+Taken from [Pretty Histograms tutorial](https://drsimonj.svbtle.com/pretty-histograms-with-ggplot2).
+
+```{r}
+# Create data
+set.seed(250120) # without this presumably you'll get a random one every time
+d <- data.frame(x = rnorm(2000))
+
+#Basic plot from tutorial
+p <- ggplot(d, aes(x, fill = cut(x, 100))) +
+  geom_histogram(show.legend = FALSE) +
+  theme_minimal() +
+  labs(x = "Wing Colour", y = "Number of Butterflies") +
+  ggtitle("Catching Butterflies")
+
+p + scale_fill_discrete(h = c(180, 360), c = 150, l = 80)
+```
+
+```{r}
+p <- ggplot(d, aes(x, fill = cut(x, 100))) +
+  geom_histogram(show.legend = FALSE) +
+  theme_minimal() +
+  labs(x = "Wing Colour", y = "Number of Butterflies") +
+  ggtitle("Catching Butterflies")
+
+#luminance down a bit, tweaked the distribution
+p + scale_fill_discrete(h = c(140, 300), c = 150, l = 50)
+```
+

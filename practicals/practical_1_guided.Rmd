@@ -1,11 +1,10 @@
 ---
-title: "Analysing Data Practical 1: Setup and Revision"
-author: "Dr Jennifer Mankin"
+title: "Analysing Data Practical 1"
+subtitle: "Setup and Revision"
 ---
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(ggplot2)
 ```
 
 # Welcome to Analysing Data!
@@ -27,9 +26,9 @@ In **every** practical, we will ask you to do the same steps as soon as you arri
 * Download and open the worksheet, RMarkdown and data files for that week
 * Run the first (setup) code chunk
 
-### Step 1: Log into OneDrive and Canvas
+### Step 1: OneDrive and Canvas
 
-**OneDrive**: Sign in at [Office.com](office.com) with your Sussex email and password
+**OneDrive**: Open your files and click on the blue cloud to open OneDrive and log in with your Sussex email and password
 
 **Canvas**: Sign in at [canvas.sussex.ac.uk](canvas.sussex.ac.uk) with your Sussex email and password
 
@@ -40,21 +39,22 @@ In **every** practical, we will ask you to do the same steps as soon as you arri
 
 ### Step 3: Create/open your project
 
-* This week, we will set up the project file that you will use for the rest of the term
-  + If you are using your own computer, use [this tutorial](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-working-in-rstudio) to set up a project. 
-* In RStudio, click on File > New project..
-  + In the New Project window, select New Directory, then New Project.
+* We will set up the project file for the rest of the term
+  + On your own computer, use [this tutorial](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-working-in-rstudio) to set up a project. 
+* In RStudio, click on File > New project...
+  + Select New Directory, then New Project.
   + Under Directory name, type “analysing_data”, and for the subdirectory, choose your OneDrive
   + Then click Create Project
   + In the new analysing_data folder, create three new subfolders: `data`, `images`, and `r_docs`.
-* Every week after this, you should open this project as soon as you open RStudio
+* Every week, open this project as soon as you open RStudio
 
 ### Step 4: Download files
 
 * In Canvas, go to the Analysing Data page > Syllabus > click on the current week of term. Right now, it's Week 1.
 * Under Files:
-  + Save the Markdown file in your `analysing_data` > `r_docs` folder
-  + Save the dataset(s) in your `analysing_data` > `data` folder
+  + Save the Markdown file in `analysing_data` > `r_docs`
+  + Save dataset(s) in `analysing_data` > `data`
+    - This week we don't have any data for you to download, but do this if there are any!
   
 ### Step 5: Open the files
 
@@ -66,11 +66,13 @@ In **every** practical, we will ask you to do the same steps as soon as you arri
 
 # Today's Tasks
 
-* The goal of today is to get reacquainted with RStudio and RMarkdown. 
-* There are three tasks in the worksheet and Markdown file for you to work on
+* The goal today is to get reacquainted with RStudio/RMarkdown. 
+* Work on the three tasks in the worksheet and Markdown file
   + All three draw on things you learned in PAAS
 * The challenge tasks may include new functions or new ideas
   + Have a go, but don't worry if you get stuck!
+  + **IMPORTANT**: Complete the regular tasks first!
+    - **Challenge** tasks will help you increase your skills in R if you finish early, or if you'd like to practice more at home
 
 # Practice Quiz
 
@@ -81,5 +83,6 @@ In **every** practical, we will ask you to do the same steps as soon as you arri
   
 # Next Week
 
-* Quiz topic: identical to the practice quiz
-  + Revise practicals and tutorials from PAAS, and Dr Mankin's Week 1 lecture
+* Quiz topic: same the practice quiz
+  + Revise lectures, practicals and tutorials from PAAS
+  + Try the practice quiz as much as you like!
