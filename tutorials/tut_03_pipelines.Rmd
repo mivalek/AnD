@@ -8,7 +8,7 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = T, fig.height=3, fig.width=5, fig.align = "center")
 ```
 
-In this tutorial, we will take a closer look at pipes (`%>%`), tidyverse functions, and at combining these to create command pipelines.
+In this tutorial, we will take a closer look at pipes (`%>%`), `tidyverse` functions, and at combining these to create command pipelines.
 
 # Setting up
 
@@ -17,10 +17,10 @@ All you need for this tutorial is this file and open RStudio. It's best to have 
 <div class="solText">
 #### Note on code in the tutorial
 
-You can reveal the code under each task. The point of this tutorial is not to torment you with tasks you cannot do. However, you are strongly encouraged not to reach straight for the answer. Try to complete the task yourself: write the code in your script, run it, see if it works. If it doesn't, try again. Only reveal the solution if you're stuck or if you want to check your own solution.
+You can reveal the solution to each task by clicking on the "Solution" button. The point of this tutorial is not to torment you with tasks you cannot do. However, you are strongly encouraged not to reach straight for the answer. Try to complete the task yourself: write the code in your script, run it, see if it works. If it doesn't, try again. Only reveal the solution if you're stuck or if you want to check your own solution.
 </div>
 
-`r task()`Open your analysing_data R project in RStudio and open a new R script. Here is where you can write solution code for the tasks.
+`r task()`Open your analysing_data `R` project in RStudio and open a new `R` script. Here is where you can write solution code for the tasks.
 
 `r task()`The only package you will need to load to complete this tutorial is `tidyverse`. Load it now.
 
@@ -90,7 +90,7 @@ make.cake(type, flour, vegan = FALSE, dairy = TRUE, servings = 8) {
 }
 ```
 
-Each of the arguments has some allowed values. For instance, we may know how to make `type="chocolate"` or `type="red_velvet"` cake. Maybe we only allow for `flour=` to be `"plain"`, `"self-raising"`, or `"gluten-free"`. The `vegan=` and `dairy=` arguments are logical so can only take values `TRUE` or `FALSE`. Finally, `size=` is a numeric argument and should be the number of people we want the cake to feed. Notice that the last three arguments have a pre-defined default setting. So, if we do not change these, the result will be a non-vegan cake for 8 people that containg dairy. The first two arguments do not have a default value and so **we must provide it**. Otherwise the function will not run and we won't be able to make a cake. And that would be sad.
+Each of the arguments has some allowed values. For instance, we may know how to make `type="chocolate"` or `type="red_velvet"` cake. Maybe we only allow for `flour=` to be `"plain"`, `"self-raising"`, or `"gluten-free"`. The `vegan=` and `dairy=` arguments are logical so can only take values `TRUE` or `FALSE`. Finally, `size=` is a numeric argument and should be the number of people we want the cake to feed. Notice that the last three arguments have a pre-defined default setting. So, if we do not change these, the result will be a non-vegan cake for eight people that contain dairy. The first two arguments do not have a default value and so **we must provide it**. Otherwise the function will not run and we won't be able to make a cake. And that would be sad.
 
 If we run the function `make.cake(type = "victoria", flour = "self-raising", dairy = F)`, `R` will bake us a nice lactose-free Victoria sponge that serves 8. Because we didn't change the value of the `vegan=` argument, the cake will, sadly, not be vegan[^1]. If the function is written well and allows for multiple values in the `type=` argument, maybe we can make several cakes, all with a single function call:
 
@@ -115,7 +115,7 @@ make.cake(c("victoria", "carrot"),
           servings = c(10, 5))
 ```
 
-`R` will match the first vector/value to the first argument, second vector/value to the second argument and so on. The reason why we had to name the `servings=` argument is that, if we didn't, `R` would put this 4^th^ vector/value to the 4^th^ argument -- `dairy=`. And since `dairy=` is a logical argument that only takes values of `TRUE` and `FALSE`, giving it the value of `c(5, 10)` would at best not work and at worst quietly produce an undesirable result[^2]!
+`R` will match the first vector/value to the first argument, second vector/value to the second argument and so on. The reason why we had to name the `servings=` argument is that, if we didn't, `R` would put this 4^th^ vector/value to the 4^th^ argument -- `dairy=`. And since `dairy=` is a logical argument that only takes values of `TRUE` and `FALSE`, giving it the value of `c(5, 10)` would at best not work and at worst quietly produce an undesirable result![^2]
 
 [^2]:Inasmuch as any cake can be undesirable...
 
@@ -125,7 +125,7 @@ This all means, that if we omit the `c()` and write
 make.cake(type = "victoria", "carrot", flour = "self-raising")
 ```
 
-`R` will interpret this as us wanting to only make a Victoria sponge and the `"carrot"` value will get passed to the first unnamed argument in the function. In this case, we are explicitly passing a value to the `flour =` argument, and so the first *unnamed* agrument that gets the value `"carrot"` will be `vegan =`. And again, this will result in undesirable behaviour.
+`R` will interpret this as us wanting to only make a Victoria sponge and the `"carrot"` value will get passed to the first unnamed argument in the function. In this case, we are explicitly passing a value to the `flour =` argument, and so the first *unnamed* argument that gets the value `"carrot"` will be `vegan =`. And again, this will result in undesirable behaviour.
 
 \ 
 
@@ -135,7 +135,6 @@ Let's have a look at the `filter()` function from the `dplyr` package that loads
 
 `r task()`Bring up the documentation (help file) for `dplyr::filter`.
 
-**Htin: **If there are se
 <!-- ans
 Just type `?dplyr::filter` into the *console* and press <kbd>&crarr;\ Enter</kbd> -->
 
@@ -145,28 +144,28 @@ Just type `?dplyr::filter` into the *console* and press <kbd>&crarr;\ Enter</kbd
 
 OK, so we can see that the function requires us to give it some data as the `.data` argument has no default value. The `...` is an unnamed argument that we use to specify the condition according to which we want to filter our data.
 
-For instance, if we want to only look at data from participants who are older than 22 **OR** have brown eyes, we can do this by formulation this condition as `age > 22 | eye_col == "brown"`. The complete command will then be:
+For instance, if we want to only look at data from participants who are 19 years old or younger **OR** have brown eyes, we can do this by formulation this condition as `age > 22 | eye_col == "brown"`. The complete command will then be:
 
 ```{r}
-filter(.data = my_data, age > 22 | eye_col == "brown")
+filter(.data = my_data, age <= 19 | eye_col == "brown")
 ```
 
 \ 
 
 <div class="warn">
-**Note** that when joining two or more logical expressions, *e.g.,* `age > 22` and `eye_col == "brown"` using the logical operators AND `&` and OR `|`, every constituent expression must be able to work on its own.</div>
+**Note** that when joining two or more logical expressions, *e.g.,* `age > 22` and `eye_col == "brown"` using the logical operators AND `&` and OR `|`, every constituent part must be a logical expression able to work on its own.</div>
 
-`r task()`Write a `filter` command that only gives you data for people aged between 20 and 24. The result should look like this:
+`r task()`Write a `filter` command that only gives you data for people aged between 20 and 21. The result should look like this:
 
 ```{r, echo=F}
-filter(.data = my_data, age > 20 & age < 24)
+filter(.data = my_data, age > 19 & age < 22)
 ```
 
 **Hint: **See the red box above.
 
 <!-- ans
 ```{r, eval=F}
-filter(.data = my_data, age > 20 & age < 24)
+filter(.data = my_data, age > 19 & age < 22)
 ```
 -->
 
@@ -238,7 +237,7 @@ cakes %>% make.cake(type = ., flour = "gluten-free")
 
 First of all, we created a vector containing the two kinds of cake we want to bake. Then, we took that `cakes` vector and pushed it into the `type=` argument of the `make.cake()` function. We did this explicitly using the dot `.`. The dot basically says *"whatever it is you're pushing with the pipe, put it here"*.
 
-The pipe, however, is most often used in its implicit form. If we don't include the dot, the pipe will push whatever is to the left of it into the function ot the right of it **as its first agrument**. In other words, the above can be written as:
+The pipe, however, is most often used in its implicit form. If we don't include the dot, the pipe will push whatever is to the left of it into the function of the right of it **as its first argument**. In other words, the above can be written as:
 
 ```{r, eval = F}
 cakes %>% make.cake(flour = "gluten-free")
@@ -248,7 +247,7 @@ The `type=` argument, being the first argument of the function to the right of t
 
 \ 
 
-Just to clarify, the two commands above are just a different way of swriting:
+Just to clarify, the two commands above are just a different way of writing:
 
 ```{r, eval = F}
 make.cake(type = c("chocolate", "red_velvet"),
@@ -361,7 +360,7 @@ my_data %>%
 
 Pipelines let you process your data quickly in a linear fashion. They also encourage you to analyse the task in front of you in terms of a succession of small, clearly defined steps.
 
-To conclude, let's illustrate the final point on the example of the following plot breated from `my_data`:
+To conclude, let's illustrate the final point on the example of the following plot created from `my_data`:
 
 ```{r, echo = F}
 my_data %>%
@@ -394,7 +393,7 @@ my_data %>%
   theme_classic()
 ```
 
-First three of these four steps are exactly the same thig as you did in the previous task. As for the plotting itself, that is the topic for next week's tutorial...
+First three of these four steps are exactly the same thig as what you did in the previous task. As for the plotting itself, that is the topic for next week's tutorial...
 
 `r task()`Save your script in the `r_docs` folder of your R project.
 

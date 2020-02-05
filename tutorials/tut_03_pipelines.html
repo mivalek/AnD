@@ -1263,6 +1263,1277 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
+<style type="text/css">.pagedtable {
+overflow: auto;
+padding-left: 8px;
+padding-right: 8px;
+}
+.pagedtable-wrapper {
+border: 1px solid #ccc;
+border-radius: 4px;
+margin-bottom: 10px;
+}
+.pagedtable table {
+width: 100%;
+max-width: 100%;
+margin: 0;
+}
+.pagedtable th {
+padding: 0 5px 0 5px;
+border: none;
+border-bottom: 2px solid #dddddd;
+min-width: 45px;
+}
+.pagedtable-empty th {
+display: none;
+}
+.pagedtable td {
+padding: 0 4px 0 4px;
+}
+.pagedtable .even {
+background-color: rgba(140, 140, 140, 0.1);
+}
+.pagedtable-padding-col {
+display: none;
+}
+.pagedtable a {
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.pagedtable-index-nav {
+cursor: pointer;
+padding: 0 5px 0 5px;
+float: right;
+border: 0;
+}
+.pagedtable-index-nav-disabled {
+cursor: default;
+text-decoration: none;
+color: #999;
+}
+a.pagedtable-index-nav-disabled:hover {
+text-decoration: none;
+color: #999;
+}
+.pagedtable-indexes {
+cursor: pointer;
+float: right;
+border: 0;
+}
+.pagedtable-index-current {
+cursor: default;
+text-decoration: none;
+font-weight: bold;
+color: #333;
+border: 0;
+}
+a.pagedtable-index-current:hover {
+text-decoration: none;
+font-weight: bold;
+color: #333;
+}
+.pagedtable-index {
+width: 30px;
+display: inline-block;
+text-align: center;
+border: 0;
+}
+.pagedtable-index-separator-left {
+display: inline-block;
+color: #333;
+font-size: 9px;
+padding: 0 0 0 0;
+cursor: default;
+}
+.pagedtable-index-separator-right {
+display: inline-block;
+color: #333;
+font-size: 9px;
+padding: 0 4px 0 0;
+cursor: default;
+}
+.pagedtable-footer {
+padding-top: 4px;
+padding-bottom: 5px;
+}
+.pagedtable-not-empty .pagedtable-footer {
+border-top: 2px solid #dddddd;
+}
+.pagedtable-info {
+overflow: hidden;
+color: #999;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+.pagedtable-header-name {
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.pagedtable-header-type {
+color: #999;
+font-weight: 400;
+}
+.pagedtable-na-cell {
+font-style: italic;
+opacity: 0.3;
+}
+</style>
+<script>// Production steps of ECMA-262, Edition 5, 15.4.4.18
+// Reference: http://es5.github.io/#x15.4.4.18
+if (!Array.prototype.forEach) {
+
+  Array.prototype.forEach = function(callback, thisArg) {
+
+    var T, k;
+
+    if (this === null) {
+      throw new TypeError(' this is null or not defined');
+    }
+
+    // 1. Let O be the result of calling toObject() passing the
+    // |this| value as the argument.
+    var O = Object(this);
+
+    // 2. Let lenValue be the result of calling the Get() internal
+    // method of O with the argument "length".
+    // 3. Let len be toUint32(lenValue).
+    var len = O.length >>> 0;
+
+    // 4. If isCallable(callback) is false, throw a TypeError exception.
+    // See: http://es5.github.com/#x9.11
+    if (typeof callback !== "function") {
+      throw new TypeError(callback + ' is not a function');
+    }
+
+    // 5. If thisArg was supplied, let T be thisArg; else let
+    // T be undefined.
+    if (arguments.length > 1) {
+      T = thisArg;
+    }
+
+    // 6. Let k be 0
+    k = 0;
+
+    // 7. Repeat, while k < len
+    while (k < len) {
+
+      var kValue;
+
+      // a. Let Pk be ToString(k).
+      //    This is implicit for LHS operands of the in operator
+      // b. Let kPresent be the result of calling the HasProperty
+      //    internal method of O with argument Pk.
+      //    This step can be combined with c
+      // c. If kPresent is true, then
+      if (k in O) {
+
+        // i. Let kValue be the result of calling the Get internal
+        // method of O with argument Pk.
+        kValue = O[k];
+
+        // ii. Call the Call internal method of callback with T as
+        // the this value and argument list containing kValue, k, and O.
+        callback.call(T, kValue, k, O);
+      }
+      // d. Increase k by 1.
+      k++;
+    }
+    // 8. return undefined
+  };
+}
+
+// Production steps of ECMA-262, Edition 5, 15.4.4.19
+// Reference: http://es5.github.io/#x15.4.4.19
+if (!Array.prototype.map) {
+
+  Array.prototype.map = function(callback, thisArg) {
+
+    var T, A, k;
+
+    if (this == null) {
+      throw new TypeError(' this is null or not defined');
+    }
+
+    // 1. Let O be the result of calling ToObject passing the |this|
+    //    value as the argument.
+    var O = Object(this);
+
+    // 2. Let lenValue be the result of calling the Get internal
+    //    method of O with the argument "length".
+    // 3. Let len be ToUint32(lenValue).
+    var len = O.length >>> 0;
+
+    // 4. If IsCallable(callback) is false, throw a TypeError exception.
+    // See: http://es5.github.com/#x9.11
+    if (typeof callback !== 'function') {
+      throw new TypeError(callback + ' is not a function');
+    }
+
+    // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
+    if (arguments.length > 1) {
+      T = thisArg;
+    }
+
+    // 6. Let A be a new array created as if by the expression new Array(len)
+    //    where Array is the standard built-in constructor with that name and
+    //    len is the value of len.
+    A = new Array(len);
+
+    // 7. Let k be 0
+    k = 0;
+
+    // 8. Repeat, while k < len
+    while (k < len) {
+
+      var kValue, mappedValue;
+
+      // a. Let Pk be ToString(k).
+      //   This is implicit for LHS operands of the in operator
+      // b. Let kPresent be the result of calling the HasProperty internal
+      //    method of O with argument Pk.
+      //   This step can be combined with c
+      // c. If kPresent is true, then
+      if (k in O) {
+
+        // i. Let kValue be the result of calling the Get internal
+        //    method of O with argument Pk.
+        kValue = O[k];
+
+        // ii. Let mappedValue be the result of calling the Call internal
+        //     method of callback with T as the this value and argument
+        //     list containing kValue, k, and O.
+        mappedValue = callback.call(T, kValue, k, O);
+
+        // iii. Call the DefineOwnProperty internal method of A with arguments
+        // Pk, Property Descriptor
+        // { Value: mappedValue,
+        //   Writable: true,
+        //   Enumerable: true,
+        //   Configurable: true },
+        // and false.
+
+        // In browsers that support Object.defineProperty, use the following:
+        // Object.defineProperty(A, k, {
+        //   value: mappedValue,
+        //   writable: true,
+        //   enumerable: true,
+        //   configurable: true
+        // });
+
+        // For best browser support, use the following:
+        A[k] = mappedValue;
+      }
+      // d. Increase k by 1.
+      k++;
+    }
+
+    // 9. return A
+    return A;
+  };
+}
+
+var PagedTable = function (pagedTable) {
+  var me = this;
+
+  var source = function(pagedTable) {
+    var sourceElems = [].slice.call(pagedTable.children).filter(function(e) {
+      return e.hasAttribute("data-pagedtable-source");
+    });
+
+    if (sourceElems === null || sourceElems.length !== 1) {
+      throw("A single data-pagedtable-source was not found");
+    }
+
+    return JSON.parse(sourceElems[0].innerHTML);
+  }(pagedTable);
+
+  var options = function(source) {
+    var options = typeof(source.options) !== "undefined" &&
+      source.options !== null ? source.options : {};
+
+    var columns = typeof(options.columns) !== "undefined" ? options.columns : {};
+    var rows = typeof(options.rows) !== "undefined" ? options.rows : {};
+
+    var positiveIntOrNull = function(value) {
+      return parseInt(value) >= 0 ? parseInt(value) : null;
+    };
+
+    return {
+      pages: positiveIntOrNull(options.pages),
+      rows: {
+        min: positiveIntOrNull(rows.min),
+        max: positiveIntOrNull(rows.max),
+        total: positiveIntOrNull(rows.total)
+      },
+      columns: {
+        min: positiveIntOrNull(columns.min),
+        max: positiveIntOrNull(columns.max),
+        total: positiveIntOrNull(columns.total)
+      }
+    };
+  }(source);
+
+  var Measurer = function() {
+
+    // set some default initial values that will get adjusted in runtime
+    me.measures = {
+      padding: 12,
+      character: 8,
+      height: 15,
+      defaults: true
+    };
+
+    me.calculate = function(measuresCell) {
+      if (!me.measures.defaults)
+        return;
+
+      var measuresCellStyle = window.getComputedStyle(measuresCell, null);
+
+      var newPadding = parsePadding(measuresCellStyle.paddingLeft) +
+            parsePadding(measuresCellStyle.paddingRight);
+
+      var sampleString = "ABCDEFGHIJ0123456789";
+      var newCharacter = Math.ceil(measuresCell.clientWidth / sampleString.length);
+
+      if (newPadding <= 0 || newCharacter <= 0)
+        return;
+
+      me.measures.padding = newPadding;
+      me.measures.character = newCharacter;
+      me.measures.height = measuresCell.clientHeight;
+      me.measures.defaults = false;
+    };
+
+    return me;
+  };
+
+  var Page = function(data, options) {
+    var me = this;
+
+    var defaults = {
+      max: 7,
+      rows: 10
+    };
+
+    var totalPages = function() {
+      return Math.ceil(data.length / me.rows);
+    };
+
+    me.number = 0;
+    me.max = options.pages !== null ? options.pages : defaults.max;
+    me.visible = me.max;
+    me.rows = options.rows.min !== null ? options.rows.min : defaults.rows;
+    me.total = totalPages();
+
+    me.setRows = function(newRows) {
+      me.rows = newRows;
+      me.total = totalPages();
+    };
+
+    me.setPageNumber = function(newPageNumber) {
+      if (newPageNumber < 0) newPageNumber = 0;
+      if (newPageNumber >= me.total) newPageNumber = me.total - 1;
+
+      me.number = newPageNumber;
+    };
+
+    me.setVisiblePages = function(visiblePages) {
+      me.visible = Math.min(me.max, visiblePages);
+      me.setPageNumber(me.number);
+    };
+
+    me.getVisiblePageRange = function() {
+      var start = me.number - Math.max(Math.floor((me.visible - 1) / 2), 0);
+      var end = me.number + Math.floor(me.visible / 2) + 1;
+      var pageCount = me.total;
+
+      if (start < 0) {
+        var diffToStart = 0 - start;
+        start += diffToStart;
+        end += diffToStart;
+      }
+
+      if (end > pageCount) {
+        var diffToEnd = end - pageCount;
+        start -= diffToEnd;
+        end -= diffToEnd;
+      }
+
+      start = start < 0 ? 0 : start;
+      end = end >= pageCount ? pageCount : end;
+
+      var first = false;
+      var last = false;
+
+      if (start > 0 && me.visible > 1) {
+        start = start + 1;
+        first = true;
+      }
+
+      if (end < pageCount && me.visible > 2) {
+        end = end - 1;
+        last = true;
+      }
+
+      return {
+        first: first,
+        start: start,
+        end: end,
+        last: last
+      };
+    };
+
+    me.getRowStart = function() {
+      var rowStart = page.number * page.rows;
+      if (rowStart < 0)
+        rowStart = 0;
+
+      return rowStart;
+    };
+
+    me.getRowEnd = function() {
+      var rowStart = me.getRowStart();
+      return Math.min(rowStart + me.rows, data.length);
+    };
+
+    me.getPaddingRows = function() {
+      var rowStart = me.getRowStart();
+      var rowEnd = me.getRowEnd();
+      return data.length > me.rows ? me.rows - (rowEnd - rowStart) : 0;
+    };
+  };
+
+  var Columns = function(data, columns, options) {
+    var me = this;
+
+    me.defaults = {
+      min: 5
+    };
+
+    me.number = 0;
+    me.visible = 0;
+    me.total = columns.length;
+    me.subset = [];
+    me.padding = 0;
+    me.min = options.columns.min !== null ? options.columns.min : me.defaults.min;
+    me.max = options.columns.max !== null ? options.columns.max : null;
+    me.widths = {};
+
+    var widthsLookAhead = Math.max(100, options.rows.min);
+    var paddingColChars = 10;
+
+    me.emptyNames = function() {
+      columns.forEach(function(column) {
+        if (columns.label !== null && columns.label !== "")
+          return false;
+      });
+
+      return true;
+    };
+
+    var parsePadding = function(value) {
+      return parseInt(value) >= 0 ? parseInt(value) : 0;
+    };
+
+    me.calculateWidths = function(measures) {
+      columns.forEach(function(column) {
+        var maxChars = Math.max(
+          column.label.toString().length,
+          column.type.toString().length
+        );
+
+        for (var idxRow = 0; idxRow < Math.min(widthsLookAhead, data.length); idxRow++) {
+          maxChars = Math.max(maxChars, data[idxRow][column.name.toString()].length);
+        }
+
+        me.widths[column.name] = {
+          // width in characters
+          chars: maxChars,
+          // width for the inner html columns
+          inner: maxChars * measures.character,
+          // width adding outer styles like padding
+          outer: maxChars * measures.character + measures.padding
+        };
+      });
+    };
+
+    me.getWidth = function() {
+      var widthOuter = 0;
+      for (var idxCol = 0; idxCol < me.subset.length; idxCol++) {
+        var columnName = me.subset[idxCol].name;
+        widthOuter = widthOuter + me.widths[columnName].outer;
+      }
+
+      widthOuter = widthOuter + me.padding * paddingColChars * measurer.measures.character;
+
+      if (me.hasMoreLeftColumns()) {
+        widthOuter = widthOuter + columnNavigationWidthPX + measurer.measures.padding;
+      }
+
+      if (me.hasMoreRightColumns()) {
+        widthOuter = widthOuter + columnNavigationWidthPX + measurer.measures.padding;
+      }
+
+      return widthOuter;
+    };
+
+    me.updateSlice = function() {
+      if (me.number + me.visible >= me.total)
+        me.number = me.total - me.visible;
+
+      if (me.number < 0) me.number = 0;
+
+      me.subset = columns.slice(me.number, Math.min(me.number + me.visible, me.total));
+
+      me.subset = me.subset.map(function(column) {
+        Object.keys(column).forEach(function(colKey) {
+          column[colKey] = column[colKey] === null ? "" : column[colKey].toString();
+        });
+
+        column.width = null;
+        return column;
+      });
+    };
+
+    me.setVisibleColumns = function(columnNumber, newVisibleColumns, paddingCount) {
+      me.number = columnNumber;
+      me.visible = newVisibleColumns;
+      me.padding = paddingCount;
+
+      me.updateSlice();
+    };
+
+    me.incColumnNumber = function(increment) {
+      me.number = me.number + increment;
+    };
+
+    me.setColumnNumber = function(newNumber) {
+      me.number = newNumber;
+    };
+
+    me.setPaddingCount = function(newPadding) {
+      me.padding = newPadding;
+    };
+
+    me.getPaddingCount = function() {
+      return me.padding;
+    };
+
+    me.hasMoreLeftColumns = function() {
+      return me.number > 0;
+    };
+
+    me.hasMoreRightColumns = function() {
+      return me.number + me.visible < me.total;
+    };
+
+    me.updateSlice(0);
+    return me;
+  };
+
+  var data = source.data;
+  var page = new Page(data, options);
+  var measurer = new Measurer(data, options);
+  var columns = new Columns(data, source.columns, options);
+
+  var table = null;
+  var tableDiv = null;
+  var header = null;
+  var footer = null;
+  var tbody = null;
+
+  // Caches pagedTable.clientWidth, specially for webkit
+  var cachedPagedTableClientWidth = null;
+
+  var onChangeCallbacks = [];
+
+  var clearSelection = function() {
+    if(document.selection && document.selection.empty) {
+      document.selection.empty();
+    } else if(window.getSelection) {
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+    }
+  };
+
+  var columnNavigationWidthPX = 5;
+
+  var renderColumnNavigation = function(increment, backwards) {
+    var arrow = document.createElement("div");
+    arrow.setAttribute("style",
+      "border-top: " + columnNavigationWidthPX + "px solid transparent;" +
+      "border-bottom: " + columnNavigationWidthPX + "px solid transparent;" +
+      "border-" + (backwards ? "right" : "left") + ": " + columnNavigationWidthPX + "px solid;");
+
+    var header = document.createElement("th");
+    header.appendChild(arrow);
+    header.setAttribute("style",
+      "cursor: pointer;" +
+      "vertical-align: middle;" +
+      "min-width: " + columnNavigationWidthPX + "px;" +
+      "width: " + columnNavigationWidthPX + "px;");
+
+    header.onclick = function() {
+      columns.incColumnNumber(backwards ? -1 : increment);
+
+      me.animateColumns(backwards);
+      renderFooter();
+
+      clearSelection();
+      triggerOnChange();
+    };
+
+    return header;
+  };
+
+  var maxColumnWidth = function(width) {
+    var padding = 80;
+    var columnMax = Math.max(cachedPagedTableClientWidth - padding, 0);
+
+    return parseInt(width) > 0 ?
+      Math.min(columnMax, parseInt(width)) + "px" :
+      columnMax + "px";
+  };
+
+  var clearHeader = function() {
+    var thead = pagedTable.querySelectorAll("thead")[0];
+    thead.innerHTML = "";
+  };
+
+  var renderHeader = function(clear) {
+    cachedPagedTableClientWidth = pagedTable.clientWidth;
+
+    var fragment = document.createDocumentFragment();
+
+    header = document.createElement("tr");
+    fragment.appendChild(header);
+
+    if (columns.number > 0)
+      header.appendChild(renderColumnNavigation(-columns.visible, true));
+
+    columns.subset = columns.subset.map(function(columnData) {
+      var column = document.createElement("th");
+      column.setAttribute("align", columnData.align);
+      column.style.textAlign = columnData.align;
+
+      column.style.maxWidth = maxColumnWidth(null);
+      if (columnData.width) {
+        column.style.minWidth =
+          column.style.maxWidth = maxColumnWidth(columnData.width);
+      }
+
+      var columnName = document.createElement("div");
+      columnName.setAttribute("class", "pagedtable-header-name");
+      if (columnData.label === "") {
+        columnName.innerHTML = "&nbsp;";
+      }
+      else {
+        columnName.appendChild(document.createTextNode(columnData.label));
+      }
+      column.appendChild(columnName);
+
+      var columnType = document.createElement("div");
+      columnType.setAttribute("class", "pagedtable-header-type");
+      if (columnData.type === "") {
+        columnType.innerHTML = "&nbsp;";
+      }
+      else {
+        columnType.appendChild(document.createTextNode("<" + columnData.type + ">"));
+      }
+      column.appendChild(columnType);
+
+      header.appendChild(column);
+
+      columnData.element = column;
+
+      return columnData;
+    });
+
+    for (var idx = 0; idx < columns.getPaddingCount(); idx++) {
+      var paddingCol = document.createElement("th");
+      paddingCol.setAttribute("class", "pagedtable-padding-col");
+      header.appendChild(paddingCol);
+    }
+
+    if (columns.number + columns.visible < columns.total)
+      header.appendChild(renderColumnNavigation(columns.visible, false));
+
+    if (typeof(clear) == "undefined" || clear) clearHeader();
+    var thead = pagedTable.querySelectorAll("thead")[0];
+    thead.appendChild(fragment);
+  };
+
+  me.animateColumns = function(backwards) {
+    var thead = pagedTable.querySelectorAll("thead")[0];
+
+    var headerOld = thead.querySelectorAll("tr")[0];
+    var tbodyOld = table.querySelectorAll("tbody")[0];
+
+    me.fitColumns(backwards);
+
+    renderHeader(false);
+
+    header.style.opacity = "0";
+    header.style.transform = backwards ? "translateX(-30px)" : "translateX(30px)";
+    header.style.transition = "transform 200ms linear, opacity 200ms";
+    header.style.transitionDelay = "0";
+
+    renderBody(false);
+
+    if (headerOld) {
+      headerOld.style.position = "absolute";
+      headerOld.style.transform = "translateX(0px)";
+      headerOld.style.opacity = "1";
+      headerOld.style.transition = "transform 100ms linear, opacity 100ms";
+      headerOld.setAttribute("class", "pagedtable-remove-head");
+      if (headerOld.style.transitionEnd) {
+        headerOld.addEventListener("transitionend", function() {
+          var headerOldByClass = thead.querySelector(".pagedtable-remove-head");
+          if (headerOldByClass) thead.removeChild(headerOldByClass);
+        });
+      }
+      else {
+        thead.removeChild(headerOld);
+      }
+    }
+
+    if (tbodyOld) table.removeChild(tbodyOld);
+
+    tbody.style.opacity = "0";
+    tbody.style.transition = "transform 200ms linear, opacity 200ms";
+    tbody.style.transitionDelay = "0ms";
+
+    // force relayout
+    window.getComputedStyle(header).opacity;
+    window.getComputedStyle(tbody).opacity;
+
+    if (headerOld) {
+      headerOld.style.transform = backwards ? "translateX(20px)" : "translateX(-30px)";
+      headerOld.style.opacity = "0";
+    }
+
+    header.style.transform = "translateX(0px)";
+    header.style.opacity = "1";
+
+    tbody.style.opacity = "1";
+  }
+
+  me.onChange = function(callback) {
+    onChangeCallbacks.push(callback);
+  };
+
+  var triggerOnChange = function() {
+    onChangeCallbacks.forEach(function(onChange) {
+      onChange();
+    });
+  };
+
+  var clearBody = function() {
+    if (tbody) {
+      table.removeChild(tbody);
+      tbody = null;
+    }
+  };
+
+  var renderBody = function(clear) {
+    cachedPagedTableClientWidth = pagedTable.clientWidth
+
+    var fragment = document.createDocumentFragment();
+
+    var pageData = data.slice(page.getRowStart(), page.getRowEnd());
+
+    pageData.forEach(function(dataRow, idxRow) {
+      var htmlRow = document.createElement("tr");
+      htmlRow.setAttribute("class", (idxRow % 2 !==0) ? "even" : "odd");
+
+      if (columns.hasMoreLeftColumns())
+        htmlRow.appendChild(document.createElement("td"));
+
+      columns.subset.forEach(function(columnData) {
+        var cellName = columnData.name;
+        var dataCell = dataRow[cellName];
+        var htmlCell = document.createElement("td");
+
+        if (dataCell === "NA") htmlCell.setAttribute("class", "pagedtable-na-cell");
+        if (dataCell === "__NA__") dataCell = "NA";
+
+        var cellText = document.createTextNode(dataCell);
+        htmlCell.appendChild(cellText);
+        if (dataCell.length > 50) {
+          htmlCell.setAttribute("title", dataCell);
+        }
+        htmlCell.setAttribute("align", columnData.align);
+        htmlCell.style.textAlign = columnData.align;
+        htmlCell.style.maxWidth = maxColumnWidth(null);
+        if (columnData.width) {
+          htmlCell.style.minWidth = htmlCell.style.maxWidth = maxColumnWidth(columnData.width);
+        }
+        htmlRow.appendChild(htmlCell);
+      });
+
+      for (var idx = 0; idx < columns.getPaddingCount(); idx++) {
+        var paddingCol = document.createElement("td");
+        paddingCol.setAttribute("class", "pagedtable-padding-col");
+        htmlRow.appendChild(paddingCol);
+      }
+
+      if (columns.hasMoreRightColumns())
+        htmlRow.appendChild(document.createElement("td"));
+
+      fragment.appendChild(htmlRow);
+    });
+
+    for (var idxPadding = 0; idxPadding < page.getPaddingRows(); idxPadding++) {
+      var paddingRow = document.createElement("tr");
+
+      var paddingCellRow = document.createElement("td");
+      paddingCellRow.innerHTML = "&nbsp;";
+      paddingCellRow.setAttribute("colspan", "100%");
+      paddingRow.appendChild(paddingCellRow);
+
+      fragment.appendChild(paddingRow);
+    }
+
+    if (typeof(clear) == "undefined" || clear) clearBody();
+    tbody = document.createElement("tbody");
+    tbody.appendChild(fragment);
+
+    table.appendChild(tbody);
+  };
+
+  var getLabelInfo = function() {
+    var pageStart = page.getRowStart();
+    var pageEnd = page.getRowEnd();
+    var totalRows = data.length;
+
+    var totalRowsLabel = options.rows.total ? options.rows.total : totalRows;
+    var totalRowsLabelFormat = totalRowsLabel.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+
+    var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRowsLabelFormat + " rows";
+    if (totalRows < page.rows) {
+      infoText = totalRowsLabel + " row" + (totalRows != 1 ? "s" : "");
+    }
+    if (columns.total > columns.visible) {
+      var totalColumnsLabel = options.columns.total ? options.columns.total : columns.total;
+
+      infoText = infoText + " | " + (columns.number + 1) + "-" +
+        (Math.min(columns.number + columns.visible, columns.total)) +
+        " of " + totalColumnsLabel + " columns";
+    }
+
+    return infoText;
+  };
+
+  var clearFooter = function() {
+    footer = pagedTable.querySelectorAll("div.pagedtable-footer")[0];
+    footer.innerHTML = "";
+
+    return footer;
+  };
+
+  var createPageLink = function(idxPage) {
+    var pageLink = document.createElement("a");
+    pageLinkClass = idxPage === page.number ? "pagedtable-index pagedtable-index-current" : "pagedtable-index";
+    pageLink.setAttribute("class", pageLinkClass);
+    pageLink.setAttribute("data-page-index", idxPage);
+    pageLink.onclick = function() {
+      page.setPageNumber(parseInt(this.getAttribute("data-page-index")));
+      renderBody();
+      renderFooter();
+
+      triggerOnChange();
+    };
+
+    pageLink.appendChild(document.createTextNode(idxPage + 1));
+
+    return pageLink;
+  }
+
+  var renderFooter = function() {
+    footer = clearFooter();
+
+    var next = document.createElement("a");
+    next.appendChild(document.createTextNode("Next"));
+    next.onclick = function() {
+      page.setPageNumber(page.number + 1);
+      renderBody();
+      renderFooter();
+
+      triggerOnChange();
+    };
+    if (data.length > page.rows) footer.appendChild(next);
+
+    var pageNumbers = document.createElement("div");
+    pageNumbers.setAttribute("class", "pagedtable-indexes");
+
+    var pageRange = page.getVisiblePageRange();
+
+    if (pageRange.first) {
+      var pageLink = createPageLink(0);
+      pageNumbers.appendChild(pageLink);
+
+      var pageSeparator = document.createElement("div");
+      pageSeparator.setAttribute("class", "pagedtable-index-separator-left");
+      pageSeparator.appendChild(document.createTextNode("..."))
+      pageNumbers.appendChild(pageSeparator);
+    }
+
+    for (var idxPage = pageRange.start; idxPage < pageRange.end; idxPage++) {
+      var pageLink = createPageLink(idxPage);
+
+      pageNumbers.appendChild(pageLink);
+    }
+
+    if (pageRange.last) {
+      var pageSeparator = document.createElement("div");
+      pageSeparator.setAttribute("class", "pagedtable-index-separator-right");
+      pageSeparator.appendChild(document.createTextNode("..."))
+      pageNumbers.appendChild(pageSeparator);
+
+      var pageLink = createPageLink(page.total - 1);
+      pageNumbers.appendChild(pageLink);
+    }
+
+    if (data.length > page.rows) footer.appendChild(pageNumbers);
+
+    var previous = document.createElement("a");
+    previous.appendChild(document.createTextNode("Previous"));
+    previous.onclick = function() {
+      page.setPageNumber(page.number - 1);
+      renderBody();
+      renderFooter();
+
+      triggerOnChange();
+    };
+    if (data.length > page.rows) footer.appendChild(previous);
+
+    var infoLabel = document.createElement("div");
+    infoLabel.setAttribute("class", "pagedtable-info");
+    infoLabel.setAttribute("title", getLabelInfo());
+    infoLabel.appendChild(document.createTextNode(getLabelInfo()));
+    footer.appendChild(infoLabel);
+
+    var enabledClass = "pagedtable-index-nav";
+    var disabledClass = "pagedtable-index-nav pagedtable-index-nav-disabled";
+    previous.setAttribute("class", page.number <= 0 ? disabledClass : enabledClass);
+    next.setAttribute("class", (page.number + 1) * page.rows >= data.length ? disabledClass : enabledClass);
+  };
+
+  var measuresCell = null;
+
+  var renderMeasures = function() {
+    var measuresTable = document.createElement("table");
+    measuresTable.style.visibility = "hidden";
+    measuresTable.style.position = "absolute";
+    measuresTable.style.whiteSpace = "nowrap";
+    measuresTable.style.height = "auto";
+    measuresTable.style.width = "auto";
+
+    var measuresRow = document.createElement("tr");
+    measuresTable.appendChild(measuresRow);
+
+    measuresCell = document.createElement("td");
+    var sampleString = "ABCDEFGHIJ0123456789";
+    measuresCell.appendChild(document.createTextNode(sampleString));
+
+    measuresRow.appendChild(measuresCell);
+
+    tableDiv.appendChild(measuresTable);
+  }
+
+  me.init = function() {
+    tableDiv = document.createElement("div");
+    pagedTable.appendChild(tableDiv);
+    var pagedTableClass = data.length > 0 ?
+      "pagedtable pagedtable-not-empty" :
+      "pagedtable pagedtable-empty";
+
+    if (columns.total == 0 || (columns.emptyNames() && data.length == 0)) {
+      pagedTableClass = pagedTableClass + " pagedtable-empty-columns";
+    }
+
+    tableDiv.setAttribute("class", pagedTableClass);
+
+    renderMeasures();
+    measurer.calculate(measuresCell);
+    columns.calculateWidths(measurer.measures);
+
+    table = document.createElement("table");
+    table.setAttribute("cellspacing", "0");
+    table.setAttribute("class", "table table-condensed");
+    tableDiv.appendChild(table);
+
+    table.appendChild(document.createElement("thead"));
+
+    var footerDiv = document.createElement("div");
+    footerDiv.setAttribute("class", "pagedtable-footer");
+    tableDiv.appendChild(footerDiv);
+
+    // if the host has not yet provided horizontal space, render hidden
+    if (tableDiv.clientWidth <= 0) {
+      tableDiv.style.opacity = "0";
+    }
+
+    me.render();
+
+    // retry seizing columns later if the host has not provided space
+    function retryFit() {
+      if (tableDiv.clientWidth <= 0) {
+        setTimeout(retryFit, 100);
+      } else {
+        me.render();
+        triggerOnChange();
+      }
+    }
+    if (tableDiv.clientWidth <= 0) {
+      retryFit();
+    }
+  };
+
+  var registerWidths = function() {
+    columns.subset = columns.subset.map(function(column) {
+      column.width = columns.widths[column.name].inner;
+      return column;
+    });
+  };
+
+  var parsePadding = function(value) {
+    return parseInt(value) >= 0 ? parseInt(value) : 0;
+  };
+
+  me.fixedHeight = function() {
+    return options.rows.max != null;
+  }
+
+  me.fitRows = function() {
+    if (me.fixedHeight())
+      return;
+
+    measurer.calculate(measuresCell);
+
+    var rows = options.rows.min !== null ? options.rows.min : 0;
+    var headerHeight = header !== null && header.offsetHeight > 0 ? header.offsetHeight : 0;
+    var footerHeight = footer !== null && footer.offsetHeight > 0 ? footer.offsetHeight : 0;
+
+    if (pagedTable.offsetHeight > 0) {
+      var availableHeight = pagedTable.offsetHeight - headerHeight - footerHeight;
+      rows = Math.floor((availableHeight) / measurer.measures.height);
+    }
+
+    rows = options.rows.min !== null ? Math.max(options.rows.min, rows) : rows;
+
+    page.setRows(rows);
+  }
+
+  // The goal of this function is to add as many columns as possible
+  // starting from left-to-right, when the right most limit is reached
+  // it tries to add columns from the left as well.
+  //
+  // When startBackwards is true columns are added from right-to-left
+  me.fitColumns = function(startBackwards) {
+    measurer.calculate(measuresCell);
+    columns.calculateWidths(measurer.measures);
+
+    if (tableDiv.clientWidth > 0) {
+      tableDiv.style.opacity = 1;
+    }
+
+    var visibleColumns = tableDiv.clientWidth <= 0 ? Math.max(columns.min, 1) : 1;
+    var columnNumber = columns.number;
+    var paddingCount = 0;
+
+    // track a list of added columns as we build the visible ones to allow us
+    // to remove columns when they don't fit anymore.
+    var columnHistory = [];
+
+    var lastTableHeight = 0;
+    var backwards = startBackwards;
+
+    var tableDivStyle = window.getComputedStyle(tableDiv, null);
+    var tableDivPadding = parsePadding(tableDivStyle.paddingLeft) +
+      parsePadding(tableDivStyle.paddingRight);
+
+    var addPaddingCol = false;
+    var currentWidth = 0;
+
+    while (true) {
+      columns.setVisibleColumns(columnNumber, visibleColumns, paddingCount);
+      currentWidth = columns.getWidth();
+
+      if (tableDiv.clientWidth - tableDivPadding < currentWidth) {
+        break;
+      }
+
+      columnHistory.push({
+        columnNumber: columnNumber,
+        visibleColumns: visibleColumns,
+        paddingCount: paddingCount
+      });
+
+      if (columnHistory.length > 100) {
+        console.error("More than 100 tries to fit columns, aborting");
+        break;
+      }
+
+      if (columns.max !== null &&
+        columns.visible + columns.getPaddingCount() >= columns.max) {
+        break;
+      }
+
+      // if we run out of right-columns
+      if (!backwards && columnNumber + columns.visible >= columns.total) {
+        // if we started adding right-columns, try adding left-columns
+        if (!startBackwards && columnNumber > 0) {
+          backwards = true;
+        }
+        else if (columns.min === null || visibleColumns + columns.getPaddingCount() >= columns.min) {
+          break;
+        }
+        else {
+          paddingCount = paddingCount + 1;
+        }
+      }
+
+      // if we run out of left-columns
+      if (backwards && columnNumber == 0) {
+        // if we started adding left-columns, try adding right-columns
+        if (startBackwards && columnNumber + columns.visible < columns.total) {
+          backwards = false;
+        }
+        else if (columns.min === null || visibleColumns + columns.getPaddingCount() >= columns.min) {
+          break;
+        }
+        else {
+          paddingCount = paddingCount + 1;
+        }
+      }
+
+      // when moving backwards try fitting left columns first
+      if (backwards && columnNumber > 0) {
+        columnNumber = columnNumber - 1;
+      }
+
+      if (columnNumber + visibleColumns < columns.total) {
+        visibleColumns = visibleColumns + 1;
+      }
+    }
+
+    var lastRenderableColumn = {
+        columnNumber: columnNumber,
+        visibleColumns: visibleColumns,
+        paddingCount: paddingCount
+    };
+
+    if (columnHistory.length > 0) {
+      lastRenderableColumn = columnHistory[columnHistory.length - 1];
+    }
+
+    columns.setVisibleColumns(
+      lastRenderableColumn.columnNumber,
+      lastRenderableColumn.visibleColumns,
+      lastRenderableColumn.paddingCount);
+
+    if (pagedTable.offsetWidth > 0) {
+      page.setVisiblePages(Math.max(Math.ceil(1.0 * (pagedTable.offsetWidth - 250) / 40), 2));
+    }
+
+    registerWidths();
+  };
+
+  me.fit = function(startBackwards) {
+    me.fitRows();
+    me.fitColumns(startBackwards);
+  }
+
+  me.render = function() {
+    me.fitColumns(false);
+
+    // render header/footer to measure height accurately
+    renderHeader();
+    renderFooter();
+
+    me.fitRows();
+    renderBody();
+
+    // re-render footer to match new rows
+    renderFooter();
+  }
+
+  var resizeLastWidth = -1;
+  var resizeLastHeight = -1;
+  var resizeNewWidth = -1;
+  var resizeNewHeight = -1;
+  var resizePending = false;
+
+  me.resize = function(newWidth, newHeight) {
+
+    function resizeDelayed() {
+      resizePending = false;
+
+      if (
+        (resizeNewWidth !== resizeLastWidth) ||
+        (!me.fixedHeight() && resizeNewHeight !== resizeLastHeight)
+      ) {
+        resizeLastWidth = resizeNewWidth;
+        resizeLastHeight = resizeNewHeight;
+
+        setTimeout(resizeDelayed, 200);
+        resizePending = true;
+      } else {
+        me.render();
+        triggerOnChange();
+
+        resizeLastWidth = -1;
+        resizeLastHeight = -1;
+      }
+    }
+
+    resizeNewWidth = newWidth;
+    resizeNewHeight = newHeight;
+
+    if (!resizePending) resizeDelayed();
+  };
+};
+
+var PagedTableDoc;
+(function (PagedTableDoc) {
+  var allPagedTables = [];
+
+  PagedTableDoc.initAll = function() {
+    allPagedTables = [];
+
+    var pagedTables = [].slice.call(document.querySelectorAll('[data-pagedtable="false"],[data-pagedtable=""]'));
+    pagedTables.forEach(function(pagedTable, idx) {
+      pagedTable.setAttribute("data-pagedtable", "true");
+      pagedTable.setAttribute("pagedtable-page", 0);
+      pagedTable.setAttribute("class", "pagedtable-wrapper");
+
+      var pagedTableInstance = new PagedTable(pagedTable);
+      pagedTableInstance.init();
+
+      allPagedTables.push(pagedTableInstance);
+    });
+  };
+
+  PagedTableDoc.resizeAll = function() {
+    allPagedTables.forEach(function(pagedTable) {
+      pagedTable.render();
+    });
+  };
+
+  window.addEventListener("resize", PagedTableDoc.resizeAll);
+
+  return PagedTableDoc;
+})(PagedTableDoc || (PagedTableDoc = {}));
+
+window.onload = function() {
+  PagedTableDoc.initAll();
+};
+</script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -1576,25 +2847,25 @@ div.tocify {
 --theme-col: 179, 142, 210;
 }
 </style>
-<p>In this tutorial, we will take a closer look at pipes (<code>%&gt;%</code>), tidyverse functions, and at combining these to create command pipelines.</p>
+<p>In this tutorial, we will take a closer look at pipes (<code>%&gt;%</code>), <code>tidyverse</code> functions, and at combining these to create command pipelines.</p>
 <div id="setting-up" class="section level1">
 <h1>Setting up</h1>
 <p>All you need for this tutorial is this file and open RStudio. It’s best to have both open in maximised windows, not side-by-side. Remember that you can quickly switch between two last used windows using the <kbd>Alt</kbd> + <kbd>↹ Tab</kbd> (Windows) or <kbd>⌘ Command</kbd> + <kbd>⇥ Tab</kbd> (Mac OS) shortcut.</p>
 <div class="solText">
 <h4 id="note-on-code-in-the-tutorial">Note on code in the tutorial</h4>
-<p>You can reveal the code under each task. The point of this tutorial is not to torment you with tasks you cannot do. However, you are strongly encouraged not to reach straight for the answer. Try to complete the task yourself: write the code in your script, run it, see if it works. If it doesn’t, try again. Only reveal the solution if you’re stuck or if you want to check your own solution.</p>
+<p>You can reveal the solution to each task by clicking on the “Solution” button. The point of this tutorial is not to torment you with tasks you cannot do. However, you are strongly encouraged not to reach straight for the answer. Try to complete the task yourself: write the code in your script, run it, see if it works. If it doesn’t, try again. Only reveal the solution if you’re stuck or if you want to check your own solution.</p>
 </div>
 <p> </p>
 <div id="task-1" class="section level3">
 <h3>Task 1</h3>
-<p>Open your analysing_data R project in RStudio and open a new R script. Here is where you can write solution code for the tasks.</p>
+<p>Open your analysing_data <code>R</code> project in RStudio and open a new <code>R</code> script. Here is where you can write solution code for the tasks.</p>
 <p> </p>
 </div>
 <div id="task-2" class="section level3">
 <h3>Task 2</h3>
 <p>The only package you will need to load to complete this tutorial is <code>tidyverse</code>. Load it now.</p>
 <details>
-<p><summary>See answer</summary></p>
+<p><summary>Solution</summary></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
 </details>
 <p>Now, let’s create data we can work with. We can just use the code that creates the data from last practical .Rmd file.</p>
@@ -1627,7 +2898,7 @@ div.tocify {
 <h3>Task 4</h3>
 <p>Run this code to create the data set and look at it to familiarise yourself with it.</p>
 <details>
-<summary>See answer</summary> There are several ways of looking at data. The basic one is just to type the name of the dataset into the <em>console</em> and pressing <kbd>↵ Enter</kbd>
+<summary>Solution</summary> There are several ways of looking at data. The basic one is just to type the name of the dataset into the <em>console</em> and pressing <kbd>↵ Enter</kbd>
 </details>
 <p> </p>
 <p>OK, now that everything is set up, let’s get going!</p>
@@ -1652,7 +2923,7 @@ div.tocify {
   make recipe for a standard [type] cake * [servings]
   
 }</code></pre>
-<p>Each of the arguments has some allowed values. For instance, we may know how to make <code>type=&quot;chocolate&quot;</code> or <code>type=&quot;red_velvet&quot;</code> cake. Maybe we only allow for <code>flour=</code> to be <code>&quot;plain&quot;</code>, <code>&quot;self-raising&quot;</code>, or <code>&quot;gluten-free&quot;</code>. The <code>vegan=</code> and <code>dairy=</code> arguments are logical so can only take values <code>TRUE</code> or <code>FALSE</code>. Finally, <code>size=</code> is a numeric argument and should be the number of people we want the cake to feed. Notice that the last three arguments have a pre-defined default setting. So, if we do not change these, the result will be a non-vegan cake for 8 people that containg dairy. The first two arguments do not have a default value and so <strong>we must provide it</strong>. Otherwise the function will not run and we won’t be able to make a cake. And that would be sad.</p>
+<p>Each of the arguments has some allowed values. For instance, we may know how to make <code>type=&quot;chocolate&quot;</code> or <code>type=&quot;red_velvet&quot;</code> cake. Maybe we only allow for <code>flour=</code> to be <code>&quot;plain&quot;</code>, <code>&quot;self-raising&quot;</code>, or <code>&quot;gluten-free&quot;</code>. The <code>vegan=</code> and <code>dairy=</code> arguments are logical so can only take values <code>TRUE</code> or <code>FALSE</code>. Finally, <code>size=</code> is a numeric argument and should be the number of people we want the cake to feed. Notice that the last three arguments have a pre-defined default setting. So, if we do not change these, the result will be a non-vegan cake for eight people that contain dairy. The first two arguments do not have a default value and so <strong>we must provide it</strong>. Otherwise the function will not run and we won’t be able to make a cake. And that would be sad.</p>
 <p>If we run the function <code>make.cake(type = &quot;victoria&quot;, flour = &quot;self-raising&quot;, dairy = F)</code>, <code>R</code> will bake us a nice lactose-free Victoria sponge that serves 8. Because we didn’t change the value of the <code>vegan=</code> argument, the cake will, sadly, not be vegan<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. If the function is written well and allows for multiple values in the <code>type=</code> argument, maybe we can make several cakes, all with a single function call:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">make.cake</span>(<span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;victoria&quot;</span>, <span class="st">&quot;carrot&quot;</span>),</a>
 <a class="sourceLine" id="cb4-2" title="2">          <span class="dt">flour =</span> <span class="st">&quot;self-raising&quot;</span>,</a>
@@ -1664,10 +2935,10 @@ div.tocify {
 <a class="sourceLine" id="cb5-2" title="2">          <span class="st">&quot;self-raising&quot;</span>,</a>
 <a class="sourceLine" id="cb5-3" title="3">          <span class="kw">c</span>(F, T),</a>
 <a class="sourceLine" id="cb5-4" title="4">          <span class="dt">servings =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">5</span>))</a></code></pre></div>
-<p><code>R</code> will match the first vector/value to the first argument, second vector/value to the second argument and so on. The reason why we had to name the <code>servings=</code> argument is that, if we didn’t, <code>R</code> would put this 4<sup>th</sup> vector/value to the 4<sup>th</sup> argument – <code>dairy=</code>. And since <code>dairy=</code> is a logical argument that only takes values of <code>TRUE</code> and <code>FALSE</code>, giving it the value of <code>c(5, 10)</code> would at best not work and at worst quietly produce an undesirable result<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>!</p>
+<p><code>R</code> will match the first vector/value to the first argument, second vector/value to the second argument and so on. The reason why we had to name the <code>servings=</code> argument is that, if we didn’t, <code>R</code> would put this 4<sup>th</sup> vector/value to the 4<sup>th</sup> argument – <code>dairy=</code>. And since <code>dairy=</code> is a logical argument that only takes values of <code>TRUE</code> and <code>FALSE</code>, giving it the value of <code>c(5, 10)</code> would at best not work and at worst quietly produce an undesirable result!<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>This all means, that if we omit the <code>c()</code> and write</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">make.cake</span>(<span class="dt">type =</span> <span class="st">&quot;victoria&quot;</span>, <span class="st">&quot;carrot&quot;</span>, <span class="dt">flour =</span> <span class="st">&quot;self-raising&quot;</span>)</a></code></pre></div>
-<p><code>R</code> will interpret this as us wanting to only make a Victoria sponge and the <code>&quot;carrot&quot;</code> value will get passed to the first unnamed argument in the function. In this case, we are explicitly passing a value to the <code>flour =</code> argument, and so the first <em>unnamed</em> agrument that gets the value <code>&quot;carrot&quot;</code> will be <code>vegan =</code>. And again, this will result in undesirable behaviour.</p>
+<p><code>R</code> will interpret this as us wanting to only make a Victoria sponge and the <code>&quot;carrot&quot;</code> value will get passed to the first unnamed argument in the function. In this case, we are explicitly passing a value to the <code>flour =</code> argument, and so the first <em>unnamed</em> argument that gets the value <code>&quot;carrot&quot;</code> will be <code>vegan =</code>. And again, this will result in undesirable behaviour.</p>
 <p> </p>
 <p><code>make.cake()</code> is, sadly, not an actual function but real <code>R</code> functions work <strong>exactly</strong> according to these principles. If you want to know what arguments a function accepts and how they are used, and what default values they have, you can always type <code>?name.of.function</code> <em>into the console</em> and press <kbd>↵ Enter</kbd>. This will bring up the documentation for the function in your Files/Plots/Packages/Help/Viewer pane of RStudio (lower right by default).</p>
 <p>Let’s have a look at the <code>filter()</code> function from the <code>dplyr</code> package that loads as part of <code>tidyverse</code>:</p>
@@ -1675,76 +2946,48 @@ div.tocify {
 <div id="task-5" class="section level3">
 <h3>Task 5</h3>
 <p>Bring up the documentation (help file) for <code>dplyr::filter</code>.</p>
-<strong>Htin: </strong>If there are se
 <details>
-<summary>See answer</summary> Just type <code>?dplyr::filter</code> into the <em>console</em> and press <kbd>↵ Enter</kbd>
+<summary>Solution</summary> Just type <code>?dplyr::filter</code> into the <em>console</em> and press <kbd>↵ Enter</kbd>
 </details>
 <p> </p>
 <p> </p>
 <p>OK, so we can see that the function requires us to give it some data as the <code>.data</code> argument has no default value. The <code>...</code> is an unnamed argument that we use to specify the condition according to which we want to filter our data.</p>
-<p>For instance, if we want to only look at data from participants who are older than 22 <strong>OR</strong> have brown eyes, we can do this by formulation this condition as <code>age &gt; 22 | eye_col == &quot;brown&quot;</code>. The complete command will then be:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">filter</span>(<span class="dt">.data =</span> my_data, age <span class="op">&gt;</span><span class="st"> </span><span class="dv">22</span> <span class="op">|</span><span class="st"> </span>eye_col <span class="op">==</span><span class="st"> &quot;brown&quot;</span>)</a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="co"># A tibble: 56 x 3</span></a>
-<a class="sourceLine" id="cb7-3" title="3">      id   age eye_col</a>
-<a class="sourceLine" id="cb7-4" title="4">   <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st"> </span><span class="dv">1</span>  <span class="dv">1725</span>    <span class="dv">20</span> brown  </a>
-<a class="sourceLine" id="cb7-6" title="6"> <span class="dv">2</span>  <span class="dv">1381</span>    <span class="dv">20</span> brown  </a>
-<a class="sourceLine" id="cb7-7" title="7"> <span class="dv">3</span>  <span class="dv">1362</span>    <span class="dv">19</span> brown  </a>
-<a class="sourceLine" id="cb7-8" title="8"> <span class="dv">4</span>  <span class="dv">1688</span>    <span class="dv">21</span> brown  </a>
-<a class="sourceLine" id="cb7-9" title="9"> <span class="dv">5</span>  <span class="dv">1338</span>    <span class="dv">20</span> brown  </a>
-<a class="sourceLine" id="cb7-10" title="10"> <span class="dv">6</span>  <span class="dv">1435</span>    <span class="dv">21</span> brown  </a>
-<a class="sourceLine" id="cb7-11" title="11"> <span class="dv">7</span>  <span class="dv">1379</span>    <span class="dv">18</span> brown  </a>
-<a class="sourceLine" id="cb7-12" title="12"> <span class="dv">8</span>  <span class="dv">1467</span>    <span class="dv">21</span> brown  </a>
-<a class="sourceLine" id="cb7-13" title="13"> <span class="dv">9</span>  <span class="dv">1842</span>    <span class="dv">22</span> brown  </a>
-<a class="sourceLine" id="cb7-14" title="14"><span class="dv">10</span>  <span class="dv">1444</span>    <span class="dv">19</span> brown  </a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="co"># ... with 46 more rows</span></a></code></pre></div>
+<p>For instance, if we want to only look at data from participants who are 19 years old or younger <strong>OR</strong> have brown eyes, we can do this by formulation this condition as <code>age &gt; 22 | eye_col == &quot;brown&quot;</code>. The complete command will then be:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">filter</span>(<span class="dt">.data =</span> my_data, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">19</span> <span class="op">|</span><span class="st"> </span>eye_col <span class="op">==</span><span class="st"> &quot;brown&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["eye_col"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1193","2":"18","3":"blue"},{"1":"1872","2":"20","3":"brown"},{"1":"1256","2":"22","3":"brown"},{"1":"1706","2":"19","3":"blue"},{"1":"1461","2":"18","3":"brown"},{"1":"1800","2":"22","3":"brown"},{"1":"1028","2":"20","3":"brown"},{"1":"1018","2":"21","3":"brown"},{"1":"1446","2":"18","3":"brown"},{"1":"1198","2":"19","3":"brown"},{"1":"1835","2":"21","3":"brown"},{"1":"1492","2":"22","3":"brown"},{"1":"1480","2":"20","3":"brown"},{"1":"1937","2":"19","3":"brown"},{"1":"1683","2":"21","3":"brown"},{"1":"1831","2":"19","3":"blue"},{"1":"1810","2":"18","3":"blue"},{"1":"1834","2":"18","3":"brown"},{"1":"1121","2":"18","3":"grey"},{"1":"1073","2":"20","3":"brown"},{"1":"1711","2":"18","3":"blue"},{"1":"1246","2":"21","3":"brown"},{"1":"1641","2":"18","3":"brown"},{"1":"1890","2":"19","3":"grey"},{"1":"1238","2":"18","3":"brown"},{"1":"1990","2":"20","3":"brown"},{"1":"1436","2":"18","3":"blue"},{"1":"1714","2":"22","3":"brown"},{"1":"1414","2":"21","3":"brown"},{"1":"1265","2":"18","3":"blue"},{"1":"1627","2":"21","3":"brown"},{"1":"1652","2":"19","3":"brown"},{"1":"1337","2":"20","3":"brown"},{"1":"1335","2":"21","3":"brown"},{"1":"1837","2":"21","3":"brown"},{"1":"1719","2":"21","3":"brown"},{"1":"1402","2":"20","3":"brown"},{"1":"1290","2":"18","3":"brown"},{"1":"1448","2":"21","3":"brown"},{"1":"1603","2":"19","3":"brown"},{"1":"1536","2":"19","3":"grey"},{"1":"1257","2":"18","3":"brown"},{"1":"1942","2":"22","3":"brown"},{"1":"1836","2":"19","3":"brown"},{"1":"1267","2":"18","3":"blue"},{"1":"1214","2":"19","3":"brown"},{"1":"1621","2":"18","3":"green"},{"1":"1208","2":"20","3":"brown"},{"1":"1058","2":"20","3":"brown"},{"1":"1217","2":"21","3":"brown"},{"1":"1832","2":"19","3":"blue"},{"1":"1007","2":"19","3":"blue"},{"1":"1848","2":"22","3":"brown"},{"1":"1955","2":"19","3":"brown"},{"1":"1032","2":"18","3":"brown"},{"1":"1192","2":"22","3":"brown"},{"1":"1701","2":"19","3":"blue"},{"1":"1765","2":"21","3":"brown"},{"1":"1577","2":"18","3":"brown"},{"1":"1867","2":"21","3":"brown"},{"1":"1631","2":"19","3":"blue"},{"1":"1126","2":"18","3":"brown"},{"1":"1615","2":"19","3":"brown"},{"1":"1467","2":"20","3":"brown"},{"1":"1570","2":"22","3":"brown"},{"1":"1190","2":"22","3":"brown"},{"1":"1675","2":"19","3":"grey"},{"1":"1010","2":"18","3":"brown"},{"1":"1284","2":"19","3":"blue"},{"1":"1838","2":"18","3":"brown"},{"1":"1298","2":"19","3":"blue"},{"1":"1066","2":"18","3":"brown"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p> </p>
 <div class="warn">
-<strong>Note</strong> that when joining two or more logical expressions, <em>e.g.,</em> <code>age &gt; 22</code> and <code>eye_col == &quot;brown&quot;</code> using the logical operators AND <code>&amp;</code> and OR <code>|</code>, every constituent expression must be able to work on its own.
+<strong>Note</strong> that when joining two or more logical expressions, <em>e.g.,</em> <code>age &gt; 22</code> and <code>eye_col == &quot;brown&quot;</code> using the logical operators AND <code>&amp;</code> and OR <code>|</code>, every constituent part must be a logical expression able to work on its own.
 </div>
 <p> </p>
 </div>
 <div id="task-6" class="section level3">
 <h3>Task 6</h3>
-<p>Write a <code>filter</code> command that only gives you data for people aged between 20 and 24. The result should look like this:</p>
-<pre><code># A tibble: 42 x 3
-      id   age eye_col
-   &lt;int&gt; &lt;int&gt; &lt;chr&gt;  
- 1  1688    21 brown  
- 2  1646    21 blue   
- 3  1435    21 brown  
- 4  1467    21 brown  
- 5  1842    22 brown  
- 6  1498    21 blue   
- 7  1178    21 blue   
- 8  1370    21 brown  
- 9  1747    21 brown  
-10  1741    21 brown  
-# ... with 32 more rows</code></pre>
+<p>Write a <code>filter</code> command that only gives you data for people aged between 20 and 21. The result should look like this:</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["eye_col"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1872","2":"20","3":"brown"},{"1":"1028","2":"20","3":"brown"},{"1":"1018","2":"21","3":"brown"},{"1":"1835","2":"21","3":"brown"},{"1":"1480","2":"20","3":"brown"},{"1":"1683","2":"21","3":"brown"},{"1":"1647","2":"21","3":"blue"},{"1":"1073","2":"20","3":"brown"},{"1":"1246","2":"21","3":"brown"},{"1":"1517","2":"20","3":"green"},{"1":"1990","2":"20","3":"brown"},{"1":"1414","2":"21","3":"brown"},{"1":"1627","2":"21","3":"brown"},{"1":"1337","2":"20","3":"brown"},{"1":"1335","2":"21","3":"brown"},{"1":"1430","2":"21","3":"blue"},{"1":"1837","2":"21","3":"brown"},{"1":"1030","2":"21","3":"grey"},{"1":"1392","2":"21","3":"blue"},{"1":"1719","2":"21","3":"brown"},{"1":"1402","2":"20","3":"brown"},{"1":"1115","2":"20","3":"grey"},{"1":"1448","2":"21","3":"brown"},{"1":"1744","2":"20","3":"blue"},{"1":"1849","2":"20","3":"blue"},{"1":"1454","2":"20","3":"blue"},{"1":"1208","2":"20","3":"brown"},{"1":"1058","2":"20","3":"brown"},{"1":"1217","2":"21","3":"brown"},{"1":"1732","2":"20","3":"blue"},{"1":"1097","2":"21","3":"green"},{"1":"1474","2":"21","3":"grey"},{"1":"1765","2":"21","3":"brown"},{"1":"1867","2":"21","3":"brown"},{"1":"1531","2":"20","3":"green"},{"1":"1467","2":"20","3":"brown"},{"1":"1666","2":"21","3":"grey"},{"1":"1378","2":"20","3":"blue"},{"1":"1961","2":"21","3":"green"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p><strong>Hint: </strong>See the red box above.</p>
 <details>
-<p><summary>See answer</summary></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">filter</span>(<span class="dt">.data =</span> my_data, age <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span> <span class="op">&amp;</span><span class="st"> </span>age <span class="op">&lt;</span><span class="st"> </span><span class="dv">24</span>)</a></code></pre></div>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">filter</span>(<span class="dt">.data =</span> my_data, age <span class="op">&gt;</span><span class="st"> </span><span class="dv">19</span> <span class="op">&amp;</span><span class="st"> </span>age <span class="op">&lt;</span><span class="st"> </span><span class="dv">22</span>)</a></code></pre></div>
 </details>
 <p> </p>
 <p>The <code>mutate()</code> function is works on the same principle and is used for manipulation existing variables or creating new ones. Let’s say, we want to turn the <code>eye_col</code> variable into a factor and also create a column of <em>z</em>-score<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> of age. We can use <code>mutate()</code> along with <code>factor()</code> and <code>scale()</code>, the latter of which calculates the <em>z</em>-score:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">mutate</span>(<span class="dt">.data =</span> my_data,</a>
-<a class="sourceLine" id="cb10-2" title="2">       <span class="dt">eye_col =</span> <span class="kw">factor</span>(eye_col), <span class="co"># turn eye_col into a factor of itself</span></a>
-<a class="sourceLine" id="cb10-3" title="3">       <span class="dt">age_z =</span> <span class="kw">scale</span>(age)) <span class="co"># create new variable age_z</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="co"># A tibble: 100 x 4</span></a>
-<a class="sourceLine" id="cb10-5" title="5">      id   age eye_col age_z[,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb10-6" title="6">   <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>fct<span class="op">&gt;</span><span class="st">       </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="st"> </span><span class="dv">1</span>  <span class="dv">1725</span>    <span class="dv">20</span> brown     <span class="fl">-0.0756</span></a>
-<a class="sourceLine" id="cb10-8" title="8"> <span class="dv">2</span>  <span class="dv">1381</span>    <span class="dv">20</span> brown     <span class="fl">-0.0756</span></a>
-<a class="sourceLine" id="cb10-9" title="9"> <span class="dv">3</span>  <span class="dv">1337</span>    <span class="dv">20</span> green     <span class="fl">-0.0756</span></a>
-<a class="sourceLine" id="cb10-10" title="10"> <span class="dv">4</span>  <span class="dv">1488</span>    <span class="dv">18</span> blue      <span class="fl">-1.59</span>  </a>
-<a class="sourceLine" id="cb10-11" title="11"> <span class="dv">5</span>  <span class="dv">1558</span>    <span class="dv">19</span> blue      <span class="fl">-0.832</span> </a>
-<a class="sourceLine" id="cb10-12" title="12"> <span class="dv">6</span>  <span class="dv">1707</span>    <span class="dv">18</span> grey      <span class="fl">-1.59</span>  </a>
-<a class="sourceLine" id="cb10-13" title="13"> <span class="dv">7</span>  <span class="dv">1362</span>    <span class="dv">19</span> brown     <span class="fl">-0.832</span> </a>
-<a class="sourceLine" id="cb10-14" title="14"> <span class="dv">8</span>  <span class="dv">1688</span>    <span class="dv">21</span> brown      <span class="fl">0.681</span> </a>
-<a class="sourceLine" id="cb10-15" title="15"> <span class="dv">9</span>  <span class="dv">1646</span>    <span class="dv">21</span> blue       <span class="fl">0.681</span> </a>
-<a class="sourceLine" id="cb10-16" title="16"><span class="dv">10</span>  <span class="dv">1338</span>    <span class="dv">20</span> brown     <span class="fl">-0.0756</span></a>
-<a class="sourceLine" id="cb10-17" title="17"><span class="co"># ... with 90 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">mutate</span>(<span class="dt">.data =</span> my_data,</a>
+<a class="sourceLine" id="cb9-2" title="2">       <span class="dt">eye_col =</span> <span class="kw">factor</span>(eye_col), <span class="co"># turn eye_col into a factor of itself</span></a>
+<a class="sourceLine" id="cb9-3" title="3">       <span class="dt">age_z =</span> <span class="kw">scale</span>(age)) <span class="co"># create new variable age_z</span></a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["eye_col"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["age_z"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1193","2":"18","3":"blue","4":"-1.39373133"},{"1":"1872","2":"20","3":"brown","4":"-0.01379932"},{"1":"1256","2":"22","3":"brown","4":"1.36613269"},{"1":"1154","2":"22","3":"blue","4":"1.36613269"},{"1":"1706","2":"19","3":"blue","4":"-0.70376532"},{"1":"1461","2":"18","3":"brown","4":"-1.39373133"},{"1":"1800","2":"22","3":"brown","4":"1.36613269"},{"1":"1028","2":"20","3":"brown","4":"-0.01379932"},{"1":"1018","2":"21","3":"brown","4":"0.67616668"},{"1":"1446","2":"18","3":"brown","4":"-1.39373133"},{"1":"1198","2":"19","3":"brown","4":"-0.70376532"},{"1":"1835","2":"21","3":"brown","4":"0.67616668"},{"1":"1088","2":"22","3":"grey","4":"1.36613269"},{"1":"1492","2":"22","3":"brown","4":"1.36613269"},{"1":"1480","2":"20","3":"brown","4":"-0.01379932"},{"1":"1937","2":"19","3":"brown","4":"-0.70376532"},{"1":"1683","2":"21","3":"brown","4":"0.67616668"},{"1":"1647","2":"21","3":"blue","4":"0.67616668"},{"1":"1831","2":"19","3":"blue","4":"-0.70376532"},{"1":"1810","2":"18","3":"blue","4":"-1.39373133"},{"1":"1286","2":"22","3":"blue","4":"1.36613269"},{"1":"1834","2":"18","3":"brown","4":"-1.39373133"},{"1":"1121","2":"18","3":"grey","4":"-1.39373133"},{"1":"1073","2":"20","3":"brown","4":"-0.01379932"},{"1":"1711","2":"18","3":"blue","4":"-1.39373133"},{"1":"1213","2":"22","3":"blue","4":"1.36613269"},{"1":"1246","2":"21","3":"brown","4":"0.67616668"},{"1":"1517","2":"20","3":"green","4":"-0.01379932"},{"1":"1641","2":"18","3":"brown","4":"-1.39373133"},{"1":"1890","2":"19","3":"grey","4":"-0.70376532"},{"1":"1238","2":"18","3":"brown","4":"-1.39373133"},{"1":"1990","2":"20","3":"brown","4":"-0.01379932"},{"1":"1436","2":"18","3":"blue","4":"-1.39373133"},{"1":"1714","2":"22","3":"brown","4":"1.36613269"},{"1":"1033","2":"22","3":"blue","4":"1.36613269"},{"1":"1414","2":"21","3":"brown","4":"0.67616668"},{"1":"1265","2":"18","3":"blue","4":"-1.39373133"},{"1":"1627","2":"21","3":"brown","4":"0.67616668"},{"1":"1652","2":"19","3":"brown","4":"-0.70376532"},{"1":"1337","2":"20","3":"brown","4":"-0.01379932"},{"1":"1335","2":"21","3":"brown","4":"0.67616668"},{"1":"1430","2":"21","3":"blue","4":"0.67616668"},{"1":"1837","2":"21","3":"brown","4":"0.67616668"},{"1":"1767","2":"22","3":"green","4":"1.36613269"},{"1":"1030","2":"21","3":"grey","4":"0.67616668"},{"1":"1392","2":"21","3":"blue","4":"0.67616668"},{"1":"1719","2":"21","3":"brown","4":"0.67616668"},{"1":"1402","2":"20","3":"brown","4":"-0.01379932"},{"1":"1290","2":"18","3":"brown","4":"-1.39373133"},{"1":"1115","2":"20","3":"grey","4":"-0.01379932"},{"1":"1448","2":"21","3":"brown","4":"0.67616668"},{"1":"1603","2":"19","3":"brown","4":"-0.70376532"},{"1":"1536","2":"19","3":"grey","4":"-0.70376532"},{"1":"1871","2":"22","3":"blue","4":"1.36613269"},{"1":"1257","2":"18","3":"brown","4":"-1.39373133"},{"1":"1820","2":"22","3":"blue","4":"1.36613269"},{"1":"1744","2":"20","3":"blue","4":"-0.01379932"},{"1":"1942","2":"22","3":"brown","4":"1.36613269"},{"1":"1836","2":"19","3":"brown","4":"-0.70376532"},{"1":"1267","2":"18","3":"blue","4":"-1.39373133"},{"1":"1849","2":"20","3":"blue","4":"-0.01379932"},{"1":"1454","2":"20","3":"blue","4":"-0.01379932"},{"1":"1214","2":"19","3":"brown","4":"-0.70376532"},{"1":"1621","2":"18","3":"green","4":"-1.39373133"},{"1":"1208","2":"20","3":"brown","4":"-0.01379932"},{"1":"1058","2":"20","3":"brown","4":"-0.01379932"},{"1":"1217","2":"21","3":"brown","4":"0.67616668"},{"1":"1832","2":"19","3":"blue","4":"-0.70376532"},{"1":"1007","2":"19","3":"blue","4":"-0.70376532"},{"1":"1053","2":"22","3":"grey","4":"1.36613269"},{"1":"1732","2":"20","3":"blue","4":"-0.01379932"},{"1":"1681","2":"22","3":"grey","4":"1.36613269"},{"1":"1848","2":"22","3":"brown","4":"1.36613269"},{"1":"1097","2":"21","3":"green","4":"0.67616668"},{"1":"1955","2":"19","3":"brown","4":"-0.70376532"},{"1":"1474","2":"21","3":"grey","4":"0.67616668"},{"1":"1226","2":"22","3":"green","4":"1.36613269"},{"1":"1032","2":"18","3":"brown","4":"-1.39373133"},{"1":"1192","2":"22","3":"brown","4":"1.36613269"},{"1":"1701","2":"19","3":"blue","4":"-0.70376532"},{"1":"1765","2":"21","3":"brown","4":"0.67616668"},{"1":"1577","2":"18","3":"brown","4":"-1.39373133"},{"1":"1867","2":"21","3":"brown","4":"0.67616668"},{"1":"1531","2":"20","3":"green","4":"-0.01379932"},{"1":"1631","2":"19","3":"blue","4":"-0.70376532"},{"1":"1126","2":"18","3":"brown","4":"-1.39373133"},{"1":"1566","2":"22","3":"grey","4":"1.36613269"},{"1":"1615","2":"19","3":"brown","4":"-0.70376532"},{"1":"1467","2":"20","3":"brown","4":"-0.01379932"},{"1":"1570","2":"22","3":"brown","4":"1.36613269"},{"1":"1190","2":"22","3":"brown","4":"1.36613269"},{"1":"1675","2":"19","3":"grey","4":"-0.70376532"},{"1":"1666","2":"21","3":"grey","4":"0.67616668"},{"1":"1010","2":"18","3":"brown","4":"-1.39373133"},{"1":"1284","2":"19","3":"blue","4":"-0.70376532"},{"1":"1378","2":"20","3":"blue","4":"-0.01379932"},{"1":"1838","2":"18","3":"brown","4":"-1.39373133"},{"1":"1298","2":"19","3":"blue","4":"-0.70376532"},{"1":"1066","2":"18","3":"brown","4":"-1.39373133"},{"1":"1961","2":"21","3":"green","4":"0.67616668"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p> </p>
 </div>
 <div id="task-7" class="section level3">
@@ -1752,35 +2995,26 @@ div.tocify {
 <p>Run the command above, saving its output back into <code>my_data2</code> using the assignment operator <code>&lt;-</code>. Then create a new variable <code>age_z_abs</code> with the absolute value of the <em>z</em>-score.</p>
 <p><strong>Hint: </strong>If you don’t know <em>how to calculate absolute value in R</em> look up the italicised phrase on the Internet.</p>
 <details>
-<p><summary>See answer</summary></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">my_data2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">.data =</span> my_data,</a>
-<a class="sourceLine" id="cb11-2" title="2">                  <span class="dt">eye_col =</span> <span class="kw">factor</span>(eye_col),</a>
-<a class="sourceLine" id="cb11-3" title="3">                  <span class="dt">age_z =</span> <span class="kw">scale</span>(age))</a>
-<a class="sourceLine" id="cb11-4" title="4"></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="kw">mutate</span>(my_data, <span class="dt">age_z_abs =</span> <span class="kw">abs</span>(age_z))</a></code></pre></div>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">my_data2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">.data =</span> my_data,</a>
+<a class="sourceLine" id="cb10-2" title="2">                  <span class="dt">eye_col =</span> <span class="kw">factor</span>(eye_col),</a>
+<a class="sourceLine" id="cb10-3" title="3">                  <span class="dt">age_z =</span> <span class="kw">scale</span>(age))</a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="kw">mutate</span>(my_data, <span class="dt">age_z_abs =</span> <span class="kw">abs</span>(age_z))</a></code></pre></div>
 </details>
 <p>You want to see something like this:</p>
-<pre><code># A tibble: 100 x 5
-      id   age eye_col age_z[,1] age_z_abs[,1]
-   &lt;int&gt; &lt;int&gt; &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;
- 1  1725    20 brown     -0.0756        0.0756
- 2  1381    20 brown     -0.0756        0.0756
- 3  1337    20 green     -0.0756        0.0756
- 4  1488    18 blue      -1.59          1.59  
- 5  1558    19 blue      -0.832         0.832 
- 6  1707    18 grey      -1.59          1.59  
- 7  1362    19 brown     -0.832         0.832 
- 8  1688    21 brown      0.681         0.681 
- 9  1646    21 blue       0.681         0.681 
-10  1338    20 brown     -0.0756        0.0756
-# ... with 90 more rows</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["eye_col"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["age_z"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["age_z_abs"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1193","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1872","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1256","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1154","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1706","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1461","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1800","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1028","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1018","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1446","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1198","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1835","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1088","2":"22","3":"grey","4":"1.36613269","5":"1.36613269"},{"1":"1492","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1480","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1937","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1683","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1647","2":"21","3":"blue","4":"0.67616668","5":"0.67616668"},{"1":"1831","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1810","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1286","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1834","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1121","2":"18","3":"grey","4":"-1.39373133","5":"1.39373133"},{"1":"1073","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1711","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1213","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1246","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1517","2":"20","3":"green","4":"-0.01379932","5":"0.01379932"},{"1":"1641","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1890","2":"19","3":"grey","4":"-0.70376532","5":"0.70376532"},{"1":"1238","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1990","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1436","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1714","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1033","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1414","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1265","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1627","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1652","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1337","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1335","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1430","2":"21","3":"blue","4":"0.67616668","5":"0.67616668"},{"1":"1837","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1767","2":"22","3":"green","4":"1.36613269","5":"1.36613269"},{"1":"1030","2":"21","3":"grey","4":"0.67616668","5":"0.67616668"},{"1":"1392","2":"21","3":"blue","4":"0.67616668","5":"0.67616668"},{"1":"1719","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1402","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1290","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1115","2":"20","3":"grey","4":"-0.01379932","5":"0.01379932"},{"1":"1448","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1603","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1536","2":"19","3":"grey","4":"-0.70376532","5":"0.70376532"},{"1":"1871","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1257","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1820","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1744","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1942","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1836","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1267","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1849","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1454","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1214","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1621","2":"18","3":"green","4":"-1.39373133","5":"1.39373133"},{"1":"1208","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1058","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1217","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1832","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1007","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1053","2":"22","3":"grey","4":"1.36613269","5":"1.36613269"},{"1":"1732","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1681","2":"22","3":"grey","4":"1.36613269","5":"1.36613269"},{"1":"1848","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1097","2":"21","3":"green","4":"0.67616668","5":"0.67616668"},{"1":"1955","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1474","2":"21","3":"grey","4":"0.67616668","5":"0.67616668"},{"1":"1226","2":"22","3":"green","4":"1.36613269","5":"1.36613269"},{"1":"1032","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1192","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1701","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1765","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1577","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1867","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1531","2":"20","3":"green","4":"-0.01379932","5":"0.01379932"},{"1":"1631","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1126","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1566","2":"22","3":"grey","4":"1.36613269","5":"1.36613269"},{"1":"1615","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1467","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1570","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1190","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1675","2":"19","3":"grey","4":"-0.70376532","5":"0.70376532"},{"1":"1666","2":"21","3":"grey","4":"0.67616668","5":"0.67616668"},{"1":"1010","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1284","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1378","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1838","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1298","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1066","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1961","2":"21","3":"green","4":"0.67616668","5":"0.67616668"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>You can actually do it all in a single step:</p>
 <details>
-<p><summary>See answer</summary></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">my_data2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">.data =</span> my_data,</a>
-<a class="sourceLine" id="cb13-2" title="2">                  <span class="dt">eye_col =</span> <span class="kw">factor</span>(eye_col),</a>
-<a class="sourceLine" id="cb13-3" title="3">                  <span class="dt">age_z =</span> <span class="kw">scale</span>(age),</a>
-<a class="sourceLine" id="cb13-4" title="4">                  <span class="dt">age_z_abs =</span> <span class="kw">abs</span>(age_z))</a></code></pre></div>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">my_data2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">.data =</span> my_data,</a>
+<a class="sourceLine" id="cb11-2" title="2">                  <span class="dt">eye_col =</span> <span class="kw">factor</span>(eye_col),</a>
+<a class="sourceLine" id="cb11-3" title="3">                  <span class="dt">age_z =</span> <span class="kw">scale</span>(age),</a>
+<a class="sourceLine" id="cb11-4" title="4">                  <span class="dt">age_z_abs =</span> <span class="kw">abs</span>(age_z))</a></code></pre></div>
 </details>
 <p> </p>
 <p>So as you can see, the basic principles of working with functions are pretty straightforward. You just need to make sure you are giving the right values to the right arguments and type it all up in a way that <code>R</code> understands. Piece of cake!</p>
@@ -1790,73 +3024,64 @@ div.tocify {
 <div id="the-dreaded-pipe" class="section level1">
 <h1>The dreaded pipe <code>%&gt;%</code></h1>
 <p>There is actually very little to dread about the pipe operator. In fact, all it does is take whatever is to the left of it and push it into the function to the right of it:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">cakes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;chocolate&quot;</span>, <span class="st">&quot;red_velvet&quot;</span>)</a>
-<a class="sourceLine" id="cb14-2" title="2"></a>
-<a class="sourceLine" id="cb14-3" title="3">cakes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">make.cake</span>(<span class="dt">type =</span> ., <span class="dt">flour =</span> <span class="st">&quot;gluten-free&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">cakes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;chocolate&quot;</span>, <span class="st">&quot;red_velvet&quot;</span>)</a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3">cakes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">make.cake</span>(<span class="dt">type =</span> ., <span class="dt">flour =</span> <span class="st">&quot;gluten-free&quot;</span>) </a></code></pre></div>
 <p>First of all, we created a vector containing the two kinds of cake we want to bake. Then, we took that <code>cakes</code> vector and pushed it into the <code>type=</code> argument of the <code>make.cake()</code> function. We did this explicitly using the dot <code>.</code>. The dot basically says <em>“whatever it is you’re pushing with the pipe, put it here”</em>.</p>
-<p>The pipe, however, is most often used in its implicit form. If we don’t include the dot, the pipe will push whatever is to the left of it into the function ot the right of it <strong>as its first agrument</strong>. In other words, the above can be written as:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">cakes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">make.cake</span>(<span class="dt">flour =</span> <span class="st">&quot;gluten-free&quot;</span>)</a></code></pre></div>
+<p>The pipe, however, is most often used in its implicit form. If we don’t include the dot, the pipe will push whatever is to the left of it into the function of the right of it <strong>as its first argument</strong>. In other words, the above can be written as:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">cakes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">make.cake</span>(<span class="dt">flour =</span> <span class="st">&quot;gluten-free&quot;</span>)</a></code></pre></div>
 <p>The <code>type=</code> argument, being the first argument of the function to the right of the <code>%&gt;%</code>, gets taken care of by the pipe.</p>
 <p> </p>
-<p>Just to clarify, the two commands above are just a different way of swriting:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">make.cake</span>(<span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;chocolate&quot;</span>, <span class="st">&quot;red_velvet&quot;</span>),</a>
-<a class="sourceLine" id="cb16-2" title="2">          <span class="dt">flour =</span> <span class="st">&quot;gluten-free&quot;</span>) </a></code></pre></div>
+<p>Just to clarify, the two commands above are just a different way of writing:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">make.cake</span>(<span class="dt">type =</span> <span class="kw">c</span>(<span class="st">&quot;chocolate&quot;</span>, <span class="st">&quot;red_velvet&quot;</span>),</a>
+<a class="sourceLine" id="cb14-2" title="2">          <span class="dt">flour =</span> <span class="st">&quot;gluten-free&quot;</span>) </a></code></pre></div>
 <p> </p>
 <div id="task-8" class="section level3">
 <h3>Task 8</h3>
 <p>Rewrite the command below so that it uses the pipe without the dot.</p>
-<pre><code># A tibble: 100 x 5
-      id   age eye_col age_z[,1] age_z_abs[,1]
-   &lt;int&gt; &lt;int&gt; &lt;fct&gt;       &lt;dbl&gt;         &lt;dbl&gt;
- 1  1725    20 brown     -0.0756        0.0756
- 2  1381    20 brown     -0.0756        0.0756
- 3  1337    20 green     -0.0756        0.0756
- 4  1488    18 blue      -1.59          1.59  
- 5  1558    19 blue      -0.832         0.832 
- 6  1707    18 grey      -1.59          1.59  
- 7  1362    19 brown     -0.832         0.832 
- 8  1688    21 brown      0.681         0.681 
- 9  1646    21 blue       0.681         0.681 
-10  1338    20 brown     -0.0756        0.0756
-# ... with 90 more rows</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["age"],"name":[2],"type":["int"],"align":["right"]},{"label":["eye_col"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["age_z"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["age_z_abs"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1193","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1872","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1256","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1154","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1706","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1461","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1800","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1028","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1018","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1446","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1198","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1835","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1088","2":"22","3":"grey","4":"1.36613269","5":"1.36613269"},{"1":"1492","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1480","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1937","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1683","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1647","2":"21","3":"blue","4":"0.67616668","5":"0.67616668"},{"1":"1831","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1810","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1286","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1834","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1121","2":"18","3":"grey","4":"-1.39373133","5":"1.39373133"},{"1":"1073","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1711","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1213","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1246","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1517","2":"20","3":"green","4":"-0.01379932","5":"0.01379932"},{"1":"1641","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1890","2":"19","3":"grey","4":"-0.70376532","5":"0.70376532"},{"1":"1238","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1990","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1436","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1714","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1033","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1414","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1265","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1627","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1652","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1337","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1335","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1430","2":"21","3":"blue","4":"0.67616668","5":"0.67616668"},{"1":"1837","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1767","2":"22","3":"green","4":"1.36613269","5":"1.36613269"},{"1":"1030","2":"21","3":"grey","4":"0.67616668","5":"0.67616668"},{"1":"1392","2":"21","3":"blue","4":"0.67616668","5":"0.67616668"},{"1":"1719","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1402","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1290","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1115","2":"20","3":"grey","4":"-0.01379932","5":"0.01379932"},{"1":"1448","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1603","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1536","2":"19","3":"grey","4":"-0.70376532","5":"0.70376532"},{"1":"1871","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1257","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1820","2":"22","3":"blue","4":"1.36613269","5":"1.36613269"},{"1":"1744","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1942","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1836","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1267","2":"18","3":"blue","4":"-1.39373133","5":"1.39373133"},{"1":"1849","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1454","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1214","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1621","2":"18","3":"green","4":"-1.39373133","5":"1.39373133"},{"1":"1208","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1058","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1217","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1832","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1007","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1053","2":"22","3":"grey","4":"1.36613269","5":"1.36613269"},{"1":"1732","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1681","2":"22","3":"grey","4":"1.36613269","5":"1.36613269"},{"1":"1848","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1097","2":"21","3":"green","4":"0.67616668","5":"0.67616668"},{"1":"1955","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1474","2":"21","3":"grey","4":"0.67616668","5":"0.67616668"},{"1":"1226","2":"22","3":"green","4":"1.36613269","5":"1.36613269"},{"1":"1032","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1192","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1701","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1765","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1577","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1867","2":"21","3":"brown","4":"0.67616668","5":"0.67616668"},{"1":"1531","2":"20","3":"green","4":"-0.01379932","5":"0.01379932"},{"1":"1631","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1126","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1566","2":"22","3":"grey","4":"1.36613269","5":"1.36613269"},{"1":"1615","2":"19","3":"brown","4":"-0.70376532","5":"0.70376532"},{"1":"1467","2":"20","3":"brown","4":"-0.01379932","5":"0.01379932"},{"1":"1570","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1190","2":"22","3":"brown","4":"1.36613269","5":"1.36613269"},{"1":"1675","2":"19","3":"grey","4":"-0.70376532","5":"0.70376532"},{"1":"1666","2":"21","3":"grey","4":"0.67616668","5":"0.67616668"},{"1":"1010","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1284","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1378","2":"20","3":"blue","4":"-0.01379932","5":"0.01379932"},{"1":"1838","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1298","2":"19","3":"blue","4":"-0.70376532","5":"0.70376532"},{"1":"1066","2":"18","3":"brown","4":"-1.39373133","5":"1.39373133"},{"1":"1961","2":"21","3":"green","4":"0.67616668","5":"0.67616668"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <details>
-<p><summary>See answer</summary></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">eye_col =</span> <span class="kw">factor</span>(eye_col),</a>
-<a class="sourceLine" id="cb18-3" title="3">         <span class="dt">age_z =</span> <span class="kw">scale</span>(age),</a>
-<a class="sourceLine" id="cb18-4" title="4">         <span class="dt">age_z_abs =</span> <span class="kw">abs</span>(age_z))</a></code></pre></div>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">my_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">eye_col =</span> <span class="kw">factor</span>(eye_col),</a>
+<a class="sourceLine" id="cb15-3" title="3">         <span class="dt">age_z =</span> <span class="kw">scale</span>(age),</a>
+<a class="sourceLine" id="cb15-4" title="4">         <span class="dt">age_z_abs =</span> <span class="kw">abs</span>(age_z))</a></code></pre></div>
 </details>
 <p> </p>
 </div>
 <div id="task-9" class="section level3">
 <h3>Task 9</h3>
 <p>To practice some more, rewrite the command below in the same pipe fashion and run it to see a plot.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> my_data2, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age in years&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;N&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw">theme_classic</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> my_data2, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age in years&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;N&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="st">  </span><span class="kw">theme_classic</span>()</a></code></pre></div>
 <details>
-<p><summary>See answer</summary></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">my_data2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-4" title="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age in years&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;N&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-5" title="5"><span class="st">  </span><span class="kw">theme_classic</span>()</a></code></pre></div>
-<img src="data:image/png;base64,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" width="480" style="display: block; margin: auto;" />
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">my_data2 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age in years&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;N&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="kw">theme_classic</span>()</a></code></pre></div>
+<img src="data:image/png;base64,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" width="480" style="display: block; margin: auto;" />
 </details>
 <p> </p>
 <p>So why are pipes useful? Well, they are useful because they enable us to create pipelines. Because of the philosophy of the <code>tidyverse</code>, all of its functions take a tibble as their first argument and also produce a tibble as their output. This means that we can take a <code>tidyverse</code> command and pipe it into another <code>tidyverse</code> command and another and so on…</p>
 <p>Going back to our cake-making example<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>, you can think of pipelines as steps in a recipe:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">ingredients <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">eggs =</span> <span class="cf">break</span>(eggs),</a>
-<a class="sourceLine" id="cb21-3" title="3">         <span class="dt">flour =</span> <span class="kw">sift</span>(flour),</a>
-<a class="sourceLine" id="cb21-4" title="4">         <span class="dt">butter =</span> <span class="kw">melt</span>(butter)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-5" title="5"><span class="st">  </span><span class="kw">mixer</span>(<span class="dt">speed =</span> <span class="st">&quot;medium&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-6" title="6"><span class="st">  </span><span class="kw">baking_tin</span>(<span class="dt">cm =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="st">  </span><span class="kw">oven</span>(<span class="dt">temp =</span> <span class="dv">180</span>, <span class="dt">fan =</span> T, <span class="dt">time =</span> <span class="dv">35</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-8" title="8"><span class="st">  </span><span class="kw">cooling_rack</span>(<span class="dt">time =</span> <span class="dv">60</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-9" title="9"><span class="st">  </span><span class="kw">add_icing</span>(<span class="dt">type =</span> <span class="st">&quot;buttercream&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-10" title="10"><span class="st">  </span><span class="kw">omnomnom</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">ingredients <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">eggs =</span> <span class="cf">break</span>(eggs),</a>
+<a class="sourceLine" id="cb18-3" title="3">         <span class="dt">flour =</span> <span class="kw">sift</span>(flour),</a>
+<a class="sourceLine" id="cb18-4" title="4">         <span class="dt">butter =</span> <span class="kw">melt</span>(butter)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="st">  </span><span class="kw">mixer</span>(<span class="dt">speed =</span> <span class="st">&quot;medium&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="st">  </span><span class="kw">baking_tin</span>(<span class="dt">cm =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="st">  </span><span class="kw">oven</span>(<span class="dt">temp =</span> <span class="dv">180</span>, <span class="dt">fan =</span> T, <span class="dt">time =</span> <span class="dv">35</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="st">  </span><span class="kw">cooling_rack</span>(<span class="dt">time =</span> <span class="dv">60</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="st">  </span><span class="kw">add_icing</span>(<span class="dt">type =</span> <span class="st">&quot;buttercream&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-10" title="10"><span class="st">  </span><span class="kw">omnomnom</span>()</a></code></pre></div>
 <p><strong>DISCLAIMER: </strong> The above is not actual <code>R</code> code!</p>
 <p> </p>
 </div>
@@ -1869,17 +3094,15 @@ div.tocify {
 <li>Summarise data creating two summary variables: <code>mean_age</code> and <code>sd_age</code></li>
 </ol>
 <p>Let’s see how this is done:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(eye_col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age =</span> <span class="kw">mean</span>(age),</a>
-<a class="sourceLine" id="cb22-4" title="4">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(age))</a>
-<a class="sourceLine" id="cb22-5" title="5"><span class="co"># A tibble: 4 x 3</span></a>
-<a class="sourceLine" id="cb22-6" title="6">  eye_col mean_age sd_age</a>
-<a class="sourceLine" id="cb22-7" title="7">  <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb22-8" title="8"><span class="dv">1</span> blue        <span class="dv">20</span>     <span class="fl">1.38</span></a>
-<a class="sourceLine" id="cb22-9" title="9"><span class="dv">2</span> brown       <span class="fl">20.2</span>   <span class="fl">1.33</span></a>
-<a class="sourceLine" id="cb22-10" title="10"><span class="dv">3</span> green       <span class="dv">20</span>     <span class="fl">1.18</span></a>
-<a class="sourceLine" id="cb22-11" title="11"><span class="dv">4</span> grey        <span class="fl">20.1</span>   <span class="fl">1.45</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">my_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(eye_col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age =</span> <span class="kw">mean</span>(age),</a>
+<a class="sourceLine" id="cb19-4" title="4">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(age))</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["eye_col"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean_age"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sd_age"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"blue","2":"19.82143","3":"1.467009"},{"1":"brown","2":"19.94340","3":"1.446682"},{"1":"green","2":"20.57143","3":"1.397276"},{"1":"grey","2":"20.50000","3":"1.445998"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>Pretty neat, don’t you think?</p>
 <p> </p>
 <p>Pipelines can be arbitrarily long and their length should depend purely on the complexity of the task you are trying to accomplish.</p>
@@ -1887,24 +3110,22 @@ div.tocify {
 <div id="task-10" class="section level3">
 <h3>Task 10</h3>
 <p>Take <code>my_data</code>, calculate the <em>z</em>-score of age, and then calculate the mean of this <em>z</em>-score for <em>each eye colour</em>, all in a single pipeline. The result should look like this:</p>
-<pre><code># A tibble: 4 x 2
-  eye_col mean_age_z
-  &lt;chr&gt;        &lt;dbl&gt;
-1 blue      -0.0756 
-2 brown      0.0459 
-3 green     -0.0756 
-4 grey       0.00841</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["eye_col"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean_age_z"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"blue","2":"-0.1370075"},{"1":"brown","2":"-0.0528540"},{"1":"green","2":"0.3804670"},{"1":"grey","2":"0.3311837"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <details>
-<p><summary>See answer</summary></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_z =</span> <span class="kw">scale</span>(age)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(eye_col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age_z =</span> <span class="kw">mean</span>(age_z))</a></code></pre></div>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">my_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_z =</span> <span class="kw">scale</span>(age)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(eye_col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age_z =</span> <span class="kw">mean</span>(age_z))</a></code></pre></div>
 </details>
 <p> </p>
 <p>Pipelines let you process your data quickly in a linear fashion. They also encourage you to analyse the task in front of you in terms of a succession of small, clearly defined steps.</p>
-<p>To conclude, let’s illustrate the final point on the example of the following plot breated from <code>my_data</code>:</p>
-<p><img src="data:image/png;base64,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" width="480" style="display: block; margin: auto;" /></p>
+<p>To conclude, let’s illustrate the final point on the example of the following plot created from <code>my_data</code>:</p>
+<p><img src="data:image/png;base64,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" width="480" style="display: block; margin: auto;" /></p>
 <p>OK, so what we have here is a plot with eye colour on the x-axis and mean <em>z</em>-score of age on the y-axis. The individual points give us the mean <em>z</em>-score for the given eye colour. Starting with <code>my_data</code>, we can break down the process of creating such a plot into simple steps:</p>
 <ol style="list-style-type: decimal">
 <li>Create <em>z</em>-score of age</li>
@@ -1913,15 +3134,15 @@ div.tocify {
 <li>Plot it</li>
 </ol>
 <p>All of the above can be done in a single pipeline. The code used to create the plot does just that:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_z =</span> <span class="kw">scale</span>(age)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(eye_col) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age_z =</span> <span class="kw">mean</span>(age_z)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> eye_col, <span class="dt">y =</span> mean_age_z)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb25-6" title="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">fill =</span> <span class="st">&quot;#b38ed2&quot;</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">shape =</span> <span class="dv">23</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb25-7" title="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Eye colour&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Mean z-score of age&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb25-8" title="8"><span class="st">  </span><span class="kw">theme_classic</span>()</a></code></pre></div>
-<p>First three of these four steps are exactly the same thig as you did in the previous task. As for the plotting itself, that is the topic for next week’s tutorial…</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">my_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_z =</span> <span class="kw">scale</span>(age)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(eye_col) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age_z =</span> <span class="kw">mean</span>(age_z)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> eye_col, <span class="dt">y =</span> mean_age_z)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb21-6" title="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">fill =</span> <span class="st">&quot;#b38ed2&quot;</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">shape =</span> <span class="dv">23</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Eye colour&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Mean z-score of age&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb21-8" title="8"><span class="st">  </span><span class="kw">theme_classic</span>()</a></code></pre></div>
+<p>First three of these four steps are exactly the same thig as what you did in the previous task. As for the plotting itself, that is the topic for next week’s tutorial…</p>
 <p> </p>
 </div>
 <div id="task-11" class="section level3">
@@ -2128,25 +3349,28 @@ hr {
 
 details {
     border: solid 1px rgb(var(--theme-col));
-    width: 6.5em;
+    width: 6em;
     border-radius: 5px;
     margin: 1em 0 2em 0;
-    background-color: rgba(var(--theme-col), .3);
+    background-color: rgb(var(--theme-col));
 	padding: .5em
 }
 
 details[open] {
 	width: 100%;
+    background-color: rgba(var(--theme-col), .3);
 }
 
 summary {
-	display: block;
+	display: list-item;
 	cursor: pointer;
 	outline: 0;
+	color: #fdfdfd;
 }
 
 details[open] > summary {
     padding-bottom: 1em;
+	color: #434b75;
 }
 
 details > .sourceCode {
