@@ -1,0 +1,44 @@
+---
+title: "Lecture 8: The Linear Model"
+subtitle: "Analysing Data, Spring 2020"
+author: "Dr Jennifer Mankin"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(kableExtra)
+library(tidyverse)
+```
+
+## Overview
+
+* The Story So Far
+  + Distributions and test statistics
+  + NHST and the null hypothesis
+  + Predictors, outcomes, and types of data
+* Today: the Linear Model
+  + What is (statistical) modelling?
+  + What is the Linear Model?
+  + How do we use it, and why is it so important?
+
+## The Story So Far
+
+* Review of Milan's stuff
+
+## The Story So Far: *r* and *t*
+
+
+
+## Modelling a Line
+
+* How can we learn about Y using X?
+  + Statistical modeling
+  + Outcome = Model + Error
+* Brief revision: *r* and continuous data
+* Creating a statistical model with lm()
+  + Equation of the linear model
+  + How does this equation create a line?
+  + How is this line a model?
+  + What does the linear model do?
+* Looking ahead: the linear model forever
+

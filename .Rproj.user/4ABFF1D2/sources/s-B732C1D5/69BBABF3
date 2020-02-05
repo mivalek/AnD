@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580292726187.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "69BBABF3",
+    "lastKnownWriteTime" : 1580293629,
+    "last_content_update" : 1580293629744,
+    "path" : "~/AnD/lectures/lecture_8_rlm.Rmd",
+    "project_path" : "lectures/lecture_8_rlm.Rmd",
+    "properties" : {
+        "cursorPosition" : "19,16",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

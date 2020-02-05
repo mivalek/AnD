@@ -5,9 +5,13 @@ author: "Your Name"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(ggplot2)
+install.packages(c("WRS2", "GGally", "lm.beta", "kableExtra"))
 library(tidyverse)
 library(kableExtra)
+# Run the following code if tidyverse isn't playing ball on uni computers by deleting the # before each line
+# source("http://tinyurl.com/sussexfix")
+# sussex.fix()
+# sussex::install.sussex("tidyverse")
 ```
 
 # Part 1: Complete Setup
@@ -56,24 +60,14 @@ For more, see [Keyboard Shortcuts in RStudio/RMarkdown](https://support.rstudio.
 
 Once you have completed your basic setup, you can start practicing using R again. To do this, you will need to find some data hidden throughout the Analysing Data Canvas site to do some analysis.
 
-Complete the tasks below with the required information. See "Hints", below, if you get stuck.
+Complete the tasks below with the required information. See "Hints" below each set of tasks if you get stuck.
 
-## Task 1
-### Task 1.1: Import the Dataset
-### Task 1.2 Create a new summary table
-```{r task1}
+## **Important**: Tasks and Challenges
 
-```
+Make sure you complete the regular tasks first, during the practical session. The tasks marked **Challenge** are designed to help increase your skills in R if you finish early or if you would like to practice more at home.
 
-**Hint**: Use the following tutorials/practicals if you need help:
-
-* [Creating factors](http://milton-the-cat.rocks/learnr/r/discovr_01/#section-data-types)
-* [Filtering, selecting, and changing variables](http://milton-the-cat.rocks/learnr/r/discovr_01/#section-tibbles)
-* [Creating a summary table](http://milton-the-cat.rocks/learnr/r/discovr_02/#section-creating-a-summary-table)
-* Using `kable()`: Google it!
-
-## Task 2: Histograms
-### Task 2.1: Fill in the code below 
+## Task 1: Data and graphs
+### Task 1.1: Fill in the code below 
 
 For all of the values you are asked to find here, use ONLY the Analysing Data Canvas site. Ask a tutor if you get stuck!
  
@@ -81,7 +75,9 @@ For all of the values you are asked to find here, use ONLY the Analysing Data Ca
  * Replace `m` with the percentage of your total module mark that comes from the weekly quizzes
  * Replace `s` with the number of Research Participation credits you need to obtain via SONA
  
-```{r task2}
+**Hint**: your markdown code should show red x's in the code chunk below - it's trying to warn you that something is missing. Hover your mouse over the red x to see RStudio's suggestion for what's wrong! 
+ 
+```{r}
 random_tib <- tibble(
   group = factor(rep(c("ctrl", "exp"), each = 1000)),
   score = rnorm(
@@ -92,20 +88,20 @@ random_tib <- tibble(
 )
 ```
 
-### Task 2.2: Plot a histogram of the `score` variable in the `random_tib` dataset
+### Task 1.2: Plot a histogram of the `score` variable in the `random_tib` dataset
 
-```{r task2hist}
+```{r}
 
 ```
 
-Task 2.3 **Challenge**: Try the following extra tasks:
+Task 1.3 **Challenge**: Try the following extra tasks:
 
 * Set the fill hex colour to the last six digits of the University Counselling Service phone number
 * Change the X axis label to "Score" and the Y axis label to "Count"
 * Group by colour using the "group" variable
 * Create side-by-side histograms, one for group = ctrl and one for group = exp
 
-```{r task2challenge}
+```{r}
 
 ```
 
@@ -114,17 +110,37 @@ Task 2.3 **Challenge**: Try the following extra tasks:
 * [Discovr Summarising Data: Histograms](http://milton-the-cat.rocks/learnr/r/discovr_02/#section-histograms)
 * Challenge tasks: [Discovr Visualising Data: ggplot2](http://milton-the-cat.rocks/learnr/r/discovr_05/#section-boxplots-aka-box-whisker-plots)
 
+## Task 2
+### Task 2.1: Import the Dataset
+### Task 2.2: Create a new summary table
+```{r task1}
+
+```
+
+### Task 2.3 **Challenge**: Create a nice table
+
+Use `kable()` and `kable_styling()` to create a nicely formatted table with capitalised column names and the caption "Summary of Length for Mid and High Dose".
+
+```{r}
+
+```
+
+**Hint**: Use the following tutorials/practicals if you need help:
+
+* [Creating factors](http://milton-the-cat.rocks/learnr/r/discovr_01/#section-data-types)
+* [Filtering, selecting, and changing variables](http://milton-the-cat.rocks/learnr/r/discovr_01/#section-tibbles)
+* [Creating a summary table](http://milton-the-cat.rocks/learnr/r/discovr_02/#section-creating-a-summary-table)
+* Using `kable()`: Google it!
+
 ## Task 3: Create a report with inline text
 
 ### Task 3.1: Create a new code chunk
 
-In this code chunk, create two new objects, `people` and `blueshirt`, that contain the total number of people you can currently see and the number wearing blue shirts, respectively.
+In a new code chunk, create two new objects, `people` and `blueshirt`, that contain the total number of people you can currently see and the number wearing blue shirts, respectively.
 
-Then, in the following paragraph, use inline code to complete each line by replacing all of the text in square brackets. Try to do this **using only R commands and objects** - do not enter any numbers directly! For example, instead of writing "Today is Tuesday" (when it will not be Tuesday when you read this!), I could write `r Sys.Date() %>% weekdays()`, which should produce the current day of the week whenever you run it (see the Markdown file for the code behind this). To see how inline text will appear when you knit your document, place your cursor inside the blue code text and push ctrl + enter to run that code.
+Then, in the following paragraph, use inline code to complete each line by replacing all of the text in square brackets. Try to do this **using only R commands and objects** - do not enter any numbers directly! For example, instead of writing "Today is Tuesday" (when it will not be Tuesday when you read this!), I could write `r Sys.Date() %>% weekdays()`, which should produce the current day of the week whenever you run it. To see how inline text will appear when you knit your document, place your cursor inside the blue code text and push ctrl + enter to run that code.
 
 It is currently [replace with current day]. There are [replace using object] people around me, [replace using calculation] percent of which are wearing blue. 
-
-It is currently `r Sys.Date() %>% weekdays()`. There are `r people` people around me, `r (blueshirt/people*100) %>% round(2)` percent of which are wearing blue. 
 
 ### Task 3.2 **Challenge**: Complete the report below using the data from Task 1.
 
@@ -133,4 +149,4 @@ Analysis of the dataset `ToothGrowth` revealed that the high-dose group had a me
 **Hints**:
 
 * Think about inline code the same way as code in code chunks. You can create multiple commands, linked by `%>%`, to get to the right value.
-* Use `magrittr::extract2("name_of_variable")` to extract a particular value from a column in a tibble.
+* Use `pull("name_of_variable")` to extract a particular value from a column in a tibble.
