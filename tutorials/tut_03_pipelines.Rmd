@@ -1,0 +1,405 @@
+---
+title: "Tutorial 3: Pipelines"
+author: "Analysing Data"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = T, fig.height=3, fig.width=5, fig.align = "center")
+```
+
+In this tutorial, we will take a closer look at pipes (`%>%`), tidyverse functions, and at combining these to create command pipelines.
+
+# Setting up
+
+All you need for this tutorial is this file and open RStudio. It's best to have both open in maximised windows, not side-by-side. Remember that you can quickly switch between two last used windows using the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) or <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcut.
+
+<div class="solText">
+#### Note on code in the tutorial
+
+You can reveal the code under each task. The point of this tutorial is not to torment you with tasks you cannot do. However, you are strongly encouraged not to reach straight for the answer. Try to complete the task yourself: write the code in your script, run it, see if it works. If it doesn't, try again. Only reveal the solution if you're stuck or if you want to check your own solution.
+</div>
+
+`r task()`Open your analysing_data R project in RStudio and open a new R script. Here is where you can write solution code for the tasks.
+
+`r task()`The only package you will need to load to complete this tutorial is `tidyverse`. Load it now.
+
+<!-- ans
+```{r, eval=F}
+library(tidyverse)
+```
+-->
+
+Now, let's create data we can work with. We can just use the code that creates the data from last practical .Rmd file.
+
+`r task()`Type in the following code into your script file. Do not just copy-paste it. At this stage of your learning, you want to develop the muscle memory and the right habits, such as not forgetting commas and making sure all open brackets are closed. This takes practice and manual typing. There's value in laziness but the time for it is later.
+
+```{r}
+n <- 100 # sample size
+# let's create us some data
+my_data <- tibble(
+  id = sample(x = 1000:1999, # numbers we're sampling from
+               # how many numbers are we drawing? (n defined in 1st line of code)
+              size = n),
+  age = sample(x = 18:22,
+               size = n,
+               # n is larger than number of things we're sampling from so we need
+               # sample with replacement
+               replace = TRUE),
+  eye_col = sample(c("blue", "green", "grey", "brown"),
+                   size = n,
+                   replace = TRUE,
+                   # probabilities of sampling each colour
+                   prob = c(.3, .12, .09, .49))
+)
+```
+
+**Tip:** You should try to understand all code you are using, regardless of whether or not you are its author. Remember that you can always run bits of code by highlighting a valid section (*i.e.,* a complete command such as `sample(x = 1000:1999, size = n)`) and running it by pressing <kbd>Ctrl</kbd> + <kbd>&crarr;\ Enter</kbd> (Windows) or <kbd>&#8984;\ Command</kbd> + <kbd>&crarr;\ Enter</kbd> (Mac OS).
+
+`r task()`Run this code to create the data set and look at it to familiarise yourself with it.
+
+<!-- ans
+There are several ways of looking at data. The basic one is just to type the name of the dataset into the *console* and pressing  <kbd>&crarr;\ Enter</kbd> -->
+
+\ 
+
+OK, now that everything is set up, let's get going!
+
+
+# Functions
+
+Anything in `R` with a set of round brackets behind it is a function. A function takes some input and produces some output. You can think of functions as a recipe: It is a sequence of operations that can take some input (desired qualities of a cake) and produce some output (cake). The input to a function is called "arguments".
+
+Lets see what a rough cake function could look like:
+
+```
+make.cake(type, flour, vegan = FALSE, dairy = TRUE, servings = 8) {
+  
+  if flour is "gluten-free"
+  make recipe for a gluten-free [type] cake * [servings]
+  
+  if vegan is TRUE
+  make recipe for a vegan [type] cake * [servings]
+  
+  if dairy is FALSE
+  make recipe for a lactose-free [type] cake  * [servings]
+  
+  if none of the above
+  make recipe for a standard [type] cake * [servings]
+  
+}
+```
+
+Each of the arguments has some allowed values. For instance, we may know how to make `type="chocolate"` or `type="red_velvet"` cake. Maybe we only allow for `flour=` to be `"plain"`, `"self-raising"`, or `"gluten-free"`. The `vegan=` and `dairy=` arguments are logical so can only take values `TRUE` or `FALSE`. Finally, `size=` is a numeric argument and should be the number of people we want the cake to feed. Notice that the last three arguments have a pre-defined default setting. So, if we do not change these, the result will be a non-vegan cake for 8 people that containg dairy. The first two arguments do not have a default value and so **we must provide it**. Otherwise the function will not run and we won't be able to make a cake. And that would be sad.
+
+If we run the function `make.cake(type = "victoria", flour = "self-raising", dairy = F)`, `R` will bake us a nice lactose-free Victoria sponge that serves 8. Because we didn't change the value of the `vegan=` argument, the cake will, sadly, not be vegan[^1]. If the function is written well and allows for multiple values in the `type=` argument, maybe we can make several cakes, all with a single function call:
+
+[^1]: To those of you who just made one of the many tired old anti-vegan jokes: [Well done you!](https://mivalek.github.io/Lectures/gif/clap.gif)
+
+
+```{r, eval = F}
+make.cake(type = c("victoria", "carrot"),
+          flour = "self-raising",
+          vegan = c(F, T),
+          servings = c(10, 5))
+```
+
+Here, we are making two cakes. Both are made with standard self-raising flour, the Victoria sponge is non-vegan and serves 10, while the carrot cake is vegan for 5 people. Since we didn't modify the `dairy=` argument, it will default to its predefined value `TRUE`. Notice that if we want to give multiple values to the same argument, we **must combine them into a single vector** using the `c()` function. Also notice, that arguments **must be separated with commas**. If we do not, `R` will not understand.
+
+The reason for this is that in `R` argument names (*e.g.,* `type`) do not need to be specified. We can write the above command as:
+
+```{r, eval = F}
+make.cake(c("victoria", "carrot"),
+          "self-raising",
+          c(F, T),
+          servings = c(10, 5))
+```
+
+`R` will match the first vector/value to the first argument, second vector/value to the second argument and so on. The reason why we had to name the `servings=` argument is that, if we didn't, `R` would put this 4^th^ vector/value to the 4^th^ argument -- `dairy=`. And since `dairy=` is a logical argument that only takes values of `TRUE` and `FALSE`, giving it the value of `c(5, 10)` would at best not work and at worst quietly produce an undesirable result[^2]!
+
+[^2]:Inasmuch as any cake can be undesirable...
+
+This all means, that if we omit the `c()` and write 
+
+```{r, eval = F}
+make.cake(type = "victoria", "carrot", flour = "self-raising")
+```
+
+`R` will interpret this as us wanting to only make a Victoria sponge and the `"carrot"` value will get passed to the first unnamed argument in the function. In this case, we are explicitly passing a value to the `flour =` argument, and so the first *unnamed* agrument that gets the value `"carrot"` will be `vegan =`. And again, this will result in undesirable behaviour.
+
+\ 
+
+`make.cake()` is, sadly, not an actual function but real `R` functions work **exactly** according to these principles. If you want to know what arguments a function accepts and how they are used, and what default values they have, you can always type `?name.of.function` *into the console* and press <kbd>&crarr;\ Enter</kbd>. This will bring up the documentation for the function in your Files/Plots/Packages/Help/Viewer pane of RStudio (lower right by default).
+
+Let's have a look at the `filter()` function from the `dplyr` package that loads as part of `tidyverse`:
+
+`r task()`Bring up the documentation (help file) for `dplyr::filter`.
+
+**Htin: **If there are se
+<!-- ans
+Just type `?dplyr::filter` into the *console* and press <kbd>&crarr;\ Enter</kbd> -->
+
+\ 
+
+\ 
+
+OK, so we can see that the function requires us to give it some data as the `.data` argument has no default value. The `...` is an unnamed argument that we use to specify the condition according to which we want to filter our data.
+
+For instance, if we want to only look at data from participants who are older than 22 **OR** have brown eyes, we can do this by formulation this condition as `age > 22 | eye_col == "brown"`. The complete command will then be:
+
+```{r}
+filter(.data = my_data, age > 22 | eye_col == "brown")
+```
+
+\ 
+
+<div class="warn">
+**Note** that when joining two or more logical expressions, *e.g.,* `age > 22` and `eye_col == "brown"` using the logical operators AND `&` and OR `|`, every constituent expression must be able to work on its own.</div>
+
+`r task()`Write a `filter` command that only gives you data for people aged between 20 and 24. The result should look like this:
+
+```{r, echo=F}
+filter(.data = my_data, age > 20 & age < 24)
+```
+
+**Hint: **See the red box above.
+
+<!-- ans
+```{r, eval=F}
+filter(.data = my_data, age > 20 & age < 24)
+```
+-->
+
+\ 
+
+The `mutate()` function is works on the same principle and is used for manipulation existing variables or creating new ones. Let's say, we want to turn the `eye_col` variable into a factor and also create a column of *z*-score[^3] of age. We can use `mutate()` along with `factor()` and `scale()`, the latter of which calculates the *z*-score:
+
+[^3]:*z*-score of a variable is the variable minus its mean, all divided by its standard deviation: $z = \frac{x - \bar{x}}{s_x}$
+
+```{r}
+mutate(.data = my_data,
+       eye_col = factor(eye_col), # turn eye_col into a factor of itself
+       age_z = scale(age)) # create new variable age_z
+```
+
+
+`r task()`Run the command above, saving its output back into `my_data2` using the assignment operator `<-`. Then create a new variable `age_z_abs` with the absolute value of the *z*-score.
+
+**Hint: **If you don't know *how to calculate absolute value in R* look up the italicised phrase on the Internet.
+
+<!-- ans
+```{r, eval=F}
+my_data2 <- mutate(.data = my_data,
+                  eye_col = factor(eye_col),
+                  age_z = scale(age))
+
+mutate(my_data, age_z_abs = abs(age_z))
+
+```
+-->
+
+You want to see something like this:
+
+```{r, echo=F}
+my_data2 <- mutate(.data = my_data,
+                   eye_col = factor(eye_col),
+                   age_z = scale(age),
+                   age_z_abs = abs(age_z))
+
+my_data2
+```
+
+You can actually do it all in a single step:
+
+<!-- ans
+```{r, eval=F}
+my_data2 <- mutate(.data = my_data,
+                  eye_col = factor(eye_col),
+                  age_z = scale(age),
+                  age_z_abs = abs(age_z))
+```
+-->
+
+\ 
+
+So as you can see, the basic principles of working with functions are pretty straightforward. You just need to make sure you are giving the right values to the right arguments and type it all up in a way that `R` understands. Piece of cake!
+
+Now that we're all expert function users, let's talk about the dreaded pipe...
+
+# The dreaded pipe `%>%`
+
+There is actually very little to dread about the pipe operator. In fact, all it does is take whatever is to the left of it and push it into the function to the right of it:
+
+```{r, eval = F}
+cakes <- c("chocolate", "red_velvet")
+
+cakes %>% make.cake(type = ., flour = "gluten-free") 
+```
+
+First of all, we created a vector containing the two kinds of cake we want to bake. Then, we took that `cakes` vector and pushed it into the `type=` argument of the `make.cake()` function. We did this explicitly using the dot `.`. The dot basically says *"whatever it is you're pushing with the pipe, put it here"*.
+
+The pipe, however, is most often used in its implicit form. If we don't include the dot, the pipe will push whatever is to the left of it into the function ot the right of it **as its first agrument**. In other words, the above can be written as:
+
+```{r, eval = F}
+cakes %>% make.cake(flour = "gluten-free")
+```
+
+The `type=` argument, being the first argument of the function to the right of the `%>%`, gets taken care of by the pipe.
+
+\ 
+
+Just to clarify, the two commands above are just a different way of swriting:
+
+```{r, eval = F}
+make.cake(type = c("chocolate", "red_velvet"),
+          flour = "gluten-free") 
+```
+
+`r task()`Rewrite the command below so that it uses the pipe without the dot.
+
+```{r, echo=F}
+mutate(.data = my_data,
+       eye_col = factor(eye_col),
+       age_z = scale(age),
+       age_z_abs = abs(age_z))
+```
+
+<!-- ans
+```{r, eval=F}
+my_data %>%
+  mutate(eye_col = factor(eye_col),
+         age_z = scale(age),
+         age_z_abs = abs(age_z))
+```
+-->
+
+`r task()`To practice some more, rewrite the command below in the same pipe fashion and run it to see a plot.
+
+```{r, eval=F}
+ggplot(data = my_data2, mapping = aes(x = age)) +
+  geom_histogram(color = "black", fill = "white") +
+  labs(x = "Age in years", y = "N") +
+  theme_classic()
+```
+
+<!-- ans
+```{r}
+my_data2 %>%
+  ggplot(mapping = aes(x = age)) +
+  geom_histogram(color = "black", fill = "white") +
+  labs(x = "Age in years", y = "N") +
+  theme_classic()
+```
+-->
+
+\ 
+
+So why are pipes useful? Well, they are useful because they enable us to create pipelines. Because of the philosophy of the `tidyverse`, all of its functions take a tibble as their first argument and also produce a tibble as their output. This means that we can take a `tidyverse` command and pipe it into another `tidyverse` command and another and so on...
+
+Going back to our cake-making example[^4], you can think of pipelines as steps in a recipe:
+
+```{r, eval = F}
+ingredients %>%
+  mutate(eggs = break(eggs),
+         flour = sift(flour),
+         butter = melt(butter)) %>%
+  mixer(speed = "medium") %>%
+  baking_tin(cm = 25) %>%
+  oven(temp = 180, fan = T, time = 35) %>%
+  cooling_rack(time = 60) %>%
+  add_icing(type = "buttercream") %>%
+  omnomnom()
+```
+
+[^4]:We just LOVE cake!
+
+**DISCLAIMER: ** The above is not actual `R` code!
+
+\ 
+
+# Basic pipeline
+
+One of the most basic but very useful pipelines is the `group_by() %>% summarise()` pipeline. It does pretty much what it says on the tin: it lets us group our data by some variable and then summarise it in any way we want. Imagine we want to know what the mean and *SD* of age was in our data set but we want to know these statistics **separately for each eye colour**. We can think of this task as a two-step operation:
+
+1. Group data by `eye_col`
+2. Summarise data creating two summary variables: `mean_age` and `sd_age`
+
+Let's see how this is done:
+
+```{r}
+my_data %>%
+  group_by(eye_col) %>%
+  summarise(mean_age = mean(age),
+            sd_age = sd(age))
+```
+
+Pretty neat, don't you think?
+
+\ 
+
+Pipelines can be arbitrarily long and their length should depend purely on the complexity of the task you are trying to accomplish.
+
+`r task()`Take `my_data`, calculate the *z*-score of age, and then calculate the mean of this *z*-score for *each eye colour*, all in a single pipeline. The result should look like this:
+
+```{r, echo=F}
+my_data %>%
+  mutate(age_z = scale(age)) %>%
+  group_by(eye_col) %>%
+  summarise(mean_age_z = mean(age_z))
+```
+
+<!-- ans
+```{r, eval=F}
+my_data %>%
+  mutate(age_z = scale(age)) %>%
+  group_by(eye_col) %>%
+  summarise(mean_age_z = mean(age_z))
+```
+-->
+
+\ 
+
+Pipelines let you process your data quickly in a linear fashion. They also encourage you to analyse the task in front of you in terms of a succession of small, clearly defined steps.
+
+To conclude, let's illustrate the final point on the example of the following plot breated from `my_data`:
+
+```{r, echo = F}
+my_data %>%
+  mutate(age_z = scale(age)) %>%
+  group_by(eye_col) %>%
+  summarise(mean_age_z = mean(age_z)) %>%
+  ggplot(mapping = aes(x = eye_col, y = mean_age_z)) +
+  geom_point(fill = "#b38ed2", size = 5, shape = 23) +
+  labs(x = "Eye colour", y = "Mean z-score of age") +
+  theme_classic()
+```
+
+OK, so what we have here is a plot with eye colour on the x-axis and mean *z*-score of age on the y-axis. The individual points give us the mean *z*-score for the given eye colour. Starting with `my_data`, we can break down the process of creating such a plot into simple steps:
+
+1. Create *z*-score of age
+1. Group data by eye colour
+1. Summarise data, calculating mean of *Z*-score for each eye colour
+1. Plot it
+
+All of the above can be done in a single pipeline. The code used to create the plot does just that:
+
+```{r, eval = F}
+my_data %>%
+  mutate(age_z = scale(age)) %>%
+  group_by(eye_col) %>%
+  summarise(mean_age_z = mean(age_z)) %>%
+  ggplot(mapping = aes(x = eye_col, y = mean_age_z)) +
+  geom_point(fill = "#b38ed2", size = 5, shape = 23) +
+  labs(x = "Eye colour", y = "Mean z-score of age") +
+  theme_classic()
+```
+
+First three of these four steps are exactly the same thig as you did in the previous task. As for the plotting itself, that is the topic for next week's tutorial...
+
+`r task()`Save your script in the `r_docs` folder of your R project.
+
+\ 
+
+Today you deepened your understanding of functions in `R` and learn the philosophy of `tidyverse` pipelines. You acquired the skills to do a lot of data-wrangling and laid the groundwork for doing even more complex things!
+
+That's all for today. See you soon...
