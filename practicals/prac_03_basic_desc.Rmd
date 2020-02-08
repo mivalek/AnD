@@ -1,0 +1,101 @@
+---
+title: "Writing up analysis 01"
+subtitle: "Basic descriptives"
+author: "insert your name"
+output:
+  html_document:
+    number_sections: true
+---
+
+This is the first in a series of documents that will teach you how to inspect, tidy up, and analyse various kinds of data as well as write up the results of your analysis.
+
+
+# Setup
+
+First things first, when you're writing a document in R Markdown, it is worth setting some global chunk options. This is what the chunk below does. `echo = TRUE` means that the code will be displayed by default, unless you explicitly change it to `FALSE` for any given code chunk. There are rarely any reasons to show your code in the write up so normally, you would change the option to `FALSE` before generating the final version of your report. `warning = FALSE` and `message = FALSE` mean that any warnings/messages given by functions will not be displayed in the final document. It is very important to be aware of any warnings and know what they mean but they are for you, the analyst, not for the reader.
+
+```{r setup}
+# setting up default code chunk behaviour
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+Normally, you would want to hide both this chunk and its output from the final document. You can do it by adding `, include=FALSE` right after the `{r setup` bit so that it reads `{r setup, include=FALSE}`.
+
+\ 
+
+Next, to be able to use `R` to its full potential, you need to load packages (you must install them first - this is only done once). It's good to have them all loaded in a single chunk at the top of your .Rmd. Whenever you realise you need to load another package, just scroll up and add another `library()` command to the chunk.
+
+
+```{r packages, include = F}
+# add library() commands to load all packages you need for this document.
+
+
+```
+
+# Read-in and inspect 
+
+OK, time to read in your data. Remember, you must store the data in an object using `<-`, otherwise `R` will just spit them out into the console and forget all about them.
+
+```{r read-in}
+# complete the line to read in the data
+
+data <- read_csv()
+```
+
+\ 
+
+The first step in analysis is a thorough data inspection. Before you start fitting statistical models and what not, you need to make sure you know your data inside-out. Are the variables stored in appropriate classes (`numeric`/`character`/`factor`)? Are there `NA`s? How many? Are all values sensible? Are there typos? These are *some* of the questions you should be able to answer and, in the following weeks, you will learn how to do this.
+
+```{r inspect}
+# check classes of your columns and number of NAs by looking at the summary of the data
+
+```
+
+# Describe 
+
+Once you've gathered the basic info about your data set as a whole, it's useful to look at the descriptive statistics for every single variable to get a better feel for it. This is also a good time to prepare objects/tibbles you'll use for write-up and tables.
+
+```{r descriptives}
+age_desc <- 
+
+gender_desc <- 
+  
+type_desc <-
+
+unharm_desc <- 
+```
+
+\ 
+
+# Report
+
+Now that all that's dealt with, you can start writing up. It doesn't matter that you don't have the results yet. The sample, material, and procedure details aren't going to change. In fact, there's no reason why you can't start writing up even before you have your data!
+
+## Method
+
+### Participants
+
+The study was conducted on a sample of `r nrow(data)` volunteers (*M*~age~ = [provide `R` code], *SD*~age~ = `r age_desc %>% pull(age_sd)`). The data were collected anonymously on-line. Data from [provide `R` code] participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
+
+### Materials
+
+We used images of faces of a photorealistic human avatar and a robotic avatar as stimuli. These two faces were then modified to create the faces’ harmed analogues by adding the facial texture of a moderate burn to their right side. All images measured 960&times;720 pixels and were displayed individually on a white background.
+
+We measured the extent to which participants attributed the capacity to experience (7 items), agency (7 items), consciousness (2 items), and pain (1 item) to the avatars. A 7-item measure of empathy with avatars was used and avatars were also rated on attractiveness (1 item). All items used a 7-point likers scale.
+
+### Procedure
+
+[ *Read the relevant bit of the paper and provide your own account of the procedure* ]
+
+```{r table_1}
+# provide tibble to push to kable() and fill in missing column names
+ %>%
+  kable(col.names = c( , "*N*", "%", "*M*~age~", ),
+        caption = "Table 1 *Descriptive statistics by categories of gender*")
+```
+
+\ 
+
+\ 
+
+That's it for now. Next time we'll dig deeper into our data and continue writing up our report.

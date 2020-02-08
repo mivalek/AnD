@@ -1,0 +1,692 @@
+---
+title: "Taking a good look at your data"
+subtitle: "Practical 3"
+author: "Analysing data"
+---
+
+<!-- To knit this .Rmd do the following -->
+
+```{r setup_how_to_knit, include=F, eval=F}
+remotes::install_github("mivalek/teachR")
+teachR::make.sheet("[path to file]/ad_practical03.Rmd", "and", toc_depth = 3, tasks_to_headings = T)
+```
+
+## Intro
+
+Welcome to the third Analysing Data practical. Today, we will be using the skills you revised in the [latest tutorial](https://mivalek.github.io/adata/tut/tut_03_pipelines.html) to start analysing real data. We will:
+
+- Read in datasets and check data
+- Do basic descriptive statistics
+- Learn how to make tables and include them in papers/reports
+- Write-up the Participants and Procedure sections
+
+## Guided part
+
+```{r setup_data, echo = F}
+set.seed(1)
+library(tidyverse)
+library(english)
+gensex <- read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
+```
+
+First of all, let's make sure we're all set up:
+
+- Log into Canvas and go to this week's practical
+- Download the "prac_03_basic_desc.Rmd" file into your `r_docs` subfolder analysing_data project folder
+- Open RStudio
+- Open a new sript and save it in the same folder as "prac_03_script.R"
+
+### Read in data
+
+From this week on, we will be using data from the Gender and Sexuality Questionnaire that we asked you to fill in. You can get the data set here: https://mivalek.github.io/adata/gen_sex_q.csv
+
+When dealing with the Internet, it is useful to understand that anything online is just some sort of file. Most website are simply HTML documents not too unlike the ones you've already created using Rmd. In the case of our data, it is a "comma-separated values" file, or CSV. We *could* download it into our `data` folder and then read it into RStudio. However, we can also read it directly from the URL (link) like this:
+
+```{r, eval=F}
+read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
+```
+
+\ 
+
+#### Time to think
+
+- Why might it be preferable to read data in from the URL?
+- Why might it be better to save data on your computer?
+- The `read_csv()` function comes from the `tidyverse` package. What do we need to do before we can run the command above?
+- What will the command above do? Is that what we want? If not, what do we need to add to the line?
+
+\ 
+
+Let's read the data into RStudio so that we can start working with them.
+
+```{r, eval=F}
+library(tidyverse)
+gensex <- read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
+```
+
+<div class="solText">
+#### Note on data
+
+Before making the data set accessible, we removed the data of any students who were younger than 18 years as well as those who asked for their data to be withdrawn. We don't want to make anyone feel excluded and we appreciate your willingness to contribute your data. However, there are ethical issues concerning using data of minors we simply cannot disregard. Thank you!
+
+For educational purposes we also added a few rows of data with odd/missing values.</div>
+
+### First glance
+
+Now that we have our dataset in RStudio, we should familiarise ourselves with it. Before we can go through with any analyses, we need to make sure we can trust our data. Data come in all sorts of shapes: sometimes neat and tidy, other times very messy. Human error can creep in and, if uncorrected, can render data useless or deceptive. That's why we always need to perform a thorough data audit. Best place to start is often looking at the structure of the data set.
+
+```{r}
+gensex %>% str()
+```
+
+Here we can see if the variables are coded as numbers (`num`), character strings (`char`), or logical (`logi`). The first step in data audit/cleaning is to make sure these so called "classes" (`numeric`, `character`, `logical`, `factor`) are what we would expect given our variables and, if not, to understand why.
+
+Looking at the output of the command above, everything is looking good, except for `Age`. `Age` is supposed to be a numeric variable, but `R` read it as a character string. To understand why this happened, we need to look at what values were entered as age by our participants. We can do that by pulling the `Age` variable from our data and making a frequency table of the different ages:
+
+```{r}
+gensex %>%
+  pull(Age) %>%
+  table()
+```
+
+\ 
+
+### Data cleaning
+
+Hmm... \  Looks like some participants didn't just enter the number, but instead wrote "18 years" and "19 years old". Because of these two data points, the variable cannot be understood as numbers. To convert `Age` into a numeric variable, we first need to replace these values with 18 and 19, respectively. We can write a pipeline that *mutates* (changes) the value of the `Age` variable *recoding* the two rows as numbers:
+
+```{r}
+gensex %>%
+  mutate(Age = recode(Age, "18 years" = "18", "19 years old" = "19"))
+```
+
+OK, something happened, but it's sort of difficult to see what and whether we did what we wanted. But because of the flexibility of the pipelines, we can just take this resulting tibble, pull the `Age` variable out of it and create a frequency table, just like we did before:
+
+```{r}
+gensex %>%
+  mutate(Age = recode(Age, "18 years" = "18", "19 years old" = "19")) %>%
+  pull(Age) %>%
+  table()
+```
+
+This looks good: Whereas before we had 69 participants with age 18 and 113 with age 19, now we have 70 and 114, respectively.
+
+We're not done yet, though! The variable is still coded as `character` so we need to change it into `numeric` by adding the `as.numeric()` function, inside the `mutate()` section of our pipeline:
+
+```{r}
+gensex %>%
+  mutate(Age = recode(Age, "18 years" = "18", "19 years old" = "19"),
+         Age = as.numeric(Age))
+```
+
+We can check that this did the job by pulling out the `Age` variable from the dataset and looking at its class:
+
+```{r}
+gensex %>%
+  mutate(Age = recode(Age, "18 years" = "18", "19 years old" = "19"),
+         Age = as.numeric(Age)) %>%
+  pull(Age) %>%
+  class()
+```
+
+\ 
+
+<font size="+3">**Success!**</font>
+
+\ 
+
+\ 
+
+<div class = "warn">
+Notice that the `"18"` and `"19"` are in quotes. This is important. Remember that `Age` is currently a `character` variable so if we are changing some of its values, the replacement values must also be `character` values. Putting in simply `18` and `19` will result in unwanted behaviour:
+
+```{r}
+gensex %>%
+  mutate(Age = recode(Age, "18 years" = 18, "19 years old" = 19),
+         Age = as.numeric(Age))
+```
+</div>
+
+\ 
+
+Don't forget that pipelines on their own **do not modify the original data**. To save our changes into `gensex`, we need to reassign the output of the pipeline back to itself:
+
+```{r}
+gensex <- gensex %>%
+  mutate(Age = recode(Age, "18 years" = "18", "19 years old" = "19"),
+         Age = as.numeric(Age))
+```
+
+\ 
+
+One more thing: It's good to set categorical variables to be factors instead of character vectors. Factors are handy for plotting and some statistics.
+
+```{r}
+gensex <- gensex %>%
+  mutate(Gender = factor(Gender))
+```
+
+We can double-check all is now as its supposed to be:
+
+```{r}
+gensex %>% str()
+```
+
+\ 
+
+Now that basic housekeeping is done, let's look at the roughest summary of our data.
+
+```{r}
+gensex %>% summary()
+```
+
+As we can see, we have some missing values in the some of the variables. That's OK, missing data happen.
+
+
+Notice, however, a few oddities. Firstly, the maximum age seems very unlikely. It is safe to assume that there are no participants older than 99 years. We could just replace the extreme values of age with `NA` but the problem is that we cannot guarantee that these participants were 18+ years old. To be on the safe side, let's filter out their data. Before we do that, let's save the number of rows we are about to exclude. This is the kind of information you want to put in your paper/report. To do that, we can use `filter()` and `nrow()` (number of rows):
+
+```{r}
+age_removed <- gensex %>% filter(Age > 99) %>% nrow()
+age_removed
+```
+
+So now we know we are about to remove `r age_removed` participants due to odd values of `Age`. Let's do it:
+
+```{r}
+gensex <- gensex %>% filter(Age < 100)
+```
+
+Secondly, all variables contain at least 7 missing values. It is possible that there are participants who started the questionnaire but never actually replied to any questions. We want to delete these "attempts".
+
+\ 
+
+#### Removing rows with only `NA`s
+
+Let's think about how we can tell `R` to remove those rows of our dataset that only have missing values. The following steps do the trick:
+
+1. Test each data point for whether or not it is an `NA`
+2. Add up the results *by row*
+3. Remove rows for which this added up number is equal or larger than some number we choose
+
+OK, let's take it one step at a time.
+
+To test each data point for missingness, we can use the `is.na()` function. The output of this function is not a `tibble` but we can convert it into one using `as.tibble()`:
+
+```{r}
+is.na(gensex) %>% as.tibble()
+```
+
+As you can see, we now get only the values `TRUE` and `FALSE` in place of our data. We can use the fact that computers treat `TRUE` as 1 and `FALSE` as 0 to calculate the number of missing values per each row. To do that, we only need to take the row sums using the aptly names `rowSums()` function:
+
+```{r}
+rowSums(is.na(gensex))
+```
+
+Because we only have 12 variables in our questionnaire (plus the Duration column), any row that has 12 missing values doesn't include any data. We can however argue, that even data from participants who only provided 1 answer is are not very useful. Thus, we can filter only those rows that have fewer than 11 `NA`s. Just like with odd values of `Age`, before we do that, lets count how many rows we will be removing:
+
+```{r}
+all_missing <- gensex %>% filter(rowSums(is.na(gensex)) > 10) %>% nrow()
+all_missing
+```
+
+OK, so we're removing `r all_missing` rows. Let's do it using `filter()`.
+
+```{r}
+gensex <- gensex %>% filter(rowSums(is.na(gensex)) < 11)
+```
+
+
+And with that, our data are reasonable clean...
+
+\ 
+
+### Basic descriptive stats
+
+With all of this out of the way, we can prepare tibbles of relevant summary statistics. First of all, age:
+
+```{r}
+age_desc <- gensex %>%
+  summarise(age_mean = mean(Age),
+            sd_age = sd(Age),
+            min_age = min(Age),
+            max_age = max(Age))
+age_desc
+```
+
+We only ever need to report these kinds of numbers to 2 decimal places so let's round things up:
+
+```{r}
+age_desc <- age_desc %>% 
+  modify(round, 2)
+age_desc
+```
+
+We can do all of the above in a single *pipeline*:
+
+```{r}
+age_desc <- gensex %>%
+  summarise(mean = mean(Age, na.rm = T),
+            sd = sd(Age, na.rm = T),
+            min = min(Age, na.rm = T),
+            max = max(Age, na.rm = T)) %>%
+  modify(round, 2)
+age_desc
+```
+
+This `age_desc` tibble now enables us to report descriptive statistics in text using in-line code. For instance, we can just type <code>&#96;r age_desc %>% pull(mean)&#96;</code> in R Markdown and when the file gets generated, it will read `r age_desc %>% pull(mean)`. That's useful, isn't it!
+
+\ 
+
+Let's create another tibble of descriptives, this time with age breakdown by Gender:
+
+```{r, message=T, warning=TRUE}
+gen_age_desc <- gensex %>%
+  group_by(Gender) %>%
+  summarise(n = n(),
+            perc = n()/nrow(gensex) * 100,
+            mean_age = mean(Age, na.rm = T),
+            sd_age = sd(Age, na.rm = T))
+gen_age_desc
+```
+
+The command returns the following message:
+
+"Factor `Gender` contains implicit NA, consider using `forcats::fct_explicit_na`"
+
+This is not technically a problem, we can just have a row for `NA` in the tibble. However, using the `fct_explicit_na()` function suggested by the warning creates an additional level `(Missing)` in the `Gender` variable, instead of the `NA`s. We can use the function inside of `mutate()`:
+
+```{r}
+gen_age_desc <- gensex %>%
+  mutate(Gender = fct_explicit_na(Gender)) %>%
+  group_by(Gender) %>%
+  summarise(n = n(),
+            perc = n()/nrow(gensex) * 100,
+            mean_age = mean(Age, na.rm = T),
+            sd_age = sd(Age, na.rm = T))
+gen_age_desc
+```
+
+I think this looks better and there are also minor advantages of having explicitly labelled missing data when it comes to plotting. More on that later...
+
+\ 
+
+This second descriptive tibble is also quite handy as we can take it and easily convert in into a nice table using the `kable()` function from package `kableExtra` (if you've had problems with this package, load the `knitr` package instead and omit the `%>% kable_styling()` bit):
+
+```{r}
+library(kableExtra)
+gen_age_desc %>% kable() %>% kable_styling()
+```
+
+Granted, the table isn't formatted perfectly... Let's remedy that!
+
+There are basically only three things we want to edit
+
+1. The table header could look better
+1. The table should have a caption
+1. Reported numbers should be rounded to 2 decimal places
+
+All of these edits can be done using arguments to `kable()`, namely `col.names=` and `caption=`. We can use R Markdown within these arguments to get things like subscripts or italics:
+
+```{r}
+gen_age_desc %>%
+  mutate(Gender = str_to_sentence(Gender)) %>%
+  kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~age~"),
+        caption = "Table 1 *Descriptive statistics by Gender*",
+        digits = 2) %>%
+  kable_styling()
+```
+
+\ 
+
+That's pretty neat, don't you think?
+
+\ 
+
+<div class="warn">
+Tables in documents generated from your own R markdown files will look slightly different. That is because we are using our own custom theme for these sheets.
+</div>
+
+
+### Write-up
+
+Now that we are familiar with our data, we can start writing up. Obviously, we don't really have any results yet but we can at least describe our sample. This is normally done in the *Participants* subsection of the *Method* section. On top of that, we can give a description of what data were collected and how in the *Materials* and *Procedure* subsections, respectively. Here, both would be very short so we can collapse them into a single subsection:
+
+\ 
+
+#### Method
+
+##### Participants
+
+Data from `r nrow(gensex)` first year Psychology students at the University of Sussex (*M*~age~ = `r age_desc %>% pull(mean)`, *SD*~age~ = `r age_desc %>% pull(sd)`) were collected anonymously as part of the Analysing Data module. This excludes `r as.english(age_removed)` participants, whose data were removed due to unlikely values of age in order to avoid using data from minors. Further `r as.english(all_missing)` participants only provided answers to one item and so were not included in the sample either.
+
+##### Materials and procedure
+
+Participants filled in a questionnaire hosted via Qualtrics.
+The form was accessed using a URL given in lecture.
+<!-- Each participant was given a unique ID code they then entered into the form. -->
+The questionnaire contained ten Likert-type items on topics relating to gender and sexuality. Data on participants' own age and gender were also collected. The age breakdown by gender is given in Table 1.
+
+```{r, echo=F}
+gen_age_desc %>%
+  mutate(Gender = str_to_sentence(Gender)) %>%
+  kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~age~"),
+        caption = "Table 1 *Descriptive statistics by Gender*") %>%
+  kable_styling()
+```
+
+\ 
+
+<div class="solText">
+<title>Points to notice</title>
+
+Read through our mock write-up again and notice the following points:
+
+  - Concision
+      - Make it short and sweet. Above, we only needed one sentence to tell the reader who our participants were, how many there were in our sample, what the basic descriptives of their age were, how they were recruited and where and how it all happened.
+  - Right amount of detail
+      - You want to report all the info about your sample that we did. We *could* also have reported the range of ages but it's not crucial.
+      - In *Material and procedure* we need to give the reader enough information so that they can get a good idea of what exactly it is that we did.
+  - You can refer to tables if it's helpful
+      
+These are all good guidelines for writing up the *Method* section.
+</div>
+
+\ 
+
+That's all we have to cover this week. **Save you "prac_02_script.R" file** and it's over to you!
+
+\ 
+
+## Worksheet
+
+```{r, echo = F}
+data <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/harm_data.csv")
+```
+
+In the remaining time you will practice what you have just learnt. To make things interesting, let's use the data from [an actual paper by Swiderska and K&uuml;ster (2018)](https://journals.sagepub.com/doi/10.1177/0301006618809919) exploring the ways in which the capacity of people to empathise with robots can be increased. You can find the data from the study at https://raw.githubusercontent.com/mivalek/AnD/master/data/harm_data.csv.
+
+`r task()`First of all, if you haven't done it yet, download the "prac_03_basic_desc.Rmd" file from canvas and open it in RStudio.
+
+Use the R Markdown file to complete the following tasks.
+
+`r task()`In the `packages` code chunk, write the code to load the packages you will need to complete this practical: `tidyverse` and `kableExtra` (or `knitr`, if the latter causes trouble) should be enough.
+
+
+```{r, eval=F, echo= solution, class="solution"}
+# add library() commands to load all packages you need for this document.
+
+library(tidyverse)
+# if kableExtra doesn't work
+library(knitr)
+# otherwise
+library(kableExtra)
+```
+
+`r task()`In the `read-in` code chunk, write the code to read the data into RStudio.
+
+```{r, eval=F, echo= solution, class="solution"}
+# complete the line to read in the data
+
+data <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/harm_data.csv")
+```
+
+`r task()`In the `inspect` chunk, write code that does the following:
+
+`r subtask()`Make sure the classes of your variables match the code book below: Ordinal variables can be coded as numbers but categorical (nominal) variables should be factors.
+
+**Hint. **A basic summary will do.
+
+```{r, echo = solution, class = "solution"}
+summary(data)
+```
+
+```{r, echo = F}
+tibble(
+  var_name = names(data),
+  level = rep(c("nominal", "continuous", "ordinal"),
+              c(5, 1, 6)),
+  desc = c(
+    "Unique participant ID",
+    "Experimntal condition; combination of Humanness and Harm",
+    "Avatar type: 1 = Human, 2 = Robot",
+    "Avatar state: 1 = Unharmed, 2 = Harmed",
+    "Participant gender: 1 = Male, 2 = Female",
+    "Participant age in years",
+    "Does avatar have capacity to feel pain? 1 = Strongly disagree, 7 = Strongly agree",
+    "Does avatar have experience? 1 = Strongly disagree, 7 = Strongly agree",
+    "Does avatar have agency? 1 = Strongly disagree, 7 = Strongly agree",
+    "Does avatar have consciousness? 1 = Strongly disagree, 7 = Strongly agree",
+    "Level of empathy for avatar: Higher number means more empathy felt",
+    "Attractiveness of avatar: Higher number means more attractive")) %>%
+  kable(col.names = c("Variable name", "Level", "Description"),
+        caption = "Data set code book") %>%
+  kable_styling()
+```
+
+`r subtask()`If there's something wrong with any of the variables, fix it! The result should look like this:
+
+<!-- solution
+The `Age` variable is currently a `character` variable. That's not right. We can use `tally()` to see what values there are in the variable:-->
+
+```{r, echo=solution, class = "solution"}
+data %>%
+  group_by(Age) %>%
+  tally()
+```
+
+<!-- solution
+There seems to be an odd value of age: "1y". Since we can't be sure what the actual age is, let's remove this row. While we are at it, we may as well convert the variable to numeric:-->
+
+```{r, include=solution, class = "solution"}
+data <- data %>%
+  filter(Age != "1y") %>%
+  mutate(Age = as.numeric(Age))
+# check it worked
+data
+```
+
+<!-- solution
+OK, that did the trick. Now, let's convert the variables that should be nominal into factors:-->
+
+```{r, echo=solution, eval = F, class = "solution"}
+data <- data %>% mutate(
+  ID = factor(ID),
+  Condition = factor(Condition),
+  Humanness = factor(Humanness),
+  Harm = factor(Harm),
+  Gender = factor(Gender))
+```
+
+
+`r subtask()`Give all factors proper labels as per code book.
+
+<!-- solution
+To do this, let's go back to the last command above and edit it, specifying the `labels=` argument:-->
+
+```{r, echo=solution, class = "solution"}
+data <- data %>% mutate(
+  ID = factor(ID),
+  Condition = factor(Condition, labels = c("Human_NoHarm", "Human_Harm",
+                                           "Robot_NoHarm", "Robot_Harm")),
+  Humanness = factor(Humanness, labels = c("Human", "Robot")),
+  Harm = factor(Harm, labels = c("Unharmed", "Harmed")),
+  Gender = factor(Gender, labels = c("Male", "Female")))
+# check it worked
+data
+```
+
+
+`r subtask()`Check if all ID codes are unique (*e.g.,* they do not repeat).
+
+**Hint: **Once again, a frequency table might come in handy.
+
+<!-- solution
+There are several solutions to this problem. `table()` will do the trick. If all ID only occur once, than they are unique.-->
+
+```{r, include = solution, class = "solution"}
+data %>%
+  pull(ID) %>%
+  table()
+```
+
+<!-- solution
+We can even ask `R` if all IDs only occur once:-->
+
+```{r, include = solution, class = "solution"}
+data %>%
+  pull(ID) %>%
+  table() %>%
+  all() == 1
+```
+
+
+`r task()`Take a minute to look at the summary of the data set. Notice the means and medians of the numeric variables. Think about what the distributions of the variables might look like.
+
+<!-- solution
+One thing to notice is the distance between a variable's mean and its median. If they are almost identical, the variable is probably symmetrically distributed. If they are far apart, the variable is skewed one way or the other. Notice that the `Pain` variable is quite skewed.
+
+Also look at maximums and minimums. We know all the ordinal items are on 7-point scales so any numbers outside of 1-7 are suspicious. In this case, there are no suspect values.
+
+Min and max of Age is also worth checking...-->
+
+`r task()`Only keep data from participants with *reasonable* values of age. If you are removing any rows, make sure you keep record of how many and why!
+
+<!-- solution
+I'd say 18 to 90 sounds reasonable:-->
+
+```{r, echo=solution, class = "solution"}
+too_young <- data %>%
+  filter(Age < 17) %>%
+  nrow()
+too_old <- data %>%
+  filter(Age > 90) %>%
+  nrow()
+data <- data %>% filter(Age > 18 | Age < 90)
+```
+
+`r task()`In the `descriptives` code chunk, write code that creates:
+
+`r subtask()`A tibble of descriptive statistics (mean, standard deviation, minimum, maximum) for the `Age` variable rounded to 2 decimal places. It should look like this:
+
+```{r, echo=solution, class = "solution"}
+age_desc <- data %>%
+  summarise(age_mean = mean(Age),
+            age_sd = sd(Age),
+            age_min = min(Age),
+            age_max = max(Age)) %>%
+  modify(round, 2)
+# let's see
+age_desc
+```
+
+`r subtask()`A tibble with *N*s, %s, and age (mean and *SD*) breakdown by categories of the `Gender` variable. Something like this:
+
+
+```{r, echo=solution, class = "solution"}
+gender_desc <- data %>%
+  mutate(Gender = fct_explicit_na(Gender)) %>%
+  group_by(Gender) %>%
+  summarise(n = n(),
+            perc = n()/nrow(data) * 100,
+            age_mean = mean(Age),
+            age_sd = sd(Age))
+# let's see
+gender_desc
+```
+
+`r subtask()`A tibble with frequencies (*N*s) and means of `Pain`, `Experience`, `Agency`, and `Consciousness` broken down by categories avatar type.
+
+<!-- solution
+Do not copy-paste, practice makes perfect!-->
+
+```{r, echo=solution, class = "solution"}
+type_desc <- data %>%
+  group_by(Humanness) %>%
+  summarise(n = n(),
+            pain_m = mean(Pain),
+            exp_m = mean(Experience),
+            agency_m = sd(Agency),
+            consc_m = sd(Consciousness))
+# let's see
+type_desc
+```
+
+
+`r subtask()`A tibble with frequencies and means of `Attractiveness` and `Empathy` broken down by categories avatar type **for unharmed avatars only**.
+
+<!-- solution
+Once more...-->
+
+```{r, echo=solution, class = "solution"}
+unharm_desc <- data %>%
+  filter(Harm == "Unharmed") %>%
+  group_by(Humanness) %>%
+  summarise(n = n(),
+            attr_m = mean(Attractiveness),
+            emp_m = mean(Empathy))
+# See the resul
+unharm_desc
+```
+
+
+`r task()`Complete the **Write-up** section of the .Rmd file.
+
+<!-- solution
+<pre>
+<code>## Method
+
+### Participants
+
+The study was conducted on a sample of &#96;r nrow(data)&#96; volunteers (*M*~age~ = &#96;r age_desc %>% pull(age_mean)&#96;, *SD*~age~ = &#96;r age_desc %>% pull(age_sd)&#96;). The data were collected anonymously on-line. Data from &#96;r too_young + too_old&#96; participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
+
+[...]
+
+### Procedure
+
+Participants were presented with pictures of the avatars. Their task was to evaluate the degree to which mental capacities (experience, agency, consciousness, and pain) could be attributed to the faces and the extent to which the presented avatars elicited empathic reactions. Every page of the survey consisted of the respective face displayed above a 7-point, Likert-type response scale (1 = "Strongly disagree" to 7 = "Strongly agree"). The survey was delivered via EFS Survey (Version 9.0, QuestBack AG, Germany). The experiment followed a 2 (Harm: harmed vs. control) 2&times;2 (Robotization: human vs. robotic) between-subjects factorial design.</code>
+</pre>
+
+\ 
+
+The R Markdown above will appear as:
+
+#### 4.1 Method
+
+##### 4.1.1 Participants
+
+The study was conducted on a sample of `r nrow(data)` volunteers (*M*~age~ = `r age_desc %>% pull(age_mean)`, *SD*~age~ = `r age_desc %>% pull(age_sd)`). The data were collected anonymously on-line. Data from `r too_young + too_old` participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
+
+[...]
+
+##### 4.1.3 Procedure
+
+Participants were presented with pictures of the avatars. Their task was to evaluate the degree to which mental capacities (experience, agency, consciousness, and pain) could be attributed to the faces and the extent to which the presented avatars elicited empathic reactions. Every page of the survey consisted of the respective face displayed above a 7-point, Likert-type response scale (1 = "Strongly disagree" to 7 = "Strongly agree"). The survey was delivered via EFS Survey (Version 9.0, QuestBack AG, Germany). The experiment followed a 2 (Harm: harmed vs. control) 2&times;2 (Robotization: human vs. robotic) between-subjects factorial design.
+
+<div class="warn">
+**We lifted the above from the original paper. You should not!**
+</div>-->
+
+`r task()`Edit the code in the `table_1` code chunk, giving it your tibble with age breakdown by gender, to create a nice formatted table in your document. Make sure the table show values to 2 decimal digits.
+
+
+```{r table_1, echo = solution, class="solution"}
+# provide tibble to push to kable() and fill in missing column names
+gender_desc %>%
+  kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~Age~"),
+        caption = "Table 1 *Descriptive statistics by categories of gender*",
+        digits = 2) %>%
+  kable_styling()
+```
+
+`r task()`Knit (generate) the final document from your R markdown file and rejoice in its beauty.
+
+\ 
+
+That's all for this week. You've done quite a lot today. You learnt about why it's important to audit your data. You explored some of the things you should look at and how to clean datasets in `R`. You practiced creating pipelines, filtering, modifying, grouping, and summarising data. You looked at the brak-down of data by levels of a variable and created tables of basic descriptive statistics. Finally, you learnt how to write up the Participants and Procedure sections of a paper.
+
+<font size="+4">**Well done!**</font>
+\ 
+
+\ 
+
+

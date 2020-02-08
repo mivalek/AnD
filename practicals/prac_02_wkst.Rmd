@@ -50,7 +50,7 @@ This option determines whether or not the code (not the output!) gets printed in
 By default, it is set to `TRUE` for all chunks.
 If you don't want the code to be visible, just change the option to `FALSE`.
 
-![](pics/echo.png)
+![](../pics/echo.png)
 
 ### `eval=`
 
@@ -60,7 +60,7 @@ In the picture below on the left side, the code used to create `my_data` does no
 This has a knock-on effect on the subsequent chunk.
 As there is no `my_data`, we get an error when trying to use this object to plot the histogram.
 
-![](pics/eval.png)
+![](../pics/eval.png)
 
 
 ### `include=`
@@ -69,7 +69,7 @@ This option determines whether **both code and output** appear in the knitted do
 It does not change evaluation, though: regardless of its value, the code gets executed by `R`.
 But, if the option is set to `FALSE` this will happen *quietly* in the background and there will be no record of this happening in the knitted document.
 
-![](pics/include.png){height="530px"}
+![](../pics/include.png){height="530px"}
 
 ### Usage
 
