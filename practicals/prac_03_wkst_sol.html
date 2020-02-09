@@ -1880,23 +1880,23 @@ For educational purposes we also added a few rows of data with odd/missing value
 <h3>Basic descriptive stats</h3>
 <p>With all of this out of the way, we can prepare tibbles of relevant summary statistics. First of all, age:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">age_mean =</span> <span class="kw">mean</span>(Age),</a>
-<a class="sourceLine" id="cb20-3" title="3">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(Age),</a>
-<a class="sourceLine" id="cb20-4" title="4">            <span class="dt">min_age =</span> <span class="kw">min</span>(Age),</a>
-<a class="sourceLine" id="cb20-5" title="5">            <span class="dt">max_age =</span> <span class="kw">max</span>(Age))</a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age),</a>
+<a class="sourceLine" id="cb20-3" title="3">            <span class="dt">age =</span> <span class="kw">sd</span>(Age),</a>
+<a class="sourceLine" id="cb20-4" title="4">            <span class="dt">age =</span> <span class="kw">min</span>(Age),</a>
+<a class="sourceLine" id="cb20-5" title="5">            <span class="dt">age =</span> <span class="kw">max</span>(Age))</a>
 <a class="sourceLine" id="cb20-6" title="6">age_desc</a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="co"># A tibble: 1 x 4</span></a>
-<a class="sourceLine" id="cb20-8" title="8">  age_mean sd_age min_age max_age</a>
-<a class="sourceLine" id="cb20-9" title="9">     <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb20-10" title="10"><span class="dv">1</span>     <span class="fl">19.6</span>   <span class="fl">2.50</span>      <span class="dv">18</span>      <span class="dv">51</span></a></code></pre></div>
+<a class="sourceLine" id="cb20-7" title="7"><span class="co"># A tibble: 1 x 2</span></a>
+<a class="sourceLine" id="cb20-8" title="8">   mean   age</a>
+<a class="sourceLine" id="cb20-9" title="9">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb20-10" title="10"><span class="dv">1</span>  <span class="fl">19.6</span>    <span class="dv">51</span></a></code></pre></div>
 <p>We only ever need to report these kinds of numbers to 2 decimal places so let’s round things up:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">age_desc &lt;-<span class="st"> </span>age_desc <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">modify</span>(round, <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb21-3" title="3">age_desc</a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="co"># A tibble: 1 x 4</span></a>
-<a class="sourceLine" id="cb21-5" title="5">  age_mean sd_age min_age max_age</a>
-<a class="sourceLine" id="cb21-6" title="6">     <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="dv">1</span>     <span class="fl">19.6</span>    <span class="fl">2.5</span>      <span class="dv">18</span>      <span class="dv">51</span></a></code></pre></div>
+<a class="sourceLine" id="cb21-4" title="4"><span class="co"># A tibble: 1 x 2</span></a>
+<a class="sourceLine" id="cb21-5" title="5">   mean   age</a>
+<a class="sourceLine" id="cb21-6" title="6">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="dv">1</span>  <span class="fl">19.6</span>    <span class="dv">51</span></a></code></pre></div>
 <p>We can do all of the above in a single <em>pipeline</em>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> T),</a>
@@ -2690,17 +2690,17 @@ Attractiveness of avatar: Higher number means more attractive
 <p>A tibble of descriptive statistics (mean, standard deviation, minimum, maximum) for the <code>Age</code> variable rounded to 2 decimal places. It should look like this:</p>
 <div class="solution">
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">age_desc &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">age_mean =</span> <span class="kw">mean</span>(Age),</a>
-<a class="sourceLine" id="cb37-3" title="3">            <span class="dt">age_sd =</span> <span class="kw">sd</span>(Age),</a>
-<a class="sourceLine" id="cb37-4" title="4">            <span class="dt">age_min =</span> <span class="kw">min</span>(Age),</a>
-<a class="sourceLine" id="cb37-5" title="5">            <span class="dt">age_max =</span> <span class="kw">max</span>(Age)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age),</a>
+<a class="sourceLine" id="cb37-3" title="3">            <span class="dt">sd =</span> <span class="kw">sd</span>(Age),</a>
+<a class="sourceLine" id="cb37-4" title="4">            <span class="dt">min =</span> <span class="kw">min</span>(Age),</a>
+<a class="sourceLine" id="cb37-5" title="5">            <span class="dt">max =</span> <span class="kw">max</span>(Age)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb37-6" title="6"><span class="st">  </span><span class="kw">modify</span>(round, <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb37-7" title="7"><span class="co"># let&#39;s see</span></a>
 <a class="sourceLine" id="cb37-8" title="8">age_desc</a>
 <a class="sourceLine" id="cb37-9" title="9"><span class="co"># A tibble: 1 x 4</span></a>
-<a class="sourceLine" id="cb37-10" title="10">  age_mean age_sd age_min age_max</a>
-<a class="sourceLine" id="cb37-11" title="11">     <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb37-12" title="12"><span class="dv">1</span>     <span class="fl">22.9</span>   <span class="fl">21.0</span>       <span class="dv">1</span>     <span class="dv">223</span></a></code></pre></div>
+<a class="sourceLine" id="cb37-10" title="10">   mean    sd   min   max</a>
+<a class="sourceLine" id="cb37-11" title="11">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb37-12" title="12"><span class="dv">1</span>  <span class="fl">22.9</span>  <span class="fl">21.0</span>     <span class="dv">1</span>   <span class="dv">223</span></a></code></pre></div>
 </div>
 <p> </p>
 </div>
@@ -2783,7 +2783,7 @@ Attractiveness of avatar: Higher number means more attractive
 
 ### Participants
 
-The study was conducted on a sample of `r nrow(data)` volunteers (*M*~age~ = `r age_desc %&gt;% pull(age_mean)`, *SD*~age~ = `r age_desc %&gt;% pull(age_sd)`). The data were collected anonymously on-line. Data from `r too_young + too_old` participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
+The study was conducted on a sample of `r nrow(data)` volunteers (*M*~age~ = `r age_desc %&gt;% pull(mean)`, *SD*~age~ = `r age_desc %&gt;% pull(sd)`). The data were collected anonymously on-line. Data from `r too_young + too_old` participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
 
 [...]
 
@@ -3474,7 +3474,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2",
+      selectors: "h1,h2,h3",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

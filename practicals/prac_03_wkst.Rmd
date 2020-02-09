@@ -246,10 +246,10 @@ With all of this out of the way, we can prepare tibbles of relevant summary stat
 
 ```{r}
 age_desc <- gensex %>%
-  summarise(age_mean = mean(Age),
-            sd_age = sd(Age),
-            min_age = min(Age),
-            max_age = max(Age))
+  summarise(mean = mean(Age),
+            age = sd(Age),
+            age = min(Age),
+            age = max(Age))
 age_desc
 ```
 
@@ -570,10 +570,10 @@ data <- data %>% filter(Age > 18 | Age < 90)
 
 ```{r, echo=solution, class = "solution"}
 age_desc <- data %>%
-  summarise(age_mean = mean(Age),
-            age_sd = sd(Age),
-            age_min = min(Age),
-            age_max = max(Age)) %>%
+  summarise(mean = mean(Age),
+            sd = sd(Age),
+            min = min(Age),
+            max = max(Age)) %>%
   modify(round, 2)
 # let's see
 age_desc
@@ -637,7 +637,7 @@ unharm_desc
 
 ### Participants
 
-The study was conducted on a sample of &#96;r nrow(data)&#96; volunteers (*M*~age~ = &#96;r age_desc %>% pull(age_mean)&#96;, *SD*~age~ = &#96;r age_desc %>% pull(age_sd)&#96;). The data were collected anonymously on-line. Data from &#96;r too_young + too_old&#96; participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
+The study was conducted on a sample of &#96;r nrow(data)&#96; volunteers (*M*~age~ = &#96;r age_desc %>% pull(mean)&#96;, *SD*~age~ = &#96;r age_desc %>% pull(sd)&#96;). The data were collected anonymously on-line. Data from &#96;r too_young + too_old&#96; participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
 
 [...]
 
@@ -654,7 +654,7 @@ The R Markdown above will appear as:
 
 ##### 4.1.1 Participants
 
-The study was conducted on a sample of `r nrow(data)` volunteers (*M*~age~ = `r age_desc %>% pull(age_mean)`, *SD*~age~ = `r age_desc %>% pull(age_sd)`). The data were collected anonymously on-line. Data from `r too_young + too_old` participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
+The study was conducted on a sample of `r nrow(data)` volunteers (*M*~age~ = `r age_desc %>% pull(mean)`, *SD*~age~ = `r age_desc %>% pull(sd)`). The data were collected anonymously on-line. Data from `r too_young + too_old` participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
 
 [...]
 
