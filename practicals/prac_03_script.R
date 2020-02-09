@@ -97,10 +97,10 @@ gensex <- gensex %>% filter(rowSums(is.na(gensex)) < 11)
 
 # desc for Age
 age_desc <- gensex %>%
-  summarise(age_mean = mean(Age),
-            sd_age = sd(Age),
-            min_age = min(Age),
-            max_age = max(Age))
+  summarise(mean = mean(Age),
+            sd = sd(Age),
+            min = min(Age),
+            max = max(Age))
 
 # round to 2 decimal places
 age_desc <- age_desc %>% 
