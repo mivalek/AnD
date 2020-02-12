@@ -1,0 +1,975 @@
+---
+title: "Tutorial 4: Visualising data with <code>ggplot()</code>"
+author: "Analysing Data"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2movies)
+library(ggmosaic)
+library(cowplot)
+library(colortools)
+knitr::opts_chunk$set(echo = T, fig.height=4, fig.width=5, fig.align = "center",
+                      message = F, warning = F, toggle = F, cache = T)
+
+
+bg_col <- "#fdfdfd"
+default_col <- "#434b75"
+theme_col <- "#b38ed2"
+complement_col <- complementary(theme_col, F)[2]
+point_col <- paste0(default_col, "88")
+
+my_theme <- theme_cowplot() +
+  theme(line = element_line(colour = default_col),
+        plot.background = element_rect(fill = bg_col),
+        panel.background = element_rect(fill = bg_col),
+        text = element_text(colour = default_col),
+        title = element_text(colour = default_col),
+        axis.line = element_line(colour = default_col),
+        axis.ticks = element_line(colour = default_col),
+        axis.text = element_text(colour = default_col),
+        axis.title = element_text(colour = default_col),
+        strip.background = element_rect(fill = default_col, colour = default_col),
+        strip.text = element_text(colour = bg_col)
+  )
+update_geom_defaults("bar", list(fill = bg_col, colour = default_col))
+```
+
+The goal of this tutorial is to understand the philosophy and syntax of `ggplot()`. This is a very powerful tool for data visualisation of all sorts and, thought it takes a little getting used to, once you wrap your head around it, you will be able to create pretty much any plot you want. We will also look at how to integrate `ggplot()` into pipelines and combine it with other `tidyverse` functions.
+
+# Setting up
+
+Just like last time, all you need for this tutorial is this file and RStudio. Remember that you can easily switch between windows with the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) and <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcuts.
+
+`r task()`Open your analysing_data `R` project in RStudio and open a new `R` script. Here is where you can write solution code for the tasks.
+
+`r task()`Aside from loading `tidyverse`, you will need to install the `ggplot2movies` package. It includes some pretty cool data from the [Internet Movie Database](https://www.imdb.com/). Do it now but **remember that installing packages is a one-off thing** so don't put the command that does it in your script. Simply type it into the console and press <kbd>&crarr;\ Enter</kbd> 
+
+```{r, eval=F, toggle=T}
+install.packages("ggplot2movies")
+library(tidyverse)
+```
+
+`r task()`Now, let's import the `movies` data set from `ggplot2movies`. Let's save it under the name `movie_data`.
+
+**Hint: **To explicitly ask for an object (*e.g.,* data or function) from a given package do `package_name::object_name`.
+
+```{r, toggle=T}
+movie_data <- ggplot2movies::movies
+```
+
+This data set comes with its own help file that explains what the individual variables represent. You can access the help file with `?ggplot2movies::movies`.
+
+`r task()`Read the help file for the data set.
+
+\ 
+
+As you can see in the Environment tab, it's a pretty big data set: `r nrow(movie_data)` rows! To make it a little more manageable, let's only keep data from movies from this century using `filter()`.
+
+```{r, toggle=T}
+movie_data <- movie_data %>%
+  filter(year > 2000)
+```
+
+OK, `r nrow(movie_data)` is still quite a few but not crazy many. Ideal for some plotting!
+
+# Plots
+
+Plots are a good way to visualise your data. In the most basic sense, plots are created by mapping a variable onto an axis. We can categorise plots in terms of the number of variables they use
+
+## Univariate plots
+
+As the name suggests, these are plots that visualise *a single* variable. With plots like these, we only map a variable onto the X-axis. You've already seen some univariate plots but let's run through a few again:
+
+\ 
+
+#### Histogram
+
+- Used for a single **continuous** variable
+- Heights of bars represent *frequencies* of observations within a given range (AKA *bin*)
+
+```{r, echo = F, fig.width=9}
+p1 <- movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length)) +
+  geom_histogram() +
+  labs(x = "Film duration (in minutes)", y = expression(italic(N)),
+       title = "30 bins") +
+  my_theme + theme(
+    axis.title.y = element_text(angle = 0, vjust = .5)
+  )
+
+p2 <- movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length)) +
+  geom_histogram(bins = 100) +
+  labs(x = "Film duration (in minutes)", y = expression(italic(N)),
+       title = "100 bins") +
+  my_theme + theme(
+    axis.title.y = element_text(angle = 0, vjust = .5)
+  )
+
+plot_grid(p1, p2)
+```
+
+\ 
+
+#### Density plot
+
+- Similar to histogram but smoother
+- Shape is less dependent on choosing number of bins
+- Distribution is a little *idealised*
+
+```{r, echo = F}
+movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length)) +
+  geom_density(colour = NA, fill = complement_col) +
+  labs(x = "Film duration (in minutes)", y = expression(italic(N))) +
+  my_theme + theme(
+    axis.title.y = element_text(angle = 0, vjust = .5)
+  )
+```
+
+\ 
+
+#### Barchart
+
+- AKA Bar plot
+- Like histogram but for a single *categorical* variable (*i.e.,* nominal variable with levels/categories)
+
+```{r, echo = F, fig.width=7}
+movie_data %>%
+  select(title, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(x = genre)) +
+  geom_bar(fill = default_col) +
+  labs(x = "Genre", y = expression(italic(N))) +
+  my_theme + theme(
+    axis.title.y = element_text(angle = 0, vjust = .5)
+  )
+```
+
+\ 
+
+## Bivariate plots
+
+Bivariate plots map one variable onto the X-axis and one onto the Y-axis. They are great for looking at relationships between two variables. If there is dependence between the variables, we usually plot the *independent* variable onto the X-axis and the *dependent* variable onto the Y-axis.
+
+\ 
+
+#### Scatterplot
+
+- AKA scattergram
+- Great for continuous variables
+- Can include line of best fit
+
+```{r, echo = F}
+movie_data %>%
+  filter(length > 60 & length < 200) %>%
+  ggplot(aes(length, rating)) +
+  geom_point(color = default_col, alpha = .1, size = 2) +
+  geom_smooth(method = "lm", color = default_col, fill = theme_col, size = .5) +
+  labs(x = "Length (in minutes)", y = "Average IMDb user rating") +
+  my_theme
+```
+
+\ 
+
+#### Boxplot
+
+- AKA Box-and-whiskers plot
+- Good for visualising distribution of a *continuous* variable broken-down by a *categorical* variable
+- Shows median, inter-quartile range, and outliers
+
+```{r, echo = F}
+movie_data %>%
+  filter(!is.na(budget)) %>%
+  mutate(budget = budget/1e06) %>%
+  select(title, budget, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(genre, budget)) +
+  geom_boxplot(colour = default_col, notch = T, outlier.color = complement_col) +
+  labs(x = "Film genre", y = "Budget (in million USD)") +
+  coord_flip() +
+  my_theme
+```
+
+\ 
+
+#### Errorbar plot
+
+- Good for visualising summary statistics of a *continuous* grouped by a *categorical* variable
+- Error bars can represent spread of data, standard errors of estimates, or confidence intervals
+
+```{r, echo = F}
+movie_data %>%
+  filter(votes > 0 & votes < 50000) %>%
+  select(title, votes, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  group_by(genre) %>%
+  summarise(m = mean(votes),
+            se2 = sd(votes)/sqrt(n())) %>%
+  # mutate(genre = str_pad(genre, width = max(nchar(genre)), side = "left")) %>%
+  ggplot(aes(genre, m)) +
+  geom_errorbar(aes(ymin = m - se2, ymax = m + se2), width = .1) +
+  geom_point(shape = 23, fill = theme_col, size= 3) +
+  labs(x = "Film genre", y = "Number of IMDb user votes") +
+  my_theme +
+  theme(axis.text.x = element_text(angle = 45, hjust =1),
+        panel.grid.major = element_line(colour = "#434b7544", size = .01))
+```
+  
+#### Mosaic plot
+
+- Good for visualising relationships between two *categorical* variables
+- Width of bars represents proportions
+
+```{r, echo = F}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(genre, mpaa), fill = genre)) +
+  labs(x = "MPAA rating", y = "Film genre") +
+  my_theme +
+  guides(fill = F)
+```
+
+
+*Sidenote: *The [MPAA rating system](https://en.wikipedia.org/wiki/Motion_Picture_Association_of_America_film_rating_system) is the scale used in USA for parental guidance with respect to the movie content.[^1]
+
+[^1]:You know, the system that tells us that strong language or a pair of breasts is somehow more damaging to young people than gruesome violence...
+
+\ 
+
+## Multivariate plots
+
+Plotting three variables, each on its own axis is possible with 3D plots but it's stretching the options of the media. 3D plots on paper are as good as useless and even animated plots that can be rotated are not all that clear. Going beyond three variables is impossible due to the fact that we perceive the world in three spatial dimensions.
+
+There are however two "tricks" we can use to visualise three and even 4 variables.
+
+### Grouping
+
+Both uni- and bivariate plots can be grouped by another variable, continuous or categorical, using different colours or shapes. Below are a few examples but the principle can essentially apply to any type of plot, perhaps with the exception of the mosaic plot.
+
+#### Grouped density plot
+
+- Density plots and histograms grouped by a second categorical variable are possible but not terribly clear!
+
+```{r, echo = F, fig.width=7}
+movie_data %>% 
+  filter(!is.na(budget) & mpaa %in% c("PG", "PG-13", "R")) %>%
+  mutate(budget = budget/10e6) %>%
+  ggplot(aes(budget, fill = mpaa)) +
+  geom_density(colour = NA, alpha = .3) +
+  labs(x = "Budget (in million USD)", y = expression(italic(N))) +
+  my_theme +
+  scale_fill_brewer(name = "MPAA", type = "qual", palette = "Set1")
+```
+
+\ 
+
+#### Grouped barchart
+
+```{r, echo = F, fig.width=7}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(x = genre, fill = mpaa)) +
+  geom_bar(position = "dodge2") +
+  labs(x = "Genre", y = expression(italic(N))) +
+  scale_fill_brewer(name = "MPAA", type = "qual", palette = "Set1", direction = -1) +
+  my_theme + theme(
+    axis.text.x = element_text(angle = 45, hjust =1),
+    axis.title.y = element_text(angle = 0, vjust = .5)
+  )
+```
+
+\ 
+
+#### Colour-differentiated scattergram
+
+```{r, echo = F, fig.width=7}
+movie_data %>%
+  filter(!is.na(budget) & votes > 0) %>%
+  mutate(budget = budget/10e6) %>%
+  filter(budget <= 5) %>%
+  ggplot(aes(budget, rating, color = year)) +
+  geom_point(alpha = .7, size = 2, position = position_jitter(.1, .5)) +
+  labs(x = "Budget (in million USD)", y = "Average IMDb user rating") +
+  scale_color_continuous(name = "Year of\nrelease") +
+  my_theme
+```
+
+
+
+#### Grouped boxplot
+
+```{r, echo = F, fig.width=7}
+movie_data %>%
+  filter(!is.na(budget) & mpaa %in% c("PG", "PG-13", "R")) %>%
+  mutate(budget = budget/1e06) %>%
+  select(title, budget, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(genre, budget, fill = mpaa)) +
+  geom_boxplot(colour = default_col, notch = F) +
+  labs(x = "Film genre", y = "Budget (in million USD)") +
+  scale_fill_brewer(name = "MPAA", type = "qual", palette = 2) +
+  my_theme +
+  theme(axis.text.x = element_text(angle = 45, hjust =1))
+```
+
+\ 
+
+#### Grouped errorbar plot
+
+```{r, echo = F, fig.width=7}
+movie_data %>%
+  filter(votes > 0 & votes < 50000 & mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, votes, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  group_by(genre, mpaa) %>%
+  summarise(m = mean(votes),
+            se2 = sd(votes)/sqrt(n())) %>%
+  ggplot(aes(genre, m, fill = mpaa)) +
+  geom_errorbar(aes(ymin = m - se2, ymax = m + se2), width = .1, position = position_dodge(width = .3)) +
+  geom_point(shape = 23, size= 3, position =  position_dodge(width = .3)) +
+  labs(x = "Film genre", y = "Number of IMDb user votes") +
+  scale_fill_manual(name = "MPAA", values = c("#1794ce", "#fec10c", "#972c8d")) +
+  coord_flip() +
+  my_theme + theme(panel.grid.major = element_line(colour = "#434b7544", size = .01))
+```
+
+\ 
+
+#### Raincloud plot
+
+And because many people find them beautiful (none more so than Dr Atkinson), here's an example of a raincloud plot combining a density plot, a scatterplot, and a boxplot.
+
+```{r, echo = F, fig.width = 7}
+
+"%||%" <- function(a, b) {
+  if (!is.null(a)) a else b
+}
+
+geom_flat_violin <- function(mapping = NULL, data = NULL, stat = "ydensity",
+                        position = "dodge", trim = TRUE, scale = "area",
+                        show.legend = NA, inherit.aes = TRUE, ...) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomFlatViolin,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      trim = trim,
+      scale = scale,
+      ...
+    )
+  )
+}
+
+GeomFlatViolin <-
+  ggproto("GeomFlatViolin", Geom,
+          setup_data = function(data, params) {
+            data$width <- data$width %||%
+              params$width %||% (resolution(data$x, FALSE) * 0.9)
+            
+            # ymin, ymax, xmin, and xmax define the bounding rectangle for each group
+            data %>%
+              group_by(group) %>%
+              mutate(ymin = min(y),
+                     ymax = max(y),
+                     xmin = x,
+                     xmax = x + width / 2)
+          },
+          
+          draw_group = function(data, panel_scales, coord) {
+            # Find the points for the line to go all the way around
+            data <- transform(data, xminv = x,
+                              xmaxv = x + violinwidth * (xmax - x))
+            
+            # Make sure it's sorted properly to draw the outline
+            newdata <- rbind(plyr::arrange(transform(data, x = xminv), y),
+                             plyr::arrange(transform(data, x = xmaxv), -y))
+            
+            # Close the polygon: set first and last point the same
+            # Needed for coord_polar and such
+            newdata <- rbind(newdata, newdata[1,])
+            
+            ggplot2:::ggname("geom_flat_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
+          },
+          
+          draw_key = draw_key_polygon,
+          
+          default_aes = aes(weight = 1, colour = "grey20", fill = "white", size = 0.5,
+                            alpha = NA, linetype = "solid"),
+          
+          required_aes = c("x", "y")
+)
+
+raincloud_theme = theme(
+  text = element_text(colour = default_col),
+  axis.title.x = element_text(colour = default_col),
+  axis.title.y = element_text(colour = default_col),
+  axis.text = element_text(colour = default_col),
+  axis.text.x = element_text(colour = default_col),
+  legend.title=element_text(colour = default_col),
+  legend.text=element_text(colour = default_col),
+  legend.position = "right",
+  plot.title = element_text(lineheight=.8, colour = default_col),
+  panel.border = element_blank(),
+  panel.grid.minor = element_blank(),
+  panel.grid.major = element_blank(),
+  axis.line.x = element_line(colour = default_col, size=0.5, linetype='solid'),
+  axis.line.y = element_line(colour = default_col, size=0.5, linetype='solid'),
+  axis.ticks = element_line(colour = default_col),
+  axis.title = element_text(colour = default_col))
+
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R") & votes < 3000) %>%
+  ggplot( aes(x = mpaa, y = votes, fill = mpaa)) +
+  geom_flat_violin(position = position_nudge(x = .2, y = 0), alpha = .8, colour = default_col) +
+  geom_point(aes(y = votes, color = mpaa), position = position_jitter(width = .15), size = 1, alpha = 0.3) +
+  geom_boxplot(width = .1, outlier.shape = NA, alpha = 0.5, colour = default_col) +
+  expand_limits(x = 5.25) +
+  guides(fill = FALSE, color = FALSE) +
+  scale_color_brewer(palette = 2, type = "qual") +
+  scale_fill_brewer(palette = 2, type = "qual") +
+  coord_flip(xlim = c(1.3, 3.1)) +
+  labs(x = "MPAA rating", y = "Number of user votes") +
+  my_theme +
+  raincloud_theme
+```
+
+### Faceting
+
+Another way of introducing an additional variable to a 2D plot is using faceting, where a separate plot is created for each level of the variable. For instance, the grouped scatterplot above was a little too busy so, instead of putting everything into a single plot panel, we can facet the plot by year of release:
+
+```{r, echo = F, fig.width=9, fig.height=6}
+movie_data %>%
+  filter(!is.na(budget) & votes > 0) %>%
+  mutate(budget = budget/10e6) %>%
+  filter(budget <= 5) %>%
+  ggplot(aes(budget, rating)) +
+  geom_point(alpha = .3, size = 2, colour = default_col, position = position_jitter(.1, .5)) +
+  geom_smooth(method = "lm") +
+  labs(x = "Budget (in million USD)", y = "Average IMDb user rating") +
+  scale_color_continuous(name = "Year of\nrelease") +
+  facet_wrap(~year) +
+  my_theme
+```
+
+We can even use the sizes or shapes of the plotted points to reflect some variables and, along with faceting, visualise the mutual relationships of five-six variables:
+
+```{r, echo = F, fig.height = 7, fig.width=9}
+movie_data %>%
+  filter(votes > 0 & votes < 50000 & mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, year, votes, mpaa, rating, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  group_by(genre, mpaa, year) %>%
+  summarise(m = mean(rating),
+            se2 = sd(rating)/sqrt(n()),
+            votes = mean(votes)) %>%
+  ggplot(aes(genre, m, fill = mpaa, size = votes)) +
+  geom_errorbar(aes(ymin = m - se2, ymax = m + se2), width = .1, position = position_dodge(width = .5), size = .5) +
+  geom_point(shape = 23, position =  position_dodge(width = .5)) +
+  labs(x = "Film genre", y = "Average user rating") +
+  scale_fill_manual(name = "MPAA\nrating", values = c("#1794ce", "#fec10c", "#972c8d")) +
+  scale_size_continuous(name = "Average\nvotes") +
+  guides(fill = guide_legend(override.aes = list(size=4))) +
+  coord_flip() +
+  facet_wrap(~ year) +
+  my_theme +
+  theme(panel.grid.major = element_line(colour = "#434b7544", size = .01),
+        legend.position = c(.75, .25),
+        legend.box = "horizontal")
+```
+
+Granted, this plot is a bit of an overkill and it's a little difficult to make sense of. The amount of information we managed to fit in, however, is quite impressive. Whether or not it's worth the decrease in clarity is a different question...
+
+\ 
+
+Now that we've reviewed the basic types of plots, let's recreate some of them using the `ggplot2` package that gets loaded as part of `tidyverse`.
+
+# `ggplot()`
+
+You've already seen quite a few `ggplot()` plots but let's go through the philosophy of how they are constructed so that you don't ever have to get confused by them!
+
+## Layers
+
+Plots created using `ggplot()` are built up in layers. To illustrate this, let's take a look at our scatterplot from earlier:
+
+```{r, echo = F}
+movie_data %>%
+  filter(length > 60 & length < 200) %>%
+  ggplot(aes(length, rating)) +
+  geom_point(color = default_col, alpha = .1, size = 2) +
+  geom_smooth(method = "lm", color = default_col, fill = theme_col, size = .5) +
+  labs(x = "Length (in minutes)", y = "Average IMDb user rating") +
+  my_theme
+```
+
+This particular plot is composed of five layers:
+
+1. The first layer is simply the plotting space
+    - Here we tell `R` what data we are plotting and what variables we're mapping on what axis
+    - It is basically just like taking a sheet of paper and drawing the axes
+1. Next comes the layer with the points
+    - Here we specify that it is points we are drawing
+    - We can also choose things like the size, colour, or shape of the points
+    - You could liken adding a layer to taking a transparent plastic sheet, drawing something on it and overlaying it on the previous layer.
+1. Next is the line of the best fit
+1. Next layer modifies the default axis labels to make them more informative
+1. Finally, we add a theme layer that changes the default look of the scatterplot.
+
+This is what the result of each individual step looks like:
+
+```{r, echo = F, fig.height=7, fig.width=9}
+p1 <- movie_data %>%
+  filter(length > 60 & length < 200) %>%
+  ggplot(aes(length, rating)) + theme(plot.margin =margin(1, .3, .3, .3, "cm"))
+p2 <- p1 + geom_point(color = default_col, alpha = .1, size = 1.5)
+p3 <- p2 + geom_smooth(method = "lm", color = default_col, fill = theme_col, size = .5)
+p4 <- p3 + labs(x = "Length (in minutes)", y = "Average IMDb user rating") 
+p5 <- p4 + my_theme + theme(plot.margin =margin(1, .3, .3, .3, "cm"))
+
+plot_grid(p1, p2, p3, p4, p5, labels = paste0(1:5, ")"), label_colour = default_col, nrow = 2)
+```
+
+\ 
+
+In order to understand how the layers are built up we need to talk about two pieces of `ggplot()` jargon. 
+
+## &AElig;sthetics
+
+&AElig;sthetics -- the `aes()` function -- let us map variables onto the plot.
+Every time we use a variable anywhere inside a `ggplot()`, we have to do it using `aes()`. To tell `R` that we want the `length` variable on the X-axis and the `rating` variable on the Y-axis, we have to map these as &aelig;sthetics in the base layer. The base layer (the one that creates the plotting space) itself is created using the `ggplot()` function:
+
+```{r}
+ggplot(data = movie_data,
+       mapping = aes(x = length,
+                     y = rating))
+```
+
+Here we are telling `R`:
+"Draw a plotting space mapping the `length` variable from the `movie_data` dataset onto the X-axis and the `rating` variable from the same dataset onto the Y-axis."
+
+`r task()`The `ggplot()` function, being part of the `tidyverse` lends itself nicely to use at the end of a pipeline.
+Rewrite the command above, piping the dataset into `ggplot()`.
+
+```{r, eval=F, toggle=T}
+movie_data %>%
+  ggplot(mapping = aes(x = length,
+                       y = rating))
+```
+
+<div class="warn">
+Keep in mind that any time you want to map a variable onto some argument in `ggplot()`, be it an axis or something else, **you must use the <code>aes()</code> function!**</div>
+
+\ 
+
+We will come back to &aelig;sthetics in due course but now, let's talk about the other important term in the `ggplot()` vocabulary.
+
+## Geoms
+
+Geoms are the actual meat of the plots.
+Every time we want to add a layer of points, bars, lines, histogram and what not, we do this using one of the many available geom functions.
+To name a few, there is:
+
+  - `geom_histogram()`
+  - `geom_density()`
+  - `geom_bar()`
+  - `geom_point()`
+  - `geom_smooth()`
+  - `geom_boxplot()`
+  - `geom_errorbar()`
+  
+Each one of the geom functions takes several arguments but all of them take `mapping=` and `data=`, just like `ggplot()`. However, they all **inherit** values for these arguments from the base layer created with `ggplot()` and so you don't need to provide these (unless you want to override this inheritance but that's an advanced topic). Let's illustrate what this means.
+
+
+```{r, eval = F}
+movie_data %>%
+  ggplot(mapping = aes(x = length,
+                       y = rating))
+```
+
+We can start building up our plot by adding our first geom. Since this is a bivariate plot of two continuous variables, let's use `geom_point()` to plot a scattergram:
+
+```{r}
+movie_data %>%
+  ggplot(mapping = aes(x = length,
+                       y = rating)) +
+  geom_point()
+```
+
+Without having to specify any arguments to `geom_point()`, the points got plotted correctly on the X and Y axes. That is because these &aelig;sthetics got *inherited* from the base layer.
+
+\ 
+
+<div class="solText">
+<title>An aside for the keen beens</title>
+
+\ 
+
+If, for some reason, we want to override the inheritance of &aelig;sthetics, we can do it by specifying values to the `data=` and `mapping=` arguments of a given geom. Let's say, we want to plot the points corresponding to the values in our `simp_tim` on top of our histogram and we want to make them big and blue.
+
+Let's create a simple tibble to show how this works:
+
+```{r}
+simp_tib <- tibble(
+  x_coord = c(0, 200, 400, 600),
+  y_coord = c(2.5, 5, 7.5, 10)
+)
+```
+
+```{r, echo=F}
+simp_tib
+```
+
+\ 
+
+Imagine we want to add data from `simp_tib` to the plot. To do that, we need to add another `geom_point()` layer with its own `data=` and `mapping=` arguments:
+
+```{r}
+movie_data %>%
+  ggplot(mapping = aes(x = length,
+                       y = rating)) +
+  geom_point() +
+  geom_point(data = simp_tib,
+             mapping = aes(x = x_coord,
+                           y = y_coord),
+             size = 5,
+             colour = "blue")
+```
+
+Thus, we overrode the &aelig;sthetics inherited from the `ggplot()` layer and instead asked for the `simp_tib` data to be plotted. Notice that the X and Y coordinates of the points in the plotting space correspond to the values in the columns of the tibble:
+
+```{r, echo=F}
+simp_tib %>% kable(col.names = c("X coordinate", "Y coordinate"), row.names = T) %>% kable_styling(full_width = F)
+```
+
+\ 
+
+Mind you, unless you're making some pretty fancy plot, you will rarely need to override the inherited &aelig;sthetics!</div>
+
+\ 
+
+The same principle applies to all the geoms. However, bear in mind that **univariate** geoms, such as `geom_histogram()` and `geom_density()`, only work when you map just the X-axis, not the Y-axis. That means that if we try to add a `geom_histogram()` to our plot, it will not work, because the plotting space has two variables mapped onto it:
+
+```{r, error = T}
+movie_data %>%
+  ggplot(mapping = aes(x = length,
+                       y = rating)) +
+  geom_point() +
+  geom_histogram()
+```
+
+
+\ 
+
+# Making a histogram
+
+OK, time to get our hands dirty! The things we discussed above should give us the tools necessary to start recreating some of the pretty plots from the beginning of the tutorial. Let's start with this one:
+
+```{r, echo = F}
+movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length)) +
+  geom_histogram() +
+  labs(x = "Film duration (in minutes)", y = "N") +
+  theme_classic()
+```
+
+`r task()`First of all, we want to prepare our data. There are some awfully long movies in this data set, so let's only keep those that are less than 240 minutes long (honestly though!). Then pipe the resulting dataset into `ggplot()`, mapping `length()` onto the X-axis using `aes()`. The result should look like this:
+
+```{r, echo=F}
+movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length))
+```
+
+```{r, toggle=T, eval = F}
+movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length))
+```
+
+`r task()`To add a histogram layer, all you have to do is add `geom_histogram()` to our command using a `+` (not `%>%`). Try it now!
+
+```{r, toggle=T, eval = F}
+movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length)) +
+  geom_histogram()
+```
+
+\ 
+
+You should see a histogram with dark bars. Let's say we want the bars to be white. We can specify the `fill = "white"` argument inside the geom function to change the colour used to fill the bars.
+
+`r task()`Make the bars of the histogram white.
+
+\ 
+
+Now that we have changed the fill, we can see that the bars have no outlines. We can use the `colour=` argument  (`color=` also works) to change the colour of the outlines.
+
+`r task()`Make the outlines of the bars black.
+
+```{r, toggle=T}
+movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length)) +
+  geom_histogram(fill = "white", colour = "black")
+```
+
+\ 
+
+An important thing is to give plots informative axis labels. We can do this by adding the `labs()` layer. This is how it's used:
+
+```{r, eval = F}
+[...plot code...] +
+  labs(x = "Label for the X-axis", y = "Label for the Y-axis")
+```
+
+
+`r task()`Reproduce the axis labels of the histogram we are trying to replicate.
+
+```{r, toggle = T, echo = F}
+movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length)) +
+  geom_histogram(fill = "white", colour = "black") +
+  labs(x = "Film duration (in minutes)", y = "N")
+```
+
+\ 
+
+Almost there. All we have left to do is give the plot a little more classic look. `ggplot()` comes with several themes and you can even make your own ones to really create exactly the plot you want. For now, though, let's stick with the stock themes. Themes are changed by adding a `theme_something()` with the "something" replaced by the name of the theme. When you type `theme_`, RStudio should offer you a list of available themes.
+
+`r task()`Change the theme to match the plot we're replicating.
+
+**Hint: **The plot does have a rather *classic* look, wink, wink...
+
+```{r, toggle=T}
+movie_data %>% 
+  filter(length < 240) %>%
+  ggplot(aes(length)) +
+  geom_histogram(fill = "white", colour = "black") +
+  labs(x = "Film duration (in minutes)", y = "N") +
+  theme_classic()
+```
+
+\ 
+
+That, my friend, is a fine histogram!
+
+\ 
+
+# Fancy grouped barchart
+
+OK, let's do one more! How about this one?
+
+```{r, echo = F, fig.width=6}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  rename(MPAA = mpaa) %>%
+  select(rating, MPAA, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(genre, rating, fill = MPAA)) +
+  geom_boxplot() +
+  labs(x = "Film genre", y = "Average IMDb user rating") +
+  coord_flip() +
+  theme_minimal()
+```
+
+Before we can draw this plot, we first need to do a little bit of data wrangling. If you've had a look at the `movies_data` dataset (as you should always do!), you will have noticed that there are several indicator variables for genre rather than a single genre column. This is useful in a situation where one movie can fall into several genre categories but it's not great for plotting. What we need is a single column where it would say what genre a given movie is. If a movie fits into several categories, we can just have multiple rows for that particular movie.
+
+How to do this is a topic for next term so for now, just take the following code and use it to create the plot. There is only one line that should be completely new to you. The rest should make sense. In particular, notice how we used `filter()` and the `%in%` operator to only choose movies with an MPAA ratings of "PG", "PG-13", or "R". The `%in%` operator is extremely useful so you will see and use it quite often.
+
+```{r}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, rating, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1)
+```
+
+Now that we have our data in a shape fit for plotting, let's start!
+
+`r task()`Plot a boxplot with `genre` on the X-axis and `rating` on the Y-axis and give it the same labels as in the plot above. This is the result you are going for:
+
+**Hint: **`geom_boxplot()`
+
+```{r, echo = F}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, rating, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(x = genre, y = rating)) +
+  geom_boxplot() +
+  labs(x = "Film genre", y = "Average IMDb user rating") 
+```
+
+```{r, eval = F, toggle = T}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, rating, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(x = genre, y = rating)) +
+  geom_boxplot() +
+  labs(x = "Film genre", y = "Average IMDb user rating") 
+```
+
+\ 
+
+That's a solid boxplot but what we really want is to have three boxes per movie genre, one for PG movies, one for PG-13 movies and one for R-rated movies, each filled with a colour indicating the MPAA rating. To do this, we can map the `mpaa` variable onto the `fill=` argument inside the `aes()` function in the base layer.
+
+`r task()`Create a grouped boxplot by mapping `mpaa` onto `fill=`.
+
+```{r, echo = F}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, rating, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(x = genre, y = rating, fill = mpaa)) +
+  geom_boxplot() +
+  labs(x = "Film genre", y = "Average IMDb user rating") 
+```
+
+```{r, eval = F, toggle = T}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, rating, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  ggplot(aes(x = genre, y = rating, fill = mpaa)) +
+  geom_boxplot() +
+  labs(x = "Film genre", y = "Average IMDb user rating") 
+```
+
+Getting warmer!
+
+Three things left to do. First, notice that the legend title is in small letters. That's not very nice. There are several ways we can change the legend title but the easiest one is to just rename that variable in the dataset from `mpaa` to `MPAA` since it is the variable name that gets used for the legend title.
+
+To rename a variable, we can use the `rename()` tidyverse function:
+
+```{r, eval = F}
+data %>% rename(new_name = old_name)
+```
+
+`r task()`Insert a `rename()` command into the pipeline immediately before the plotting command. Once you do that, make sure you adjust for the new name by changing `mpaa` to `MPAA` whenever the variable is used **after** the `rename()` command.
+
+```{r, eval = F, toggle = T}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, rating, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  rename(MPAA = mpaa) %>%
+  ggplot(aes(x = genre, y = rating, fill = MPAA)) + # don't forget to adjust!
+  geom_boxplot() +
+  labs(x = "Film genre", y = "Average IMDb user rating") 
+```
+
+\ 
+
+Almost there! Now, we want to stop the individual genre labels to be written over each other. Again, there are several solutions: we could make the plot wider, or the labels smaller, we could even rotate them 45&deg;. But sometimes it's easiest (and quite refreshing actually) to flip the X and Y-axes around. Doing this in `ggplot()` is very simple: you only need to add a `coord_flip()` layer to flip the coordinates around.
+
+`r task()`Add the `coord_flip()` layer to your plot.
+
+```{r, eval = F, toggle = T}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, rating, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  rename(MPAA = mpaa) %>%
+  ggplot(aes(x = genre, y = rating, fill = MPAA)) + # don't forget to adjust!
+  geom_boxplot() +
+  labs(x = "Film genre", y = "Average IMDb user rating") +
+  coord_flip()
+```
+
+\ 
+
+Great stuff!
+
+`r task()`Finally, change the theme of the plot to a *minimal* theme and you should get exactly the same plot as the one we set out to create.
+
+```{r, toggle = T}
+movie_data %>%
+  filter(mpaa %in% c("PG", "PG-13", "R")) %>%
+  select(title, rating, mpaa, Action:Short) %>%
+  pivot_longer(cols = Action:Short, names_to = "genre", values_to = "is_genre") %>%
+  filter(is_genre == 1) %>%
+  rename(MPAA = mpaa) %>%
+  ggplot(aes(x = genre, y = rating, fill = MPAA)) + # don't forget to adjust!
+  geom_boxplot() +
+  labs(x = "Film genre", y = "Average IMDb user rating") +
+  coord_flip() +
+  theme_minimal()
+```
+
+\ 
+
+As they say in Scotland: *Ya beauty!*
+
+\ 
+
+`r task()`Save your script in the `r_docs` folder of your R project and you're done.
+
+\ 
+
+<div class=solText>
+
+# Recap
+
+\ 
+
+OK, that was quite a handful but you learnt many useful things:
+
+  - Philosophy of `ggplot()`
+    - Built up in layers
+    - Base layer specifies axis and grouping variables
+    - Variables are mapped using `aes()`
+    - You can add layers of geoms to your plot.
+    - Geoms inherit &aelig;sthetics form the base layer (this can be overridden)
+    - Layers are added using `+` not `%>%`
+  - That scatter plots are created with `+ geom_point()`
+  - That histogram is `+ geom_histogram()`
+  - That a geom can be **grouped** as illustrated with a boxplot (`+ geom_boxplot()`)
+  - How to give plots proper labels
+  - How to change the theme of a plot
+</div>
+
+That's all for today. See you soon...
+
+\ 
+
+<font size="+4">**Good job!**</font>
+
+\ 
+
+\ 
+
+\ 
+
+

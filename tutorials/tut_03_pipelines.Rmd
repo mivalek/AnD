@@ -14,7 +14,7 @@ In this tutorial, we will take a closer look at pipes (`%>%`), `tidyverse` funct
 
 All you need for this tutorial is this file and open RStudio. It's best to have both open in maximised windows, not side-by-side. Remember that you can quickly switch between two last used windows using the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) or <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcut.
 
-<div class="solText">
+<div class="warn">
 #### Note on code in the tutorial
 
 You can reveal the solution to each task by clicking on the "Solution" button. The point of this tutorial is not to torment you with tasks you cannot do. However, you are strongly encouraged not to reach straight for the answer. Try to complete the task yourself: write the code in your script, run it, see if it works. If it doesn't, try again. Only reveal the solution if you're stuck or if you want to check your own solution.
@@ -22,13 +22,23 @@ You can reveal the solution to each task by clicking on the "Solution" button. T
 
 `r task()`Open your analysing_data `R` project in RStudio and open a new `R` script. Here is where you can write solution code for the tasks.
 
+<div class="solText">
+<title>Scripts</title>
+
+Scripts are basically text files with some added bells and whistles. Think of the script as one big R Markdown code chunk: It contains only code and comments. There are no headings, no body text, no tables... We use scripts when we want to write more than just a line or two of code but we don't want to knit a document out of it.
+
+You can run the script in its entirety by highlighting all of its content (<kbd>Ctrl</kbd> + <kbd>A</kbd> on Windows or <kbd>&#8984;\ Command</kbd> + <kbd>A</kbd> on Mac OS) and run it pressing <kbd>Ctrl</kbd> + <kbd>&crarr;\ Enter</kbd> (Windows) or <kbd>&#8984;\ Command</kbd> + <kbd>&crarr;\ Enter</kbd> (Mac OS).
+
+Same thing applies to running only parts of your script: Highlight whatever code you want to run and run it using the same shortcut.
+
+When you run code, it will get sent to the console and that is where all output (except for plots and help files) will appear. So make sure your console isn't minimised or otherwise hidden! Plots and help files appear in the Files/Plots/Packages/Help/Viewer pane of RStudio (bottom right by default).
+</div>
+
 `r task()`The only package you will need to load to complete this tutorial is `tidyverse`. Load it now.
 
-<!-- ans
-```{r, eval=F}
+```{r, eval=F, toggle=T}
 library(tidyverse)
 ```
--->
 
 Now, let's create data we can work with. We can just use the code that creates the data from last practical .Rmd file.
 
@@ -58,7 +68,7 @@ my_data <- tibble(
 
 `r task()`Run this code to create the data set and look at it to familiarise yourself with it.
 
-<!-- ans
+<!-- toggle
 There are several ways of looking at data. The basic one is just to type the name of the dataset into the *console* and pressing  <kbd>&crarr;\ Enter</kbd> -->
 
 \ 
@@ -135,7 +145,7 @@ Let's have a look at the `filter()` function from the `dplyr` package that loads
 
 `r task()`Bring up the documentation (help file) for `dplyr::filter`.
 
-<!-- ans
+<!-- toggle
 Just type `?dplyr::filter` into the *console* and press <kbd>&crarr;\ Enter</kbd> -->
 
 \ 
@@ -144,7 +154,7 @@ Just type `?dplyr::filter` into the *console* and press <kbd>&crarr;\ Enter</kbd
 
 OK, so we can see that the function requires us to give it some data as the `.data` argument has no default value. The `...` is an unnamed argument that we use to specify the condition according to which we want to filter our data.
 
-For instance, if we want to only look at data from participants who are 19 years old or younger **OR** have brown eyes, we can do this by formulation this condition as `age > 22 | eye_col == "brown"`. The complete command will then be:
+For instance, if we want to only look at data from participants who are 19 years old or younger **OR** have brown eyes, we can do this by formulating this condition as `age <=19 | eye_col == "brown"`. The complete command will then be:
 
 ```{r}
 filter(.data = my_data, age <= 19 | eye_col == "brown")
@@ -153,25 +163,19 @@ filter(.data = my_data, age <= 19 | eye_col == "brown")
 \ 
 
 <div class="warn">
-**Note** that when joining two or more logical expressions, *e.g.,* `age > 22` and `eye_col == "brown"` using the logical operators AND `&` and OR `|`, every constituent part must be a logical expression able to work on its own.</div>
+**Note** that when joining two or more logical expressions, *e.g.,* `age <= 19` and `eye_col == "brown"` using the logical operators AND `&` and OR `|`, every constituent part must be a logical expression able to work on its own.</div>
 
 `r task()`Write a `filter` command that only gives you data for people aged between 20 and 21. The result should look like this:
 
-```{r, echo=F}
-filter(.data = my_data, age > 19 & age < 22)
-```
-
 **Hint: **See the red box above.
 
-<!-- ans
-```{r, eval=F}
+```{r, toggle=T}
 filter(.data = my_data, age > 19 & age < 22)
 ```
--->
 
 \ 
 
-The `mutate()` function is works on the same principle and is used for manipulation existing variables or creating new ones. Let's say, we want to turn the `eye_col` variable into a factor and also create a column of *z*-score[^3] of age. We can use `mutate()` along with `factor()` and `scale()`, the latter of which calculates the *z*-score:
+The `mutate()` function is works on the same principle and is used for manipulating existing variables or creating new ones. Let's say, we want to turn the `eye_col` variable into a factor and also create a column of *z*-score[^3] of age. We can use `mutate()` along with `factor()` and `scale()`, the latter of which calculates the *z*-score:
 
 [^3]:*z*-score of a variable is the variable minus its mean, all divided by its standard deviation: $z = \frac{x - \bar{x}}{s_x}$
 
@@ -186,38 +190,28 @@ mutate(.data = my_data,
 
 **Hint: **If you don't know *how to calculate absolute value in R* look up the italicised phrase on the Internet.
 
-<!-- ans
-```{r, eval=F}
+```{r, toggle=T}
 my_data2 <- mutate(.data = my_data,
                   eye_col = factor(eye_col),
                   age_z = scale(age))
 
-mutate(my_data, age_z_abs = abs(age_z))
-
+my_data2 <- mutate(my_data2, age_z_abs = abs(age_z))
 ```
--->
 
 You want to see something like this:
 
 ```{r, echo=F}
-my_data2 <- mutate(.data = my_data,
-                   eye_col = factor(eye_col),
-                   age_z = scale(age),
-                   age_z_abs = abs(age_z))
-
 my_data2
 ```
 
 You can actually do it all in a single step:
 
-<!-- ans
-```{r, eval=F}
+```{r, eval=F, toggle=T}
 my_data2 <- mutate(.data = my_data,
                   eye_col = factor(eye_col),
                   age_z = scale(age),
                   age_z_abs = abs(age_z))
 ```
--->
 
 \ 
 
@@ -237,7 +231,7 @@ cakes %>% make.cake(type = ., flour = "gluten-free")
 
 First of all, we created a vector containing the two kinds of cake we want to bake. Then, we took that `cakes` vector and pushed it into the `type=` argument of the `make.cake()` function. We did this explicitly using the dot `.`. The dot basically says *"whatever it is you're pushing with the pipe, put it here"*.
 
-The pipe, however, is most often used in its implicit form. If we don't include the dot, the pipe will push whatever is to the left of it into the function of the right of it **as its first argument**. In other words, the above can be written as:
+The pipe, however, is most often used in its implicit form. If we don't include the dot, the pipe will push whatever is to the left of it into the function to the right of it **as its first argument**. In other words, the above can be written as:
 
 ```{r, eval = F}
 cakes %>% make.cake(flour = "gluten-free")
@@ -254,24 +248,21 @@ make.cake(type = c("chocolate", "red_velvet"),
           flour = "gluten-free") 
 ```
 
-`r task()`Rewrite the command below so that it uses the pipe without the dot.
+`r task()`Rewrite the command below so that it uses the pipe (not using the dot with the pipe as discussed above).
 
-```{r, echo=F}
+```{r, eval=F}
 mutate(.data = my_data,
        eye_col = factor(eye_col),
        age_z = scale(age),
        age_z_abs = abs(age_z))
 ```
 
-<!-- ans
-```{r, eval=F}
+```{r, eval=F, toggle=T}
 my_data %>%
   mutate(eye_col = factor(eye_col),
          age_z = scale(age),
          age_z_abs = abs(age_z))
 ```
--->
-
 `r task()`To practice some more, rewrite the command below in the same pipe fashion and run it to see a plot.
 
 ```{r, eval=F}
@@ -281,15 +272,13 @@ ggplot(data = my_data2, mapping = aes(x = age)) +
   theme_classic()
 ```
 
-<!-- ans
-```{r}
+```{r, toggle=T}
 my_data2 %>%
   ggplot(mapping = aes(x = age)) +
   geom_histogram(color = "black", fill = "white") +
   labs(x = "Age in years", y = "N") +
   theme_classic()
 ```
--->
 
 \ 
 
@@ -340,21 +329,13 @@ Pipelines can be arbitrarily long and their length should depend purely on the c
 
 `r task()`Take `my_data`, calculate the *z*-score of age, and then calculate the mean of this *z*-score for *each eye colour*, all in a single pipeline. The result should look like this:
 
-```{r, echo=F}
+```{r, toggle=T}
 my_data %>%
   mutate(age_z = scale(age)) %>%
   group_by(eye_col) %>%
   summarise(mean_age_z = mean(age_z))
 ```
 
-<!-- ans
-```{r, eval=F}
-my_data %>%
-  mutate(age_z = scale(age)) %>%
-  group_by(eye_col) %>%
-  summarise(mean_age_z = mean(age_z))
-```
--->
 
 \ 
 
@@ -393,7 +374,7 @@ my_data %>%
   theme_classic()
 ```
 
-First three of these four steps are exactly the same thig as what you did in the previous task. As for the plotting itself, that is the topic for next week's tutorial...
+The first three of these four steps are exactly the same thing as what you did in the previous task. As for the plotting itself, that is the topic for next week's tutorial...
 
 `r task()`Save your script in the `r_docs` folder of your R project.
 

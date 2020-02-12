@@ -210,10 +210,10 @@ Let's think about how we can tell `R` to remove those rows of our dataset that o
 
 OK, let's take it one step at a time.
 
-To test each data point for missingness, we can use the `is.na()` function. The output of this function is not a `tibble` but we can convert it into one using `as.tibble()`:
+To test each data point for missingness, we can use the `is.na()` function. The output of this function is not a `tibble` but we can convert it into one using `as_tibble()`:
 
 ```{r}
-is.na(gensex) %>% as.tibble()
+is.na(gensex) %>% as_tibble()
 ```
 
 As you can see, we now get only the values `TRUE` and `FALSE` in place of our data. We can use the fact that computers treat `TRUE` as 1 and `FALSE` as 0 to calculate the number of missing values per each row. To do that, we only need to take the row sums using the aptly names `rowSums()` function:
@@ -329,7 +329,6 @@ All of these edits can be done using arguments to `kable()`, namely `col.names=`
 
 ```{r}
 gen_age_desc %>%
-  mutate(Gender = str_to_sentence(Gender)) %>%
   kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~age~"),
         caption = "Table 1 *Descriptive statistics by Gender*",
         digits = 2) %>%
@@ -368,7 +367,6 @@ The questionnaire contained ten Likert-type items on topics relating to gender a
 
 ```{r, echo=F}
 gen_age_desc %>%
-  mutate(Gender = str_to_sentence(Gender)) %>%
   kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~age~"),
         caption = "Table 1 *Descriptive statistics by Gender*") %>%
   kable_styling()
@@ -466,12 +464,12 @@ tibble(
 `r subtask()`If there's something wrong with any of the variables, fix it! The result should look like this:
 
 <!-- solution
-The `Age` variable is currently a `character` variable. That's not right. We can use `tally()` to see what values there are in the variable:-->
+The `Age` variable is currently a `character` variable. That's not right. We can use `table()` to see what values there are in the variable:-->
 
-```{r, echo=solution, class = "solution"}
+```{r, include=solution, class = "solution"}
 data %>%
-  group_by(Age) %>%
-  tally()
+  pull(Age) %>%
+  table()
 ```
 
 <!-- solution
@@ -497,6 +495,10 @@ data <- data %>% mutate(
   Gender = factor(Gender))
 ```
 
+```{r, echo = F, eval = !solution}
+data %>%
+  mutate_at(1:5, factor)
+```
 
 `r subtask()`Give all factors proper labels as per code book.
 
@@ -605,8 +607,8 @@ type_desc <- data %>%
   summarise(n = n(),
             pain_m = mean(Pain),
             exp_m = mean(Experience),
-            agency_m = sd(Agency),
-            consc_m = sd(Consciousness))
+            agency_m = mean(Agency),
+            consc_m = mean(Consciousness))
 # let's see
 type_desc
 ```
