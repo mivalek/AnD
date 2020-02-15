@@ -1,0 +1,24 @@
+---
+title: "Weekly quiz"
+author: "Analysing Data"
+---
+
+## Question time
+
+- Any questions about last weeks' content before quiz?
+
+## As always...
+
+- 7 (9) minutes
+- **Marked**
+- Phones face down / away
+- No talking
+- Only physical calculator / desktop app allowed
+
+## 
+
+<script src="https://mivalek.github.io/slides_files/js/quiz_timer.js"></script>
+<div class="quiz">
+<p id="timer" onclick="quizTimer(7); this.onclick=null">Get ready</p>
+</div>
+

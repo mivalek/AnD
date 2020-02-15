@@ -1877,22 +1877,22 @@ For educational purposes we also added a few rows of data with odd/missing value
 <p>With all of this out of the way, we can prepare tibbles of relevant summary statistics. First of all, age:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age),</a>
-<a class="sourceLine" id="cb20-3" title="3">            <span class="dt">age =</span> <span class="kw">sd</span>(Age),</a>
-<a class="sourceLine" id="cb20-4" title="4">            <span class="dt">age =</span> <span class="kw">min</span>(Age),</a>
-<a class="sourceLine" id="cb20-5" title="5">            <span class="dt">age =</span> <span class="kw">max</span>(Age))</a>
+<a class="sourceLine" id="cb20-3" title="3">            <span class="dt">sd =</span> <span class="kw">sd</span>(Age),</a>
+<a class="sourceLine" id="cb20-4" title="4">            <span class="dt">min =</span> <span class="kw">min</span>(Age),</a>
+<a class="sourceLine" id="cb20-5" title="5">            <span class="dt">max =</span> <span class="kw">max</span>(Age))</a>
 <a class="sourceLine" id="cb20-6" title="6">age_desc</a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="co"># A tibble: 1 x 2</span></a>
-<a class="sourceLine" id="cb20-8" title="8">   mean   age</a>
-<a class="sourceLine" id="cb20-9" title="9">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb20-10" title="10"><span class="dv">1</span>  <span class="fl">19.6</span>    <span class="dv">51</span></a></code></pre></div>
+<a class="sourceLine" id="cb20-7" title="7"><span class="co"># A tibble: 1 x 4</span></a>
+<a class="sourceLine" id="cb20-8" title="8">   mean    sd   min   max</a>
+<a class="sourceLine" id="cb20-9" title="9">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb20-10" title="10"><span class="dv">1</span>  <span class="fl">19.6</span>  <span class="fl">2.50</span>    <span class="dv">18</span>    <span class="dv">51</span></a></code></pre></div>
 <p>We only ever need to report these kinds of numbers to 2 decimal places so let’s round things up:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">age_desc &lt;-<span class="st"> </span>age_desc <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">modify</span>(round, <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb21-3" title="3">age_desc</a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="co"># A tibble: 1 x 2</span></a>
-<a class="sourceLine" id="cb21-5" title="5">   mean   age</a>
-<a class="sourceLine" id="cb21-6" title="6">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="dv">1</span>  <span class="fl">19.6</span>    <span class="dv">51</span></a></code></pre></div>
+<a class="sourceLine" id="cb21-4" title="4"><span class="co"># A tibble: 1 x 4</span></a>
+<a class="sourceLine" id="cb21-5" title="5">   mean    sd   min   max</a>
+<a class="sourceLine" id="cb21-6" title="6">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="dv">1</span>  <span class="fl">19.6</span>   <span class="fl">2.5</span>    <span class="dv">18</span>    <span class="dv">51</span></a></code></pre></div>
 <p>We can do all of the above in a single <em>pipeline</em>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> T),</a>
@@ -2653,7 +2653,7 @@ Attractiveness of avatar: Higher number means more attractive
 <a class="sourceLine" id="cb36-4" title="4">too_old &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb36-5" title="5"><span class="st">  </span><span class="kw">filter</span>(Age <span class="op">&gt;</span><span class="st"> </span><span class="dv">90</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb36-6" title="6"><span class="st">  </span><span class="kw">nrow</span>()</a>
-<a class="sourceLine" id="cb36-7" title="7">data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;</span><span class="st"> </span><span class="dv">18</span> <span class="op">|</span><span class="st"> </span>Age <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb36-7" title="7">data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Age <span class="op">&lt;</span><span class="st"> </span><span class="dv">90</span>)</a></code></pre></div>
 </div>
 <p> </p>
 </div>
@@ -2676,7 +2676,7 @@ Attractiveness of avatar: Higher number means more attractive
 <a class="sourceLine" id="cb37-9" title="9"><span class="co"># A tibble: 1 x 4</span></a>
 <a class="sourceLine" id="cb37-10" title="10">   mean    sd   min   max</a>
 <a class="sourceLine" id="cb37-11" title="11">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb37-12" title="12"><span class="dv">1</span>  <span class="fl">22.9</span>  <span class="fl">21.0</span>     <span class="dv">1</span>   <span class="dv">223</span></a></code></pre></div>
+<a class="sourceLine" id="cb37-12" title="12"><span class="dv">1</span>  <span class="fl">24.4</span>  <span class="fl">6.66</span>    <span class="dv">19</span>    <span class="dv">44</span></a></code></pre></div>
 </div>
 <p> </p>
 </div>
@@ -2696,9 +2696,9 @@ Attractiveness of avatar: Higher number means more attractive
 <a class="sourceLine" id="cb38-10" title="10"><span class="co"># A tibble: 3 x 5</span></a>
 <a class="sourceLine" id="cb38-11" title="11">  Gender        n  perc age_mean age_sd</a>
 <a class="sourceLine" id="cb38-12" title="12">  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb38-13" title="13"><span class="dv">1</span> Male         <span class="dv">75</span> <span class="fl">34.7</span>      <span class="dv">23</span>    <span class="fl">14.2</span> </a>
-<a class="sourceLine" id="cb38-14" title="14"><span class="dv">2</span> Female      <span class="dv">127</span> <span class="fl">58.8</span>      <span class="fl">23.2</span>  <span class="fl">25.1</span> </a>
-<a class="sourceLine" id="cb38-15" title="15"><span class="dv">3</span> (Missing)    <span class="dv">14</span>  <span class="fl">6.48</span>     <span class="fl">19.5</span>   <span class="fl">6.81</span></a></code></pre></div>
+<a class="sourceLine" id="cb38-13" title="13"><span class="dv">1</span> Male         <span class="dv">50</span> <span class="fl">37.9</span>      <span class="fl">25.1</span>   <span class="fl">7.82</span></a>
+<a class="sourceLine" id="cb38-14" title="14"><span class="dv">2</span> Female       <span class="dv">74</span> <span class="fl">56.1</span>      <span class="fl">24.1</span>   <span class="fl">5.96</span></a>
+<a class="sourceLine" id="cb38-15" title="15"><span class="dv">3</span> (Missing)     <span class="dv">8</span>  <span class="fl">6.06</span>     <span class="fl">22.8</span>   <span class="fl">4.86</span></a></code></pre></div>
 </div>
 <p> </p>
 </div>
@@ -2721,8 +2721,8 @@ Attractiveness of avatar: Higher number means more attractive
 <a class="sourceLine" id="cb39-10" title="10"><span class="co"># A tibble: 2 x 6</span></a>
 <a class="sourceLine" id="cb39-11" title="11">  Humanness     n pain_m exp_m agency_m consc_m</a>
 <a class="sourceLine" id="cb39-12" title="12">  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb39-13" title="13"><span class="dv">1</span> Human       <span class="dv">106</span>   <span class="fl">6.25</span>  <span class="fl">6.08</span>     <span class="fl">5.39</span>    <span class="fl">5.42</span></a>
-<a class="sourceLine" id="cb39-14" title="14"><span class="dv">2</span> Robot       <span class="dv">110</span>   <span class="fl">3.57</span>  <span class="fl">3.27</span>     <span class="fl">3.95</span>    <span class="fl">3.62</span></a></code></pre></div>
+<a class="sourceLine" id="cb39-13" title="13"><span class="dv">1</span> Human        <span class="dv">65</span>   <span class="fl">6.2</span>   <span class="fl">6.08</span>     <span class="fl">5.37</span>    <span class="fl">5.42</span></a>
+<a class="sourceLine" id="cb39-14" title="14"><span class="dv">2</span> Robot        <span class="dv">67</span>   <span class="fl">3.58</span>  <span class="fl">3.27</span>     <span class="fl">3.91</span>    <span class="fl">3.55</span></a></code></pre></div>
 </div>
 <p> </p>
 </div>
@@ -2744,8 +2744,8 @@ Attractiveness of avatar: Higher number means more attractive
 <a class="sourceLine" id="cb40-9" title="9"><span class="co"># A tibble: 2 x 4</span></a>
 <a class="sourceLine" id="cb40-10" title="10">  Humanness     n attr_m emp_m</a>
 <a class="sourceLine" id="cb40-11" title="11">  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb40-12" title="12"><span class="dv">1</span> Human        <span class="dv">62</span>   <span class="fl">4.97</span>  <span class="fl">5.73</span></a>
-<a class="sourceLine" id="cb40-13" title="13"><span class="dv">2</span> Robot        <span class="dv">42</span>   <span class="fl">2.95</span>  <span class="fl">4.43</span></a></code></pre></div>
+<a class="sourceLine" id="cb40-12" title="12"><span class="dv">1</span> Human        <span class="dv">35</span>   <span class="fl">4.94</span>  <span class="fl">5.69</span></a>
+<a class="sourceLine" id="cb40-13" title="13"><span class="dv">2</span> Robot        <span class="dv">26</span>   <span class="fl">2.81</span>  <span class="fl">4.27</span></a></code></pre></div>
 </div>
 <p> </p>
 </div>
@@ -2771,7 +2771,7 @@ Participants were presented with pictures of the avatars. Their task was to eval
 <p>The R Markdown above will appear as:</p>
 <h4 id="method-1">4.1 Method</h4>
 <h5 id="participants-1">4.1.1 Participants</h5>
-<p>The study was conducted on a sample of 216 volunteers (<em>M</em><sub>age</sub> = 22.91, <em>SD</em><sub>age</sub> = 21.05). The data were collected anonymously on-line. Data from 19 participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.</p>
+<p>The study was conducted on a sample of 132 volunteers (<em>M</em><sub>age</sub> = 24.37, <em>SD</em><sub>age</sub> = 6.66). The data were collected anonymously on-line. Data from 19 participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.</p>
 <p>[…]</p>
 <h5 id="procedure">4.1.3 Procedure</h5>
 <p>Participants were presented with pictures of the avatars. Their task was to evaluate the degree to which mental capacities (experience, agency, consciousness, and pain) could be attributed to the faces and the extent to which the presented avatars elicited empathic reactions. Every page of the survey consisted of the respective face displayed above a 7-point, Likert-type response scale (1 = “Strongly disagree” to 7 = “Strongly agree”). The survey was delivered via EFS Survey (Version 9.0, QuestBack AG, Germany). The experiment followed a 2 (Harm: harmed vs. control) 2×2 (Robotization: human vs. robotic) between-subjects factorial design.</p>
@@ -2821,16 +2821,16 @@ Gender
 Male
 </td>
 <td style="text-align:right;">
-75
+50
 </td>
 <td style="text-align:right;">
-34.72
+37.88
 </td>
 <td style="text-align:right;">
-23.00
+25.10
 </td>
 <td style="text-align:right;">
-14.21
+7.82
 </td>
 </tr>
 <tr>
@@ -2838,16 +2838,16 @@ Male
 Female
 </td>
 <td style="text-align:right;">
-127
+74
 </td>
 <td style="text-align:right;">
-58.80
+56.06
 </td>
 <td style="text-align:right;">
-23.23
+24.05
 </td>
 <td style="text-align:right;">
-25.12
+5.96
 </td>
 </tr>
 <tr>
@@ -2855,16 +2855,16 @@ Female
 (Missing)
 </td>
 <td style="text-align:right;">
-14
+8
 </td>
 <td style="text-align:right;">
-6.48
+6.06
 </td>
 <td style="text-align:right;">
-19.50
+22.75
 </td>
 <td style="text-align:right;">
-6.81
+4.86
 </td>
 </tr>
 </tbody>
@@ -2891,7 +2891,7 @@ Female
 
 body {
     background-color: #fdfdfd;
-    color: #434b75;
+    color: rgb(var(--font-col));
 	overflow-x: hidden;
 }
 
@@ -2966,7 +2966,7 @@ div .tocify {
 
 .list-group-item.active:hover {
     z-index: 2;
-	color: #434b75;
+	color: rgb(var(--font-col));
     background-color: rgb(var(--theme-col));
     border-color: #3d5063;
 
@@ -2986,7 +2986,7 @@ a {
 }
 
 .date a:hover {
-    color: #434b75;
+    color: rgb(var(--font-col));
     background-color: inherit;
 	text-decoration: none;
 }
@@ -3033,7 +3033,7 @@ blockquote p::before {
 kbd {
     padding: 2px 4px;
     font-size: 90%;
-    color: #434b75;
+    color: rgb(var(--font-col));
 	background-color: #efefef;
     border-radius: 3px;
     box-shadow: none;
@@ -3056,15 +3056,15 @@ kbd {
 }
 
 .nav-tabs > li > a:hover {
-    border-color: #434b7588;
+    border-color: rgba(var(--font-col), .5);
 }
 
 .nav-tabs {
-	border-bottom-color: #434b7588;
+	border-bottom-color: rgba(var(--font-col), .5);
 }
 
 hr {
-	border-top-color: #434b7588;
+	border-top-color: rgba(var(--font-col), .5);
 }
 
 .caption {
@@ -3094,7 +3094,7 @@ summary {
 
 details[open] > summary {
     padding-bottom: 1em;
-	color: #434b75;
+	color: rgb(var(--font-col));
 }
 
 details > .sourceCode {
@@ -3344,12 +3344,12 @@ iframe {
 }
 
 .table > thead {
-    border-top: 1px solid #434b75aa;
-    border-bottom: 1px solid #434b75aa;
+    border-top: 1px solid rgba(var(--font-col), .66);
+    border-bottom: 1px solid rgba(var(--font-col), .66);
 }
 
 .table > tbody {
-    border-bottom: 1px solid #434b75aa;
+    border-bottom: 1px solid rgba(var(--font-col), .66);
 }
 
 .table > tbody > tr > td, .table > tbody > tr > th,
@@ -3363,7 +3363,7 @@ iframe {
 }
 
 caption {
-    color: #434b75;
+    color: rgb(var(--font-col));
 }
 
 </style>

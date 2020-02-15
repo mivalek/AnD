@@ -1877,22 +1877,22 @@ For educational purposes we also added a few rows of data with odd/missing value
 <p>With all of this out of the way, we can prepare tibbles of relevant summary statistics. First of all, age:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age),</a>
-<a class="sourceLine" id="cb20-3" title="3">            <span class="dt">age =</span> <span class="kw">sd</span>(Age),</a>
-<a class="sourceLine" id="cb20-4" title="4">            <span class="dt">age =</span> <span class="kw">min</span>(Age),</a>
-<a class="sourceLine" id="cb20-5" title="5">            <span class="dt">age =</span> <span class="kw">max</span>(Age))</a>
+<a class="sourceLine" id="cb20-3" title="3">            <span class="dt">sd =</span> <span class="kw">sd</span>(Age),</a>
+<a class="sourceLine" id="cb20-4" title="4">            <span class="dt">min =</span> <span class="kw">min</span>(Age),</a>
+<a class="sourceLine" id="cb20-5" title="5">            <span class="dt">max =</span> <span class="kw">max</span>(Age))</a>
 <a class="sourceLine" id="cb20-6" title="6">age_desc</a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="co"># A tibble: 1 x 2</span></a>
-<a class="sourceLine" id="cb20-8" title="8">   mean   age</a>
-<a class="sourceLine" id="cb20-9" title="9">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb20-10" title="10"><span class="dv">1</span>  <span class="fl">19.6</span>    <span class="dv">51</span></a></code></pre></div>
+<a class="sourceLine" id="cb20-7" title="7"><span class="co"># A tibble: 1 x 4</span></a>
+<a class="sourceLine" id="cb20-8" title="8">   mean    sd   min   max</a>
+<a class="sourceLine" id="cb20-9" title="9">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb20-10" title="10"><span class="dv">1</span>  <span class="fl">19.6</span>  <span class="fl">2.50</span>    <span class="dv">18</span>    <span class="dv">51</span></a></code></pre></div>
 <p>We only ever need to report these kinds of numbers to 2 decimal places so let’s round things up:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">age_desc &lt;-<span class="st"> </span>age_desc <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">modify</span>(round, <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb21-3" title="3">age_desc</a>
-<a class="sourceLine" id="cb21-4" title="4"><span class="co"># A tibble: 1 x 2</span></a>
-<a class="sourceLine" id="cb21-5" title="5">   mean   age</a>
-<a class="sourceLine" id="cb21-6" title="6">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb21-7" title="7"><span class="dv">1</span>  <span class="fl">19.6</span>    <span class="dv">51</span></a></code></pre></div>
+<a class="sourceLine" id="cb21-4" title="4"><span class="co"># A tibble: 1 x 4</span></a>
+<a class="sourceLine" id="cb21-5" title="5">   mean    sd   min   max</a>
+<a class="sourceLine" id="cb21-6" title="6">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="dv">1</span>  <span class="fl">19.6</span>   <span class="fl">2.5</span>    <span class="dv">18</span>    <span class="dv">51</span></a></code></pre></div>
 <p>We can do all of the above in a single <em>pipeline</em>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> T),</a>
@@ -2611,8 +2611,8 @@ Do not copy-paste, practice makes perfect!-->
 <pre><code># A tibble: 2 x 6
   Humanness     n pain_m exp_m agency_m consc_m
   &lt;fct&gt;     &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-1 Human       106   6.25  6.08     1.05    1.32
-2 Robot       110   3.57  3.27     1.56    1.80</code></pre>
+1 Human       106   6.25  6.08     5.39    5.42
+2 Robot       110   3.57  3.27     3.95    3.62</code></pre>
 </div>
 <p> </p>
 </div>
@@ -2774,6 +2774,7 @@ Female
 body {
     background-color: #fdfdfd;
     color: #434b75;
+	overflow-x: hidden;
 }
 
 #header {

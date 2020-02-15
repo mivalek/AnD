@@ -247,9 +247,9 @@ With all of this out of the way, we can prepare tibbles of relevant summary stat
 ```{r}
 age_desc <- gensex %>%
   summarise(mean = mean(Age),
-            age = sd(Age),
-            age = min(Age),
-            age = max(Age))
+            sd = sd(Age),
+            min = min(Age),
+            max = max(Age))
 age_desc
 ```
 
@@ -563,7 +563,7 @@ too_young <- data %>%
 too_old <- data %>%
   filter(Age > 90) %>%
   nrow()
-data <- data %>% filter(Age > 18 | Age < 90)
+data <- data %>% filter(Age > 18 & Age < 90)
 ```
 
 `r task()`In the `descriptives` code chunk, write code that creates:

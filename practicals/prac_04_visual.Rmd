@@ -1,0 +1,127 @@
+---
+title: "Writing up analysis 02"
+subtitle: "Visualisation"
+author: "[insert your name]"
+output: html_document
+  number_sections: true
+---
+
+This is the second in a series of documents that will teach you how to inspect, tidy up, and analyse various kinds of data as well as write up the results of your analysis.
+
+
+# Setup
+
+First things first, when you're writing a document in R Markdown, it is worth setting some global chunk options. This is what the chunk below does. `echo = TRUE` means that the code will be displayed by default, unless you explicitly change it to `FALSE` for any given code chunk. There are rarely any reasons to show your code in the write up so normally, you would change the option to `FALSE` before generating the final version of your report. `warning = FALSE` and `message = FALSE` mean that any warnings/messages given by functions will not be displayed in the final document. It is very important to be aware of any warnings and know what they mean but they are for you, the analyst, not for the reader.
+
+```{r setup}
+# setting up default code chunk behaviour
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+Normally, you would want to hide both this chunk and its output from the final document. You can do it by adding `, include=FALSE` right after the `{r setup` bit so that it reads `{r setup, include=FALSE}`.
+
+\ 
+
+Next, to be able to use `R` to its full potential, you need to load packages (you must install them first - this is only done once). It's good to have them all loaded in a single chunk at the top of your .Rmd. Whenever you realise you need to load another package, just scroll up and add another `library()` command to the chunk.
+
+
+```{r packages}
+# add library() commands to load all packages you need for this document.
+
+```
+
+# Read-in and inspect 
+
+OK, time to read in your data. Remember, you must store the data in an object using `<-`, otherwise `R` will just spit them out into the console and forget all about them.
+
+```{r read-in}
+# complete the line to read in the data
+
+data <- read_csv()
+```
+
+\ 
+
+The first step in analysis is a thorough data inspection. Before you start fitting statistical models and what not, you need to make sure you know your data inside-out. Are the variables stored in appropriate classes (`numeric`/`character`/`factor`)? Are there `NA`s? How many? Are all values sensible? Are there typos? These are *some* of the questions you should be able to answer and, in the following weeks, you will learn how to do this.
+
+```{r inspect}
+# check classes of your columns and number of NAs by looking at the summary of the data
+
+```
+
+# Describe 
+
+Once you've gathered the basic info about your data set as a whole, it's useful to look at the descriptive statistics for every single variable to get a better feel for it. This is also a good time to prepare objects/tibbles you'll use for write-up and tables.
+
+```{r descriptives}
+
+```
+
+\ 
+
+Looking at numbers is important but, as the saying goes, sometimes a picture is worth a thousand words. For that reason, plot stuff. Plot everything - single variables, relationships between variables, trends (more on that in later weeks). Just make sure you don't flood your report/dissertation/paper with unnecessary exploratory plots. **Only include visualisations if they add something of value to the body text or if they communicate information more concisely than words/tables.**
+
+```{r plots}
+# you can store plots iside objects too!
+age_hist <- data %>%
+  ggplot(aes(x = )) +
+  geom_histogram(fill = "white", colour = "black") +
+  labs(x = "Participants' age in years") +
+  theme_cowplot()
+
+gender_bar <- data %>%
+  ggplot() +
+  theme_cowplot()
+
+gender_age_box <-
+
+pain_consc <- data %>%
+  ggplot() +
+  geom_point(position = "jitter") +
+  facet_wrap(~Humanness) +
+  theme_bw()
+```
+
+
+# Report
+
+Now that all that's dealt with, you can start writing up. It doesn't matter that you don't have the results yet. The sample, material, and procedure details aren't going to change. In fact, there's no reason why you can't start writing up even before you have your data!
+
+## Method
+
+### Participants
+
+The study was conducted on a sample of [provide `R` code] volunteers (*M*~age~ = [provide `R` code], [report standard deviation of age]). The data were collected anonymously on-line. Data from [provide `R` code] participants were excluded due to unlikely values of age. Table 1 shows the distribution of gender as well as an age brake-up by individual gender categories.
+
+### Materials
+
+[ *Read the relevant bit of the paper and provide your own account of the materials used* ]
+
+### Procedure
+
+[ *Read the relevant bit of the paper and provide your own account of the procedure* ]
+
+```{r table_1}
+# provide tibble to push to kable() and fill in missing column names
+ %>%
+  kable(col.names = , # Give table nice column names
+        caption = "Table 1 *Descriptive statistics by categories of gender*")
+```
+
+\ 
+
+```{r fig_1, fig.cap="Figure 1. Relationship between pain and consciousness rating by levels of harm for human and non-human avatars."}
+
+```
+
+\ 
+
+That's it for now. Next time we'll start exploring relationships between variables using statistics and carry on learning how to write a paper/report.
+
+## APPENDIX
+
+```{r append_figs}
+
+```
+
+
