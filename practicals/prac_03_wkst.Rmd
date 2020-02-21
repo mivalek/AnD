@@ -8,7 +8,7 @@ author: "Analysing data"
 
 ```{r setup_how_to_knit, include=F, eval=F}
 remotes::install_github("mivalek/teachR")
-teachR::make.sheet("[path to file]/ad_practical03.Rmd", "and", toc_depth = 3, tasks_to_headings = T)
+teachR::make.sheet("[path to file]/ad_practical03.Rmd", "and")
 ```
 
 ## Intro
@@ -410,7 +410,7 @@ Use the R Markdown file to complete the following tasks.
 `r task()`In the `packages` code chunk, write the code to load the packages you will need to complete this practical: `tidyverse` and `kableExtra` (or `knitr`, if the latter causes trouble) should be enough.
 
 
-```{r, eval=F, echo= solution, class="solution"}
+```{r, eval=F, echo= solution, sol=T}
 # add library() commands to load all packages you need for this document.
 
 library(tidyverse)
@@ -422,7 +422,7 @@ library(kableExtra)
 
 `r task()`In the `read-in` code chunk, write the code to read the data into RStudio.
 
-```{r, eval=F, echo= solution, class="solution"}
+```{r, eval=F, echo= solution, sol=T}
 # complete the line to read in the data
 
 data <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/harm_data.csv")
@@ -671,7 +671,7 @@ Participants were presented with pictures of the avatars. Their task was to eval
 `r task()`Edit the code in the `table_1` code chunk, giving it your tibble with age breakdown by gender, to create a nice formatted table in your document. Make sure the table show values to 2 decimal digits.
 
 
-```{r table_1, echo = solution, class="solution"}
+```{r table_1, echo = solution, sol=T}
 # provide tibble to push to kable() and fill in missing column names
 gender_desc %>%
   kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~Age~"),

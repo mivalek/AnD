@@ -5,7 +5,6 @@ author: "Dr Jennifer Mankin"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(ggplot2)
 library(tidyverse)
 library(kableExtra)
 ```
@@ -77,7 +76,7 @@ random_tib <- tibble(
 
 `r subtask()` Plot a histogram of the `score` variable in the `random_tib` dataset
 
-```{r, include = solution, class = "solution"}
+```{r, include = solution, sol=T}
 random_tib <- tibble(
   group = factor(rep(c("ctrl", "exp"), each = 1000)),
   score = rnorm(
@@ -101,7 +100,7 @@ random_hist
 * Group by colour using the "group" variable
 * Create side-by-side histograms, one for group = ctrl and one for group = exp
 
-```{r, include = solution, class = "solution"}
+```{r, include = solution, sol=T}
 # Set the fill hex colour to the last six digits of the University Counselling Service phone number
 ggplot(random_tib, aes(score)) +
   geom_histogram(fill = "#678156")
@@ -137,7 +136,7 @@ ggplot(random_tib, aes(score, fill = group)) +
 * Group the data by `dose`
 * Create a summary table giving the mean and standard deviation of `len` and number of cases in each group
 * View the table
-```{r, include = solution, class = "solution"}
+```{r, include = solution, sol=T}
 # Save the inbuilt dataset "ToothGrowth" as a tibble called "tooth_tib". 
 # See ?ToothGrowth for information about this dataset.
 tooth_tib <- as_tibble(ToothGrowth)
@@ -168,7 +167,7 @@ tooth_sum
 
 `r subtask()` **Challenge**: use `kable()` and `kable_styling()` to create a nicely formatted table with capitalised column names and the caption "Summary of Length for Mid and High Dose".
 
-```{r, include = solution, class = "solution"}
+```{r, include = solution, sol=T}
 # Challenge task: use kable() to create a nicely formatted table
 # Capitalise columns and add the caption "Summary of Length for Mid and High Dose"
 # You can only do this if you installed and then loaded the kableExtra package!
@@ -187,7 +186,7 @@ tooth_sum %>%
 
 `r subtask()` Create a new code chunk with two new objects, `people` and `blueshirt`, that contain the total number of people you can currently see and the number wearing blue shirts, respectively.
 
-```{r, include = solution, class = "solution"}
+```{r, include = solution, sol=T}
 # With example numbers; yours will be different!
 people <- 45
 blueshirt <- 12

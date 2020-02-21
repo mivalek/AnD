@@ -7,7 +7,7 @@ author: "Analysing data"
 
 ```{r setup_how_to_knit, include=F, eval=F}
 remotes::install_github("mivalek/teachR")
-teachR::make.sheet("[path to file]/ad_practical03.Rmd", "and", toc_depth = 3, tasks_to_headings = T)
+teachR::make.sheet("[path to file]/ad_practical03.Rmd", "and")
 library(english)
 ```
 
@@ -36,6 +36,7 @@ We can use code from last practical to read in and clean our data. Note that the
 
 ```{r}
 library(tidyverse)
+theme_set(theme_grey())
 # read in
 gensex <- read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
 
@@ -190,7 +191,7 @@ Let's tweak the appearance of our plot using what we already know:
 ```{r}
 gensex %>%
   ggplot(aes(x = Gender)) +
-  geom_bar(color = "black", fill = "grey") +
+  geom_bar(color = "black", fill = "seagreen") +
   labs(x = "Gender", y = "N") +
   theme_cowplot()
 ```
@@ -210,7 +211,7 @@ gensex %>%
 <!--   coord_flip() -->
 <!-- ``` -->
 
-I think this is a rather nice plot!
+I think this one is also rather nice!
 
 \ 
 
@@ -226,13 +227,13 @@ gensex %>%
   theme_cowplot()
 ```
 
-*Note* that the `mutate()` command comes before the data are pushed into `ggplot()`. That is because we aren't really changing the plot itself but the `gensex` tibble. We are essentially telling `R` to temporarily modify the `Gender` variable in the tibble before it gets used for plotting.
 
+*Note* that the `mutate()` command comes before the data are pushed into `ggplot()`. That is because we aren't really changing the plot itself but the `gensex` tibble. We are essentially telling `R` to temporarily modify the `Gender` variable in the tibble before it gets used for plotting.
 </div>
 
 \ 
 
-Next, we can visualise the age breakdown by gender choice using boxplots. To do this, you need to map each both of these variables onto one axis inside of the `aes()` function: The categorical variable belongs on the x axis and the continuous on the y axis:
+Next, we can visualise the age breakdown by gender choice using boxplots. To do this, you need to map each of these variables onto one axis inside of the `aes()` function: The categorical variable belongs on the X axis and the continuous on the Y axis:
 
 ```{r}
 gensex %>%
@@ -266,11 +267,11 @@ gensex %>%
   theme_cowplot()
 ```
 
-That's it for descriptive plots. Let's build up a more interesting plots that will show us something about the relationships between the main measured variables.
+That's it for descriptive visualisation. Let's build up a more interesting plot that will show us something about the relationships between the main measured variables.
 
 Suppose we are interested in knowing whether there is a relationship between participants' self-ratings of masculinity and femininity. If these are inverses of each other as is sometimes claimed, the dots should be pretty much lined up: the more masculine you think you are, the less feminine you consider yourself. However, these dimensions may well not be opposites of one another. If that's the case, it is possible for a person to feel both highly masculine and feminine at the same time. Let's build a plot to find out.
 
-Since both of these variables are continuous, a scatterplot is probably the best option. In `ggplot()`, we create scatterplots using `geom_pooint()`:
+Since both of these variables are continuous, a scatterplot is probably the best option. In `ggplot()`, we create scatterplots using `geom_point()`:
 
 ```{r}
 gensex %>%
@@ -314,7 +315,7 @@ gensex %>%
 
 That's a nice one!
 
-It's interesting to see that different gender categories display different patters. While participants who reported their gender as female seem to be roughly spread across the diagonal of the plot, those who reported their gender as male a seem to be distributed more flatly in the top half of the plot. Unfortunately, we do not have enough data from participants in the "Other" category to make any observations.
+It's interesting to see that different gender categories display different patterns. While participants who reported their gender as female seem to be roughly spread across the diagonal of the plot, those who reported their gender as male seem to be distributed more flatly in the top half of the plot. Unfortunately, we do not have enough data from participants in the "Other" category to make any observations.
 
 Please bear in mind that we cannot really say for certain if these differences are statistically significant just by looking at the scatterplot. For that, we need to run some tests!
 
@@ -336,7 +337,7 @@ data <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/harm
 
 In the remaining time you will practice visualising data with `ggplot()`. We will be using the same data from the [paper by Swiderska and K&uuml;ster (2018)](https://journals.sagepub.com/doi/10.1177/0301006618809919) as we did last time.
 
-`r task()`First of all, if you haven't finished last week's tasks pick up where you left in the [week 3 practical worksheet](https://mivalek.github.io/adata/prac/prac_03_wkst.html#worksheet). There is a [version with solutions](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html#worksheet) available no if you need help but when you use it, make sure you understand the code! There's no point copy-pasting the solutions just for the sake of completing the tasks.
+`r task()`First of all, if you haven't finished last week's tasks pick up where you left in the [week 3 practical worksheet](https://mivalek.github.io/adata/prac/prac_03_wkst.html#worksheet). There is a [version with solutions](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html#worksheet) available now if you need help but when you use it, make sure you understand the code! There's no point copy-pasting the solutions just for the sake of completing the tasks.
 
 `r task()`Download the "prac_04_visual.Rmd" file from Canvas and open it in RStudio. It is an expanded version of the one you were working on last week. Practice makes perfect...
 
@@ -344,7 +345,7 @@ Use the R Markdown file to complete the following tasks.
 
 `r task()`Complete the `packages`, `read-in`, `inspect`, and `descriptives` code chunks, as per last week's tasks. You have done it before so it would be great if you could do the tasks without further prompting. If you need a little help, that's OK. Just check out the worksheet for the individual tasks. If you must, you can even check the code you used last time but try not to copypaste it here. Rather, type it in manually to help develop coding habits.
 
-```{r, eval=F, echo= solution, class="solution"}
+```{r, eval=F, echo= solution, sol=T}
 # packages chunk
 
 library(tidyverse)
@@ -356,14 +357,14 @@ library(kableExtra)
 ```
 
 
-```{r, echo= solution, class="solution"}
+```{r, echo= solution, sol=T}
 # read-in chunk
 
 data <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/harm_data.csv")
 ```
 
 
-```{r, echo= solution, class="solution"}
+```{r, echo= solution, sol=T}
 # inspect chunk
 
 data <- data %>%
@@ -431,7 +432,7 @@ unharm_desc <- data %>%
 
 `r task()`Complete the code for the histogram of age, bar chart of gender and boxplot of age by gender in the `plots` chunk. They should look like this (feel free to choose the colours you like):
 
-```{r, include=solution, class="solution"}
+```{r, include=solution, sol=T}
 # you can store plots iside objects too!
 age_hist <- data %>%
   ggplot(aes(x = Age)) +
@@ -461,7 +462,7 @@ Since the plots are assigned to objects using the `<-` operator, they will not b
 
 `r task()`Complete the code for the `pain_consc` plot so that it looks like this:
 
-```{r, include=solution, class="solution"}
+```{r, include=solution, sol=T}
 pain_consc <- data %>%
   ggplot(aes(x = Pain, y = Consciousness, colour = Harm)) +
   geom_point(position = "jitter") +
@@ -524,7 +525,7 @@ Participants were presented with pictures of the avatars. Their task was to eval
 `r task()`Edit the code in the `table_1` code chunk, giving it your tibble with age breakdown by gender, to create a nice formatted table in your document. Make sure the table show values to 2 decimal digits and to reference your table somewhere in the body text.
 
 
-```{r table_1, echo = solution, class="solution"}
+```{r table_1, echo = solution, sol=T}
 gender_desc %>%
   kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~Age~"),
         caption = "Table 1 *Descriptive statistics by categories of gender*",
@@ -537,7 +538,7 @@ gender_desc %>%
 
 **Hint: **Just put the name of the object that contains the plot inside the chunk.
 
-```{r, echo = solution, class="solution", fig.cap="Figure 1. Relationship between pain and consciousness rating by levels of harm for human and non-human avatars."}
+```{r, eval = F, echo = solution, sol=T, fig.cap="Figure 1. Relationship between pain and consciousness rating by levels of harm for human and non-human avatars."}
 pain_consc
 ```
 
@@ -547,7 +548,7 @@ pain_consc
 
 Descriptive plots are rarely important enough to warrant space in the results section but they can be useful for the reader and so can be included in the Appendix/Supplementary materials.
 
-```{r, echo = solution, class="solution"}
+```{r, eval = F, echo = solution, sol=T}
 age_hist
 
 gender_bar
@@ -559,7 +560,7 @@ gender_age_box
 
 \ 
 
-This week you learnt how to make pretty data visualisations and you added a Materials section to your write-up. Next time, we'll finally get to actually analysing data and testing hypotheses. But, for now...
+This week you learnt how to make pretty data visualisations and you added a Materials section to your write-up. Next time, we will review everything we've learned so far and practice the skills needed to prepare data for analysis and hypotheses testing, as you'll do in your lab report. But, for now...
 
 <font size="+4">**Well done!**</font>
 

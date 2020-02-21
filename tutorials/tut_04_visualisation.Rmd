@@ -7,32 +7,17 @@ author: "Analysing Data"
 library(tidyverse)
 library(ggplot2movies)
 library(ggmosaic)
-library(cowplot)
-library(colortools)
-knitr::opts_chunk$set(echo = T, fig.height=4, fig.width=5, fig.align = "center",
-                      message = F, warning = F, toggle = F, cache = T)
 
+### DEFAULT ggplot THEME NOW SET By make.sheet() and Slidify()
+# library(colortools)
 
-bg_col <- "#fdfdfd"
-default_col <- "#434b75"
-theme_col <- "#b38ed2"
-complement_col <- complementary(theme_col, F)[2]
-point_col <- paste0(default_col, "88")
+# bg_col <- "#fdfdfd"
+# default_col <- "#434b75"
+# theme_col <- "#b38ed2"
+# complement_col <- complementary(theme_col, F)[2]
+# point_col <- paste0(default_col, "88")
+knitr::opts_chunk$set(echo = T, cache = T)
 
-my_theme <- theme_cowplot() +
-  theme(line = element_line(colour = default_col),
-        plot.background = element_rect(fill = bg_col),
-        panel.background = element_rect(fill = bg_col),
-        text = element_text(colour = default_col),
-        title = element_text(colour = default_col),
-        axis.line = element_line(colour = default_col),
-        axis.ticks = element_line(colour = default_col),
-        axis.text = element_text(colour = default_col),
-        axis.title = element_text(colour = default_col),
-        strip.background = element_rect(fill = default_col, colour = default_col),
-        strip.text = element_text(colour = bg_col)
-  )
-update_geom_defaults("bar", list(fill = bg_col, colour = default_col))
 ```
 
 The goal of this tutorial is to understand the philosophy and syntax of `ggplot()`. This is a very powerful tool for data visualisation of all sorts and, thought it takes a little getting used to, once you wrap your head around it, you will be able to create pretty much any plot you want. We will also look at how to integrate `ggplot()` into pipelines and combine it with other `tidyverse` functions.

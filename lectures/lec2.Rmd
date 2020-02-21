@@ -1,5 +1,5 @@
 ---
-title: "Fundamentals of statistical testing"
+title: "Fundamentals of statistical&nbsp;testing"
 author: "Analysing Data"
 ---
 
@@ -19,34 +19,24 @@ author: "Analysing Data"
 - Same with *SD* -- $\sigma$, $s$, and $\hat{\sigma}$
 - Greek is for populations, Latin is for samples, hat is for population estimates
 
-### Recap on distributions
+## Recap on distributions
 
 - Numerically speaking, the number of observations per each value of a variable
 - Which values occur more often and which less often
 - The shape formed by the bars of a bar chart/histogram
 
 ```{r, echo = F, fig.width=8}
-bg_col <- "#fdfdfd"
-default_col <- "#434b75"
-theme_col <- "#77bd9d"
-complement_col <- "#bd7797"
+
+### DEFAULT ggplot THEME NOW SET By make.sheet() and Slidify()
+# library(colortools)
+# 
+# bg_col <- "#fdfdfd"
+# default_col <- "#434b75"
+# theme_col <- "#77bd9d"
+# complement_col <- complementary(theme_col, plot = F)[2]
 
 set.seed(1234)
 library(tidyverse)
-library(cowplot)
-theme_set(theme_cowplot() +
-            theme(line = element_line(colour = default_col),
-                  plot.background = element_rect(fill = bg_col),
-                  panel.background = element_rect(fill = bg_col),
-                  text = element_text(colour = default_col),
-                  title = element_text(colour = default_col),
-                  axis.line = element_line(colour = default_col),
-                  axis.ticks = element_line(colour = default_col),
-                  axis.text = element_text(colour = default_col),
-                  axis.title = element_text(colour = default_col),
-                  )
-          )
-update_geom_defaults("bar", list(fill = bg_col, colour = default_col))
 
 df <- tibble(eye_col = sample(c("Brown", "Blue", "Green", "Gray"), 555,
                         replace = T, prob = c(.55, .39, .04, .02)),
@@ -153,6 +143,10 @@ df %>%
 
 #### Area below the normal curve
 
+![](pics/norm3.png){height=550px}
+
+#### Area below the normal curve
+
 - Say we want to know the number of *SD*s from the mean beyond which lie the outer 5% of the distribution
 
 ```{r, echo = F, fig.height=3}
@@ -192,16 +186,16 @@ qnorm(p = .8, mean = 0, sd = 1)
 
 - Other known distributions have different cut-offs but the principle is the same
 
-### Sampling from distributions
+## Sampling from distributions
 
 - Collecting data on a variable = randomly sampling from distribution
 - The underlying distribution is often assumed to be normal
 - Some variables might come from other distributions
     - Reaction times: *log-normal* distribution
-    - Number of annual casualties due to horse kicks: *Poisson* distributtion
+    - Number of annual casualties due to horse kicks: *Poisson* distribution
     - Passes/fails on an exam: *binomial* distribution
 
-### Sampling from distributions
+## Sampling from distributions
 
 - Samples from the same population differ from one another
 
@@ -238,12 +232,12 @@ p2 <- ggplot(NULL, aes(x = sample2)) +
 plot_grid(p1, p2)
 ```
 
-### Sampling distribution
+## Sampling distribution
 
 - If we took all possible samples of a given size (say *N = 50*) from the population and each time calculated $\bar{x}$, the means would have their own distribution
 - This is the **sampling distribution** of the mean
     - Approximately **normal**
-    - Centered around the **true population mean**, $\mu$
+    - Centred around the **true population mean**, $\mu$
 - Every statistic has its own sampling distribution (not all normal though!)
 
 ## Sampling distribution
@@ -260,7 +254,7 @@ ggplot(NULL, aes(x_bar)) +
   labs(x = "Sample mean", y = "Frequency") 
 ```
 
-## Standard error
+### Standard error
 
 - Standard deviation of the sampling distribution is the **standard error**
 
@@ -270,7 +264,7 @@ sd(x_bar)
 
 - Sampling distribution of the mean is *approximately normal*: *~68.2% of means of samples* of size 50 from this population will be *within &plusmn;`r round(sd(x_bar), 2)` of the true mean*
 
-## Standard error
+### Standard error
 
 - Standard error can be **estimated** from any of the samples
 <m>$$SE = \frac{SD}{\sqrt{N}}$$</m>
@@ -289,7 +283,7 @@ sd(x_bar)
 mean(samp)
 ```
 
-## Standard error
+### Standard error
 
 - *SE* is calculated using *N* -- there's a relationship between the two
 
@@ -299,7 +293,7 @@ tibble(x = 30:500, y = sd(samp)/sqrt(30:500)) %>%
   annotate("text", x = 400, y = 2.5, label = bquote(sigma==.(round(sd(samp), 1))), color = default_col, size = 10)
 ```
 
-## Standard error
+### Standard error
 
 - That is why *larger samples are more accurate*!
 
@@ -339,7 +333,7 @@ cbind(seq(85, 115, length.out = 300),
   theme(legend.key.height = unit(.45, "inch"), legend.position = c(.8, .6))
 ```
 
-## Standard error
+### Standard error
 
 - Allows us to gauge the accuracy of parameter estimate (<i>e.g.,</i> $\hat{\mu}$) in sample
 - The smaller the *SE*, the more confident we can be that the parameter estimate ($\hat{\mu}$) is close to population parameter ($\mu$)
@@ -352,15 +346,15 @@ cbind(seq(85, 115, length.out = 300),
 - This is the [Central Limit Theorem](https://en.wikipedia.org/wiki/Central_limit_theorem)
     - *"Central"* as in *"really important"* because, well, it is!
 
-## CLT in action {data-transition="fade-in none-out"}
+### CLT in action {data-transition="fade-in none-out"}
 
 ![](pics/clt.png){height=550px}
 
-## CLT in action {data.transition="none-in fade-out"data-gif="repeat"}
+### CLT in action {data.transition="none-in fade-out"data-gif="repeat"}
 
 ![](pics/clt_small.gif){height=550px}
 
-## Approximately normal
+### Approximately normal
 
 - As *N* gets larger, the sampling distribution of $\bar{x}$ tends towards a normal distribution with **mean = $\mu$** and **$SD = \frac{\sigma}{\sqrt{N}}$**
 
@@ -409,7 +403,7 @@ plot_grid(pop, plots[[1]], plots[[2]], plots[[3]])
 ## Take-home message
 
 - Statistics of random samples differ from parameters of a population
-- As *N* gets bigger, sample statistics approache population parameters
+- As *N* gets bigger, sample statistics approaches population parameters
 - Distribution of sample parameters is the **sampling distribution**
 - **Standard error** of a parameter estimate is the *SD* of its sampling distribution
     - Provides *margin of error* for estimated parameter

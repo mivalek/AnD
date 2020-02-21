@@ -5,7 +5,7 @@ author: "Analysing Data"
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-knitr::opts_chunk$set(echo = T, fig.height=3, fig.width=5, fig.align = "center")
+knitr::opts_chunk$set(echo = T)
 ```
 
 In this tutorial, we will take a closer look at pipes (`%>%`), `tidyverse` functions, and at combining these to create command pipelines.
@@ -263,6 +263,7 @@ my_data %>%
          age_z = scale(age),
          age_z_abs = abs(age_z))
 ```
+
 `r task()`To practice some more, rewrite the command below in the same pipe fashion and run it to see a plot.
 
 ```{r, eval=F}

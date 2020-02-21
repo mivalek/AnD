@@ -9,27 +9,16 @@ author: "Analysing Data"
 ```{r, echo=F}
 set.seed(1234)
 library(tidyverse)
-library(cowplot)
 
-bg_col <- "#fdfdfd"
-default_col <- "#434b75"
-theme_col <- "#77bd9d"
-complement_col <- "#bd7797"
-point_col <- paste0(default_col, "88")
+### DEFAULT ggplot THEME NOW SET By make.sheet() and Slidify()
+# library(colortools)
 
-theme_set(theme_cowplot() +
-            theme(line = element_line(colour = default_col),
-                  plot.background = element_rect(fill = bg_col),
-                  panel.background = element_rect(fill = bg_col),
-                  text = element_text(colour = default_col),
-                  title = element_text(colour = default_col),
-                  axis.line = element_line(colour = default_col),
-                  axis.ticks = element_line(colour = default_col),
-                  axis.text = element_text(colour = default_col),
-                  axis.title = element_text(colour = default_col),
-                  )
-          )
-update_geom_defaults("bar", list(fill = bg_col, colour = default_col))
+# bg_col <- "#fdfdfd"
+# default_col <- "#434b75"
+# theme_col <- "#77bd9d"
+# complement_col <- complementary(theme_col, F)[2]
+# point_col <- paste0(default_col, "88")
+
 ```
 
 Any questions about last week's content?
@@ -72,7 +61,7 @@ plot_grid(p1, p2)
 ```
 
 
-## Accuracy and uncertainty
+### Accuracy and uncertainty
 
 - Sample mean $\bar{x}$ is the best estimate $\hat{\mu}$ of population mean but means of almost all samples differ from population mean $\mu$
 - Same is true for *any* point estimate
@@ -89,7 +78,7 @@ plot_grid(p1, p2)
 - Important -- confidence intervals
 
 
-## Confidence intervals
+## Confidence interval
 
 - We can use *SE* and the sampling distribution to calculate a confidence interval (CI) with a certain *coverage*, <i>e.g.,</i> 90%, 95%, 99%...
 - For a 95% CI, 95% of these intervals around sample estimates will contain the value of the population parameter
@@ -128,13 +117,13 @@ plot_grid(p1, p2)
 
 ![](pics/ci_04.png){height="450px"}
 
-## How is it made?
+### How is it made?
 
 - Easy if we know sampling distribution of the mean
 - 95% of sampling distribution is within &plusmn;1.96 <i>SE</i>
 - 95% CI around estimated population mean is mean &plusmn;1.96 <i>SE</i>
 
-## How is it made?
+### How is it made?
 
 - Sampling distribution of the mean is normal (as per [CLT](lec2_slides.html#/the-central-limit-theorem)) 
 
@@ -142,7 +131,7 @@ plot_grid(p1, p2)
 
 ![](pics/ci_constr01_small.gif){height="400px"}
 
-## How is it made?
+### How is it made?
 
 - Middle 95% of the sample means lie within &plusmn;1.96 <i>SE</i>
 
@@ -150,7 +139,7 @@ plot_grid(p1, p2)
 
 ![](pics/ci_constr02_small.gif){height="400px"}
 
-## How is it made?
+### How is it made?
 
 - We use the same 1.96 <i>SE</i> to construct 95% CI around mean
 
@@ -159,12 +148,12 @@ plot_grid(p1, p2)
 ![](pics/ci_constr03_small.gif){height="400px"}
 
 
-## How is it made?
+### How is it made?
 
 - Sampling distribution is, however, not known!
 - It can be approximated using the *t*-distribution and *s* and *N*
 
-## <i>t</i>-distribution
+### <i>t</i>-distribution
 
 - Symmetrical, centred around 0
 - Its shape changes based on **degrees of freedom**
@@ -173,7 +162,7 @@ plot_grid(p1, p2)
 
 ![](pics/t_dist.png){height="400px"}
 
-## <i>t</i>-distribution
+### <i>t</i>-distribution
 
 - As shape changes, so do proportions (unlike with normal)
 - In standard normal, middle 95% of data lie within &plusmn;1.96
@@ -182,15 +171,15 @@ plot_grid(p1, p2)
 ![](pics/t_small.gif){height="400px"}
 
 
-## <i>t</i>-distribution
+### <i>t</i>-distribution
 
-- *t*-distribtuion pops up in many situations
+- *t*-distribution pops up in many situations
 - Always has to do with **estimating sampling distribution from a finite sample**
 - How we calculate number of <i>df</i> changes based on context
   - Often has to do with *N*, number of estimated parameters, or both
   - In the case of sampling distribution of the mean, <i>df = N</i> &minus; 1
 
-## Back to CI
+### Back to CI
 
 - 95% CI around estimated population mean is mean &plusmn;1.96 <i>SE</i> **if we know the exact shape of sampling distribution**
   - We don't know the shape so we approximate it using the *t*-distribution
@@ -201,7 +190,7 @@ plot_grid(p1, p2)
 qt(p = 0.975, df = 29)
 ```
 
-## Back to CI
+### Back to CI
 
 - 95% CI around the mean for a sample of 30 is $\bar{x} \pm 2.05\times SE$
 - $\widehat{SE}=\frac{s}{\sqrt{N}}$
@@ -212,20 +201,20 @@ qt(p = 0.975, df = 29)
   - *N*
   - Critical value for a *t*-distribution with <i>N</i> &minus; 1 <i>df</i>
 
-## CIs are useful
+### CIs are useful
 
 - Width of the interval tells us about how much we can expect the mean of a different sample of the same size to vary from the one we got
 - There's a x% chance that any given x% CI contains the true population mean
 - **CAVEAT: **That's not the same as saying that there's a x% chance that the population mean lies within our x% CI!
 - CIs can be calculated for *any point estimate*, not just the mean!
 
-## Remember this?
+#### Remember this?
 
 ```{r, echo=F, fig.height=5, fig.width=8} 
 plot_grid(p1, p2)
 ```
 
-## Remember this?
+#### Remember this?
 
 ```{r, echo=F, fig.height=5, fig.width=8}
 r1 <- cor.test(df$x, df$y1)

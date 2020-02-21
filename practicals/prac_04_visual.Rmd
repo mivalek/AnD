@@ -2,8 +2,9 @@
 title: "Writing up analysis 02"
 subtitle: "Visualisation"
 author: "[insert your name]"
-output: html_document
-  number_sections: true
+output:
+  html_document:
+    number_sections: true
 ---
 
 This is the second in a series of documents that will teach you how to inspect, tidy up, and analyse various kinds of data as well as write up the results of your analysis.

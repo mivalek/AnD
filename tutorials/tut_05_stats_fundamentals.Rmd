@@ -1,0 +1,385 @@
+---
+title: "Tutorial 5: Sampling distributions and confidence intervals"
+author: "Analysing Data"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+
+### DEFAULT ggplot THEME NOW SET By make.sheet() and Slidify()
+# library(colortools)
+
+# bg_col <- "#fdfdfd"
+# default_col <- "#434b75"
+# theme_col <- "#b38ed2"
+# complement_col <- complementary(theme_col, F)[2]
+# point_col <- paste0(default_col, "88")
+
+library(kableExtra)
+knitr::opts_chunk$set(echo = F, cache = F)
+
+### DEFAULT ggplot THEME NOW SET By make.sheet() and Slidify()
+box_theme <- theme(plot.background = element_rect(color = "#e7dbf0", fill = "#e7dbf0"),
+                   panel.background = element_rect(color = "#e7dbf0", fill = "#e7dbf0"))
+
+```
+
+After 4 tutorials aimed at working with RStudio, this one will focus on explaining the concepts covered in lectures 2 and 3, namely the sampling distribution and confidence intervals. These concepts may not seem intuitive but they can definitely be understood. It might, however, take some effort so, if you are feel that the content is just not making sense, go back to when it last did and take it from there. It may take a few slow reads before it all clicks into place but it will!
+
+## Populations and samples
+
+```{r}
+set.seed(432)
+mu <- 4
+sigma <- .56
+n <- 200
+se <- round(sigma/sqrt(n), 2)
+
+bag1 <- rnorm(n, mu, sigma)
+bag2 <- rnorm(n, mu, sigma)
+mean1 <- round(mean(bag1), 2)
+mean2 <- round(mean(bag2), 2)
+```
+
+First thing we must do is to clarify the differences and the relationships between populations, samples, and sampling distributions. Let's take the example of [Minstrels chocolates](https://en.wikipedia.org/wiki/Galaxy_Minstrels).
+
+<div class="solText">The **population** is *all* the Minstrels that ever existed, exist, and will exist.</div>
+
+Let's say, we want to know the average (mean) weight of a single Minstrel. To find out, we would have to weigh up every single one of them and then calculate the mean. That would involve measuring all the Minstrels on the planet, which is not feasible, all the Minstrels that have yet to be produced, which is outright impossible, and all the Minstrels that have already been eaten, which is just gross! Instead, we pop down to our local shop and get a big bag of `r n` Minstrels. For science, naturally...
+
+<div class="solText">The **sample** is the bag of `r n` Minstrels.</div>
+
+We use the sample to *make inferences* about the population. In other words, we estimate the **population parameter** of interest (mean weight of **all**  Minstrel chocolates) based on the **sample statistic** (mean weight of Minstrels in the bag) .
+
+So we weigh up all the Minstrels in the bag and plot the measurements on a histogram (*Fig. 1A*). We calculate the mean weight of the sample of Minstrels = `r mean1` grammes. Does that mean that mean that the **population** mean weight of a Minstrel is `r mean1`g? Well, not necessarily. We want to be rigorous so we go get another bag of `r n` Minstrels, repeat the process, plot the data (*Fig. 1B*) and find that the mean weight of a Minstrel in the second sample is `r mean2`g. Close but not the same.
+
+This means that **different samples yield different estimates of the population parameter.**
+
+```{r, fig.width=9, fig.height=3, fig.cap="Figure 1 Distributions of weights of Minstrels in sample 1 and 2"}
+p1 <- tibble(x = bag1) %>%
+  ggplot(aes(x)) +
+  geom_histogram() +
+  labs(x = "Weight in grammes", y = expression(italic(N)), title = "A") +
+  geom_vline(xintercept = mean1, colour = theme_col, lwd = 1) +
+  my_theme +
+  theme(axis.title.y = element_text(angle=0, vjust = .5))
+p2 <- tibble(x = bag2) %>%
+  ggplot(aes(x)) +
+  geom_histogram() +
+  labs(x = "Weight in grammes", y = "", title = "B") +
+  geom_vline(xintercept = mean2, colour = theme_col, lwd = 1) +
+  my_theme
+plot_grid(p1, p2)
+```
+
+\ 
+
+## Sampling distributions
+
+Extrapolating from this finding, we can imagine what would happen if we got all the bags of `r n` Minstrels in the world and repeated the same process. Sometimes, we would get an extra light bag (small mean weight), sometimes an extra heavy bag (large mean weight) but, they would mostly be roughly the same. We can see that these individual sample means would themselves form a distribution (*Fig. 2*)
+
+<div class="solText">The **sampling distribution** of a parameter (*e.g.,* mean weight of a Minstrel) is the distribution of the individual estimates based on all possible samples of a given size (here, bags of `r n` Minstrels)
+
+The sampling distribution of the **mean** is
+
+- normal
+- centred around the true population mean *&mu;*;
+- its standard deviation is called the **standard error**</div>
+
+```{r, fig.height=3, fig.cap="Figure 2 Sampling distribution of the mean weight of a Minstrel for *N*=200"}
+pop <- matrix(rnorm(20^6, mu, sigma), ncol = n)
+
+samp_dist <- tibble(
+  mean = apply(pop, 1, mean),
+  sd = apply(pop, 1, sd)
+)
+
+pop <- pop[c(which.min(samp_dist$mean), which.max(samp_dist$mean)), ]
+
+p3 <- samp_dist %>%
+  ggplot(aes(mean)) +
+  geom_histogram(bins = 75) +
+  labs(x = "Sample means", y = expression(italic(N))) +
+  my_theme +
+  theme(axis.title.y = element_text(angle=0, vjust = .5))
+
+p3 +
+  geom_vline(aes(xintercept = mean(mean)), colour = "seagreen", lwd = 1)
+```
+
+\ 
+
+The mean (centre) of the sampling distribution is the population mean. As it happens, this sampling distribution is centred around 4. So the **actual average weight** of a single Minstrel is 4g.
+
+Because of the [properties of the normal distribution](https://mivalek.github.io/adata/lec2_slides.html#/the-normal-distribution-1), we know that, if the population mean weight of a Minstrel is 4g mean weight per chocolate in half of the bags of `r n` Minstrels will be above 4g and half will be under 4g. We also know that 95% of the samples will give us means between &plusmn;1.96&times;*SE* from 4g. Let's unpack this last sentence:
+
+- It is a fixed property of the normal distribution that 95% of the data falls between &plusmn;1.96&times;*SD* from the mean
+- The mean of the sampling distribution is the population mean (in our case 4 grammes)
+- The standard deviation of the sampling distribution is the standard error
+- *SE* is related to the *population SD* (&sigma;)
+
+$$SE = \frac{\sigma}{\sqrt{N}}$$
+
+In our case, the population mean is 4g and the population *SD* is, let's say, 0.56. Substituting for &sigma; and *N* in the formula above, we get:
+
+$$\begin{align}SE &= \frac{0.56}{\sqrt{`r n`}}\\&= `r se`\end{align}$$
+
+So, it follows from the above that means calculated from 95% of the bags will be between &plusmn;1.96&times;*SE* from 4g, that is between `r round(mu - 1.96 * se, 2)` and `r round(mu + 1.96 * se, 2)` as illustrated in *Fig. 3*.
+
+```{r, fig.height=3, fig.cap="Figure 3 95% of the sample means"}
+p3 +
+  geom_histogram(data = filter(samp_dist, mean >= mu - 1.99 * se & mean < mu + 2.006 * se),
+                 bins = 75, fill = theme_col, alpha = .4) +
+  geom_vline(aes(xintercept = mean(mean)), colour = "seagreen", lwd = 1)
+sizes <- c(10, 50, 100, 200, 500, 1000)
+```
+
+\ 
+
+Because *SE* is related to sample size *N*, bigger samples yield sampling distributions with smaller *SE*s and so the range of 95% of sample means gets narrower a *N* gets bigger. For instance, *Table 1* shows the ranges of likely mean weights in hypothetical bags of 10, 50, 100, 200, 500, and 1000 Minstrels, respectively. As you can see, as *N* gets larger, the range gets narrower: from &plusmn;`r round(1.96 * sigma/sqrt(min(sizes)), 2)` when there are only `r min(sizes)` Minstrels per bag to &plusmn;`r round(1.96 * sigma/sqrt(max(sizes)), 2)` when there are `r max(sizes)`.
+
+```{r}
+tibble(N = sizes, Range = paste(
+  round(mu - 1.96 * sigma/sqrt(N), 2),
+  round(mu + 1.96 * sigma/sqrt(N), 2), sep = "--")) %>%
+  kable(col.names = c("Sample size (*N*)", "Range of likely means"),
+        caption = "Table 1 Relationship between sample size and the standard error",
+        align = c("c", "c")) %>%
+  column_spec(1:2, c("1.5in", "2.5in")) %>%
+  kable_styling(full_width = F)
+```
+
+<div class="warn">Bear in mind that we are talking about the **same population of all Minstrels**! The only thing that changes is the size of the bag.</div>
+
+## Confidence intervals
+
+OK, so we used our sampling distribution to find out that 95% of bags of `r n` Minstrels will yield sample means of average weight between `r round(mu - 1.96 * se, 2)` and `r round(mu + 1.96 * se, 2)` per single chocolate.
+This range comes from the population mean (*&mu;* = 4g) &plusmn;1.96&times;*SE* (&plusmn;`r round(1.96 * se, 2)`g).
+
+Conversely, it is also true that the **population mean will be within &plusmn;1.96&times;_SE_ of the sample means calculated from 95% of the bags of `r n` Minstrels.**
+Is *crucially* important to understand that these two facts are just logical consequences of one another so, if it's not making sense, re-read it slowly and carefully until it does.
+
+Because the statement above is true, we can use the &plusmn;1.96&times;*SE* range to construct a 95% confidence interval around our mean weight of a Minstrel we calculated from our bag of `r n`. If we bought 100 such bags, we would expect 95 of them to have confidence intervals that would include the value of the actual population mean as illustrated in [these slides from Lecture 3](https://mivalek.github.io/adata/lec3_slides.html#/confidence-interval-1).
+
+<div class="warn">This is true regardless of **whether or not we know what the actual value of the population mean is.**</div>
+
+\ 
+
+Unfortunately, things are a little less straightforward in real life.
+
+Take another look at the formula for the standard error of the mean:
+
+$$SE = \frac{\sigma}{\sqrt{N}}$$
+
+*&sigma;* is the **population standard deviation**. In the example above, we just said its value was 0.56. We could do this because it was just our hypothetical example so we can make things up. However, in reality, we have no idea what the standard deviation in weight of a Minstrel chocolate is. We can only get the standard deviation of weights within our bag of `r n`. It is this **sample standard deviation**, *s*, that we use to *estimate* the standard error of the mean (*i.e.,* the *SD* of the sampling distribution):
+
+$$\widehat{SE} = \frac{s}{\sqrt{N}}$$
+
+The result of using this estimated *SE* rather than the actual (unknown) *SE* is that we cannot rely on the normal distribution for the &plusmn;1.96 cut-off. Instead, we need to use the cut-off based on the Student's *t*-distribution[^1]. If you want to know why this is true, see the box below.
+
+[^1]: First described by the English statistician [William Sealy Gosset](https://en.wikipedia.org/wiki/William_Sealy_Gosset) who was, at the time, working as Head Brewer for the Guinness brewery. He wanted to publish his findings but his boss didn't want to know Guinness were using statistics in their production process and so Gosset published under the pseudonym Student.
+
+\ 
+
+<div class="solText">
+
+### Why not normal?
+
+The reason why using sample *SD* (*s*) instead of population *SD* (*&sigma;*) for calculating the standard error forces us to use the *t*-distribution has to do with the fact that the latter is a constant, while the former is a variable. Let's elaborate.
+
+There is only one population and so there is only one *&sigma;*. However, there are almost infinite possible samples and each one has its own *s*. This matters because we are using *SE* to determine the width of the confidence intervals. This *SE* is based on a given *s* in our sample which might be different from *s* in another sample. Look at the formula for 95% CI that we used:
+
+$$\begin{aligned}95\%\text{CI} &= \bar{x}\pm1.96\times \widehat{SE}\\&= \bar{x}\pm1.96\times \frac{s}{\sqrt{N}},\end{aligned}$$
+
+where $\bar{x}$ is the sample mean and *N* is the sample size. In our example, we said that we can use the &plusmn;1.96&times;*SE* range to construct a 95% confidence interval around the mean weight of a Minstrel we calculated from our bag of `r n`. Getting the *s* in the bag (`r round(sd(bag1), 2)`) and substituting in the formula, we get:
+
+
+$$\begin{align}95\%\text{CI} &= \bar{x}\pm1.96\times \widehat{SE}\\
+&= `r mean1`\pm1.96\times \frac{`r round(sd(bag1), 2)`}{\sqrt{`r n`}}\end{align}$$
+
+Make sure you understand the above because here comes the actual reason:
+
+The &plusmn;1.96 cut-off for the most extreme 5% of the distribution only **applies to the standard normal distribution** (a normal distribution with mean = 0 and *SD* = 1). If the distribution is not standard normal, this cut-off doesn't give us the middle 95% / tail 5% of the distribution. So in order to be able to use the cut-off in the formula:
+
+
+$$\bar{x}\pm1.96\times \widehat{SE},$$
+
+$\bar{x}/\widehat{SE}\ $ must follow the standard normal distribution.
+
+Now, we know that $\bar{x}$ is a variable (each bag has its own mean) that does indeed follow the normal distribution (see *Fig. 2*). We can standardise it -- turn it into the standard normal -- by subtracting from it the mean of the sampling distribution from the variable and dividing it by *SE*. This is, however, only true if *SE* is a constant! The actual *SE* really is a constant because there is only one sampling distribution of the mean for *N*=`r n` and so there's only one *SE*. But there are as many *estimates* of *SE* as there are samples and thus $\widehat{SE}$ is a **variable**. What's worse, it is not a normally distributed variable: it follows a different distribution, the [Chi-squared (*&chi;*^2^) distribution](https://en.wikipedia.org/wiki/Chi-squared_distribution). 
+
+So, instead of dividing our $\bar{x}$ by a constant *SE*, we are dividing it by a *&chi;*^2^-distributed variable. And, as it happens, __the *t*-distribution is exactly what happens when you divide a normally distributed variable by a *&chi;*^2^-distributed variable!__
+
+Because the difference between the normal and the *t*-distribution is largest when *N* is small, let's illustrate this on the example of a tiny bag of 10 Minstrels. If we divide $\bar{x}$ by *SE*, we get a normal distribution (left branch of the plot below) and we can use the &plusmn;1.96 cut-off. That's because 95% of a normal distribution lies within &plusmn;1.96 from its mean. However, in situations when *SE* is not known and is estimated as $\widehat{SE}$, we are dividing by a variable and the resulting distribution is a *t*-distribution with *N*&minus;1 degrees of freedom (df) which had a different cut-off for 95% of its inner mass (&plusmn;2.26 from the mean). This is the scenario in the right branch of the plot below.
+
+
+```{r, echo = F, fig.height=8, fig.width=7}
+
+fill <- ggplot(NULL) + theme_void() + box_theme
+plot_tib <- tibble(x = seq(-4, 4, length.out = 200),
+                   ynorm = dnorm(x),
+                   yt = dt(x, 9))
+p_arrow <- tibble(x = c(-1, 1), xend = c(-4, 4), y = c(2, 2), yend = c(0, 0)) %>%
+  ggplot(aes(x, y)) +
+  geom_segment(aes(x=x, xend=xend, y=y, yend=yend), size = 5,
+               arrow = arrow(length = unit(1, "cm"), type = "open", angle = 30),
+               linejoin='mitre', color = "#3abf81") +
+  xlim(-5.5, 4.5) +
+  ylim(-.2, 2) +
+  theme_void() + box_theme
+
+p_sampdist <- plot_tib %>%
+  mutate(x = x *se + 4) %>%
+  ggplot(aes(x, ynorm)) +
+  geom_line(col = default_col) +
+  labs(x = expression(bar(x)), y= "", title = "Sampling distribution (N = 10)") +
+  xlim(3.85, 4.14) +
+  my_theme + box_theme + theme(plot.title = element_text(hjust = .5))
+
+p_norm <- plot_tib %>%
+  ggplot(aes(x, ynorm)) +
+  geom_line(col = "#3abf81", size = 1) +
+  labs(x = expression(frac(bar(x), italic(SE))), y= "", title = "Normal distribution") +
+  my_theme + box_theme
+
+p_t <- plot_tib %>%
+  ggplot(aes(x, yt)) +
+  geom_line(aes(y = ynorm), col = default_col, lty = 2) +
+  geom_line(col = "#3abf81", size = 1) +
+  labs(x = expression(frac(bar(x), widehat(italic(SE)))), y= "", title = "t-distribution with 9 df")+
+  my_theme + box_theme + theme(plot.margin = margin(t = 7, b = 4))
+
+row1 <- plot_grid(fill, p_sampdist, fill, ncol = 3, rel_widths = c(1, 4, 1))
+row2 <- plot_grid(fill, p_arrow, fill, ncol = 3, rel_widths = c(1.2, 3, 1))
+row3 <- plot_grid(p_norm, p_t, ncol = 2)
+
+plot_grid(row1, row2, row3, ncol = 1, rel_heights = c(2.5, 1, 2.5)) +
+  box_theme
+```
+
+\ 
+
+
+__This is the reason why we must use the *t*-distribution in situations when we do not know the population standard deviation &sigma;.__</div>
+
+\ 
+
+The *t*-distribution, unlike the normal, does not have a single unchanging shape. Instead, it's shape is determined by a parameter called **degrees of freedom**. What degrees of freedom are is a little tricky to explain because the concept can mean different things in different contexts but, if you're interested in one way of looking at it, see the box below. The thing to understand is that the shape of the distribution is determined by its degrees of freedom and the degrees of freedom are almost always related to sample size.
+
+In the [3^rd^ lecture](https://mivalek.github.io/adata/lec3_slides.html#/t-distribution), we saw how the distribution has fat tails with small df and gets progressively more and more normal-like as df get larger. As a result, the cut-off that gives us the middle 95% or the outer 5% of the distribution **also changes depending on df**. In the past, before readily available computers, people have to look up these values in [tables](https://www.statisticshowto.datasciencecentral.com/tables/t-distribution-table/#two) but these days, we can simply use an `R` function that gives us the cut-off point. Let's see what the cut-off is in our case of a bag of `r n` Minstrels. Here, degrees of freedom equal *N*&minus;1 = 199.
+
+```{r, echo = T}
+# cuts off upper 2.5%
+qt(p = .975, df = 199)
+# cuts off lower 2.5%
+qt(p = .025, df = 199)
+```
+
+That means, that, in order to construct our 95% CIs around our sample mean, we need to go &plusmn;1.97&times;$\widehat{SE}$ to either side of the mean, rather than 1.96:
+
+$$\begin{aligned}95\%\ \text{CI} &= \bar{x}\pm1.97\times\frac{s}{\sqrt{N}}\\[0pt]
+&= `r mean1`\pm1.97\times\frac{`r round(sd(bag1), 2)`}{\sqrt{`r n`}}\\[4pt]
+&= `r mean1`\pm1.97\times`r round(round(sd(bag1), 2)/sqrt(n), 2)`\\[12pt]
+&= [`r round(mean1 - 1.97 * round(sd(bag1), 2)/sqrt(n), 2)`, `r round(mean1 + 1.97 * round(sd(bag1), 2)/sqrt(n), 2)`]\end{aligned}$$
+
+\ 
+
+So the average weight of a Minstrel based on our bag of `r n` chocolates is `r mean1`g with a 95% CI [`r round(mean1 - 1.97 * round(sd(bag1), 2)/sqrt(n), 2)`g, `r round(mean1 + 1.97 * round(sd(bag1), 2)/sqrt(n), 2)`g].
+
+<div class="warn">
+
+#### Remember
+
+If we calculated these 95% CIs on 100 bags, we would expect 95 of them to include the value of the population mean. That's true even if we don't know what this value is. Unfortunately, we cannot be sure whether or not the CI we calculated in any given sample does or doesn't include the population mean...</div>
+
+\ 
+
+<div class="solText">
+### Degrees of freedom
+
+As we said before, the concept of degrees of freedom is a little esoteric. Technically, it is the number of values that are free to vary in a system, given some constraints. (Told you so!)
+
+Let's talk about what this means on the example of a [sudoku puzzle](https://en.wikipedia.org/wiki/Sudoku). The sudoku grid is our system, and the rules are our constraints (something requirement that we put in place).
+
+```{r, echo = F, fig.height=3, fig.width=3}
+grid <- tibble(x = c(rep(1:10, 2), rep(c(1, 10), each = 10)),
+               y = c(rep(c(1, 10), each = 10), rep(1:10, 2)),
+               group = c(rep(1:10, 2), rep(11:20, 2)),
+               lwd = factor(ifelse(x %in% c(4, 7) | y %in% c(4, 7), 1, 0)))
+
+sudoku <- grid %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_line(aes(group = group, size = lwd), colour = default_col) +
+  scale_size_manual(values = c(.5, 1), guide = F) +
+  theme_void() +
+  box_theme
+
+nums <- tibble(x = rep(1:9, 9),
+               y = rep(9:1, each = 9),
+               value = c(
+                 8, 2, 7, 1, 5, 4, 3, 9, 6,
+                 9, 6, 5, 3, 2, 7, 1, 4, 8,
+                 3, 4, 1, 6, 8, 9, 7, 5, 2,
+                 9, 5, 3, 4, 6, 8, 2, 7, 1,
+                 4, 7, 2, 5, 1, 3, 6, 8, 9,
+                 6, 1, 8, 9, 7, 2, 4, 3, 5,
+                 7, 8, 6, 2, 3, 5, 9, 1, 4,
+                 1, 5, 4, 7, 9, 6, 8, 2, 3,
+                 2, 3, 9, 8, 4, 1, 5, 6, 7))
+
+unsolved <- sudoku +
+  geom_text(data = nums[sample(1:nrow(nums), 19), ],
+             aes(x + .5, y + .5, label = value), colour = default_col, size = 7)
+
+solved <- sudoku +
+  geom_text(data = nums,
+             aes(x + .5, y + .5, label = value), colour = default_col, size = 7)
+
+sudoku
+```
+
+The rules of the puzzle are
+
+- Each row must contain all numbers between 1 and 9
+- Each column must contain all numbers between 1 and 9
+- Each one of the nine 3&times;3 boxes must contain all numbers between 1 and 9 
+
+Given these rules, there are A LOT[^2] of ways we can fill in an empty sudoku grid. The puzzle always provides several pre-filled numbers and the task is to complete the grid according to the rules. Here is an example of an unsolved and solved sudoku puzzle
+
+```{r, echo = F, fig.height=3, fig.width=6}
+
+plot_grid(unsolved, solved, nrow = 1)
+```
+
+\ 
+
+Now, When the board is empty, any individual field can contain any allowed number. In other words, **its value is free to vary**. But as soon as we fill in one field with, let's say a 9, the rest of the fields in the same row, column, and box can only take values between 1 and 8. There are still many many solutions but fewer than before we entered the 9. Actual sudoku puzzles are set up in such a way that they only have one possible solution.
+
+\ 
+
+With that, let's look at the definition again:
+
+*"Degrees of freedom is the number of values that are free to vary in a system, given some constraints"*
+
+So the degrees of freedom of sudoku is the minimum number of values we can enter into the grid **so that there is only one possible solution** to the puzzle. As it happens, there are [17 degrees of freedom](https://arxiv.org/pdf/1201.0749.pdf) in a sudoku. Giving any more than 17 clues just makes the one solution easier to find but, theoretically, you only need 17. It's going to be some fiendishly difficult sudoku, mind you!
+
+\ 
+
+You might be wondering how this concept translates to the context of statistics and confidence intervals. Well, we said that the number of df for the *t*-distribution we use to get the cut-off value for the 95% CIs is equal to *N*&minus;1. This is because we already **constrained** the value of the mean. So, if our bag of Minstrels has `r n` chocolates in it and the mean weight of a chocolate is `r mean1`g, `r n-1` of them can theoretically weigh any amount (if we allow negative weights) but, in order for the mean to be `r mean1`g, the weight of the last Minstrel is determined by the weights of the others.
+
+And that's why in a bag of `r n` Minstrels, there are `r n-1` degrees of freedom: df = *N*&minus;1.
+</div>
+
+\ 
+
+That's all we have in store for you for this week's tutorial. The concepts explained in this document are not intuitive but it is vital that you understand them so please read it again, slowly and carefully, until you feel like it all makes sense.
+
+\ 
+
+<div class="warn">
+If you currently think that the sampling distribution is the distribution of the sample or population, you absolutely need to read this again!</div>
+
+[^2]: Apparently about 6.7&times;10^21^, according to [this paper](http://www.afjarvis.staff.shef.ac.uk/sudoku/russell_jarvis_spec2.pdf)
+
+
+
