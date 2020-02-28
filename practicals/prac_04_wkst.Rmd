@@ -568,5 +568,87 @@ This week you learnt how to make pretty data visualisations and you added a Mate
 
 \ 
 
+## FAQ/Errors
+
+Remember to check your `R` environment pane to see the changes applied to the objects (*e.g.,* data, tables, vectors, etc.) you are working with at every step. This makes it easier to notice any mistakes early on before they affect subsequent steps in your script.
+
+*Note. *Check that you are working within the correct type of document. If you are working within a markdown file, you need to make sure all your code is within code chunks, not just freely floating within the body text. If you are working with an `R` script, ensure that the script only includes code, and if you have any comments/text in the file, they have to be preceded by a hash (`#`).
+
+<details class="faq">
+<summary>
+RStudio will not load in the package using `library()` and gives me an error that says there is no such package.
+</summary>
+<ans>
+If a package does not exist, you simply have to install it on your computer using `install.packages("package_name")`. **This only needs to be done once** so do not put `install.packages()` commands in your `R` script/R Markdown documents. Once installed, you must load each package you want to use every time you open RStudio using the `library(package_name)` function. `R` scripts and R Markdown  documents must include code to load all packages used within.
+</ans>
+</details>
+
+<details class="faq">
+<summary>
+RStudio can't find the function I need to use for the tutorial (*e.g.,* `read_csv()` or `%>%`).
+</summary>
+<ans>
+If a certain function cannot be found, it means that the package including this function has not yet been loaded. If you load the required package, the function will become available.
+</ans>
+</details>
+
+<details class="faq">
+<summary>
+The change I made to an object is not being saved to it.
+</summary>
+<ans>
+To save the changes you have made to an object, remember to use the assignment operator `<-`. For example, simply typing `data %>% summary()` will give you the summary of the dataset, but will not save the results into any object. To save the output of this code, you can use an assignment operator: `data_summary <- data %>% summary()`. Make sure you don't save summary objects over the data itself (*e.g.,* `data <- data %>% summary`) as that will overwrite the existing dataset!
+</ans>
+</details>
+
+<details class="faq">
+<summary>
+I am trying to use `read_csv()` to import the dataset but it is not working.
+</summary>
+<ans>
+To use the `read_csv()` function, you need to make sure the file path/hyperlink is between quotation marks (`"`) and that there is no period at the end of the path. For example:
+
+  - Bad:  `read_csv(https://some/web/address/data.csv.)`
+  - Good: `read_csv("https://some/web/address/data.csv")`
+</ans>
+</details>
+
+<details class="faq">
+<summary>
+The tasks in the worksheet cannot be applied to the data I am working with.
+</summary>
+<ans>
+Double check to see if you are working with the correct data and note that the guided part of the worksheet often works with a different dataset than the one you are supposed to be working with in the worksheet.
+</ans>
+</details>
+
+<details class="faq">
+<summary>
+I ran the code and it seems to be working fine but I got a warning message.
+</summary>
+<ans>
+Warning messages are not necessarily indicative of a problem; they are simply `R`'s way of saying: "I did something and you should know about it."
+</ans>
+</details>
+
+<details class="faq">
+<summary>
+Help! I have an error not listed here and I can't work it out.
+</summary>
+<ans>
+Error messages in `R` are not always intuitive but try to read into the error message and figure out what the problem might be. If you still can't work it out, there are plenty of ways you can get around it! You can:
+
+  - Type `?` before the function you are trying to use in the console and press <kbd>&crarr;\ Enter</kbd>. This will pull up the help file for the function which will have more information about the correct use and various examples (*e.g.,* `?mutate`).
+  - Copy and paste the error into you preferred web search engine (DuckDuck Go, Google, Bing...) and check the solutions online.
+  - Check the environment for hints about what might be going wrong.
+</ans>
+</details>
+
+
+
+\ 
+
+\ 
+
 
 

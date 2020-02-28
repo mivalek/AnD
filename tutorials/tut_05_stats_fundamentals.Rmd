@@ -299,7 +299,7 @@ If we calculated these 95% CIs on 100 bags, we would expect 95 of them to includ
 
 As we said before, the concept of degrees of freedom is a little esoteric. Technically, it is the number of values that are free to vary in a system, given some constraints. (Told you so!)
 
-Let's talk about what this means on the example of a [sudoku puzzle](https://en.wikipedia.org/wiki/Sudoku). The sudoku grid is our system, and the rules are our constraints (something requirement that we put in place).
+Let's talk about what this means on the example of a [sudoku puzzle](https://en.wikipedia.org/wiki/Sudoku). The sudoku grid is our system, and the rules are our constraints (some requirement that we put in place).
 
 ```{r, echo = F, fig.height=3, fig.width=3}
 grid <- tibble(x = c(rep(1:10, 2), rep(c(1, 10), each = 10)),

@@ -606,7 +606,7 @@ Without having to specify any arguments to `geom_point()`, the points got plotte
 \ 
 
 <div class="solText">
-<title>An aside for the keen beens</title>
+<title>An aside for the keen beans</title>
 
 \ 
 

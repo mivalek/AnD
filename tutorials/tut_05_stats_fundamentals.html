@@ -1775,7 +1775,7 @@ If we calculated these 95% CIs on 100 bags, we would expect 95 of them to includ
 <div class="solText">
 <h3 id="degrees-of-freedom">Degrees of freedom</h3>
 <p>As we said before, the concept of degrees of freedom is a little esoteric. Technically, it is the number of values that are free to vary in a system, given some constraints. (Told you so!)</p>
-<p>Let’s talk about what this means on the example of a <a href="https://en.wikipedia.org/wiki/Sudoku">sudoku puzzle</a>. The sudoku grid is our system, and the rules are our constraints (something requirement that we put in place).</p>
+<p>Let’s talk about what this means on the example of a <a href="https://en.wikipedia.org/wiki/Sudoku">sudoku puzzle</a>. The sudoku grid is our system, and the rules are our constraints (some requirement that we put in place).</p>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkAAAAJACAMAAABSRCkEAAAABlBMVEVDS3Xn2/AstdAWAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAI/0lEQVR4nO3XwUotMRRFwev///Qb2A77BLKQ84TaU1kYoTDpz5dZ2Gf7APa3B5ClAWRpAFkaQJYGkKUBZGkAWRpAlgaQpQFkaQBZGkCWBpClAWRpAFkaQJYGkKUBZGkAWRpAlgaQpQFkaQBZ2gDoY/a9K0Dbh7b/aHeABnfjFsrDX/krv/OvHfd3SoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolRMgs2cAWdodoPdqnivsHC4c1xtoDAHaKQECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpnACZPQPI0u4AvVfzXGHncOG43kBjCNBOCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlMoJkNkzgCwNIEsDyNIAsrQ7QO/VPF9h53DhuD7jxxCgnRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUConQGbPALK0O0Dv1TxX2DlcOK430BgCtFMCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKmcAJk9A8jS7gC9V/NcYedw4bjeQGMI0E4JEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUygmQ2TOALA0gSwPI0gCytDtA79U8X2HncOG4PuPHEKCdEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKidAZs8AsrQ7QO/VPFfYOVw4rjfQGAK0UwIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSOQEyewaQpd0Beq/mucLO4cJxvYHGEKCdEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZRKgABKJUAApRIggFIJEECpBAigVAIEUCoBAiiVAAGUSoAASiVAAKUSIIBSCRBAqQQIoFQCBFAqAQIolQABlEqAAEolQAClEiCAUgkQQKkECKBUAgRQKgECKJUAAZTKCZDZsxtABNnPpv9Ow8/MjgPI0gCyNIAsDSBLA8jSALI0gCwNIEsDyNIAsjSALA0gSwPI0gCyNIAsDSBLA8jSALI0gCwNIEsDyNIAsjSALA0gSwPI0v4B83WoQY84pn8AAAAASUVORK5CYII=" width="288" style="display: block; margin: auto;" /></p>
 <p>The rules of the puzzle are</p>
 <ul>
@@ -1936,6 +1936,7 @@ code {
 
 pre.sourceCode {
 	background-color: #fff;
+	overflow-x: auto;
 }
 
 blockquote {
@@ -2000,12 +2001,13 @@ hr {
 }
 
 details {
+	position: relative;
     border: solid 1px rgb(var(--theme-col));
-    width: 6em;
+    display: inline-block;
     border-radius: 5px;
     margin: 1em 0 2em 0;
     background-color: rgb(var(--theme-col));
-	padding: .5em
+	padding: .5em;
 }
 
 details[open] {
@@ -2020,13 +2022,32 @@ summary {
 	color: #fdfdfd;
 }
 
+
+details > summary::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.faq {
+	display: block;
+}
+
+.faq > ans {
+    padding-left: 1.4em;
+    display: block;
+}
+
 details[open] > summary {
     padding-bottom: 1em;
 	color: rgb(var(--font-col));
 }
 
 details > .sourceCode {
-	margin-top: 0
+	margin-top: 0;
 }
 
 details > .pagedtable-wrapper,

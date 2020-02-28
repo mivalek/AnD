@@ -1,0 +1,14 @@
+base
+teachR
+ggplot2
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+cowplot
+ggplot2movies
+ggmosaic
