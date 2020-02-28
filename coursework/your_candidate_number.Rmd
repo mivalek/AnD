@@ -1,0 +1,104 @@
+---
+title: "Coursework report"
+author: "Analysing Data"
+output:
+  html_document:
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r cand_no}
+#########################################################
+########## COMPLETE AND RUN THIS CHUNK FIRST ############
+#########################################################
+
+## put your candidate number below, for example:
+## candidate_number <- 123456
+candidate_number <- 
+  
+
+#################  DO NOT CHANGE THIS  #################
+if (!"adata" %in% installed.packages()[ , 1]) {
+  if (!"remotes" %in% installed.packages()[ , 1])
+    install.packages("remotes")
+  remotes::install_github("mivalek/adata", upgrade = "always")
+}
+  
+```
+
+```{r packages, include=FALSE}
+## load the packages you need for the report here
+
+```
+
+```{r data}
+## pick whether you want to use the data from the RED study or the GREEN study.
+data <- adata::green_data() # delete this line if you chose the RED study
+data <- adata::red_data() # delete this line if you chose the GREEN study
+```
+
+
+
+```{r data_cleaning, include = F}
+## put code to inspect/clean/process your data here
+# check for invalid/impossible values
+# deal with missing values
+# IF NEEDED create new variables
+
+```
+
+```{r descriptives}
+### create any descriptive statistics objects you might need for reporting here
+
+### If you want to include any tables in the report, create the objects from which
+### the tables will be created
+# To make a table appear in a particular place in your report,
+# create a code chunk in the corresponding place in this Rmd file
+# and put the name of the table object there
+```
+
+```{r plots}
+### Create any plots you want to include in report and save each inside an object:
+# plot_name <- ...plot code...
+# To make a plot appear in a particular place in your report,
+# create a code chunk in the corresponding place in this Rmd file
+# and put the name of the plot object there
+
+```
+
+```{r analysis}
+
+```
+
+## Methods
+
+<!-- Keep it simple, concise and accurate -->
+
+### Participants
+
+
+### Design
+
+
+
+
+## Results
+
+
+
+
+## Discussion
+
+
+
+<!-- Including appendices (e.g., extra tables/figures) is not necessary. If you are not doing so, delete the section below -->
+
+## APPENDIX
+
+
+
+
+
