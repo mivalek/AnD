@@ -1,0 +1,11 @@
+Variable,Type,Description
+Px,Factor,Participant number
+Age,Numeric,Participant age in years
+Gender,Factor,"Participant gender; 0 = Male, 1 = Female"
+condition,Factor,"Synchrony experimental condition; 0 = Synchrony, 1 = Asynchrony"
+liking,Numeric,"Rating of how much the participants liked Pepper, from 0 (not at all) to 5 (very much)"
+anth,Numeric,"Rating of how anthropomorphic participants found Pepper, from 0 (not at all) to 5 (very much)"
+perc.int,Number,"Rating of how intelligent participants perceived Pepper to be, from 0 (not intelligent at all) to 5 (very intelligent)"
+nars1,Number,"Negative Attitude toward Robots subscale 1 (interaction with robots), higher score = more negative; total of six questions on a scale of 1 - 5, max score 30"
+nars2,Number,"Negative Attitude toward Robots subscale 2 (social influence of robots), higher score = more negative; total of five questions on a scale of 1 - 5, max score 25"
+nars3,Number,"Negative Attitude toward Robots subscale 3 (emotions in interactions with robots), higher score = more negative; total of three questions on a scale of 1 - 5, max score 15"

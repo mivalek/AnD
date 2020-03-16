@@ -1,0 +1,14 @@
+Variable name,Type,Description
+ID,factor,Unique participant ID
+Condition,factor,"Experimental condition; combination of Humanness and Harm.
+1 = Human_Harmed, 2 = Human_Unharmed, 3 = Robot_Harmed, 4 = Robot_Unharmed"
+Humanness,factor,"Avatar type: 1 = Human, 2 = Robot"
+Harm,factor,"Avatar state: 1 = Harmed, 2 = Unharmed"
+Gender,factor,"Participant gender: 1 = Male, 2 = Female"
+Age,continuous,Participant age in years
+Pain,continuous,"Does avatar have capacity to feel pain? 1 = Strongly disagree, 7 = Strongly agree"
+Experience,continuous,"Does avatar have experience? 1 = Strongly disagree, 7 = Strongly agree"
+Agency,continuous,"Does avatar have agency? 1 = Strongly disagree, 7 = Strongly agree"
+Consciousness,continuous,"Does avatar have consciousness? 1 = Strongly disagree, 7 = Strongly agree"
+Empathy,continuous,Level of empathy for avatar: Higher number means more empathy felt
+Attractiveness,continuous,Attractiveness of avatar: Higher number means more attractive

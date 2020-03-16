@@ -1,0 +1,14 @@
+Variable,Type,Description
+Duration,Continuous,"Time spent completing the questionnaire, in seconds"
+Age,Continuous,Participant age in years
+Gender,Categorical,Participant gender
+Gender_comfortable_1,Continuous,"How comfortable participants are with their response to `Gender`; Likert 1 - 9, high score = more comfortable"
+Gender_masc_1,Continuous,"How masculine participants feel they are; Likert 1 - 9, high score = more masculine"
+Gender_fem_1,Continuous,"How feminine participants feel they are; Likert 1 - 9, high score = more feminine"
+Gender_stability_1,Continuous,"How stable participants perceive their gender identity to be; Likert 1 - 9, high score = more stable"
+Sexual_strength_1,Continuous,"How strongly participants experience sexual attraction; Likert 1 - 9, high score = more strongly"
+Sexual_fewq_1,Continuous,"How frequently participants experience sexual attraction; Likert 1 - 9, high score = more frequently"
+Sexual_gender_1,Continuous,"Sexual preference for genders; Likert 1 - 9, 1 = women, 5 = no preference/no gender, 9 = men"
+Romantic_strength_1,Continuous,"How strongly participants experience romantic/emotional attraction; Likert 1 - 9, high score = more strongly"
+Romantic_freq_1,Continuous,"How frequently participants experience romantic/emotional attraction; Likert 1 - 9, high score = more frequently"
+romantic_gender_1,Continuous,"Romantic/emotional preference for genders;  Likert 1 - 9, 1 = women, 5 = no preference/no gender, 9 = men"
