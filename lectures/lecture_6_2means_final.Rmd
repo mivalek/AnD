@@ -1,0 +1,466 @@
+---
+title: 'Comparing Two Means'
+subtitle: "Analysing Data Week 6"
+author: "Dr Jennifer Mankin"
+date: "25/01/2020"
+output:
+  html_document
+---
+
+
+## Overview of the Next Weeks
+
+```{r setup, include = F, message = F, warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F, warning = F)
+library(kableExtra)
+library(tidyverse)
+library(cowplot)
+library(weights)
+library(adata)
+# colour = #03a7a7
+```
+
+* Week 5: Measures of Association
+* TODAY: Comparing Two Means
+* Week 7: Lab Report Writing
+* Week 8: The Linear Model
+
+## Overview of Today's Topics
+
+* Important Ideas
+  + The *t*-distribution
+* Comparing Two Means
+  + Study Design
+  + Logic of *t*-tests
+  + Using and reporting *t*-tests
+  + A quick look at the bigger picture (`lm()`)
+
+## Important Ideas
+
+* You heard a lot from Milan about distributions, especially *t*
+  + Good news! That's all about to be really important
+  + Still a bit lost? Revise Milan's lectures and the Week 4 tutorial
+
+## Red Study: Design
+
+* Conceptual hypothesis: Does colour influence attractiveness?
+* Operationalisation:
+  + Colour: participants saw one of two pictures in a frame
+    - Control = white frame; experimental = red frame
+  + Attractiveness: ratings of 1 - 9 on three questions:
+    - How attractive do you think this person is?
+    - How pleasant is this person to look at?
+    - If I were to meet the person in this picture face to face, I would think he is attractive.
+    - Answers averaged to get a composite score
+
+## Red Study: Design
+
+* Stop and discuss:
+  + What variables will we have? How are they measured?
+  + Which is the **predictor** and which is the **outcome**?
+  + How could you state the operational hypothesis of this study?
+* Conceptual hypothesis: Does colour influence attractiveness?
+
+## Red Study: Design
+
+* What variables will we have? How are they measured?
+  + Colour: Independent categorical variable
+    - Two levels: `red` (experimental) and `white` (control)
+    - Predictor: the thing we are manipulating
+  + Attractiveness: continuous variable
+    - Values on a scale from 1 - 9 (higher = more attractive)
+    - Outcome: the thing that changes depending on our manipulation
+    
+## Red Study: Design
+
+* Conceptual hypothesis: Does colour influence attractiveness?
+* How could you state the operational hypothesis of this study?
+* Does viewing a different colour frame around an image of a moderately attractive man influence the mean ratings of his attractiveness?
+
+## Red Study: Data
+
+The (simulated) data might look something like this:
+
+* `group`: Experimental colour condition, either `control` (white) or `experimental` (red)
+* `attract`: Mean of three attractiveness ratings
+
+```{r red_data, echo = F}
+elliot <- red_data(000000)
+
+elliot <- elliot %>%
+  mutate(group = recode(group, "expermental" = "experimental")) %>% 
+  group_by(id_code) %>% 
+  mutate(attract = mean(c(item_1, item_2, item_3))) %>% 
+  ungroup()
+
+elliot
+```
+
+
+```{r plots, include = F}
+elliot_sum <- elliot %>% 
+  group_by(group) %>% 
+  summarise(
+    mean_attract = mean(attract),
+    sd_attract = sd(attract)
+  )
+
+elliot_w <- elliot %>% 
+  select(group, attract) %>% 
+  pivot_wider(names_from = group, values_from = attract, names_prefix = "attr_")
+
+elliot_diff <- elliot_sum$mean_attract[elliot_sum$group == "control"] - elliot_sum$mean_attract[elliot_sum$group == "experimental"]
+
+elliot_hist <- ggplot(elliot, aes(attract)) +
+  geom_histogram(aes(y = ..count..), position = 'identity') +
+  labs(x = "Mean Attractiveness Rating", y = "Frequency") +
+  theme_cowplot()
+
+elliot_red_hist <- elliot %>% 
+  mutate(group = factor(group, levels = c("experimental", "control"))) %>% 
+  ggplot(aes(attract, fill = group)) + 
+  geom_histogram(aes(y = ..count..), position = "identity", color = "black") +
+  labs(x = "Mean Attractiveness Rating", y = "Frequency") +
+  scale_fill_manual(name = "Colour\nCondtion", labels = c("White", "Red"), values = alpha(c("grey", "red"), .5)) + 
+  ylim(0, 20) +
+  theme_cowplot()
+
+# hist(elliot$attract[elliot$group=="experimental"], xlim = c(4, 9), col = "red", border = "black", breaks = 30, xlab = "Composite Attractiveness Rating", main = "Attractiveness Ratings in White vs Red Groups")
+# hist(elliot$attract[elliot$group=="control"], add = T, col = scales::alpha("grey", .50), border = "black", breaks = 30)
+
+elliot_rg_hist <- ggplot(elliot, aes(attract, fill = group)) + 
+  geom_histogram(alpha = 0.5, aes(y = ..count..), position = 'identity', color = "black") +
+  labs(x = "Mean Attractiveness Rating", y = "Frequency") +
+  scale_fill_manual(name = "Colour\nCondtion", labels = c("Red", "White"), values = c("red", "grey")) + 
+  ylim(0, 20) +
+  theme_cowplot()
+
+
+# Creating point plot with CIs
+elliot_mean_plot <- elliot %>% 
+  ggplot(aes(x = group, y = attract, fill = group)) + 
+  labs(x = "Colour Condition", y = "Mean Attractiveness Rating")  +
+  stat_summary(fun.data="mean_cl_boot",geom="errorbar", width = .25) +
+  geom_point(stat = "summary",
+           fun.y = "mean",
+           size = 5, # chosen at random - larger numbers make bigger points
+           shape = 23) +
+  guides(fill = F) +
+  scale_x_discrete(labels = c("White", "Red")) +
+  scale_fill_manual(values = c("grey", "red")) +
+  scale_y_continuous(breaks = c(0:9), limits = c(0, 9)) +
+  theme_cowplot()
+
+```
+
+## Overall Distribution
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/elliot_hist.png)
+<center>
+
+```{r, echo = F, fig.width=6, fig.height=4, include = F}
+elliot_hist
+```
+
+## By Groups
+
+* Are the means of the two groups different?
+* Are they different enough for us to believe that they **come from different populations**?
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/redhist.jpg)
+<center>
+
+```{r, echo = F, fig.width=6, fig.height=4, include = F}
+elliot_red_hist
+```
+
+## Red Study: Asking Questions
+
+* If they are different enough: 
+  + We conclude that people in the two different experimental conditions represent samples from **different populations**, which have different mean attractiveness ratings
+  + That is: colour does make a difference in attractiveness ratings
+* If they are not different enough: 
+  + We conclude that the people in the two different experimental conditions represent samples from **the same population**, which has a single mean attractiveness ratings
+  + That is: colour makes no difference to attractiveness ratings
+
+## Recipe for Statistical Testing
+
+* As always, we will need:
+  + Data
+  + A test statistic
+  + The distribution of that test statistic
+  + The probability *p* of finding a test statistic as large as the one we have (or larger) if the null hypothesis is true
+  
+## Red Study: Getting Answers
+
+* Are the means in the red vs white groups different enough for us to believe that they **come from different populations**?
+  + How different are they?
+* Very simply: *M*~red~ - *M*~white~ = `r elliot_sum %>% filter(group == "experimental") %>% pull(mean_attract) %>% round(2)` - `r elliot_sum %>% filter(group == "control") %>% pull(mean_attract) %>% round(2)` = `r elliot_diff %>% round(2) %>% abs()` rating points
+
+## Red Study: The Means
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/elliot_mean_plot.png)
+<center>
+```{r, echo = F, fig.width=6, fig.height=4, include = F}
+elliot_mean_plot
+```
+
+## Red Study: Differences in Means
+
+* The value `r elliot_diff %>% round(2) %>% abs()` tells us how different our two sample means were in our experiment
+* Is this a big difference, compared to how different we might expect for any two sample means **from the same population**?
+
+## Red Study: SE of Differences
+
+* Imagine we took two samples from a population and calculated their means, and then found the **difference** between those means
+* The standard error of the distribution of those mean differences would tell us how different any two sample means from the same population are likely to be
+  + Very small differences in means will be quite common
+  + Very large differences in means will be quite unlikely
+* If the mean difference we find is very unlikely to occur, then it may be that the two means do not come from the same population
+
+## Red Study: Can You Hear Me Now?
+
+* Think of a **signal-to-noise ratio**
+  + Signal: the difference in sample means
+  + Noise: the error, here the standard error of the difference between sample means
+* The bigger the signal is compared to the noise, the less likely it is to actually just be noise itself!
+* Mathematically, we can represent this by signal/noise
+
+## Red Study: Deja Vu
+
+* We want to know how big the difference in means is compared to the standard error of the differences in means
+* If this sounds familiar: we've seen this before!
+  + As explained in [Tutorial 4](https://mivalek.github.io/adata/tut/tut_05_stats_fundamentals.html) it is **exactly** this scenario that produces the *t*-distribution
+  + See An Adventure in Statistics chapter 15 for the calculation of *t*
+  
+## Red Study: Using *t*
+
+* *t* is the difference in sample means compared to the standard error of the differences in means
+  + The larger the value of *t*, the bigger the difference between sample means is compared to the error
+    - i.e. bigger signal-to-noise ratio
+  + Check whether *t* is "large enough" using its distribution
+* We can ask R to calculate *t* for us and get the associated *p*-value
+
+## Red Study: the *t*-test
+
+```{r red_test, echo = T}
+elliot_t <- elliot %>% 
+  t.test(attract ~ group, ., alternative = "two.sided", paired = F, var.equal = T)
+elliot_t
+```
+
+## Red Study: Interpretation
+
+```{r report.p, include = F}
+report.p <- function(x){
+  ifelse(x >= .001, paste0(" = ", rd(x, 3)), "< .001")
+}
+```
+
+* Our value for *t* is `r elliot_t$statistic %>% round(2)`
+  + The difference between our sample means of `r (elliot_t$estimate[1] - elliot_t$estimate[2]) %>% round(2)` was `r elliot_t$statistic %>% round(2) %>% abs()` times greater than the standard error of the difference in means
+* Unsurprisingly, that value is very unlikely to occur if in fact the true difference in means is 0 (*p* `r elliot_t$p.value %>% report.p()`)
+* Conclusion: it is unlikely that these sample means come from the same population
+  + ie the null hypothesis may not be true
+
+## Red Study: the *t*-test
+
+```{r red_output, echo = F}
+elliot_t
+```
+
+* Report: "There was a significant difference in the mean attractiveness ratings of the red vs white colour groups (*M*~diff~ = `r (elliot_t$estimate[1] - elliot_t$estimate[2]) %>% round(2)`, 95% CI [`r elliot_t$conf.int[1] %>% round(2)`, `r elliot_t$conf.int[2] %>% round (2)`], *t*(`r elliot_t$parameter`) = `r elliot_t$statistic %>% round(2)`), *p* `r elliot_t$p.value %>% report.p()`)."
+
+## Red Study: Going Further
+
+* Thus far we've been looking at an independent-samples *t* test
+  + There are different people in the two groups (e.g. red and white)
+* What if you have the **same** people in both groups?
+
+## Repeated Measures
+
+* Imagine participants viewed both the white and the red pictures
+  + Half saw the red picture first, then the white picture
+  + The other half saw white first then red
+* After each picture, they gave attractiveness ratings as before
+* This is a **repeated measures** design
+
+## Repeated Measures
+
+```{r, include = F}
+elliot_paired <- elliot %>% 
+  select(group, attract)
+
+elliot_paired <- elliot_paired %>%
+  slice(1:142) %>% 
+  mutate(condition = group)
+```
+
+
+```{r, echo = T}
+elliot_t_paired <- elliot_paired %>% 
+  t.test(attract ~ condition, ., alternative = "two.sided", paired = T, var.equal = T)
+elliot_t_paired
+```
+
+* Report: "There was a significant difference in mean attractiveness ratings for the red vs white conditions (*M*~diff~ = `r elliot_t_paired$estimate %>% round(2)`, 95% CI [`r elliot_t_paired$conf.int[1] %>% round(2)`, `r elliot_t_paired$conf.int[2] %>% round (2)`], *t*(`r elliot_t_paired$parameter`) = `r elliot_t_paired$statistic %>% round(2)`), *p* `r elliot_t_paired$p.value %>% report.p()`)."
+
+## Red Study: Summary
+
+* Design: Means of attractiveness ratings in two independent conditions (red vs white)
+* Results: Ratings were significantly different in the two conditions
+  + *t* quantifies the size of the difference in means relative to the error
+  + Signal-to-noise ratio
+* **IMPORTANT**: Use an independent (not paired) test in your report!
+  
+## It's All Greek (And Latin) To Me
+
+* This is a lot of test statistics and random letters to remember
+  + *t*, *r*, *&chi;*^2^...
+  + Each with their own type of data they can and can't use!
+* Wouldn't it be great if we had just one statistical test that did everything?
+
+![alphabet soup](https://hackingdistributed.com/images/2013-03-23-consistency-alphabet-soup/alphabet-soup.jpg)
+
+## *t* and *r*
+
+* Remember from last week: the *p*-value from *r* comes from the *t*-distribution
+* This means **we can change *t* into *r* ** (and vice versa!)
+
+## *t* and *r*
+
+```{r t_to_r, echo = T}
+elliot.cor <- elliot %>% 
+  mutate(group = as.character(group),
+         group = recode(group, "control" = "0", "experimental" = "1"),
+         group = as.numeric(group))
+
+elliot_cor_test <- elliot.cor %>% 
+  cor.test(~ attract + group, ., alternative = "two.sided", method = "pearson")
+elliot_cor_test
+```
+
+## *t* and *r*: What's happening?
+
+* Known as a point-biserial correlation
+  + Simply means: a correlation where one of the variables is a categorical variable with two levels
+  + As one variable increases (e.g. from one level to another), the other also tends to increase
+
+## Correlation ≠ causation?
+
+* Correlation **DOES NOT IMPLY CAUSATION**
+* But if *r* and *t* are related, and *t* can capture causal relationships, can't *r* express causal relationships too?
+* Yes - because causation **DOES** imply correlation!
+  + e.g. shoe size, reading ability
+* **NO STATISTICAL ANALYSIS PROVES CAUSATION**
+  + The only way to infer causality is impeccable study design
+
+## *r* and *t*: Takeaway
+
+* *r* and *t* are two different ways of capturing the same relationship
+  + *t* quantifies the difference in means between two groups
+  + *r* quantifies the degree and direction of a relationship between two variables
+    - One of these can be a code for two different groups!
+* Sorted! ...Right?
+  + We can do better!
+
+## Drawing Lines
+
+* Let's draw a line connecting the two group means
+* Start from the mean of the `white` condition (`r elliot_t$estimate[1] %>% round(2)`)
+* Draw a straight line to the mean of the `red` condition (`r elliot_t$estimate[2] %>% round(2)`)
+
+## Drawing Lines
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/elliot_plot_line_1.jpg)
+<center>
+
+## Drawing Lines
+
+* When we change from `white` to `red`, estimated mean attractiveness changes by `r elliot_t$estimate[1] %>% round(2)` - `r elliot_t$estimate[2] %>% round(2)` = `r (elliot_t$estimate[1] %>% round(2) - elliot_t$estimate[2]) %>% round(2) %>% abs()`
+* This is a **line of best fit** that captures the same relationship as *t*
+  + A **model** of how attractiveness changes depending on colour
+
+## Drawing Lines
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/elliot_plot_line.jpg)
+<center>
+  
+## So What?
+
+* Isn't this just more complication?
+* This is actually an extremely important idea: the Linear Model
+  + A model that takes the form of a line, like the one we just saw
+
+## What's So Special About LM?
+
+* We saw earlier that *r* and *t* are two different ways of expressing the same relationship
+* If *t* can be made into a linear model, **so can *r* **
+* So can almost **any** of the models you will learn in statistics!
+  + Including *&chi;*^2^, all types of ANOVA (next term), *r*, *t*, etc.
+  
+## Quick LM Example
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/elliot_plot_line.jpg)
+<center>
+
+## Quick LM Example
+
+```{r}
+lm(attract ~ group, data = elliot)
+```
+
+## LM vs the World
+
+* The statistical alphabet soup (*r*, *t*, *&chi;*^2^, *F*, etc.) is all ways of capturing different aspects of relationships between variables
+  + All versions of the same signal-to-noise ratio for different contexts
+* Why do we use them, instead of just LM?
+  * (Sometimes) easier to explain/understand
+  * Easier to calculate by hand (which was useful before computers!)
+  * Familiar - frequently taught as separate, unrelated tests
+  * The linear model can be quite complicated compared to the simple test equivalent
+    + Logistic regression for *&chi;*^2^
+    + Multi-level models for repeated-measures designs
+
+## LM Takeaway
+
+* Almost any statistical test you will learn about is a LM underneath
+* It's LM for the rest of this module, and most of next year
+  + Week 8: come back to this (and other) examples in full
+  + Equation of the linear model, how to use it, what it means
+
+## Lab Report Takeaway
+
+* You can choose either the red or green study to write your report on
+  + See [Lab Report Information on Canvas](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0) for more
+* If you choose the red study (Elliot et al., 2010), you should use and report the results of an independent-samples *t*-test
+  + Refer to the original paper for some ideas!
+
+## Analysis for Lab Reports
+
+* Inspect, clean, and prepare the data for analysis
+* Produce descriptives of participants (age, gender)
+* Report means in each group and the results of the *t*-test
+  + Use and report `t.test()`, **not** `lm()`!
+  + Include at least one figure of the results
+  + Will be covered in depth in the next tutorial and practical!
+  
+## Preparing for Lab Reports
+
+* Next week's lecture:
+  + How to prepare and submit the Markdown
+  + Examples of what tables and figures to include
+  + How to report the results
+  + How to write a good, clear, thorough discussion
+* Next week's practical and tutorial: How to run and report a *t*-test
+* Week 8 practicals: Lab report guidance and writing
+* Markdown template will be released along with the tutorial
+  
+## Questions?
+
