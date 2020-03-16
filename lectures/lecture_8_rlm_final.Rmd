@@ -1,0 +1,515 @@
+---
+title: "Lecture 8: The Linear Model"
+subtitle: "Analysing Data, Spring 2020"
+author: "Dr Jennifer Mankin"
+---
+
+## Overview
+
+```{r setup, include=FALSE, message=F, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F, warning = F)
+library(kableExtra)
+library(tidyverse)
+library(cowplot)
+library(gridExtra)
+library(weights)
+library(adata)
+# colour = #03a7a7
+```
+
+```{r report.p, include = F}
+report.p <- function(x){
+  ifelse(x > .001, paste0(" = ", rd(x, 3)), "< .001")
+}
+```
+
+```{r red_data, echo = F}
+elliot <- red_data(000000)
+
+elliot <- elliot %>%
+  mutate(group = recode(group, "expermental" = "experimental")) %>% 
+  group_by(id_code) %>% 
+  mutate(attract = mean(c(item_1, item_2, item_3))) %>% 
+  ungroup
+
+elliot_t <- elliot %>% 
+  t.test(attract ~ group, ., alternative = "two.sided", paired = F, var.equal = T)
+```
+
+* Week 5: Measures of Association
+* Week 6: Comparing Two Means
+* Week 7: Lab Report Writing
+* TODAY: The Linear Model
+
+### Today's Topics
+
+* What is (statistical) modelling?
+* The Linear Model
+  + Categorical predictor: the Red study
+  + Continuous predictor: the GenSex data
+* Using the Linear Model
+  + Equation and elements
+  + Evaluating Significance
+  + Evaluating Model Fit
+
+## Statistical Models
+
+* We are now entering the world of statistical modelling!
+* A **statistical model** is a mathematical expression that captures the relationship between variables
+  + All of our test statistics (*r*, *t*, etc.) are actually models
+* Why create statistical models?
+
+### Models
+
+* A model is a simplified version of something in the world
+  + We want to **predict** what will happen in the world
+  + But the world is complex and full of noise (randomness)
+* We can build a model to try to capture the important elements
+  + We can change/adjust the model to see what might happen
+  
+### Aeroplanes
+
++ You could make a real aeroplane - but this is very difficult!
+  - Dangerous and difficult-to-use materials
+  - Big, heavy, complicated, and expensive
++ Before you attempt that, you could make a model instead
++ Has the same important elements: wings, fuselage, propeller, etc
+  - You can use materials that are more easily accessible
+  - Helps you **predict** how a real aeroplane will work
+
+### Statistical Models
+
+* Statistical models are *mathematical* representations
+  + Contain the most important elements (in theory!)
+    - e.g. the variables that have the strongest relationships
+  + Made using more easily accessible materials
+    - e.g. samples of data rather than populations
+    - e.g. operationalised variables
+* We use statistical models to **make predictions** about the world
+  + This is always subject to some degree of **error**
+  
+### Predictors and Outcomes
+
+* Now we start assigning our variables roles to play
+* The **outcome** is the variable we want to explain
+* The **predictors** are variables that may have a relationship with the outcome
+  + We measure or manipulate the predictors, then look for a systematic change in the outcome
+  + NB: **YOU** (the researcher) assign these roles!
+
+### General Model Equation
+
+<center><font size = "20">Outcome = model + error</font></center><p>
+
+* We can use models to **predict** the outcome for a particular case
+* This is always subject to some degree of **error**
+
+## Seeing Red
+
+* Last week's example: the Red Study *t*-test
+  + We created a linear model capturing the relationship of interest
+    - Predictor: frame colour (white or red)
+    - Outcome: Composite attractiveness rating
+  + How does the linear model capture this relationship?
+  
+### Red revisited
+
+Compare differences in means using a straight line
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/elliot_plot_line_1.jpg)
+<center>
+
+### Red revisited
+
+* When we change from `white` to `red`, estimated mean attractiveness changes by `r elliot_t$estimate[1] %>% round(2)` - `r elliot_t$estimate[2] %>% round(2)` = `r (elliot_t$estimate[1] %>% round(2) - elliot_t$estimate[2]) %>% round(2) %>% abs()`
+* This is a **line of best fit** that captures the same relationship as *t*
+  + A **model** of how attractiveness changes depending on colour
+
+### Drawing Lines
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/elliot_plot_line.jpg)
+<center>
+  
+### Drawing Lines
+
+* The line starts from the mean of the `white` (control) group
+  + This is the **intercept**, which we will call *b*~0~
+  + The value of the outcome when the predictor is 0
+* When we change the frame colour from `white` to `red`, the predicted mean attractiveness rating changes by `r (elliot_t$estimate[1] %>% round(2) - elliot_t$estimate[2]) %>% round(2) %>% abs()`
+  + This is the **slope** of the line, which we will call *b*~1~
+  + The change in the outcome for every **unit change** in the predictor
+
+### The Linear Model
+
+* We now have two parameters, *b*~0~ and *b*~1~, that describe a line
+  + This line is our **model**
+* General model equation: outcome = model + error
+* General linear model: outcome = *b*~0~ + *b*~1~(predictor~1~) + error
+  + May be familiar as e.g. y = mx + b
+
+### Seeing Red Lines
+
+<center><font size = "20">outcome = *b*~0~ + *b*~1~(predictor~1~) + error</font></center><p>
+
+* Outcome: attractiveness
+* Predictor: frame colour
+* *b*~0~: mean of the baseline (white) group (the intercept)
+* *b*~1~: change in means between white and red groups (the slope)
+* LM for Red study: attractiveness = `r elliot_t$estimate[1] %>% round(2)` + `r (elliot_t$estimate[1] %>% round(2) - elliot_t$estimate[2]) %>% round(2) %>% abs()`(group) + error
+
+### Red Lines in R
+
+```{r, echo = T}
+elliot_lm <- lm(attract ~ group, data = elliot)
+elliot_lm %>% summary()
+```
+
+## Welcome to `lm()`!
+
+* Today's new function is a very important one
+  + We will use it for the rest of the term and...
+  + It will be very important next year as well!
+* What does it do?
+  + Creates a **l**inear **m**odel -> `lm()`
+  + A statistical model that looks like a line
+  
+### Basic Anatomy of `lm()`
+
+<center><font size = "20">`lm(outcome ~ predictor, data = data)`</font></center><p>
+
+* Create a linear model between an outcome variable and a predictor variable in the dataset `data`
+* Three primary ideas for today:
+  + Calculate and interpret the model equation
+  + Evaluate significance
+  + Evaluate model fit
+* Let's have another look at the GenSex data
+
+## Creating the Model
+
+* We could draw a line to capture the trend in this data...
+
+```{r fem_masc_plot, fig.width=7, fig.height=4}
+gensex <- read_csv(here::here("/data/gensex_clean.csv"))
+
+gensex <- gensex %>% 
+  mutate(Gender = factor(Gender))
+
+gensex_scatterplot <- gensex %>%
+  mutate(Gender = fct_explicit_na(Gender)) %>% 
+  ggplot(aes(x = Gender_fem_1, y = Gender_masc_1)) +
+  geom_point(position = "jitter", size = 2, alpha = .4) +
+  labs(x = "Femininity", y = "Masculinity", title = "Self-reported femininity vs masculinity") +
+  theme_cowplot()
+```
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/gensex_scatterplot.png)
+<center>
+
+### Red revisited
+
+* When we change from `white` to `red`, estimated mean attractiveness changes by `r elliot_t$estimate[1] %>% round(2)` - `r elliot_t$estimate[2] %>% round(2)` = `r (elliot_t$estimate[1] %>% round(2) - elliot_t$estimate[2]) %>% round(2) %>% abs()`
+* This is a **line of best fit** that captures the same relationship as *t*
+  + A **model** of how attractiveness changes depending on colour
+
+### Drawing Lines
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/elliot_plot_line.jpg)
+<center>
+
+### Modelling Gender
+
+* Week 5: **correlation** between femininity and masculinity
+  + Remember: *r* expresses degree and direction of the relationship
+* Today: create a linear model using the same variables
+  + We could then use this model to make **predictions**
+* How would you write the command in R to create this model?
+
+### Modelling Gender
+
+```{r, echo = T}
+gender_lm <- lm(Gender_masc_1 ~ Gender_fem_1, data = gensex)
+gender_lm %>% summary()
+```
+
+### Modelling Gender
+
+<center><font size = "20">outcome = *b*~0~ + *b*~1~(predictor~1~) + error</font></center><p>
+
+* Outcome: Masculinity
+* Predictor: Femininity
+* *b*~0~: value of masculinity when femininity is 0 (the intercept)
+* *b*~1~: change in masculinity associated with a unit change in femininity (the slope)
+* Linear model: masculinity = `r gender_lm$coefficient[1] %>% round(2)` + `r gender_lm$coefficient[2] %>% round(2)`(femininity) + error
+  
+### Predicting Gender
+
+* We can now use this model to **predict** someone's rating of masculinity, if we know their rating of femininity
+  + e.g., someone who is not very feminine (rating: 3)
+* masculinity = `r gender_lm$coefficient[1] %>% round(2)` + `r gender_lm$coefficient[2] %>% round(2)`(femininity) + error
+  + masculinity = `r gender_lm$coefficient[1] %>% round(2)` + `r gender_lm$coefficient[2] %>% round(2)`(3) + error
+  + masculinity = `r (gender_lm$coefficient[1]+ (gender_lm$coefficient[2]*3))  %>% round(2)`+ error
+* So, we predict that someone with a femininity of 3 will have a masculinity rating of `r (gender_lm$coefficient[1]+ (gender_lm$coefficient[2]*3))  %>% round(2)`
+  + This is subject to some (UNKNOWABLE) degree of error
+
+### Predicting Gender
+
+```{r}
+gensex_lm_plot <- gensex %>%
+  mutate(Gender = fct_explicit_na(Gender)) %>% 
+  ggplot(aes(x = Gender_fem_1, y = Gender_masc_1)) +
+  geom_point(position = "jitter", size = 2, alpha = .4) +
+  geom_smooth(method = "lm") +
+  labs(x = "Femininity", y = "Masculinity", title = "Self-reported femininity vs masculinity") +
+  scale_x_continuous(breaks = c(0:10)) +
+  scale_y_continuous(breaks = c(0:10)) +
+  theme_cowplot()
+```
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/gensex_lm_plot.png)
+<center>
+
+### Interim Summary
+
+* We have a **linear model** that captures the relationship between x (the predictor, femininity) and y (the outcome, masculinity)
+  + The model is described by an intercept (*b*~0~) and a slope (*b*~1~)
+  + We can use this model to **predict** the outcome for new cases
+* But...is this model actually useful?
+  + Does it capture a significant relationship?
+  + Is this model any good?
+  
+## Evaluating Significance
+
+<center><font size = "20">masculinity = `r gender_lm$coefficient[1] %>% round(2)` + `r gender_lm$coefficient[2] %>% round(2)`(femininity) + error</font></center><p>
+
+* Most important element: *b*~1~
+  + Captures the relationship between the predictor and the outcome
+  + Our **test statistic**!
+* Captures the degree and direction of the relationship
+  + *b*~1~ = `r gender_lm$coefficient[2] %>% round(2)`
+  + Negative value: as femininity increases, masculinity decreases
+* Is this relationship significant?
+
+### Recipe for Statistical Testing
+
+* As always, we will need:
+  + Data
+  + A test statistic
+  + The distribution of that test statistic
+  + The probability *p* of finding a test statistic as large as the one we have (or larger) if the null hypothesis is true
+  
+### Null Hypothesis of *b*~1~
+
+* *b*~1~ captures the relationship between variables
+  + If *b*~1~ is 0, there is **no relationship** between the variables
+  + So, *b*~1~ = 0 represents the null hypothesis
+
+### Null Hypothesis of *b*~1~
+
+```{r}
+gensex_lm_null <- gensex %>%
+  ggplot(aes(x = Gender_fem_1, y = Gender_masc_1)) +
+  geom_point(position = "jitter", size = 2, alpha = .4) +
+  geom_smooth(method = "lm") +
+  geom_hline(yintercept=mean(gensex$Gender_masc_1), linetype="dashed", color = "red") +
+  labs(x = "Femininity", y = "Masculinity", title = "Self-reported femininity vs masculinity") +
+  scale_x_continuous(breaks = c(0:10)) +
+  scale_y_continuous(breaks = c(0:10)) +
+  theme_cowplot()
+```
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/gensex_lm_null.png)
+<center>
+
+### Null Hypothesis of *b*~1~
+
+* Is our value of *b*~1~ different from 0?
+  + Yes: it is `r gender_lm$coefficient[2] %>% round(2)`
+* Is it different **enough** from 0 to believe that it is unlikely to be 0 in the population?
+  + To find out, compare estimate of *b*~1~ to the distribution of *b*~1~
+  + Is this starting to sound familiar?
+
+### Can You Hear Me Now?
+
+* Remember our signal-to-noise ratio
+  + Signal: the estimate of *b*~1~
+  + Noise: the error, here the standard error of *b*~1~
+* The bigger the signal is compared to the noise, the less likely it is to actually just be noise itself!
+* Mathematically, we can represent this by signal/noise
+* So, we divide *b*~1~ by the standard error of *b*~1~, which gives us...
+
+### Deja Vu All Over Again
+
+<center>
+![](https://www.publicdomainpictures.net/pictures/270000/velka/herbal-tea-15369105192JG.jpg)
+</center>
+
+### Deja Vu All Over Again
+
+* If this sounds familiar: we've seen this before!
+  + As explained in [Tutorial 4](https://mivalek.github.io/adata/tut/tut_05_stats_fundamentals.html), it is **exactly** this scenario that produces the *t*-distribution
+* So, we will (again!) use *t* to get the significance of *b*~1~
+  
+### Linear Model Output, Revisited
+
+Femininity significantly predicted masculinity
+(*b* = `r gender_lm$coefficient[2] %>% round(2)`, SE(*b*) = 0.04, *t* = -20.10, *p* < .001)
+
+```{r}
+gender_lm %>% summary()
+```
+
+### Interim Summary, Again
+
+* We have a **linear model** that captures the relationship between *x* (the predictor, femininity) and *y* (the outcome, masculinity)
+  + The model is described by an intercept (*b*~0~) and a slope (*b*~1~)
+  + We can use this model to **predict** the outcome for new cases
+  + This model also captures a statistically significant relationship
+* Is this model any good?
+
+## Quantifying Model Fit
+
+```{r, include = F}
+masc.fem.cor <- gensex %>% 
+  cor.test(~ Gender_masc_1 + Gender_fem_1, ., alternative = "two.sided", method = "pearson")
+masc.fem.cor
+```
+
+* The **correlation** between masculinity and femininity was `r masc.fem.cor$estimate %>% round(2)`
+  + That correlation squared is `r (masc.fem.cor$estimate)^2 %>% round(2)`
+  + Take another look at the `lm() %>% summary()` output...
+  
+### The Model
+
+```{r, echo = T}
+gender_lm %>% summary()
+```
+
+### R^2^ in LM
+
+* The squared correlation coefficient
+* Helps us **quantify** how good the model is
+  + How can we interpret this?
+
+### Significance vs Model Fit
+
+* Significance and model fit are not the same thing
+  + Significance: how likely we are to find a *b*-value as large as the one we have observed, or larger, if the null hypothesis is true
+  + Model fit: how good the model actually is
+    - How well it fits (explains) the data we have
+    - How well it is likely to **generalise** to the population
+
+### A Step Back
+
+* We're deep down the statistical rabbit hole now!
+  + What are we trying to accomplish?
+  + Investigate scientifically how people experience gender
+* A good model is valid and reliable for **everyone**, not just our sample
+
+### Accounting for Variance
+
+* In our study, people gave different responses to our questions
+  + Some people gave high femininity ratings, others low ratings
+  + In other words: their responses **varied**
+* We have stored the responses each person gave as **variables**
+  + i.e. things that can vary!
+
+### Accounting for Variance
+
+```{r}
+fem_masc_hist <- gensex %>% 
+  select(Gender_masc_1, Gender_fem_1) %>% 
+  pivot_longer(everything(), names_to = "variable", values_to = "value") %>%
+  mutate(variable = recode(variable, "Gender_masc_1" = "Masculinity", "Gender_fem_1" = "Femininity")) %>% 
+  ggplot(aes(value)) + 
+  geom_histogram() +
+  scale_x_continuous(breaks = c(0:10)) +
+  labs(x = "Rating", y = "Frequency") +
+  facet_wrap(~variable) +
+  theme_cowplot()
+```
+
+<center>
+![](https://users.sussex.ac.uk/~jm636/images/fem_masc_hist.png)
+<center>
+
+### Accounting for Variance
+
+* We want to explain this variance, particularly in the outcome
+  + **Why** do people percieve themselves as more or less masculine?
+* A good model will **explain more variance** in the outcome
+  + It will capture why people respond the way that they do
+* A poor model will **not** explain very much variance
+
+### Back to Model Fit
+
+* So, we need a way to quantify variance explained
+* Good news! This is R^2^
+  + Expresses how much of the variance in the outcome is explained by the predictor(s)
+  + Multiply by 100 to get percent variance explained
+
+#### The Model Again
+
+```{r, echo = T}
+gender_lm %>% summary()
+```
+
+### Interpreting Model Fit
+
+* The value for R^2^ was 0.5706
+  + This means that 57.06% of the variance in ratings of masculinity was explained by ratings of femininity
+  + The remaining variance is due to influences not measured and/or included in our model
+* The adjusted R^2^ was 0.5692
+  + This means that if we applied this same model to the population, we would expect to be able to explain 56.92% of the variance in ratings of masculinity
+* We want R^2^ and adjusted R^2^ to be big, and similar to each other
+
+### Interim Summary, Once More
+
+* We have a **linear model** that captures the relationship between *x* (the predictor, femininity) and *y* (the outcome, masculinity)
+  + The model is described by an intercept (*b*~0~) and a slope (*b*~1~)
+  + We can use this model to **predict** the outcome for new cases
+  + The model captures a statistically significant relationship and explains 57% of the variance in the outcome
+
+## Final Notes
+
+* Correlation (*r*) vs LM (*b*~1~)
+* Applying to the Red model
+
+### Correlation (*r*) vs LM (*b*~1~)
+
+* Both show degree and direction of a relationship between variables
+  + Positive value = positive relationship
+  + Negative value = negative relationship
+  + Larger number = stronger relationship
+
+### Correlation (*r*) vs LM (*b*~1~)
+
+**Not** the same thing!
+
+| Correlation             | LM (Regression) |
+|-------------------------|-----------------|
+| X and Y interchangeable | X predicts Y    |
+| Single number           | Equation        |
+| Used to quantify        | Used to predict |
+  
+### Seeing Red, Once More
+
+How can you interpret this model?
+
+```{r}
+elliot_lm %>% summary()
+```
+
+## Summary
+
+* The linear model (LM) captures the relationship between at least one predictor, *x*, and an outcome, *y*
+  + Linear model equation: outcome = *b*~0~ + *b*~1~(predictor) + error
+  + Most important result is the parameter *b*~1~, which expresses the change in *y* for each unit change in *x*
+  + Significance of *b*~1~ evaluated with *t*
+  + Model fit evaluated with R^2^ and adjusted R^2^
+  
+## Questions?

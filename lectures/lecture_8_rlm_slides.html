@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Dr Jennifer Mankin" />
+  <title>Lecture 8: The Linear Model</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="https:\\mivalek.github.io\slides_files\css\slides.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+</head>
+<body>
+<div class="banner"><div class = "header msc"><a href="/">Analysing<strong>data</strong></a></div></div>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Lecture 8: The Linear Model</h1>
+  <h1 class="subtitle">Analysing Data, Spring 2020</h1>
+    <h2 class="author">Dr Jennifer Mankin</h2>
+    <h3 class="date"><a href="./lecture_8_rlm.html">Click for handout</a></h3>
+</section>
+
+<section id="overview" class="slide level2">
+<h2>Overview</h2>
+<style>
+:root {
+--theme-col: #03a7a7;
+--hover-col: #A70303;
+}
+</style>
+<ul>
+<li class="fragment">Week 5: Measures of Association</li>
+<li class="fragment">Week 6: Comparing Two Means</li>
+<li class="fragment">Week 7: Lab Report Writing</li>
+<li class="fragment">TODAY: The Linear Model</li>
+</ul>
+</section>
+<section id="todays-topics" class="slide level2">
+<h2>Today’s Topics</h2>
+<ul>
+<li class="fragment">What is (statistical) modelling?</li>
+<li class="fragment">The Linear Model
+<ul>
+<li class="fragment">Categorical predictor: the Red study</li>
+<li class="fragment">Continuous predictor: the GenSex data</li>
+</ul></li>
+<li class="fragment">Using the Linear Model
+<ul>
+<li class="fragment">Equation and elements</li>
+<li class="fragment">Evaluating Significance</li>
+<li class="fragment">Evaluating Model Fit</li>
+</ul></li>
+</ul>
+</section>
+<section id="statistical-models" class="slide level2">
+<h2>Statistical Models</h2>
+<ul>
+<li class="fragment">We are now entering the world of statistical modelling!</li>
+<li class="fragment">A <strong>statistical model</strong> is a mathematical expression that captures the relationship between variables
+<ul>
+<li class="fragment">All of our test statistics (<em>r</em>, <em>t</em>, etc.) are actually models</li>
+</ul></li>
+<li class="fragment">Why create statistical models?</li>
+</ul>
+</section>
+<section id="models" class="slide level2">
+<h2>Models</h2>
+<ul>
+<li class="fragment">A model is a simplified version of something in the world
+<ul>
+<li class="fragment">We want to <strong>predict</strong> what will happen in the world</li>
+<li class="fragment">But the world is complex and full of noise (randomness)</li>
+</ul></li>
+<li class="fragment">We can build a model to try to capture the important elements
+<ul>
+<li class="fragment">We can change/adjust the model to see what might happen</li>
+</ul></li>
+</ul>
+</section>
+<section id="aeroplanes" class="slide level2">
+<h2>Aeroplanes</h2>
+<ul>
+<li class="fragment">You could make a real aeroplane - but this is very difficult!
+<ul>
+<li class="fragment">Dangerous and difficult-to-use materials</li>
+<li class="fragment">Big, heavy, complicated, and expensive</li>
+</ul></li>
+<li class="fragment">Before you attempt that, you could make a model instead</li>
+<li class="fragment">Has the same important elements: wings, fuselage, propeller, etc
+<ul>
+<li class="fragment">You can use materials that are more easily accessible</li>
+<li class="fragment">Helps you <strong>predict</strong> how a real aeroplane will work</li>
+</ul></li>
+</ul>
+</section>
+<section id="statistical-models-1" class="slide level2">
+<h2>Statistical Models</h2>
+<ul>
+<li class="fragment">Statistical models are <em>mathematical</em> representations
+<ul>
+<li class="fragment">Contain the most important elements (in theory!)
+<ul>
+<li class="fragment">e.g. the variables that have the strongest relationships</li>
+</ul></li>
+<li class="fragment">Made using more easily accessible materials
+<ul>
+<li class="fragment">e.g. samples of data rather than populations</li>
+<li class="fragment">e.g. operationalised variables</li>
+</ul></li>
+</ul></li>
+<li class="fragment">We use statistical models to <strong>make predictions</strong> about the world
+<ul>
+<li class="fragment">This is always subject to some degree of <strong>error</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="predictors-and-outcomes" class="slide level2">
+<h2>Predictors and Outcomes</h2>
+<ul>
+<li class="fragment">Now we start assigning our variables roles to play</li>
+<li class="fragment">The <strong>outcome</strong> is the variable we want to explain</li>
+<li class="fragment">The <strong>predictors</strong> are variables that may have a relationship with the outcome
+<ul>
+<li class="fragment">We measure or manipulate the predictors, then look for a systematic change in the outcome</li>
+<li class="fragment">NB: <strong>YOU</strong> (the researcher) assign these roles!</li>
+</ul></li>
+</ul>
+</section>
+<section id="general-model-equation" class="slide level2">
+<h2>General Model Equation</h2>
+<center>
+<font size = "20">Outcome = model + error</font>
+</center>
+<p>
+<ul>
+<li class="fragment">We can use models to <strong>predict</strong> the outcome for a particular case</li>
+<li class="fragment">This is always subject to some degree of <strong>error</strong></li>
+</ul>
+</section>
+<section id="seeing-red" class="slide level2">
+<h2>Seeing Red</h2>
+<ul>
+<li class="fragment">Last week’s example: the Red Study <em>t</em>-test
+<ul>
+<li class="fragment">We created a linear model capturing the relationship of interest
+<ul>
+<li class="fragment">Predictor: frame colour (white or red)</li>
+<li class="fragment">Outcome: Composite attractiveness rating</li>
+</ul></li>
+<li class="fragment">How does the linear model capture this relationship?</li>
+</ul></li>
+</ul>
+</section>
+<section id="red-revisited" class="slide level2">
+<h2>Red revisited</h2>
+<p>Compare differences in means using a straight line</p>
+<center>
+<img data-src="https://users.sussex.ac.uk/~jm636/images/elliot_plot_line_1.jpg" />
+<center>
+</section>
+<section id="red-revisited-1" class="slide level2">
+<h2>Red revisited</h2>
+<ul>
+<li class="fragment">When we change from <code>white</code> to <code>red</code>, estimated mean attractiveness changes by 5.95 - 7.14 = 1.19</li>
+<li class="fragment">This is a <strong>line of best fit</strong> that captures the same relationship as <em>t</em>
+<ul>
+<li class="fragment">A <strong>model</strong> of how attractiveness changes depending on colour</li>
+</ul></li>
+</ul>
+</section>
+<section id="drawing-lines" class="slide level2">
+<h2>Drawing Lines</h2>
+<center>
+<img data-src="https://users.sussex.ac.uk/~jm636/images/elliot_plot_line.jpg" />
+<center>
+</section>
+<section id="drawing-lines-1" class="slide level2">
+<h2>Drawing Lines</h2>
+<ul>
+<li class="fragment">The line starts from the mean of the <code>white</code> (control) group
+<ul>
+<li class="fragment">This is the <strong>intercept</strong>, which we will call <em>b</em><sub>0</sub></li>
+<li class="fragment">The value of the outcome when the predictor is 0</li>
+</ul></li>
+<li class="fragment">When we change the frame colour from <code>white</code> to <code>red</code>, the predicted mean attractiveness rating changes by 1.19
+<ul>
+<li class="fragment">This is the <strong>slope</strong> of the line, which we will call <em>b</em><sub>1</sub></li>
+<li class="fragment">The change in the outcome for every <strong>unit change</strong> in the predictor</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-linear-model" class="slide level2">
+<h2>The Linear Model</h2>
+<ul>
+<li class="fragment">We now have two parameters, <em>b</em><sub>0</sub> and <em>b</em><sub>1</sub>, that describe a line
+<ul>
+<li class="fragment">This line is our <strong>model</strong></li>
+</ul></li>
+<li class="fragment">General model equation: outcome = model + error</li>
+<li class="fragment">General linear model: outcome = <em>b</em><sub>0</sub> + <em>b</em><sub>1</sub>(predictor<sub>1</sub>) + error
+<ul>
+<li class="fragment">May be familiar as e.g. y = mx + b</li>
+</ul></li>
+</ul>
+</section>
+<section id="seeing-red-lines" class="slide level2">
+<h2>Seeing Red Lines</h2>
+<center>
+<font size = "20">outcome = <em>b</em><sub>0</sub> + <em>b</em><sub>1</sub>(predictor<sub>1</sub>) + error</font>
+</center>
+<p>
+<ul>
+<li class="fragment">Outcome: attractiveness</li>
+<li class="fragment">Predictor: frame colour</li>
+<li class="fragment"><em>b</em><sub>0</sub>: mean of the baseline (white) group (the intercept)</li>
+<li class="fragment"><em>b</em><sub>1</sub>: change in means between white and red groups (the slope)</li>
+<li class="fragment">LM for Red study: attractiveness = 5.95 + 1.19(group) + error</li>
+</ul>
+</section>
+<section id="red-lines-in-r" class="slide level2">
+<h2>Red Lines in R</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">elliot_lm &lt;-<span class="st"> </span><span class="kw">lm</span>(attract <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> elliot)</a>
+<a class="sourceLine" id="cb1-2" title="2">elliot_lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4">Call<span class="op">:</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">lm</span>(<span class="dt">formula =</span> attract <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> elliot)</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7">Residuals<span class="op">:</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="st">     </span>Min       1Q   Median       3Q      Max </a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="fl">-2.28169</span> <span class="fl">-0.57941</span>  <span class="fl">0.05164</span>  <span class="fl">0.52743</span>  <span class="fl">1.86076</span> </a>
+<a class="sourceLine" id="cb1-10" title="10"></a>
+<a class="sourceLine" id="cb1-11" title="11">Coefficients<span class="op">:</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="st">                  </span>Estimate Std. Error t value</a>
+<a class="sourceLine" id="cb1-13" title="13">(Intercept)        <span class="fl">5.94836</span>    <span class="fl">0.09506</span>  <span class="fl">62.578</span></a>
+<a class="sourceLine" id="cb1-14" title="14">groupexperimental  <span class="fl">1.19088</span>    <span class="fl">0.13098</span>   <span class="fl">9.092</span></a>
+<a class="sourceLine" id="cb1-15" title="15">                  <span class="kw">Pr</span>(<span class="op">&gt;</span><span class="er">|</span>t<span class="op">|</span>)    </a>
+<a class="sourceLine" id="cb1-16" title="16">(Intercept)        <span class="op">&lt;</span><span class="st"> </span><span class="fl">2e-16</span> <span class="op">**</span><span class="er">*</span></a>
+<a class="sourceLine" id="cb1-17" title="17">groupexperimental <span class="fl">5.92e-16</span> <span class="op">**</span><span class="er">*</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="op">---</span></a>
+<a class="sourceLine" id="cb1-19" title="19">Signif. codes<span class="op">:</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb1-21" title="21"></a>
+<a class="sourceLine" id="cb1-22" title="22">Residual standard error<span class="op">:</span><span class="st"> </span><span class="fl">0.801</span> on <span class="dv">148</span> degrees of freedom</a>
+<a class="sourceLine" id="cb1-23" title="23">Multiple R<span class="op">-</span>squared<span class="op">:</span><span class="st">  </span><span class="fl">0.3584</span>,    Adjusted R<span class="op">-</span>squared<span class="op">:</span><span class="st">  </span><span class="fl">0.354</span> </a>
+<a class="sourceLine" id="cb1-24" title="24">F<span class="op">-</span>statistic<span class="op">:</span><span class="st"> </span><span class="fl">82.66</span> on <span class="dv">1</span> and <span class="dv">148</span> DF,  p<span class="op">-</span>value<span class="op">:</span><span class="st"> </span><span class="fl">5.924e-16</span></a></code></pre></div>
+</section>
+<section id="welcome-to-lm" class="slide level2">
+<h2>Welcome to <code>lm()</code>!</h2>
+<ul>
+<li class="fragment">Today’s new function is a very important one
+<ul>
+<li class="fragment">We will use it for the rest of the term and…</li>
+<li class="fragment">It will be very important next year as well!</li>
+</ul></li>
+<li class="fragment">What does it do?
+<ul>
+<li class="fragment">Creates a <strong>l</strong>inear <strong>m</strong>odel -&gt; <code>lm()</code></li>
+<li class="fragment">A statistical model that looks like a line</li>
+</ul></li>
+</ul>
+</section>
+<section id="basic-anatomy-of-lm" class="slide level2">
+<h2>Basic Anatomy of <code>lm()</code></h2>
+<center>
+<font size = "20"><code>lm(outcome ~ predictor, data = data)</code></font>
+</center>
+<p>
+<ul>
+<li class="fragment">Create a linear model between an outcome variable and a predictor variable in the dataset <code>data</code></li>
+<li class="fragment">Three primary ideas for today:
+<ul>
+<li class="fragment">Calculate and interpret the model equation</li>
+<li class="fragment">Evaluate significance</li>
+<li class="fragment">Evaluate model fit</li>
+</ul></li>
+<li class="fragment">Let’s have another look at the GenSex data</li>
+</ul>
+</section>
+<section id="creating-the-model" class="slide level2">
+<h2>Creating the Model</h2>
+<ul>
+<li class="fragment">We could draw a line to capture the trend in this data…</li>
+</ul>
+<center>
+<img data-src="https://users.sussex.ac.uk/~jm636/images/gensex_scatterplot.png" />
+<center>
+</section>
+<section id="red-revisited-2" class="slide level2">
+<h2>Red revisited</h2>
+<ul>
+<li class="fragment">When we change from <code>white</code> to <code>red</code>, estimated mean attractiveness changes by 5.95 - 7.14 = 1.19</li>
+<li class="fragment">This is a <strong>line of best fit</strong> that captures the same relationship as <em>t</em>
+<ul>
+<li class="fragment">A <strong>model</strong> of how attractiveness changes depending on colour</li>
+</ul></li>
+</ul>
+</section>
+<section id="drawing-lines-2" class="slide level2">
+<h2>Drawing Lines</h2>
+<center>
+<img data-src="https://users.sussex.ac.uk/~jm636/images/elliot_plot_line.jpg" />
+<center>
+</section>
+<section id="modelling-gender" class="slide level2">
+<h2>Modelling Gender</h2>
+<ul>
+<li class="fragment">Week 5: <strong>correlation</strong> between femininity and masculinity
+<ul>
+<li class="fragment">Remember: <em>r</em> expresses degree and direction of the relationship</li>
+</ul></li>
+<li class="fragment">Today: create a linear model using the same variables
+<ul>
+<li class="fragment">We could then use this model to make <strong>predictions</strong></li>
+</ul></li>
+<li class="fragment">How would you write the command in R to create this model?</li>
+</ul>
+</section>
+<section id="modelling-gender-1" class="slide level2">
+<h2>Modelling Gender</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">gender_lm &lt;-<span class="st"> </span><span class="kw">lm</span>(Gender_masc_<span class="dv">1</span> <span class="op">~</span><span class="st"> </span>Gender_fem_<span class="dv">1</span>, <span class="dt">data =</span> gensex)</a>
+<a class="sourceLine" id="cb2-2" title="2">gender_lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">Call<span class="op">:</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">lm</span>(<span class="dt">formula =</span> Gender_masc_<span class="dv">1</span> <span class="op">~</span><span class="st"> </span>Gender_fem_<span class="dv">1</span>, <span class="dt">data =</span> gensex)</a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7">Residuals<span class="op">:</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">    </span>Min      1Q  Median      3Q     Max </a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="fl">-3.6341</span> <span class="fl">-0.6461</span> <span class="fl">-0.2413</span>  <span class="fl">0.5683</span>  <span class="fl">4.7587</span> </a>
+<a class="sourceLine" id="cb2-10" title="10"></a>
+<a class="sourceLine" id="cb2-11" title="11">Coefficients<span class="op">:</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="st">             </span>Estimate Std. Error t value <span class="kw">Pr</span>(<span class="op">&gt;</span><span class="er">|</span>t<span class="op">|</span>)</a>
+<a class="sourceLine" id="cb2-13" title="13">(Intercept)   <span class="fl">8.82456</span>    <span class="fl">0.26358</span>   <span class="fl">33.48</span>   <span class="op">&lt;</span><span class="fl">2e-16</span></a>
+<a class="sourceLine" id="cb2-14" title="14">Gender_fem_<span class="dv">1</span> <span class="fl">-0.79761</span>    <span class="fl">0.03969</span>  <span class="fl">-20.10</span>   <span class="op">&lt;</span><span class="fl">2e-16</span></a>
+<a class="sourceLine" id="cb2-15" title="15">                </a>
+<a class="sourceLine" id="cb2-16" title="16">(Intercept)  <span class="op">**</span><span class="er">*</span></a>
+<a class="sourceLine" id="cb2-17" title="17">Gender_fem_<span class="dv">1</span> <span class="op">**</span><span class="er">*</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="op">---</span></a>
+<a class="sourceLine" id="cb2-19" title="19">Signif. codes<span class="op">:</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-21" title="21"></a>
+<a class="sourceLine" id="cb2-22" title="22">Residual standard error<span class="op">:</span><span class="st"> </span><span class="fl">1.219</span> on <span class="dv">304</span> degrees of freedom</a>
+<a class="sourceLine" id="cb2-23" title="23">Multiple R<span class="op">-</span>squared<span class="op">:</span><span class="st">  </span><span class="fl">0.5706</span>,    Adjusted R<span class="op">-</span>squared<span class="op">:</span><span class="st">  </span><span class="fl">0.5692</span> </a>
+<a class="sourceLine" id="cb2-24" title="24">F<span class="op">-</span>statistic<span class="op">:</span><span class="st"> </span><span class="fl">403.9</span> on <span class="dv">1</span> and <span class="dv">304</span> DF,  p<span class="op">-</span>value<span class="op">:</span><span class="st"> </span><span class="er">&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span></a></code></pre></div>
+</section>
+<section id="modelling-gender-2" class="slide level2">
+<h2>Modelling Gender</h2>
+<center>
+<font size = "20">outcome = <em>b</em><sub>0</sub> + <em>b</em><sub>1</sub>(predictor<sub>1</sub>) + error</font>
+</center>
+<p>
+<ul>
+<li class="fragment">Outcome: Masculinity</li>
+<li class="fragment">Predictor: Femininity</li>
+<li class="fragment"><em>b</em><sub>0</sub>: value of masculinity when femininity is 0 (the intercept)</li>
+<li class="fragment"><em>b</em><sub>1</sub>: change in masculinity associated with a unit change in femininity (the slope)</li>
+<li class="fragment">Linear model: masculinity = 8.82 + -0.8(femininity) + error</li>
+</ul>
+</section>
+<section id="predicting-gender" class="slide level2">
+<h2>Predicting Gender</h2>
+<ul>
+<li class="fragment">We can now use this model to <strong>predict</strong> someone’s rating of masculinity, if we know their rating of femininity
+<ul>
+<li class="fragment">e.g., someone who is not very feminine (rating: 3)</li>
+</ul></li>
+<li class="fragment">masculinity = 8.82 + -0.8(femininity) + error
+<ul>
+<li class="fragment">masculinity = 8.82 + -0.8(3) + error</li>
+<li class="fragment">masculinity = 6.43+ error</li>
+</ul></li>
+<li class="fragment">So, we predict that someone with a femininity of 3 will have a masculinity rating of 6.43
+<ul>
+<li class="fragment">This is subject to some (UNKNOWABLE) degree of error</li>
+</ul></li>
+</ul>
+</section>
+<section id="predicting-gender-1" class="slide level2">
+<h2>Predicting Gender</h2>
+<center>
+<img data-src="https://users.sussex.ac.uk/~jm636/images/gensex_lm_plot.png" />
+<center>
+</section>
+<section id="interim-summary" class="slide level2">
+<h2>Interim Summary</h2>
+<ul>
+<li class="fragment">We have a <strong>linear model</strong> that captures the relationship between x (the predictor, femininity) and y (the outcome, masculinity)
+<ul>
+<li class="fragment">The model is described by an intercept (<em>b</em><sub>0</sub>) and a slope (<em>b</em><sub>1</sub>)</li>
+<li class="fragment">We can use this model to <strong>predict</strong> the outcome for new cases</li>
+</ul></li>
+<li class="fragment">But…is this model actually useful?
+<ul>
+<li class="fragment">Does it capture a significant relationship?</li>
+<li class="fragment">Is this model any good?</li>
+</ul></li>
+</ul>
+</section>
+<section id="evaluating-significance" class="slide level2">
+<h2>Evaluating Significance</h2>
+<center>
+<font size = "20">masculinity = 8.82 + -0.8(femininity) + error</font>
+</center>
+<p>
+<ul>
+<li class="fragment">Most important element: <em>b</em><sub>1</sub>
+<ul>
+<li class="fragment">Captures the relationship between the predictor and the outcome</li>
+<li class="fragment">Our <strong>test statistic</strong>!</li>
+</ul></li>
+<li class="fragment">Captures the degree and direction of the relationship
+<ul>
+<li class="fragment"><em>b</em><sub>1</sub> = -0.8</li>
+<li class="fragment">Negative value: as femininity increases, masculinity decreases</li>
+</ul></li>
+<li class="fragment">Is this relationship significant?</li>
+</ul>
+</section>
+<section id="recipe-for-statistical-testing" class="slide level2">
+<h2>Recipe for Statistical Testing</h2>
+<ul>
+<li class="fragment">As always, we will need:
+<ul>
+<li class="fragment">Data</li>
+<li class="fragment">A test statistic</li>
+<li class="fragment">The distribution of that test statistic</li>
+<li class="fragment">The probability <em>p</em> of finding a test statistic as large as the one we have (or larger) if the null hypothesis is true</li>
+</ul></li>
+</ul>
+</section>
+<section id="null-hypothesis-of-b1" class="slide level2">
+<h2>Null Hypothesis of <em>b</em><sub>1</sub></h2>
+<ul>
+<li class="fragment"><em>b</em><sub>1</sub> captures the relationship between variables
+<ul>
+<li class="fragment">If <em>b</em><sub>1</sub> is 0, there is <strong>no relationship</strong> between the variables</li>
+<li class="fragment">So, <em>b</em><sub>1</sub> = 0 represents the null hypothesis</li>
+</ul></li>
+</ul>
+</section>
+<section id="null-hypothesis-of-b1-1" class="slide level2">
+<h2>Null Hypothesis of <em>b</em><sub>1</sub></h2>
+<center>
+<img data-src="https://users.sussex.ac.uk/~jm636/images/gensex_lm_null.png" />
+<center>
+</section>
+<section id="null-hypothesis-of-b1-2" class="slide level2">
+<h2>Null Hypothesis of <em>b</em><sub>1</sub></h2>
+<ul>
+<li class="fragment">Is our value of <em>b</em><sub>1</sub> different from 0?
+<ul>
+<li class="fragment">Yes: it is -0.8</li>
+</ul></li>
+<li class="fragment">Is it different <strong>enough</strong> from 0 to believe that it is unlikely to be 0 in the population?
+<ul>
+<li class="fragment">To find out, compare estimate of <em>b</em><sub>1</sub> to the distribution of <em>b</em><sub>1</sub></li>
+<li class="fragment">Is this starting to sound familiar?</li>
+</ul></li>
+</ul>
+</section>
+<section id="can-you-hear-me-now" class="slide level2">
+<h2>Can You Hear Me Now?</h2>
+<ul>
+<li class="fragment">Remember our signal-to-noise ratio
+<ul>
+<li class="fragment">Signal: the estimate of <em>b</em><sub>1</sub></li>
+<li class="fragment">Noise: the error, here the standard error of <em>b</em><sub>1</sub></li>
+</ul></li>
+<li class="fragment">The bigger the signal is compared to the noise, the less likely it is to actually just be noise itself!</li>
+<li class="fragment">Mathematically, we can represent this by signal/noise</li>
+<li class="fragment">So, we divide <em>b</em><sub>1</sub> by the standard error of <em>b</em><sub>1</sub>, which gives us…</li>
+</ul>
+</section>
+<section id="deja-vu-all-over-again" class="slide level2">
+<h2>Deja Vu All Over Again</h2>
+<center>
+<img data-src="https://www.publicdomainpictures.net/pictures/270000/velka/herbal-tea-15369105192JG.jpg" />
+</center>
+</section>
+<section id="deja-vu-all-over-again-1" class="slide level2">
+<h2>Deja Vu All Over Again</h2>
+<ul>
+<li class="fragment">If this sounds familiar: we’ve seen this before!
+<ul>
+<li class="fragment">As explained in <a href="https://mivalek.github.io/adata/tut/tut_05_stats_fundamentals.html">Tutorial 4</a>, it is <strong>exactly</strong> this scenario that produces the <em>t</em>-distribution</li>
+</ul></li>
+<li class="fragment">So, we will (again!) use <em>t</em> to get the significance of <em>b</em><sub>1</sub></li>
+</ul>
+</section>
+<section id="linear-model-output-revisited" class="slide level2">
+<h2>Linear Model Output, Revisited</h2>
+<p>Femininity significantly predicted masculinity (<em>b</em> = -0.8, SE(<em>b</em>) = 0.04, <em>t</em> = -20.10, <em>p</em> &lt; .001)</p>
+<pre><code>
+Call:
+lm(formula = Gender_masc_1 ~ Gender_fem_1, data = gensex)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.6341 -0.6461 -0.2413  0.5683  4.7587 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)   8.82456    0.26358   33.48   &lt;2e-16
+Gender_fem_1 -0.79761    0.03969  -20.10   &lt;2e-16
+                
+(Intercept)  ***
+Gender_fem_1 ***
+---
+Signif. codes:  
+0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 1.219 on 304 degrees of freedom
+Multiple R-squared:  0.5706,    Adjusted R-squared:  0.5692 
+F-statistic: 403.9 on 1 and 304 DF,  p-value: &lt; 2.2e-16</code></pre>
+</section>
+<section id="interim-summary-again" class="slide level2">
+<h2>Interim Summary, Again</h2>
+<ul>
+<li class="fragment">We have a <strong>linear model</strong> that captures the relationship between <em>x</em> (the predictor, femininity) and <em>y</em> (the outcome, masculinity)
+<ul>
+<li class="fragment">The model is described by an intercept (<em>b</em><sub>0</sub>) and a slope (<em>b</em><sub>1</sub>)</li>
+<li class="fragment">We can use this model to <strong>predict</strong> the outcome for new cases</li>
+<li class="fragment">This model also captures a statistically significant relationship</li>
+</ul></li>
+<li class="fragment">Is this model any good?</li>
+</ul>
+</section>
+<section id="quantifying-model-fit" class="slide level2">
+<h2>Quantifying Model Fit</h2>
+<ul>
+<li class="fragment">The <strong>correlation</strong> between masculinity and femininity was -0.76
+<ul>
+<li class="fragment">That correlation squared is 0.57</li>
+<li class="fragment">Take another look at the <code>lm() %&gt;% summary()</code> output…</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-model" class="slide level2">
+<h2>The Model</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">gender_lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3">Call<span class="op">:</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">lm</span>(<span class="dt">formula =</span> Gender_masc_<span class="dv">1</span> <span class="op">~</span><span class="st"> </span>Gender_fem_<span class="dv">1</span>, <span class="dt">data =</span> gensex)</a>
+<a class="sourceLine" id="cb4-5" title="5"></a>
+<a class="sourceLine" id="cb4-6" title="6">Residuals<span class="op">:</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="st">    </span>Min      1Q  Median      3Q     Max </a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="fl">-3.6341</span> <span class="fl">-0.6461</span> <span class="fl">-0.2413</span>  <span class="fl">0.5683</span>  <span class="fl">4.7587</span> </a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10">Coefficients<span class="op">:</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="st">             </span>Estimate Std. Error t value <span class="kw">Pr</span>(<span class="op">&gt;</span><span class="er">|</span>t<span class="op">|</span>)</a>
+<a class="sourceLine" id="cb4-12" title="12">(Intercept)   <span class="fl">8.82456</span>    <span class="fl">0.26358</span>   <span class="fl">33.48</span>   <span class="op">&lt;</span><span class="fl">2e-16</span></a>
+<a class="sourceLine" id="cb4-13" title="13">Gender_fem_<span class="dv">1</span> <span class="fl">-0.79761</span>    <span class="fl">0.03969</span>  <span class="fl">-20.10</span>   <span class="op">&lt;</span><span class="fl">2e-16</span></a>
+<a class="sourceLine" id="cb4-14" title="14">                </a>
+<a class="sourceLine" id="cb4-15" title="15">(Intercept)  <span class="op">**</span><span class="er">*</span></a>
+<a class="sourceLine" id="cb4-16" title="16">Gender_fem_<span class="dv">1</span> <span class="op">**</span><span class="er">*</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="op">---</span></a>
+<a class="sourceLine" id="cb4-18" title="18">Signif. codes<span class="op">:</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb4-20" title="20"></a>
+<a class="sourceLine" id="cb4-21" title="21">Residual standard error<span class="op">:</span><span class="st"> </span><span class="fl">1.219</span> on <span class="dv">304</span> degrees of freedom</a>
+<a class="sourceLine" id="cb4-22" title="22">Multiple R<span class="op">-</span>squared<span class="op">:</span><span class="st">  </span><span class="fl">0.5706</span>,    Adjusted R<span class="op">-</span>squared<span class="op">:</span><span class="st">  </span><span class="fl">0.5692</span> </a>
+<a class="sourceLine" id="cb4-23" title="23">F<span class="op">-</span>statistic<span class="op">:</span><span class="st"> </span><span class="fl">403.9</span> on <span class="dv">1</span> and <span class="dv">304</span> DF,  p<span class="op">-</span>value<span class="op">:</span><span class="st"> </span><span class="er">&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span></a></code></pre></div>
+</section>
+<section id="r2-in-lm" class="slide level2">
+<h2>R<sup>2</sup> in LM</h2>
+<ul>
+<li class="fragment">The squared correlation coefficient</li>
+<li class="fragment">Helps us <strong>quantify</strong> how good the model is
+<ul>
+<li class="fragment">How can we interpret this?</li>
+</ul></li>
+</ul>
+</section>
+<section id="significance-vs-model-fit" class="slide level2">
+<h2>Significance vs Model Fit</h2>
+<ul>
+<li class="fragment">Significance and model fit are not the same thing
+<ul>
+<li class="fragment">Significance: how likely we are to find a <em>b</em>-value as large as the one we have observed, or larger, if the null hypothesis is true</li>
+<li class="fragment">Model fit: how good the model actually is
+<ul>
+<li class="fragment">How well it fits (explains) the data we have</li>
+<li class="fragment">How well it is likely to <strong>generalise</strong> to the population</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="a-step-back" class="slide level2">
+<h2>A Step Back</h2>
+<ul>
+<li class="fragment">We’re deep down the statistical rabbit hole now!
+<ul>
+<li class="fragment">What are we trying to accomplish?</li>
+<li class="fragment">Investigate scientifically how people experience gender</li>
+</ul></li>
+<li class="fragment">A good model is valid and reliable for <strong>everyone</strong>, not just our sample</li>
+</ul>
+</section>
+<section id="accounting-for-variance" class="slide level2">
+<h2>Accounting for Variance</h2>
+<ul>
+<li class="fragment">In our study, people gave different responses to our questions
+<ul>
+<li class="fragment">Some people gave high femininity ratings, others low ratings</li>
+<li class="fragment">In other words: their responses <strong>varied</strong></li>
+</ul></li>
+<li class="fragment">We have stored the responses each person gave as <strong>variables</strong>
+<ul>
+<li class="fragment">i.e. things that can vary!</li>
+</ul></li>
+</ul>
+</section>
+<section id="accounting-for-variance-1" class="slide level2">
+<h2>Accounting for Variance</h2>
+<center>
+<img data-src="https://users.sussex.ac.uk/~jm636/images/fem_masc_hist.png" />
+<center>
+</section>
+<section id="accounting-for-variance-2" class="slide level2">
+<h2>Accounting for Variance</h2>
+<ul>
+<li class="fragment">We want to explain this variance, particularly in the outcome
+<ul>
+<li class="fragment"><strong>Why</strong> do people percieve themselves as more or less masculine?</li>
+</ul></li>
+<li class="fragment">A good model will <strong>explain more variance</strong> in the outcome
+<ul>
+<li class="fragment">It will capture why people respond the way that they do</li>
+</ul></li>
+<li class="fragment">A poor model will <strong>not</strong> explain very much variance</li>
+</ul>
+</section>
+<section id="back-to-model-fit" class="slide level2">
+<h2>Back to Model Fit</h2>
+<ul>
+<li class="fragment">So, we need a way to quantify variance explained</li>
+<li class="fragment">Good news! This is R<sup>2</sup>
+<ul>
+<li class="fragment">Expresses how much of the variance in the outcome is explained by the predictor(s)</li>
+<li class="fragment">Multiply by 100 to get percent variance explained</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-model-again" class="slide level2">
+<h2>The Model Again</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">gender_lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3">Call<span class="op">:</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="kw">lm</span>(<span class="dt">formula =</span> Gender_masc_<span class="dv">1</span> <span class="op">~</span><span class="st"> </span>Gender_fem_<span class="dv">1</span>, <span class="dt">data =</span> gensex)</a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6">Residuals<span class="op">:</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="st">    </span>Min      1Q  Median      3Q     Max </a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="fl">-3.6341</span> <span class="fl">-0.6461</span> <span class="fl">-0.2413</span>  <span class="fl">0.5683</span>  <span class="fl">4.7587</span> </a>
+<a class="sourceLine" id="cb5-9" title="9"></a>
+<a class="sourceLine" id="cb5-10" title="10">Coefficients<span class="op">:</span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="st">             </span>Estimate Std. Error t value <span class="kw">Pr</span>(<span class="op">&gt;</span><span class="er">|</span>t<span class="op">|</span>)</a>
+<a class="sourceLine" id="cb5-12" title="12">(Intercept)   <span class="fl">8.82456</span>    <span class="fl">0.26358</span>   <span class="fl">33.48</span>   <span class="op">&lt;</span><span class="fl">2e-16</span></a>
+<a class="sourceLine" id="cb5-13" title="13">Gender_fem_<span class="dv">1</span> <span class="fl">-0.79761</span>    <span class="fl">0.03969</span>  <span class="fl">-20.10</span>   <span class="op">&lt;</span><span class="fl">2e-16</span></a>
+<a class="sourceLine" id="cb5-14" title="14">                </a>
+<a class="sourceLine" id="cb5-15" title="15">(Intercept)  <span class="op">**</span><span class="er">*</span></a>
+<a class="sourceLine" id="cb5-16" title="16">Gender_fem_<span class="dv">1</span> <span class="op">**</span><span class="er">*</span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="op">---</span></a>
+<a class="sourceLine" id="cb5-18" title="18">Signif. codes<span class="op">:</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb5-19" title="19"><span class="dv">0</span> <span class="st">&#39;***&#39;</span> <span class="fl">0.001</span> <span class="st">&#39;**&#39;</span> <span class="fl">0.01</span> <span class="st">&#39;*&#39;</span> <span class="fl">0.05</span> <span class="st">&#39;.&#39;</span> <span class="fl">0.1</span> <span class="st">&#39; &#39;</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb5-20" title="20"></a>
+<a class="sourceLine" id="cb5-21" title="21">Residual standard error<span class="op">:</span><span class="st"> </span><span class="fl">1.219</span> on <span class="dv">304</span> degrees of freedom</a>
+<a class="sourceLine" id="cb5-22" title="22">Multiple R<span class="op">-</span>squared<span class="op">:</span><span class="st">  </span><span class="fl">0.5706</span>,    Adjusted R<span class="op">-</span>squared<span class="op">:</span><span class="st">  </span><span class="fl">0.5692</span> </a>
+<a class="sourceLine" id="cb5-23" title="23">F<span class="op">-</span>statistic<span class="op">:</span><span class="st"> </span><span class="fl">403.9</span> on <span class="dv">1</span> and <span class="dv">304</span> DF,  p<span class="op">-</span>value<span class="op">:</span><span class="st"> </span><span class="er">&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span></a></code></pre></div>
+</section>
+<section id="interpreting-model-fit" class="slide level2">
+<h2>Interpreting Model Fit</h2>
+<ul>
+<li class="fragment">The value for R<sup>2</sup> was 0.5706
+<ul>
+<li class="fragment">This means that 57.06% of the variance in ratings of masculinity was explained by ratings of femininity</li>
+<li class="fragment">The remaining variance is due to influences not measured and/or included in our model</li>
+</ul></li>
+<li class="fragment">The adjusted R<sup>2</sup> was 0.5692
+<ul>
+<li class="fragment">This means that if we applied this same model to the population, we would expect to be able to explain 56.92% of the variance in ratings of masculinity</li>
+</ul></li>
+<li class="fragment">We want R<sup>2</sup> and adjusted R<sup>2</sup> to be big, and similar to each other</li>
+</ul>
+</section>
+<section id="interim-summary-once-more" class="slide level2">
+<h2>Interim Summary, Once More</h2>
+<ul>
+<li class="fragment">We have a <strong>linear model</strong> that captures the relationship between <em>x</em> (the predictor, femininity) and <em>y</em> (the outcome, masculinity)
+<ul>
+<li class="fragment">The model is described by an intercept (<em>b</em><sub>0</sub>) and a slope (<em>b</em><sub>1</sub>)</li>
+<li class="fragment">We can use this model to <strong>predict</strong> the outcome for new cases</li>
+<li class="fragment">The model captures a statistically significant relationship and explains 57% of the variance in the outcome</li>
+</ul></li>
+</ul>
+</section>
+<section id="final-notes" class="slide level2">
+<h2>Final Notes</h2>
+<ul>
+<li class="fragment">Correlation (<em>r</em>) vs LM (<em>b</em><sub>1</sub>)</li>
+<li class="fragment">Applying to the Red model</li>
+</ul>
+</section>
+<section id="correlation-r-vs-lm-b1" class="slide level2">
+<h2>Correlation (<em>r</em>) vs LM (<em>b</em><sub>1</sub>)</h2>
+<ul>
+<li class="fragment">Both show degree and direction of a relationship between variables
+<ul>
+<li class="fragment">Positive value = positive relationship</li>
+<li class="fragment">Negative value = negative relationship</li>
+<li class="fragment">Larger number = stronger relationship</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-r-vs-lm-b1-1" class="slide level2">
+<h2>Correlation (<em>r</em>) vs LM (<em>b</em><sub>1</sub>)</h2>
+<p><strong>Not</strong> the same thing!</p>
+<table>
+<thead>
+<tr class="header">
+<th>Correlation</th>
+<th>LM (Regression)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X and Y interchangeable</td>
+<td>X predicts Y</td>
+</tr>
+<tr class="even">
+<td>Single number</td>
+<td>Equation</td>
+</tr>
+<tr class="odd">
+<td>Used to quantify</td>
+<td>Used to predict</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="seeing-red-once-more" class="slide level2">
+<h2>Seeing Red, Once More</h2>
+<p>How can you interpret this model?</p>
+<pre><code>
+Call:
+lm(formula = attract ~ group, data = elliot)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.28169 -0.57941  0.05164  0.52743  1.86076 
+
+Coefficients:
+                  Estimate Std. Error t value
+(Intercept)        5.94836    0.09506  62.578
+groupexperimental  1.19088    0.13098   9.092
+                  Pr(&gt;|t|)    
+(Intercept)        &lt; 2e-16 ***
+groupexperimental 5.92e-16 ***
+---
+Signif. codes:  
+0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.801 on 148 degrees of freedom
+Multiple R-squared:  0.3584,    Adjusted R-squared:  0.354 
+F-statistic: 82.66 on 1 and 148 DF,  p-value: 5.924e-16</code></pre>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li class="fragment">The linear model (LM) captures the relationship between at least one predictor, <em>x</em>, and an outcome, <em>y</em>
+<ul>
+<li class="fragment">Linear model equation: outcome = <em>b</em><sub>0</sub> + <em>b</em><sub>1</sub>(predictor) + error</li>
+<li class="fragment">Most important result is the parameter <em>b</em><sub>1</sub>, which expresses the change in <em>y</em> for each unit change in <em>x</em></li>
+<li class="fragment">Significance of <em>b</em><sub>1</sub> evaluated with <em>t</em></li>
+<li class="fragment">Model fit evaluated with R<sup>2</sup> and adjusted R<sup>2</sup></li>
+</ul></li>
+</ul>
+</section>
+<section id="questions" class="slide level2">
+<h2>Questions?</h2>
+</section>
+    </div>
+  </div>
+
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: false,
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1000,
+        height: 750,
+        // Factor of the display size that should remain empty around the content
+        margin: 0,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/search/search.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('h2:not(.author)').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+	$('h1.title').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+});
+
+var f = (function() {
+	// get scale
+	var element = document.querySelector('.slides');
+	var scaleX = element.getBoundingClientRect().width / element.offsetWidth;
+	var bottom = $(".present > .slide-title").offset().top + ($(".present > .slide-title").outerHeight() * scaleX);
+	
+	$(":root")[0].style.setProperty('--header-height', Math.floor(bottom) + 'px');
+});
+
+window.addEventListener( 'load', f);
+$(window).resize(f);
+Reveal.addEventListener( 'slidechanged', f);
+Reveal.addEventListener( 'overviewshown', function() {
+	$('.banner').addClass( "overview" );
+} );
+Reveal.addEventListener( 'overviewhidden', function() {	
+	$('.banner').removeClass( "overview" );
+});
+Reveal.addEventListener( 'overviewhidden', f);
+
+
+</script>
+
+  </body>
+</html>
