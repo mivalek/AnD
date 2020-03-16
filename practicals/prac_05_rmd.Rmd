@@ -1,0 +1,87 @@
+---
+title: "Synchrony and Social Interaction with Robots"
+subtitle: "Analysing Data Practical Report"
+author: "[insert your name]"
+output: 
+  html_document:
+  number_sections: true
+---
+
+```{r setup}
+# See worksheet task 1
+# setting up default code chunk behaviour inside the ()
+knitr::opts_chunk$set()
+```
+
+```{r packages}
+# See worksheet task 2
+# add library() commands to load all packages you need for this document.
+
+```
+
+```{r read_in}
+# See worksheet task 3
+# complete the line to read in the data
+sync <- read_csv()
+```
+
+```{r checking}
+# See worksheet task 4
+# check classes of your columns and number of NAs by looking at the summary of the data
+# fix any problems or change data classes here
+
+```
+
+```{r cleaning}
+# See worksheet task 5
+# clean data to change or remove strange values or cases
+
+```
+
+```{r descriptives}
+# See worksheet task 6
+# Create and save descriptives tables here
+
+
+```
+
+```{r plots}
+# See worksheet task 7
+# use this chunk to create plots
+# don't forget you can save plots as objects, then put the object name in a chunk further down to make it appear there
+
+```
+
+```{r plot_challenge}
+# See worksheet task 7.1
+# Some of the code has been filled in for you below already
+
+
+sync %>% 
+  ggplot(aes()) + # complete with the variables on x and y
+  geom_point(stat = " ", # complete with a word
+             fun.y = "mean", # complete with the function R should use to calculate the points
+             size = , # complete with a number
+             shape = , # complete with a number
+             fill = " ") + # complete with a colour
+  facet_wrap(~ ) # complete with a variable
+
+```
+
+## Method
+
+### Participants
+
+[ *Complete this section in your own words; see worksheet task 8.1* ]
+
+### Design
+
+[ *Complete this section in your own words; see worksheet task 8.2* ]
+
+## Reeults
+
+### Descriptives
+
+[ *Complete this section in your own words; see worksheet task 8.3* ]
+
+[ *Add code chunks if necessary to insert and format tables and figures* ]
