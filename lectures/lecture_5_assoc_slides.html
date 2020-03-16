@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Dr Jennifer Mankin" />
+  <title>Measures of Association</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="https:\\mivalek.github.io\slides_files\css\slides.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <script src="https://mivalek.github.io/slides_files/kePrint-0.0.1/kePrint.js"></script>
+</head>
+<body>
+<div class="banner"><div class = "header msc"><a href="/">Analysing<strong>data</strong></a></div></div>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Measures of Association</h1>
+  <h1 class="subtitle">Analysing Data Week 5</h1>
+    <h2 class="author">Dr Jennifer Mankin</h2>
+    <h3 class="date"><a href="./lecture_5_assoc.html">Click for handout</a></h3>
+</section>
+
+<section class="slide level2">
+
+<style>
+:root {
+--theme-col: #03a7a7;
+--hover-col: #A70303;
+}
+</style>
+<p>```</p>
+</section>
+<section id="overview-of-the-next-weeks" class="slide level2">
+<h2>Overview of the Next Weeks</h2>
+<ul>
+<li class="fragment">Today: Measures of Association</li>
+<li class="fragment">Week 6: Comparing Two Means</li>
+<li class="fragment">Week 7: Lab Report Writing</li>
+<li class="fragment">Week 8: The Linear Model</li>
+</ul>
+</section>
+<section id="overview-of-todays-topics" class="slide level2">
+<h2>Overview of Today’s Topics</h2>
+<ul>
+<li class="fragment">Review of Important Ideas
+<ul>
+<li class="fragment">Continuous vs Categorical Data</li>
+<li class="fragment">Distributions, test statistics, and NHST</li>
+</ul></li>
+<li class="fragment">Tests of Association
+<ul>
+<li class="fragment">What can we learn from these tests?</li>
+<li class="fragment">Continuous Data: Correlation coefficient <em>r</em></li>
+<li class="fragment">Frequency Data: Chi-squared test <em>χ</em><sup>2</sup></li>
+</ul></li>
+</ul>
+</section>
+<section id="review-of-important-ideas" class="slide level2">
+<h2>Review of Important Ideas</h2>
+<ul>
+<li class="fragment">Data can be measured in many ways
+<ul>
+<li class="fragment">Continuous, categorial, ratio, ordinal…</li>
+</ul></li>
+<li class="fragment">The type of data can have a big impact on your analysis and interpretion of results</li>
+</ul>
+</section>
+<section id="continuous-data" class="slide level2">
+<h2>Continuous Data</h2>
+<ul>
+<li class="fragment">A matter of <em>degree</em>; answers the question “How much?”
+<ul>
+<li class="fragment">Typically a score or measurement</li>
+<li class="fragment">Examples: a quiz marks, height in cm, response latency</li>
+<li class="fragment">If it makes sense to have a <em>mean</em>, you likely have continuous data</li>
+</ul></li>
+</ul>
+</section>
+<section id="categorical-data" class="slide level2">
+<h2>Categorical Data</h2>
+<ul>
+<li class="fragment">A matter of <em>membership</em>; answers the question “Which one?”
+<ul>
+<li class="fragment">Typically a group or label</li>
+<li class="fragment">Examples: practical group, alive vs. dead, control vs experimental condition</li>
+<li class="fragment">Membership in any category is binary (either in or out)</li>
+</ul></li>
+</ul>
+</section>
+<section id="distributions-test-statistics-and-nhst" class="slide level2">
+<h2>Distributions, Test Statistics, and NHST</h2>
+<ul>
+<li class="fragment">Everything from the past few weeks we will now put into action!</li>
+<li class="fragment">For each statistical analysis, we will have the same ingredients:
+<ul>
+<li class="fragment">Data</li>
+<li class="fragment">A test statistic</li>
+<li class="fragment">The distribution of that test statistic</li>
+<li class="fragment">The probability <em>p</em> of the value of the test statistic we have under the null hypothesis H<sub>0</sub></li>
+</ul></li>
+</ul>
+</section>
+<section id="reminder-about-nhst" class="slide level2">
+<h2>Reminder about NHST</h2>
+<ul>
+<li class="fragment">For all of our tests, we assume that <strong>the null hypothesis is true</strong> unless we have evidence to suggest that this is unlikely
+<ul>
+<li class="fragment">“Evidence” such as a test statistic that is sufficiently unlikely to occur under H<sub>0</sub></li>
+<li class="fragment">In that case, we reject the null and accept the alternative hypothesis H<sub>1</sub></li>
+</ul></li>
+<li class="fragment">In psychology, “sufficiently unlikely” is typically defined as less than 5% probability (<em>p</em> &lt; .05)
+<ul>
+<li class="fragment">Nothing magical about this number!</li>
+</ul></li>
+</ul>
+</section>
+<section id="overall-reminder" class="slide level2">
+<h2>Overall Reminder</h2>
+<ul>
+<li class="fragment">As scientistis we want to believe true things about the world, and disbelieve false things</li>
+<li class="fragment">NHST (<em>p</em>-values), and statistics more generally, are systems to help us make decisions about whether, and to what degree, we believe something is true</li>
+</ul>
+</section>
+<section id="measures-of-association" class="slide level2">
+<h2>Measures of Association</h2>
+<ul>
+<li class="fragment">Essential questions: are two variables related to each other, or unrelated (independent)? How can we quantify this relationship?
+<ul>
+<li class="fragment">Choose a test statistic that best captures the relationship you want to model</li>
+</ul></li>
+<li class="fragment">Today’s tests:
+<ul>
+<li class="fragment">Correlation (<em>r</em>)</li>
+<li class="fragment">Chi-Squared (<em>χ</em><sup>2</sup>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation" class="slide level2">
+<h2>Correlation</h2>
+<ul>
+<li class="fragment">Quantifies the <strong>degree</strong> and <strong>direction</strong> of a numeric relationship</li>
+<li class="fragment">Typically used with two (or more) continuous variables
+<ul>
+<li class="fragment">Can be used when one is categorical!</li>
+</ul></li>
+<li class="fragment">Today’s example: Gender and Sexuality data from the questionnaire</li>
+</ul>
+</section>
+<section id="correlation-visualisation" class="slide level2">
+<h2>Correlation: Visualisation</h2>
+<p><img src="lecture_5_assoc_slides_files/figure-revealjs/fem_masc_plot,%20-1.png" width="672" /></p>
+</section>
+<section id="correlation-1" class="slide level2">
+<h2>Correlation</h2>
+<ul>
+<li class="fragment">The plot shows that people who gave high ratings for femininity tended to give low ratings for masculinity, and vice versa</li>
+<li class="fragment">Things we might like to know:
+<ul>
+<li class="fragment">How strong is this relationship?</li>
+<li class="fragment">Should we believe that it’s real (ie representative of people/first-year psychology students in general?)</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-how-strong" class="slide level2">
+<h2>Correlation: How strong?</h2>
+<ul>
+<li class="fragment">We can quantify the <strong>strength</strong> and <strong>direction</strong> of the relationship between femininity and masculinity with Pearson’s correlation coefficient <em>r</em></li>
+<li class="fragment">Strength: absolute value of <em>r</em> between 0 and 1
+<ul>
+<li class="fragment">0: no relationship at all</li>
+<li class="fragment">1: perfect relationship</li>
+</ul></li>
+<li class="fragment">Direction: whether the value of <em>r</em> is positive or negative
+<ul>
+<li class="fragment">Positive: as one variable increases, the other tends to increase</li>
+<li class="fragment">Negative: as one variable increases, the other tends to decrease</li>
+</ul></li>
+<li class="fragment">So, values range from -1 (perfect negative) through 0 (no relationship) to 1 (perfect positive)</li>
+</ul>
+</section>
+<section id="correlation-lets-try-it" class="slide level2">
+<h2>Correlation: Let’s Try It!</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">gensex <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="st">  </span><span class="kw">select</span>(Gender_fem_<span class="dv">1</span>, Gender_masc_<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="st">  </span><span class="kw">cor</span>(<span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</a>
+<a class="sourceLine" id="cb1-4" title="4">              Gender_fem_<span class="dv">1</span> Gender_masc_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb1-5" title="5">Gender_fem_<span class="dv">1</span>     <span class="fl">1.0000000</span>    <span class="fl">-0.7553645</span></a>
+<a class="sourceLine" id="cb1-6" title="6">Gender_masc_<span class="dv">1</span>   <span class="fl">-0.7553645</span>     <span class="fl">1.0000000</span></a></code></pre></div>
+<ul>
+<li class="fragment">So, our correlation coefficient <em>r</em> is -0.76
+<ul>
+<li class="fragment">The negative sign (-) means as femininity increases, masculinity tends to decrease (and vice versa)</li>
+<li class="fragment">We saw this on the plot as a downward trend left to right</li>
+<li class="fragment">The absolute value of 0.76 is <strong>very</strong> strong - quite close to 1!</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-is-it-real" class="slide level2">
+<h2>Correlation: Is It Real?</h2>
+<ul>
+<li class="fragment">We now have our data and our test statistic <em>r</em> (-0.76)</li>
+<li class="fragment">We can now ask likely we are to get a value of -0.76 if in fact femininity and masculinity have a true <em>r</em> of 0
+<ul>
+<li class="fragment">i.e. the null hypothesis is in fact true</li>
+<li class="fragment">We will use the standard significance level of &lt; .05 in this case</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-is-it-real-1" class="slide level2">
+<h2>Correlation: Is It Real?</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">fm.r &lt;-<span class="st"> </span><span class="kw">cor.test</span>(gensex<span class="op">$</span>Gender_fem_<span class="dv">1</span>, gensex<span class="op">$</span>Gender_masc_<span class="dv">1</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">fm.r</a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">    Pearson<span class="st">&#39;s product-moment correlation</span></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="st">data:  gensex$Gender_fem_1 and gensex$Gender_masc_1</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="st">t = -20.098, df = 304, p-value &lt; 2.2e-16</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">alternative hypothesis: true correlation is not equal to 0</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="st">95 percent confidence interval:</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="st"> -0.7997536 -0.7027607</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="st">sample estimates:</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="st">       cor </span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="st">-0.7553645 </span></a></code></pre></div>
+<p>We can report this as: “There was a significant correlation between femininity and masculinity, <em>r</em>(304) = -0.76, <em>p</em> &lt; .001.”</p>
+</section>
+<section id="correlation-r-or-t" class="slide level2">
+<h2>Correlation: <em>r</em> or <em>t</em>?</h2>
+<p>Our output includes <em>t</em> and its associated <em>p</em>-value:</p>
+<pre><code>
+    Pearson&#39;s product-moment correlation
+
+data:  gensex$Gender_fem_1 and gensex$Gender_masc_1
+t = -20.098, df = 304, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.7997536 -0.7027607
+sample estimates:
+       cor 
+-0.7553645 </code></pre>
+<p>This is because the probability <em>p</em> associated with <em>r</em> actually comes from a <em>t</em>-distribution with N - 2 degrees of freedom!</p>
+</section>
+<section id="correlation-so-far" class="slide level2">
+<h2>Correlation: So Far</h2>
+<ul>
+<li class="fragment">We have seen that the correlation coefficient <em>r</em> expresses the strength and direction of the relationship between two variables</li>
+<li class="fragment">We can use this to <strong>compare</strong> the strength of different relationships</li>
+</ul>
+</section>
+<section id="correlation-comparing-rs" class="slide level2">
+<h2>Correlation: Comparing <em>r</em>s</h2>
+<p><img src="lecture_5_assoc_slides_files/figure-revealjs/fem_masc_plot_gender-1.png" width="672" /></p>
+</section>
+<section id="correlation-interpretation" class="slide level2">
+<h2>Correlation: Interpretation</h2>
+<ul>
+<li class="fragment">For both female-ID and male-ID people, there is a fairly strong negative relationship</li>
+<li class="fragment">We can use <em>r</em> to quantify whether this relationship is stronger for female-ID or male-ID people
+<ul>
+<li class="fragment">Simply compare the values of <em>r</em> for females and males separately</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-comparing-values" class="slide level2">
+<h2>Correlation: Comparing values</h2>
+<ul>
+<li class="fragment">For female-ID people, <em>r</em>(248) = -0.64, <em>p</em> &lt; .001</li>
+<li class="fragment">For male-ID people, <em>r</em>(46) = -0.58, <em>p</em> &lt; .001</li>
+<li class="fragment">So, the relationship between femininity and masculinity is stronger for female-ID people</li>
+<li class="fragment">WARNING: we should be careful about this, because we had 250 female-ID participants and 48 male-ID participants!
+<ul>
+<li class="fragment">How can we check the accuracy of our estimates of <em>r</em> for each gender ID?</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-comparing-values-1" class="slide level2">
+<h2>Correlation: Comparing values</h2>
+<ul>
+<li class="fragment">For female-ID people, <em>r</em> was -0.64, 95% CIs [-0.7, -0.56] so +/- 0.07</li>
+<li class="fragment">For male-ID people, <em>r</em> was -0.58, 95% CIs [-0.74, -0.36] so +/- 0.16</li>
+<li class="fragment">Having more female-ID people means our CIs are smaller and estimates are more accurate
+<ul>
+<li class="fragment">As these CIs overlap substantially, it’s possible that the true value of <em>r</em> for male-ID people is not actually different from female-ID people</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-vocab-alert" class="slide level2">
+<h2>Correlation: <strong>VOCAB ALERT!</strong></h2>
+<ul>
+<li class="fragment">In common language, “correlated” means “related to in some way, usually causally”
+<ul>
+<li class="fragment">Statistics: the (standardised) degree to which two or more variables covary, ie change in relation to each other</li>
+</ul></li>
+<li class="fragment">“Correlation” is a technical term!
+<ul>
+<li class="fragment">In your reports, do not say two things are “correlated” unless you plan to report <em>r</em> as evidence!</li>
+<li class="fragment">Instead: variables have a relationship/are related to each other</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-summary" class="slide level2">
+<h2>Correlation: Summary</h2>
+<ul>
+<li class="fragment">The correlation statistic <em>r</em> helps us quantify and compare the strength and direction of relationships between variables
+<ul>
+<li class="fragment">How <em>r</em> is calculated, relationship to <em>t</em>, etc: see reading!</li>
+</ul></li>
+<li class="fragment">Correlation <strong>DOES NOT IMPLY CAUSATION!!!!!!!</strong></li>
+<li class="fragment">More practice with interpreting <em>r</em> with <a href="http://guessthecorrelation.com/">this fun little game</a></li>
+</ul>
+</section>
+<section id="making-progress" class="slide level2">
+<h2>Making Progress</h2>
+<ul>
+<li class="fragment">Correlations: sorted!
+<ul>
+<li class="fragment">But we’ll come back to them later…</li>
+</ul></li>
+<li class="fragment">Next up: Chi-Square (<em>χ</em><sup>2</sup>)</li>
+</ul>
+</section>
+<section id="chi-square-test-χ2" class="slide level2">
+<h2>Chi-Square Test <em>χ</em><sup>2</sup></h2>
+<ul>
+<li class="fragment">Quantifies the relationship between frequencies</li>
+<li class="fragment">Typically used with two (or more) categorical variables
+<ul>
+<li class="fragment">Shows up in <strong>many</strong> contexts!</li>
+<li class="fragment">Also used for comparing different models…more in second year!</li>
+</ul></li>
+<li class="fragment">Today’s example: Simulated data based on the green study, Griskevicius et al. (2010)</li>
+</ul>
+</section>
+<section id="green-study-design" class="slide level2">
+<h2>Green Study: Design</h2>
+<ul>
+<li class="fragment">Research question: Why do people choose to buy “green” products?
+<ul>
+<li class="fragment">Conceptual hypothesis: buying “green” products is related to status motives</li>
+</ul></li>
+<li class="fragment">Griskevicius et al. (2010) operationalisation:
+<ul>
+<li class="fragment">Story condition: read high-status story or status-neutral story</li>
+<li class="fragment">Product choice: green or more luxurious non-green product
+<ul>
+<li class="fragment">Three products: car, soap, and dishwasher</li>
+</ul></li>
+<li class="fragment">Operational hypothesis: people in the <strong>high-status</strong> condition will choose the <strong>green</strong> products more often than people in the control condition</li>
+</ul></li>
+</ul>
+</section>
+<section id="green-study-data" class="slide level2">
+<h2>Green Study: Data</h2>
+<p>Here’s what the data may look like</p>
+<ul>
+<li class="fragment">CONDITION: control story or experimental (high-status) story</li>
+<li class="fragment">CHOICE: product choice, either green or luxury</li>
+<li class="fragment">We’ll just look at the results for one of the three products - the car</li>
+</ul>
+<pre><code># A tibble: 443 x 6
+   ID_CODE GENDER   AGE CONDITION PRODUCT    CHOICE
+   &lt;fct&gt;   &lt;fct&gt;  &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt;      &lt;fct&gt; 
+ 1 WYYJ    male      25 control   dishwasher luxury
+ 2 WYYJ    male      25 control   cleaner    green 
+ 3 WYYJ    male      25 control   car        luxury
+ 4 TBSY    female    19 control   dishwasher green 
+ 5 TBSY    female    19 control   cleaner    luxury
+ 6 TBSY    female    19 control   car        green 
+ 7 CVWL    female    18 control   dishwasher green 
+ 8 CVWL    female    18 control   cleaner    green 
+ 9 CVWL    female    18 control   car        luxury
+10 ILVB    other     21 control   dishwasher green 
+# ... with 433 more rows</code></pre>
+</section>
+<section id="green-study-summary-table" class="slide level2">
+<h2>Green Study: Summary Table</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Observed Frequencies of Car Product Choices by Story Type
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Non-Green Luxury Product
+</th>
+<th style="text-align:right;">
+Green Product
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Control Story
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+26
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+High-Status Story
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+37
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="green-study-graph" class="slide level2">
+<h2>Green Study: Graph</h2>
+<p><img src="lecture_5_assoc_slides_files/figure-revealjs/chisq_plot,%20-1.png" width="672" /></p>
+</section>
+<section id="green-study-analysis" class="slide level2">
+<h2>Green Study: Analysis</h2>
+<ul>
+<li class="fragment">Are story condition and product choice <strong>independent</strong> of each other?
+<ul>
+<li class="fragment">If yes: story condition has no association with product choice</li>
+<li class="fragment">If no: story condition is associated with product choice</li>
+</ul></li>
+<li class="fragment">The observed frequencies for our sample show some pattern</li>
+<li class="fragment">How much of a pattern is enough to believe that condition and choice are <strong>not</strong> independent?
+<ul>
+<li class="fragment">Compare to what we might expect under the null hypothesis</li>
+<li class="fragment">Calculate <em>χ</em><sup>2</sup> to quantify this</li>
+</ul></li>
+</ul>
+</section>
+<section id="chi-squared-expected-frequencies" class="slide level2">
+<h2>Chi-Squared: Expected Frequencies</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Expected Frequencies of Product Choices by Story Condition
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Non-Green Luxury Product
+</th>
+<th style="text-align:right;">
+Green Product
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Control Story
+</td>
+<td style="text-align:right;">
+44
+</td>
+<td style="text-align:right;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+High-Status Story
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+30
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li class="fragment">We might expect that there are equal counts in each cell (combination of conditions)</li>
+<li class="fragment">BUT: To account for unequal numbers of people who chose the green vs non-green products, instead we can calculate the <strong>expected frequencies</strong>
+<ul>
+<li class="fragment">That is: how many counts we would expect in each cell, if the null hypothesis is true</li>
+<li class="fragment">See An Adventure in Statistics (pgs 434 to 442) for calculations</li>
+</ul></li>
+</ul>
+</section>
+<section id="note-on-chi-squared-expected-frequencies" class="slide level2">
+<h2>Note on Chi-Squared: Expected Frequencies</h2>
+<ul>
+<li class="fragment">Important assumption: you can only use <em>χ</em><sup>2</sup> if you have expected frequencies greater than 5 in each cell
+<ul>
+<li class="fragment">Smaller than this and the test lacks sufficient <strong>power</strong> to detect relationships</li>
+</ul></li>
+<li class="fragment">For very small expected frequencies, you may want to use Fisher’s Exact Test instead
+<ul>
+<li class="fragment">For more on this, see An Adventure in Statistics pgs 442 - 444</li>
+</ul></li>
+</ul>
+</section>
+<section id="chi-squared-test-observed-vs-expected" class="slide level2">
+<h2>Chi-Squared Test: Observed vs Expected</h2>
+<ul>
+<li class="fragment">Next, we compare the expected frequencies to our observed frequencies</li>
+<li class="fragment">The <em>χ</em><sup>2</sup> test statistic represents the (standardised) difference between the observed and expected frequencies
+<ul>
+<li class="fragment">The bigger <em>χ</em><sup>2</sup> is, the bigger the difference is between our data and what we expect under the null hypothesis</li>
+</ul></li>
+</ul>
+</section>
+<section id="chi-squared-output" class="slide level2">
+<h2>Chi-Squared: Output</h2>
+<pre><code>
+    Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+
+data:  green_sum
+X-squared = 4.7051, df = 1, p-value = 0.03007</code></pre>
+<ul>
+<li class="fragment">The calculated value for <em>χ</em><sup>2</sup> (here, “X-squared”) is 4.71</li>
+<li class="fragment">The degrees of freedom, which determines the <em>χ</em><sup>2</sup> distribution, is 1 from which we get…</li>
+<li class="fragment">The <em>p</em>-value, which represents the probability of getting a test statistic this big if the null hypothesis is in fact true
+<ul>
+<li class="fragment">Here, <em>p</em> is very small ( = .030), so pretty unlikely!</li>
+<li class="fragment">We might conclude that the null hypothesis <strong>might not be true</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="important" class="slide level2">
+<h2>IMPORTANT!!!</h2>
+<ul>
+<li class="fragment">We can only test the significance (probability) of the null hypothesis being true
+<ul>
+<li class="fragment">This <strong>does not mean we have evidence for the alternative hypothesis</strong></li>
+</ul></li>
+<li class="fragment">In other words: Our test tells us that it is unlikely that there is no relationship (small <em>p</em>-value under the null hypothesis)
+<ul>
+<li class="fragment">From that we <strong>infer</strong> that maybe there is a relationship</li>
+<li class="fragment">That will only be a sensible thing to infer if we have carefully controlled for all other explanations</li>
+</ul></li>
+</ul>
+</section>
+<section id="green-study-what-can-we-conclude" class="slide level2">
+<h2>Green Study: What Can We Conclude?</h2>
+<ul>
+<li class="fragment">We wanted to know whether status motives influence “green” purchases</li>
+<li class="fragment">Operationalised as whether reading a high-status vs control story was associated with the frequency of green product vs a non-green luxury product choice</li>
+<li class="fragment">We found that 52.86% of participants who read the high-status story chose a green car over a more luxurious non-green alternative,while only 33.77% of participants who read the control story made the same choice (χ<sup>2</sup>(1) = 4.71, <em>p</em> = .030).</li>
+<li class="fragment">So, our results suggest that high-status motives are related to how frequently people choose green products</li>
+</ul>
+</section>
+<section id="lab-reports" class="slide level2">
+<h2>Lab Reports</h2>
+<ul>
+<li class="fragment">You can choose either the red or green study to write your report on
+<ul>
+<li class="fragment">See <a href="https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0">Lab Report Information on Canvas</a> for more</li>
+</ul></li>
+<li class="fragment">If you choose the green study (Griskevicius et al., 2010), you should use and report the results of <em>χ</em><sup>2</sup>
+<ul>
+<li class="fragment">Refer to the original paper for some ideas!</li>
+</ul></li>
+</ul>
+</section>
+<section id="analysis-for-lab-reports" class="slide level2">
+<h2>Analysis for Lab Reports</h2>
+<ul>
+<li class="fragment">Inspect and clean the data</li>
+<li class="fragment">Produce descriptives of participants (age, gender)</li>
+<li class="fragment">Report observed frequencies and <em>χ</em><sup>2</sup> results for all three product choices
+<ul>
+<li class="fragment">Include at least one figure of the results</li>
+<li class="fragment">Will be covered in depth in the next tutorial and practical!</li>
+</ul></li>
+</ul>
+</section>
+<section id="questions" class="slide level2">
+<h2>Questions?</h2>
+</section>
+    </div>
+  </div>
+
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: false,
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1000,
+        height: 750,
+        // Factor of the display size that should remain empty around the content
+        margin: 0,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/search/search.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('h2:not(.author)').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+	$('h1.title').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+});
+
+var f = (function() {
+	// get scale
+	var element = document.querySelector('.slides');
+	var scaleX = element.getBoundingClientRect().width / element.offsetWidth;
+	var bottom = $(".present > .slide-title").offset().top + ($(".present > .slide-title").outerHeight() * scaleX);
+	
+	$(":root")[0].style.setProperty('--header-height', Math.floor(bottom) + 'px');
+});
+
+window.addEventListener( 'load', f);
+$(window).resize(f);
+Reveal.addEventListener( 'slidechanged', f);
+Reveal.addEventListener( 'overviewshown', function() {
+	$('.banner').addClass( "overview" );
+} );
+Reveal.addEventListener( 'overviewhidden', function() {	
+	$('.banner').removeClass( "overview" );
+});
+Reveal.addEventListener( 'overviewhidden', f);
+
+
+</script>
+
+  </body>
+</html>

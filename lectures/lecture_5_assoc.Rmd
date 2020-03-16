@@ -1,0 +1,408 @@
+---
+title: "Measures of Association"
+subtitle: "Analysing Data Week 5"
+author: "Dr Jennifer Mankin"
+output: 
+  html_document
+---
+
+```{r setup, include=FALSE, message=F, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F, warning = F)
+library(kableExtra)
+library(tidyverse)
+library(cowplot)
+library(gridExtra)
+library(weights)
+library(adata)
+# colour = #03a7a7
+```
+
+```{r report.p, include = F}
+report.p <- function(x){
+  ifelse(x > .001, paste0(" = ", rd(x, 3)), "< .001")
+}
+```
+
+## Overview of the Next Weeks
+
+* Today: Measures of Association
+* Week 6: Comparing Two Means
+* Week 7: Lab Report Writing
+* Week 8: The Linear Model
+
+## Overview of Today's Topics
+
+* Review of Important Ideas
+  + Continuous vs Categorical Data
+  + Distributions, test statistics, and NHST
+* Tests of Association
+  + What can we learn from these tests?
+  + Continuous Data: Correlation coefficient *r*
+  + Frequency Data: Chi-squared test *&chi;*^2^
+
+## Review of Important Ideas
+
+* Data can be measured in many ways
+  + Continuous, categorial, ratio, ordinal...
+* The type of data can have a big impact on your analysis and interpretion of results
+
+## Continuous Data
++ A matter of *degree*; answers the question "How much?"
+  - Typically a score or measurement
+  - Examples: a quiz marks, height in cm, response latency
+  - If it makes sense to have a *mean*, you likely have continuous data
+
+## Categorical Data
++ A matter of *membership*; answers the question "Which one?"
+  - Typically a group or label
+  - Examples: practical group, alive vs. dead, control vs experimental condition
+  - Membership in any category is binary (either in or out)
+
+## Distributions, Test Statistics, and NHST
+
+* Everything from the past few weeks we will now put into action!
+* For each statistical analysis, we will have the same ingredients:
+  + Data
+  + A test statistic
+  + The distribution of that test statistic
+  + The probability *p* of the value of the test statistic we have under the null hypothesis H~0~
+
+## Reminder about NHST
+
+* For all of our tests, we assume that **the null hypothesis is true** unless we have evidence to suggest that this is unlikely
+  + "Evidence" such as a test statistic that is sufficiently unlikely to occur under H~0~
+  + In that case, we reject the null and accept the alternative hypothesis H~1~
+* In psychology, "sufficiently unlikely" is typically defined as less than 5% probability (*p* < .05)
+  + Nothing magical about this number!
+  
+## Overall Reminder
+
+* As scientistis we want to believe true things about the world, and disbelieve false things
+* NHST (*p*-values), and statistics more generally, are systems to help us make decisions about whether, and to what degree, we believe something is true
+
+## Measures of Association
+
+* Essential questions: are two variables related to each other, or unrelated (independent)? How can we quantify this relationship?
+  + Choose a test statistic that best captures the relationship you want to model
+* Today's tests:
+  + Correlation (*r*)
+  + Chi-Squared (*&chi;*^2^)
+
+## Correlation
+
+* Quantifies the **degree** and **direction** of a numeric relationship
+* Typically used with two (or more) continuous variables
+  + Can be used when one is categorical!
+* Today's example: Gender and Sexuality data from the questionnaire
+
+## Correlation: Visualisation
+
+```{r fem_masc_plot, fig.width=7, fig.height=4}
+gensex <- read_csv(here::here("/data/gensex_clean.csv"))
+
+gensex <- gensex %>% 
+  mutate(Gender = factor(Gender))
+
+p1 <- gensex %>%
+  mutate(Gender = fct_explicit_na(Gender)) %>% 
+  ggplot(aes(x = Gender_fem_1, y = Gender_masc_1)) +
+  geom_point(position = "jitter", size = 2, alpha = .4) +
+  labs(x = "Femininity", y = "Masculinity", title = "Plot of ratings of femininity vs masculinity") +
+  theme_cowplot()
+p1
+```
+
+## Correlation
+
+* The plot shows that people who gave high ratings for femininity tended to give low ratings for masculinity, and vice versa
+* Things we might like to know:
+  + How strong is this relationship?
+  + Should we believe that it's real (ie representative of people/first-year psychology students in general?)
+
+## Correlation: How strong?
+
+* We can quantify the **strength** and **direction** of the relationship between femininity and masculinity with Pearson's correlation coefficient *r*
+* Strength: absolute value of *r* between 0 and 1
+  + 0: no relationship at all
+  + 1: perfect relationship
+* Direction: whether the value of *r* is positive or negative
+  + Positive: as one variable increases, the other tends to increase
+  + Negative: as one variable increases, the other tends to decrease
+* So, values range from -1 (perfect negative) through 0 (no relationship) to 1 (perfect positive)
+
+## Correlation: Let's Try It!
+
+```{r gensex_cor, echo = T}
+gensex %>% 
+  select(Gender_fem_1, Gender_masc_1) %>% 
+  cor(method = "pearson")
+```
+```{r gensex_cor_rep}
+gensex_r <- gensex %>% 
+  select(Gender_fem_1, Gender_masc_1) %>% 
+  cor(method = "pearson") %>%
+  pluck(2)
+```
+* So, our correlation coefficient *r* is `r gensex_r %>% round(2)`
+  + The negative sign (-) means as femininity increases, masculinity tends to decrease (and vice versa)
+  + We saw this on the plot as a downward trend left to right
+  + The absolute value of `r gensex_r %>% round(2) %>% abs()` is **very** strong - quite close to 1!
+
+## Correlation: Is It Real?
+
+* We now have our data and our test statistic *r* (`r gensex_r %>% round(2)`)
+* We can now ask likely we are to get a value of `r gensex_r %>% round(2)` if in fact femininity and masculinity have a true *r* of 0
+  + i.e. the null hypothesis is in fact true
+  + We will use the standard significance level of < .05 in this case
+
+## Correlation: Is It Real?
+
+```{r, gensex_cor_test, echo = T}
+fm.r <- cor.test(gensex$Gender_fem_1, gensex$Gender_masc_1, alternative = "two.sided", method = "pearson")
+fm.r
+```
+
+We can report this as: "There was a significant correlation between femininity and masculinity, *r*(`r fm.r$parameter`) = `r gensex_r %>% round(2)`, *p* `r fm.r$p.value %>% report.p()`."
+
+## Correlation: *r* or *t*?
+
+Our output includes *t* and its associated *p*-value:
+
+```{r}
+fm.r
+```
+
+This is because the probability *p* associated with *r* actually comes from a *t*-distribution with N - 2 degrees of freedom!
+
+## Correlation: So Far
+
+* We have seen that the correlation coefficient *r* expresses the strength and direction of the relationship between two variables
+* We can use this to **compare** the strength of different relationships
+
+## Correlation: Comparing *r*s
+
+```{r fem_masc_plot_gender, fig.width=7, fig.height=4}
+gensex %>%
+  mutate(Gender = fct_explicit_na(Gender)) %>% 
+  ggplot(aes(x = Gender_fem_1, y = Gender_masc_1, colour = Gender)) +
+  geom_point(position = "jitter", size = 2, alpha = .4) +
+  labs(x = "Femininity", y = "Masculinity", title = "Ratings of self-reported femininity vs masculinity by gender identity") +
+  theme_cowplot()
+```
+
+## Correlation: Interpretation
+
+* For both female-ID and male-ID people, there is a fairly strong negative relationship
+* We can use *r* to quantify whether this relationship is stronger for female-ID or male-ID people
+  + Simply compare the values of *r* for females and males separately
+
+## Correlation: Comparing values
+
+```{r fem_vs_male_corr}
+male.gs <- filter(gensex, Gender == "Male")
+fem.gs <- filter(gensex, Gender == "Female")
+
+male.cor <- cor.test(male.gs$Gender_fem_1, male.gs$Gender_masc_1, alternative = "two.sided", method = "pearson")
+
+fem.cor <- cor.test(fem.gs$Gender_fem_1, fem.gs$Gender_masc_1, alternative = "two.sided", method = "pearson")
+```
+
+* For female-ID people, *r*(`r fem.cor$parameter`) = `r fem.cor$estimate %>% round(2)`, *p* `r fem.cor$p.value %>% report.p()`
+* For male-ID people, *r*(`r male.cor$parameter`) = `r male.cor$estimate %>% round(2)`, *p* `r male.cor$p.value %>% report.p()`
+* So, the relationship between femininity and masculinity is stronger for female-ID people
+* WARNING: we should be careful about this, because we had `r gensex %>% filter(Gender == "Female") %>% nrow()` female-ID participants and `r gensex %>% filter(Gender == "Male") %>% nrow()` male-ID participants!
+  + How can we check the accuracy of our estimates of *r* for each gender ID?
+  
+## Correlation: Comparing values
+
+* For female-ID people, *r* was `r fem.cor$estimate %>% round(2)`, 95% CIs [`r fem.cor$conf.int[1] %>% round(2)`, `r fem.cor$conf.int[2] %>% round(2)`] so +/- `r (fem.cor$estimate - fem.cor$conf.int[1]) %>% round(2)`
+* For male-ID people, *r* was `r male.cor$estimate %>% round(2)`, 95% CIs [`r male.cor$conf.int[1] %>% round(2)`, `r male.cor$conf.int[2] %>% round(2)`] so +/- `r (male.cor$estimate - male.cor$conf.int[1]) %>% round(2)`
+* Having more female-ID people means our CIs are smaller and estimates are more accurate
+  + As these CIs overlap substantially, it's possible that the true value of *r* for male-ID people is not actually different from female-ID people
+
+## Correlation: **VOCAB ALERT!**
+
+* In common language, "correlated" means "related to in some way, usually causally"
+  + Statistics: the (standardised) degree to which two or more variables covary, ie change in relation to each other
+* "Correlation" is a technical term!
+  + In your reports, do not say two things are "correlated" unless you plan to report *r* as evidence!
+  + Instead: variables have a relationship/are related to each other
+  
+## Correlation: Summary
+
+* The correlation statistic *r* helps us quantify and compare the strength and direction of relationships between variables
+  + How *r* is calculated, relationship to *t*, etc: see reading!
+* Correlation **DOES NOT IMPLY CAUSATION!!!!!!!**
+* More practice with interpreting *r* with [this fun little game](http://guessthecorrelation.com/)
+
+## Making Progress
+
+* Correlations: sorted!
+  + But we'll come back to them later...
+* Next up: Chi-Square (*&chi;*^2^)
+
+## Chi-Square Test *&chi;*^2^
+
+* Quantifies the relationship between frequencies
+* Typically used with two (or more) categorical variables
+  + Shows up in **many** contexts!
+  + Also used for comparing different models...more in second year!
+* Today's example: Simulated data based on the green study, Griskevicius et al. (2010)
+
+## Green Study: Design
+
+* Research question: Why do people choose to buy "green" products?
+  + Conceptual hypothesis: buying "green" products is related to status motives
+* Griskevicius et al. (2010) operationalisation:
+  + Story condition: read high-status story or status-neutral story
+  + Product choice: green or more luxurious non-green product
+    - Three products: car, soap, and dishwasher
+  + Operational hypothesis: people in the **high-status** condition will choose the **green** products more often than people in the control condition
+
+
+```{r chisq_tables, include = F}
+green_tib <- green_data(seed = 080588)
+
+green_tib <- green_tib %>% 
+  mutate(AGE = recode(AGE, "2e" = "2"), 
+         AGE = as.numeric(AGE),
+         CONDITION = recode(CONDITION, "conrol" = "control"),
+         CHOICE = CATEGORY) %>%
+  select(-CATEGORY) %>% 
+  filter(AGE > 17)
+
+green_sum <- green_tib %>% 
+  filter(PRODUCT == "car") %>% 
+  select(CONDITION, CHOICE) %>% 
+  mutate(CONDITION = recode(CONDITION, "experimental" = "High-Status Story", "control" = "Control Story")) %>%
+  group_by(CONDITION) %>% 
+  table()
+
+green_chsq <- chisq.test(green_sum)
+```
+
+## Green Study: Data
+
+Here's what the data may look like
+
+* CONDITION: control story or experimental (high-status) story
+* CHOICE: product choice, either green or luxury
+* We'll just look at the results for one of the three products - the car
+
+```{r chisq_tib}
+green_tib
+```
+
+## Green Study: Summary Table
+
+```{r}
+green_tab <- green_tib %>% 
+  mutate(CONDITION = recode(CONDITION, "experimental" = "High-Status Story", "control" = "Control Story")) %>% 
+  filter(PRODUCT == "car") %>% 
+  select(CONDITION, CHOICE) %>% 
+  group_by(CHOICE) %>% 
+  table()
+
+green_tab %>% 
+  kable(caption = "Observed Frequencies of Car Product Choices by Story Type",
+        col.names = c("Non-Green Luxury Product", "Green Product")) %>% 
+  kable_styling()
+
+```
+
+
+## Green Study: Graph
+
+```{r chisq_plot, , fig.width=7, fig.height=4}
+green_bar <- ggplot(as_tibble(green_tab), aes(x = CONDITION, y = n)) +
+  geom_bar(
+    aes(fill = CHOICE), 
+    stat="identity", position = position_dodge(0.8),
+    width = 0.7) +
+  labs(title = "Frequency of Car Product Choices by Story Type", x = "Story Condition", y = "Frequency", fill = "Product Choice") +
+  scale_y_continuous(limits = c(0, 60)) +
+  scale_color_manual(values = c("#3bc53b", "#5c3f78"))+
+  scale_fill_manual(values = c("#3bc53b", "#5c3f78"), labels = c("Green Product", "Non-Green Luxury Product"))+
+  scale_x_discrete(labels = c("Control Story","High-Status Story"))
+
+green_bar
+```
+
+## Green Study: Analysis
+
+* Are story condition and product choice **independent** of each other?
+  + If yes: story condition has no association with product choice
+  + If no: story condition is associated with product choice
+* The observed frequencies for our sample show some pattern
+* How much of a pattern is enough to believe that condition and choice are **not** independent?
+  + Compare to what we might expect under the null hypothesis
+  + Calculate *&chi;*^2^ to quantify this
+
+## Chi-Squared: Expected Frequencies
+
+```{r}
+green_chsq$expected %>% 
+  kable(caption = "Expected Frequencies of Product Choices by Story Condition",
+        col.names = c("Non-Green Luxury Product", "Green Product")) %>% 
+  kable_styling()
+```
+* We might expect that there are equal counts in each cell (combination of conditions)
+* BUT: To account for unequal numbers of people who chose the green vs non-green products, instead we can calculate the **expected frequencies**
+  + That is: how many counts we would expect in each cell, if the null hypothesis is true
+  + See An Adventure in Statistics (pgs 434 to 442) for calculations
+
+## Note on Chi-Squared: Expected Frequencies
+
+* Important assumption: you can only use *&chi;*^2^ if you have expected frequencies greater than 5 in each cell
+  + Smaller than this and the test lacks sufficient **power** to detect relationships
+* For very small expected frequencies, you may want to use Fisher's Exact Test instead
+  + For more on this, see An Adventure in Statistics pgs 442 - 444
+
+## Chi-Squared Test: Observed vs Expected
+* Next, we compare the expected frequencies to our observed frequencies
+* The *&chi;*^2^ test statistic represents the (standardised) difference between the observed and expected frequencies
+  + The bigger *&chi;*^2^ is, the bigger the difference is between our data and what we expect under the null hypothesis
+
+## Chi-Squared: Output
+  
+```{r}
+green_chsq
+```
+
++ The calculated value for *&chi;*^2^ (here, "X-squared") is `r green_chsq$statistic %>% round(2)`
++ The degrees of freedom, which determines the *&chi;*^2^ distribution, is `r green_chsq$parameter %>% round(2)` from which we get...
++ The *p*-value, which represents the probability of getting a test statistic this big if the null hypothesis is in fact true
+  - Here, *p* is very small (`r green_chsq$p.value %>% report.p()`), so pretty unlikely!
+  - We might conclude that the null hypothesis **might not be true**
+
+## IMPORTANT!!!
+
+* We can only test the significance (probability) of the null hypothesis being true
+  + This **does not mean we have evidence for the alternative hypothesis**
+* In other words: Our test tells us that it is unlikely that there is no relationship (small *p*-value under the null hypothesis)
+  + From that we **infer** that maybe there is a relationship
+  + That will only be a sensible thing to infer if we have carefully controlled for all other explanations
+
+## Green Study: What Can We Conclude?
+
+* We wanted to know whether status motives influence "green" purchases
+* Operationalised as whether reading a high-status vs control story was associated with the frequency of green product vs a non-green luxury product choice
+* We found that `r (green_chsq$observed[4]/(green_chsq$observed[4]+green_chsq$observed[2]) * 100) %>% round(2)`% of participants who read the high-status story chose a green car over a more luxurious non-green alternative,while only `r (green_chsq$observed[3]/(green_chsq$observed[1]+green_chsq$observed[3]) * 100) %>% round(2)`% of participants who read the control story made the same choice (&chi;^2^(`r green_chsq$parameter`) = `r green_chsq$statistic %>% round(2)`, *p* `r green_chsq$p.value %>% report.p()`).
+* So, our results suggest that high-status motives are related to how frequently people choose green products
+
+## Lab Reports
+
+* You can choose either the red or green study to write your report on
+  + See [Lab Report Information on Canvas](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0) for more
+* If you choose the green study (Griskevicius et al., 2010), you should use and report the results of *&chi;*^2^
+  + Refer to the original paper for some ideas!
+
+## Analysis for Lab Reports
+
+* Inspect and clean the data
+* Produce descriptives of participants (age, gender)
+* Report observed frequencies and *&chi;*^2^ results for all three product choices
+  + Include at least one figure of the results
+  + Will be covered in depth in the next tutorial and practical!
+  
+## Questions?
