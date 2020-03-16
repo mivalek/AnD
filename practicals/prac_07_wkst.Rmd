@@ -76,7 +76,7 @@ As a reminder, in the original study the researchers showed each participant one
 ### Codebook
 
 ```{r, echo = F}
-read_csv("../data/harm_codebook.csv") %>% 
+read_csv("https://users.sussex.ac.uk/~jm636/harm_codebook.csv") %>% 
   kable() %>% 
   kable_styling()
 ```

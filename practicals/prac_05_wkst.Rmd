@@ -18,7 +18,7 @@ library(kableExtra)
 ```
 
 ```{r data_setup, include = F}
-sync <- read_csv("../data/synchrony_short.csv")
+sync <- read_csv("https://users.sussex.ac.uk/~jm636/synchrony_short.csv")
 
 px_total <- sync %>% nrow()
 
@@ -137,7 +137,7 @@ In the `checking` code chunk, check each variable in the dataset and compare it 
 ### Codebook
 
 ```{r sync_codebook, echo = F}
-sync.cb <- read_csv("../data/synchrony_codebook.csv")
+sync.cb <- read_csv("https://users.sussex.ac.uk/~jm636/synchrony_codebook.csv")
 
 sync.cb %>% 
   kable() %>% 
