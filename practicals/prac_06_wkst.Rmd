@@ -82,7 +82,7 @@ As usual, before beginning any analysis, we will want to take a look at our data
 ## Codebook
 
 ```{r, echo = F}
-read_csv("harm_codebook.csv") %>% 
+read_csv("../data/harm_codebook.csv") %>% 
   kable() %>% 
   kable_styling()
 ```
@@ -340,7 +340,7 @@ We have the same problem here that we had in the tutorial. Specifically, we need
 `r task()`Why is it that there's no point in analysing our existing categorical variables with chi-squared? Look at the variables we have and think about what the analysis would tell us.
 
 ```{r, echo = F}
-read_csv("harm_codebook.csv") %>% 
+read_csv("../data/harm_codebook.csv") %>% 
   kable(caption = "Harm Dataset Codebook") %>% 
   kable_styling()
 ```
