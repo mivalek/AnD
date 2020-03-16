@@ -1,5 +1,5 @@
 ---
-title: "Tutorial 6: Comparing Two Means"
+title: "Tutorial 7: Comparing Two Means"
 author: "Analysing Data"
 ---
 

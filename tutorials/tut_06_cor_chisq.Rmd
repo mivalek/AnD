@@ -1,5 +1,5 @@
 ---
-title: "Tutorial 5: Measures of Association"
+title: "Tutorial 6: Measures of Association"
 author: "Analysing Data"
 ---
 
