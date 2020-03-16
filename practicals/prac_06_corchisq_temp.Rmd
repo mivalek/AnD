@@ -1,0 +1,595 @@
+---
+title: "Practical 6: Measures of Association<br>...with solutions"
+author: "Analysing Data"
+---
+ 
+```{r, echo=F, results='asis'}
+cat("
+<style>
+:root {
+--theme-col: 179, 142, 210;
+--font-col: 67, 75, 117;
+}
+</style>
+")
+```
+
+```{r, rsetup, include=F}
+knitr::opts_chunk$set(comment=NULL, collapse=T, strip.white=F, echo=T,
+    message = F, warning = F, prompt = F, comment = NA, split = F, toggle = F, fig.align = "center")
+knitr::knit_hooks$set(sol = function(before, options, envir){
+  if (before){
+    paste0('<div class="solution">')
+  } else {
+    paste0('</div>')
+  }
+},
+                     toggle = function(before, options, envir){
+  if (options$toggle) {
+    if (before){
+      paste0('<details><summary>Solution</summary>')
+    } else {
+      paste0('</details>')
+    }
+  }
+})
+hook_inline = knitr::knit_hooks$get('inline')
+knitr::knit_hooks$set(
+  inline = function(x) {
+    res = hook_inline(x)
+    if (is.numeric(x)) prettyNum(format(x, scientific=FALSE), big.mark=',') else res
+  })
+```
+ 
+```{r task_fun, echo=FALSE}
+tsk <- s_tsk <- 1 # Task counter
+
+task <- function(x = tsk, headings = tasks_to_headings) {
+  tsk <<- x + 1
+  s_tsk <<- 1
+  return(paste0("\\ \n\n", ifelse(headings, "### ", "**"), "Task ", x, ifelse(headings, "\n\n", ": **")))
+}
+
+subtask <- function(x = tsk - 1, y = s_tsk, headings = tasks_to_headings) {
+  s_tsk <<- y + 1
+  return(paste0("\\ \n\n", ifelse(headings, "#### ", "**"), "Task ", x, ".", y, ifelse(headings, "\n\n", ": **")))
+}
+```
+ 
+```{r plot_theme, include=FALSE}
+library(ggplot2)
+bg_col <- '#fdfdfd'
+default_col <- '#434b75'
+theme_col <- #b38ed2
+complement_col <- colortools::complementary(theme_col, F)[2]
+point_col <- paste0(default_col, '88')
+ 
+my_theme <- cowplot::theme_cowplot() +
+  theme(line = element_line(colour = default_col),
+        plot.background = element_rect(fill = bg_col),
+        panel.background = element_rect(fill = bg_col),
+        text = element_text(colour = default_col),
+        title = element_text(colour = default_col),
+        axis.line = element_line(colour = default_col),
+        axis.ticks = element_line(colour = default_col),
+        axis.text = element_text(colour = default_col),
+        axis.title = element_text(colour = default_col),
+        strip.background = element_rect(fill = default_col, colour = default_col),
+        strip.text = element_text(colour = bg_col)
+  )
+update_geom_defaults("bar", list(fill = bg_col, colour = default_col))
+ggplot2::theme_set(my_theme)
+```
+ 
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(cowplot)
+library(weights)
+library(Hmisc)
+library(colortools)
+knitr::opts_chunk$set(fig.height=4, fig.width=5, fig.align = "center",
+                      message = F, warning = F, toggle = F, sol = T)
+```
+
+This practical will help you practice preparing for, conducting, and reporting correlation and chi-squared analyses in R. Before you start this practical, you should make sure you review the relevant lecture, as this practical assumes you already know what these analyses are and how to interpret the output. You should also use this practical in combination with the tutorial on the same topic.
+
+# Setting Up
+
+For this practical, you will need this worksheet, RStudio, and a new Markdown document. At this point, you should have enough experience with Markdown to make your own document. Remember that you can easily switch between windows with the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) and <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcuts.
+
+`r task()`Open your analysing_data `R` project in RStudio and create a new Markdown file. Since we will be practicing reporting using inline code, we will need Markdown later on. For the tasks, get into the habit of creating new code chunks as you go.
+
+\ 
+
+`r task()`Aside from loading `tidyverse`, we will also be using `Hmisc`, `cowplot`, and `kableExtra`. If you don't have any of these packages installed, do that now using `install.packages("package_name")`. **Remember that installing packages is a one-off thing** so don't put the command that does it in your Markdown. Simply type it into the console and press <kbd>&crarr;\ Enter</kbd>. The `library()` commands should always go in a separate code chunk at the beginning of your Markdown document, so that your code will run correctly.
+
+```{r, eval=F, echo = solution}
+library(tidyverse)
+library(Hmisc)
+library(kableExtra)
+library(cowplot)
+```
+
+\ 
+
+### Data and Design
+
+As usual, we will need some data to work with. Since we put so much work into cleaning it previously, let's use the harm dataset that we have seen previously, from [an actual paper by Swiderska and Küster (2018)](https://journals.sagepub.com/doi/10.1177/0301006618809919). You can find the data from the study at https://raw.githubusercontent.com/mivalek/AnD/master/data/harm_data.csv. You will also need to copy and paste in the code that you wrote from Practical 3 to clean this dataset.
+
+The main idea in this study is that people attribute mental states to someone else to a higher degree if they also perceive them to be able to experience pain. The study created harmed and unharmed versions of human and robot avatars and showed them to participants in an independent-measures design (i.e. each participant only saw one of the four possible avatars). The participants were then asked to rate the avatars on a variety of mental awareness measures, such as consciousness and agency.
+
+**CONTENT WARNING - Facial injury**: The design of this study involved showing participants pictures of photorealistic avatars, either human or robot. These avatars also were either unharmed, or had a facial wound resembling a burn. The images will not be replicated in this practical, but the original paper does contain these images on pg 5 of the linked PDF. This practical will only refer to the experimental manipulation, "harm", in general terms.
+
+`r task()`Read in the data and write or copy (from the Week 3 practical) any code to clean it.
+
+**Hint**: Copy and paste in code that saves something or makes a change to the dataset, ie uses the assignment operator `<-`.
+
+```{r, echo = solution}
+data <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/harm_data.csv")
+
+data <- data %>%
+  filter(Age != "1y") %>% # filter out row with typo in Age
+  mutate(Age = as.numeric(Age), # turn into numeric
+# turn nominal variables into factors, giving them labels
+         ID = factor(ID),
+         Condition = factor(Condition, labels = c("Human_Harmed", "Human_Unharmed",
+                                                  "Robot_Harmed", "Robot_Unharmed")),
+         Humanness = factor(Humanness, labels = c("Human", "Robot")),
+         Harm = factor(Harm, labels = c("Harmed", "Unharmed")),
+         Gender = factor(Gender, labels = c("Male", "Female")))
+
+# Number of px we're about to remove due to outlying/unlikely ages
+too_young <- data %>%
+  filter(Age < 17) %>%
+  nrow()
+too_old <- data %>%
+  filter(Age > 90) %>%
+  nrow()
+
+# remove cases
+data <- data %>% filter(Age > 18 & Age < 90)
+```
+
+\ 
+
+# Data Preparation
+
+As usual, before beginning any analysis, we will want to take a look at our data to make sure it's clean and correct before we proceed. Since we're using a dataset that we've cleaned already, we should be pretty happy with this, but let's have a look again at these variables. The main reason is that you can run tests all day, but if you don't know what the variables you are working with actually mean, that doesn't do you much good!
+
+## Codebook
+
+```{r, echo = F}
+read_csv("harm_codebook.csv") %>% 
+  kable() %>% 
+  kable_styling()
+```
+`r task()` Use the codebook above to check each variable, and make sure you understand how each variable was measured and that your data is coded the same way
+
+**NOTE**: A previous version of the codebook had reversed the labels for `Harm`. Check your code against the corrected codebook here and ensure your data is correctly coded in both the `Harm` and `Condition` variables. If you need to, edit the cleaning code above and read in/clean the dataset again.
+
+\ 
+
+# Correlation
+
+The first of the two analyses we will practice today is bivariate correlation. At the end of our analysis, we want to be able to report the strength and direction of the relationship between any two variables using the correlation coefficient *r*, as well as the associated *p*-value.
+
+## Graphing
+
+Once again, we should graph our data before we jump into running our analysis. Looking at summaries of numbers is good, but there's no substitute for a good graph to help you understand your data.
+
+`r task()`Use `select()` and `pivot_longer` along with `ggplot()` to make multiple histograms, one each for `Pain`, `Experience`, and `Agency`, as below.
+
+**Hint**: See the tutorial for how to do this. If you're not confident using `pivot_longer()`, you can also make these three histograms separately.
+
+```{r, echo = solution}
+data %>% 
+  select(Pain, Experience, Agency) %>% 
+  pivot_longer(everything(), names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(value)) +
+  geom_histogram() +
+  labs(x = "Rating of Mental Abilities", y = "Frequency")+
+  facet_wrap(~variable)
+```
+
+`r subtask()`Before you move on, stop and think about what the histograms are telling you about the distribution of each variable.
+
+<div class="solText">
+We can see that these three variables are each distributed differently. `Agency` is the most symmetrical, so most people thought that the avatars had some agency; very few people thought that the avatars had little to no agency (small bars on the left side of the graph). For `Experience`, opinions were fairly evenly distributed, but with many people saying that the avatars had more experiences. Finally, `Pain` shows a very interesting distribution - most people said that the avatars were in considerable pain (the very tall bar on the right side of the graph). But we can also see that a good number of people said that the avatars weren't experiencing much pain. What happened?
+
+Remember that these are histograms for the whole study - that is, we haven't made separate histograms for different conditions. So, these histograms are showing us people who saw different robot/human and harmed/unharmed conditions all on the same graph. That means we might not be getting the real picture! We'll have to dig a bit deeper into this data to find out what's going on.
+</div>
+
+As we said above, we're particularly interested in the relationship between `Pain` and `Experience`, and between `Pain` and `Agency`, in different conditions. Let's have an overall look at the relationships between these variables with a correlation matrix.
+
+## Correlation Matrix: The Big Picture
+
+`r task()`Create a correlation matrix of `Pain`, `Experience`, and `Agency` using `rcorr()` and save it as `harm.cor`.
+
+**Hint**: Don't forget that you have to change your data into a matrix before you can pipe it into `rcorr()`. [Have a look at the tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#correlation) if you get stuck!
+
+```{r, echo = solution}
+harm.cor <- data %>% 
+  select(Pain, Experience, Agency) %>% 
+  as.matrix() %>% 
+  rcorr()
+```
+
+`r subtask()`Use `$` to get the matrix of correlation coefficients out of `harm.cor` and save it as `harm.cor.r`. Then, turn it into a nicely formatted table rounded to two decimal places, as below
+
+```{r, echo = solution}
+harm.cor.r <- harm.cor$r 
+
+harm.cor.r %>% 
+  kable(caption = "Correlation Matrix", 
+        digits = 2) %>% 
+  kable_styling()
+```
+
+`r subtask()`Have a look at the correlations in the output. What is the strongest correlation? The weakest? Are they positive or negative? What does this mean? Write down your interpretation in your Markdown file.
+
+<div class="solText">
+We can see that we get our three variables listed along both the top and sides of this matrix. Where two variables intersect, we can find the value of the correlation between them. Because this table is mirrored (ie has the same values) above and below the diagonal line, we only need to look at three different values of *r*.
+
+The highest correlation is between Pain and Experience (*r* = .90). This is an extremely strong correlation - almost a perfect one-to-one correspondence between these variables. The weakest correlation is between Pain and Agency (*r* = .72), although this is still quite a strong relationship. The correlation between Experience and Agency was in between (*r* = .78). All three are positive correlations, which means as any one of these variables increases (ie the participant gave higher ratings), the other variables also increased.
+</div>
+
+`r task()`Create a nicely formatted table of the *p*-values for the same correlation matrix, rounding to three decimal places, as below.
+
+```{r, echo = solution}
+harm.cor$P %>% 
+    kable(caption = "Correlation *p*-values",
+          digits = 3) %>% 
+  kable_styling()
+```
+
+`r subtask()`What do the values in this table mean? What do they tell you about the correlation coefficients from the previous table? Write down your interpretation in your Markdown file.
+
+<div class="solText">
+This table is pretty unhelpful. Instead of getting *p*-values to three decimal places, we just have zeros. What happened?
+
+As we will see in a moment, this is because all three of the correlations between variables have a very very small *p*-value. So small, in fact, that when we ask for rounding to three decimal places, we get 0.000 - which R just simplifies to 0. However, remember that *p* is never actually 0, just very very small.
+
+In any case, the value of *p* for the correlations for all three pairs of is smaller than .001. We can conclude from this that it is very unlikely that would get correlations as strong as the ones we have found (or stronger), if the true value of each of these correlations was in fact 0. In other words, all three of these correlations are significant.
+</div>
+
+## Bivariate Correlations
+
+We said above that we were particularly interested in the relationship between `Pain` and both `Experience` and `Agency`. Here we're going to focus down even more and look at only `Pain` and `Experience`.
+
+As a reminder, in the original study the researchers showed each participant one avatar, which could have been one of four possibilities. First, the avatar could have been either a human or robot avatar (`Humanness`). Second, the avatar could have been either harmed or unharmed (`Harm`). So, there were four possible conditions, each representing one of the four possible combinations of `Humanness` and `Harm` - namely, `Human_Unharmed`, `Human_Harmed`, `Robot_Unharmed`, and `Robot_Harmed` [variable `Condition`]. The study hypothesised that participants would rate the avatars more highly on `Experience` - that is, whether the avatar had feelings, desires, etc. - if they were harmed. They also thought that participants would rate the avatars more highly on experience if they thought the avatars were experiencing more pain (`Pain`). 
+
+`r task()`Use `cor.test()` to calculate a correlation between `Pain` and `Experience` and save it as `pain_exp_corr`.
+
+**Hint**: If you are having trouble using pipes, try `$` instead! See the tutorial for more details.
+
+```{r, echo = solution}
+pain_exp_corr <- cor.test(data$Pain, data$Experience, alternative = "two.sided", method = "pearson")
+```
+
+When we run this function, the output is some reasonably easy to read information about the results of our test. We can see here that we have:
+
+* The type of analysis we asked for (Pearson's product-moment correlation) and the variables we used
+* The value of *r* under "sample estimates: cor"
+* The values of *t*, degrees of freedom, and *p*
+* The 95% confidence interval around *r*
+
+`r subtask()`Stop and look at the values that the output has given you. Based on what you have learned from the lecture, write down what you think this result means, and how you could interpret it.
+
+<div class="solText">
+The values of *r* and *p* are the same here as in the correlation matrix above, so we can interpret them the same way. Namely, as participants perceived the avatar to be in more pain, they also rated them as having higher Experience. This was a very strong, positive, and significant relationship.
+
+We can also see that the confidence intervals around the estimated value of *r* are quite narrow. So, if this is one of the 95% of confidence interval that contain the true population value of *r*, then that value is somewhere between .86 and .93.
+</div>
+
+`r subtask()`Create a scatterplot of these two variables to help you understand the correlation. Does this change your interpretation at all?
+
+<div class="solText">
+
+```{r, echo = solution}
+data %>% 
+  ggplot(aes(Pain, Experience)) +
+  geom_point(position = "jitter")
+```
+We can see from this plot that this is a very strong correlation, with a clear positive trend upwards to the right. We might notice that the points are bunched up at the low and high ends of the plot. This indicates that there were a lot of participants who gave similar answers to both the Pain and Experience ratings - that is, if they rated a 7 on one, they tended to rate a 7 on the other, or if they rated 1 on one, they tended to rate 1 on the other. It's a bit strange to see people having such different perceptions - it could be that these ratings are coming from people in different conditions.
+</div>
+
+`r subtask()`Report the results of this correlation analysis and your interpretation in APA style, using inline reporting.
+
+<div class="solText">
+As usual, the following is an example; you should try writing this report in your own words.
+
+<pre><code>
+To investigate the relationship between ratings of pain and experience, we performed a correlation analysis on these two variables. The results showed that there was a very strong positive relationship between them (*r* = &#96;r pain_exp_corr$estimate %>% round(2)&#96;, 95% CI [&#96;r pain_exp_corr$conf.int[1] %>% round(2)&#96;, &#96;r pain_exp_corr$conf.int[2] %>% round(2)&#96;], *p* < .001). 
+</pre></code>
+
+This will be rendered in Markdown as:
+
+To investigate the relationship between ratings of pain and experience, we performed a correlation analysis on these two variables. The results showed that there was a very strong positive relationship between them (*r* = `r pain_exp_corr$estimate %>% round(2)`, 95% CI [`r pain_exp_corr$conf.int[1] %>% round(2)`, `r pain_exp_corr$conf.int[2] %>% round(2)`], *p* < .001). 
+</div>
+
+### Summary
+
+If you've gotten this far and been able to successfully run and interpret the analyses and plots, then well done! You have a good grip on how to perform correlation analyses in R. However, we haven't really answered the research question that we mentioned above: namely, does the relationship between Pain and Experience change depending on experimental condition? The next section will look into the data in more depth to understand this relationship, but this is **optional** if you would prefer to move on to chi-squared instead.
+
+<div class = "solText">
+## Challenge Task: Interactions
+
+`r task()`This series of tasks will take a more in-depth look at the relationship between ratings of Pain and Experience in different experimental conditions.
+
+What we are really looking at here is called an **interaction**. An interaction is when the relationship between two variables changes depending on a third variable. Here, for instance, the relationship between `Pain` and `Experience` may change depending on what condition participants were in (that is, whether they were giving those ratings for a human or robot avatar, and whether that avatar was harmed or unharmed). This is a complex topic that we will return to in second year, when we will learn how to evaluate interactions statistically. You **do not need to about interactions for this module** or for any assessments on this module. However, read on if you're interested in investigating the patterns in the data and practicing your analysis and interpretation skills.
+
+`r subtask()`Create a scatterplot of `Pain` vs `Experience`, with different coloured dots depending on `Harm`, and with separate panels for `Humanness`. What does this tell you about the relationship between `Pain` and `Experience` in different conditions?
+
+**Hint**: Have a look at the Week 4 Practical, task 5.
+
+<div class="solText">
+```{r, echo = solution}
+pain_exp_plot <- data %>%
+  ggplot(aes(x = Pain, y = Experience, colour = Harm)) +
+  geom_point(position = "jitter") +
+  facet_wrap(~Humanness) +
+  theme_cowplot()
+pain_exp_plot
+```
+This plot makes the same scatterplot we saw above, but now we know what condition each dot belongs to, which shows us some interesting patterns. We can see, as we expected, that there seems to be a positive correlation of `Pain` and `Experience` for both human and robot avatars (different panels). This means that overall, as we saw before, participants who thought the avatars were more able to feel pain also thought they had more overall experiences.
+
+However, look at the different colours of dots in the Human vs Robot panels, representing different levels of `Harm`. Let's start on the Human panel. The red dots, representing "harmed", all cluster quite tightly in the upper right. This tells us that the harmed human avatars were almost universally perceived to have the ability to feel pain, and also a strong ability to have other mental experiences. The blue dots, representing "unharmed", are much more spread out, indicating that both the ability to feel pain and to have other mental experiences were not as strong for unharmed human avatars.
+
+Now we can compare this pattern to how participants responded for robot avatars (right panel). For both harmed and unharmed avatars, the dots show a much more scattered pattern than for human avatars, with more ratings in the bottom left corner of the plot (indicating lower ratings on both the `Pain` and `Experience` scales). For unharmed robot avatars particularly, many participants seemed to rate both ability to feel pain and to experience other mental states very low, producing the cluster of blue dots in the bottom left of the plot. This is noticeably different to the way they responded when the robot avatar was harmed (red dots). In this case, the ratings on both scales tended to be higher; but not as high as they were for the human avatar.
+</div>
+
+Overall it seems that there were different patterns of responses in all four combinations of conditions. Let's look into this further.
+
+`r subtask()`Run correlation analyses for `Pain` vs `Experience` separately for each of the four levels of `Condition`. How do the correlation coefficients (i.e. values of *r*) differ in each of the four combinations of condtions? What does can you conclude from this?
+
+**Hint**: Running these analyses will require some problem-solving, and there are a few different ways you could tackle this problem. If you get stuck, try looking at the `formula` options in the help documentation for `cor.test()`.
+
+<div class="solText">
+You can run the four analyses in a few different ways. The first is not very tidyverse, but it'll work, namely: creating four new datasets, each with only one value of `Condition`:
+
+```{r, eval = F}
+data.cond1 <- data %>% 
+  filter(Condition == "Human_Harmed")
+data.cond2 <- data %>% 
+  filter(Condition == "Human_Unharmed")
+data.cond3 <- data %>% 
+  filter(Condition == "Robot_Harmed")
+data.cond4 <- data %>% 
+  filter(Condition == "Robot_Unharmed")
+
+cor.test(data.cond1$Pain, data.cond1$Experience, alternative = "two.sided", method = "pearson")
+cor.test(data.cond2$Pain, data.cond2$Experience, alternative = "two.sided", method = "pearson")
+cor.test(data.cond3$Pain, data.cond3$Experience, alternative = "two.sided", method = "pearson")
+cor.test(data.cond4$Pain, data.cond4$Experience, alternative = "two.sided", method = "pearson")
+```
+
+This works but it's tedious and not very obvious what we're doing, if we come back to this code later. (It would be a good idea, as usual, to comment in your code so that you can remember what you were doing!) However, the following command using a pipe doesn't work, as we've seen before:
+
+```{r, eval = F, echo = T}
+data %>% 
+  filter(Condition == "Human_Unharmed") %>% 
+  cor.test(Pain, Experience, alternative = "two.sided", method = "pearson")
+```
+
+So, is there simpler and more tidyverse way to do this?
+
+It turns out, there is! If you looked at the help documentation for `cor.test()`, you will see that besides the `x`, `y` method of putting data into the function, there's also a `formula` method. The formula comes up in `t.test()` and `lm()` as well, so this is a good chance to use it! The thing that's different about the formula method is that it has an argument where you can tell R which data to use - which means, you can pipe a dataset in. In the help documentation, we can see that the formula we need to use is `~ u + v`, where `u` and `v` are the two variables we want to correlate. Let's try it:
+
+```{r, echo = solution}
+human_harm_cor <- data %>% 
+  filter(Condition == "Human_Harmed") %>% 
+  cor.test(~Pain + Experience, ., alternative = "two.sided", method = "pearson")
+
+human_unharm_cor <-data %>% 
+  filter(Condition == "Human_Unharmed") %>% 
+  cor.test(~Pain + Experience, ., alternative = "two.sided", method = "pearson")
+
+robot_harm_cor <-data %>% 
+  filter(Condition == "Robot_Harmed") %>% 
+  cor.test(~Pain + Experience, ., alternative = "two.sided", method = "pearson")
+
+robot_unharm_cor <-data %>% 
+  filter(Condition == "Robot_Unharmed") %>% 
+  cor.test(~Pain + Experience, ., alternative = "two.sided", method = "pearson")
+
+human_harm_cor
+human_unharm_cor
+robot_harm_cor
+robot_unharm_cor
+```
+
+Note the dot `.`, which is where we told R to pipe in the dataset. This is still a bit repetitive, but it will do for now!
+
+Finally, let's have a look at our results. We can see that indeed, the values of *r* are different in each of the four combinations of condition. For people who rated harmed human avatars, the correlation between pain and experience was `r human_harm_cor$estimate %>% round(2)`, whereas for unharmed human avatars it was `r human_unharm_cor$estimate %>% round(2)`. This is quite a difference, and tells us that the relationship between pain and experience was stronger for unharmed avatars. For comparison, for harmed robot avatars, the correlation between pain and experience was `r robot_harm_cor$estimate %>% round(2)`, whereas for unharmed robot avatars it was `r robot_unharm_cor$estimate %>% round(2)`! So, it seems that for both human and robot avatars, the relationship between pain and experience is stronger in the unharmed rather than harmed condition. This could be because people react differently to harm - some ascribing stronger and others less strong mental states.
+
+Our next step might be to find out whether the mean ratings differed in these conditions...but we'll come back to that next week. There are also more complex analyses we could do with these kinds of designs, but that's a problem for next year! If you are very keen on this sort of thing, you can do the entire analysis again, but for Agency instead of Experience. For now, if you gave this a bash - even if you weren't entirely successful - well done. This is quite a complex way of thinking about data, but it also allows us to ask (and answer) more interesting questions about the way people perceive, think, and behave.
+</div>
+</div>
+
+# Chi-Squared
+
+Our second test of association is the chi-squared test. Unlike *r*, we will use chi-squared on frequency data to find out whether two categorical variables are independent of each other or not.
+
+## Data Preparation
+
+We have the same problem here that we had in the tutorial. Specifically, we need to perform a chi-squared test on categorical data. Here we have five categorical variables, but it's pointless to perform a chi-squared analysis on any of them. So, we'll need to create a categorical variable, as we did in the tutorial, before we can practice with the chi-squared analysis.
+
+`r task()`Why is it that there's no point in analysing our existing categorical variables with chi-squared? Look at the variables we have and think about what the analysis would tell us.
+
+```{r, echo = F}
+read_csv("harm_codebook.csv") %>% 
+  kable(caption = "Harm Dataset Codebook") %>% 
+  kable_styling()
+```
+
+<div class="solText">
+Referring to the codebook, the five categorical variables we have are `ID`, `Condition`, `Humanness`, `Harm`, and `Gender`. ID is not really a variable - it's just a unique identifier for each participant. `Condition` is just a combination of `Humanness` and `Harm`, and therefore has four levels - we have only learned this far about chi-squared with two categories, but in any case this variable is redundant if we have `Humanness` and `Harm` already. We could look at a chi-squared analysis between `Gender` and `Humanness`, or `Gender` and `Harm`, but this would only tell us whether the researchers allocated equal numbers of male and female participants to their experimental conditions.
+
+In short, the primary problem here is that all of the categorical variables are **predictors**, and none of them are **outcomes**. So, performing a chi-squared analysis using them won't tell us anything interesting about our research question.
+</div>
+
+The issue is that all of the outcome variables in our dataset - `Pain`, `Experience`, `Agency`, and `Consciousness`, `Empathy`, and `Attractiveness` - are all continuous rather than categorical variables. However, we saw in the tutorial that we can create a categorical variable out of a continous variable. We'll do this again here using a **median split**, which simply means that we find the middle value in a variable and split the variable in half. Values below the median go in one category (e.g. "low"), and values above the median go in another (e.g. "high"). Since we haven't looked at it much, we'll do this with `Consciousness`.
+
+`r task()`Run the following code to create a new factor variable, `Conc_med`, out of the `Consciousness` variable, and ask for a summary to have a look at it. The general format of the code should look familiar to you. 
+
+See the "What For?" box in the tutorial for more on `ifelse()` if you're interested in how this code works. Don't worry if you don't understand it completely; you just need to understand that the new variable contains a new factor called `Conc_med`, which captures whether participants gave low or high ratings for avatar consciousness.
+
+```{r}
+data <- data %>% 
+  mutate(Conc_med = ifelse(Consciousness < median(Consciousness), "Low", "High"),
+         Conc_med = factor(Conc_med))
+```
+
+<div class = "warn">
+### Median Splits
+
+Changing the way a variable is measured, as we have done with `Consciousness`, above, is not an uncommon practice, but it should be done carefully and thoughtfully. In some cases, splitting at the median (as we have done) is the most sensible option; in other cases, you may want to split at the mean, or at the quartiles. Which you do depends on understanding very clearly what question you asked your participants and what your data means before you do it.
+
+Although the median split is a simple mathematical operation, you should consider carefully whether this is a good idea, including the following points:
+
+1. When you change data from continuous to categorical in this way, you lose detail. For example, in this case, because the median was `r median(data$Consciousness)`, everyone who gave a rating below this was categorised as giving as "low" rating for the consciousness of the avatar. So if Participant gave a 4 but Participant B gave a 1, this distinction was lost. 
+2. People who gave more similar ratings could be in different categories. For example, if Participant A rated consciousness as a 4, they were put in the same category as Participant B who rated 1, but a **different** category from Participant C, who rated 5. So, Participants A (low) and C (high) actually rated consciousness more similarly than A and B did. 
+3. Is it really a good idea to analyse data that your participants haven't actually given you? That is, you can't be sure whether, if you had actually asked your participants, "Would you say that this avatar has a high or low level of consciousness?" they would respond the same way as your median split has categorised them.
+
+Altogether, it's generally best practice to analyse the data you actually collected. However, you will see median splits reported in papers, and it's useful for us here to practice chi-squared specifically, so we'll make use of it, cautiously.
+</div>
+
+\ 
+
+Before we move on, we should get some summaries of our data to help us get an idea of what's going on.
+
+`r task()`Create contingency (frequency) tables of `Conc_med`, split up by `Humanness`, and split up by `Harm`. Save them into new objects, e.g. `conc_human_tab` and `conc_harm_tab`. Then, create nicely formatted versions of each using `kable`.
+
+
+```{r, echo = solution}
+conc_human_tab <- data %>%
+  select(Conc_med, Humanness) %>% 
+  group_by(Humanness) %>% 
+  table() 
+
+conc_human_tab %>% 
+  kable(caption = "Consciousness by Avatar Humanness") %>% 
+  kable_styling()
+
+conc_harm_tab <- data %>%
+  select(Conc_med, Harm) %>% 
+  group_by(Harm) %>% 
+  table() 
+
+conc_harm_tab %>% 
+  kable(caption = "Consciousness by Avatar Harm") %>% 
+  kable_styling()
+```
+<div class="solText">
+Both these tables give us some interesting information. Unsurprisingly, it looks like participants gave higher ratings of consciousness to humans than to robots. Also, as the original paper had hypothesized, when avatars were harmed, they were more likely to have higher levels of consciousness attributed to them. 
+</div>
+
+## Graphing
+
+As in the tutorial, it's a good idea to visualise your data besides just looking at the numbers. (It's also good practice for your lab report!).
+
+`r task()`Create two bar graphs representing the counts in the two tables above (ie `Conc_med` vs `Humanness` and `Conc_med` vs `Harm`).
+
+**Hints:**
+
+* In `aes()`, use `fill = variable_name` to split up the bars on the x-axis by that variable
+* In your geom function, use `position = "dodge"` to put the bars side by side
+  + You can also try leaving this out to see what happens!
+* Use `labs()` to rename the labels informatively.
+* Use `scale_fill_manual(name = "...", values = c(...))` to change the legend title and the colours of the bars. 
+* Use a nice theme (hint: cows are very stylish!)
+
+
+```{r, echo = solution}
+data %>% 
+  ggplot(aes(x = Humanness, fill = Conc_med)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Avatar Humanness", y = "Frequency") +
+  scale_fill_manual(name = "Consciousness", values = c("light grey", "dark grey")) +
+  theme_cowplot()
+
+data %>% 
+  ggplot(aes(x = Harm, fill = Conc_med)) +
+  geom_bar(position = "dodge") +
+  labs(x = "Avatar Harm", y = "Frequency") +
+  scale_fill_manual(name = "Consciousness", values = c("light grey", "dark grey")) +
+  theme_cowplot()
+```
+<div class="solText">
+We can now clearly see the pattern that the counts were telling us earlier. The result for Humanness is particularly striking - almost a perfectly opposite pattern for humans vs robots. Again, though, this isn't particularly surprising, since what we're measuring with `Conc_med` is whether participants thought that the avatar had high or low levels of consciousness. 
+
+The pattern for harm is similar, although less strongly divided. In general (remember, we're looking at both humans and robots together), harmed avatars were percieved to have higher levels of consciousness than unharmed avatars. 
+</div>
+
+## Analysis with `chisq.test()`
+
+Now that we know what the general pattern of the data looks like, we can run our statistical analysis to find out whether the counts in different categories are different enough to believe that there may be an association between them.
+
+`r task()`Use the contingency tables you created above to run two chi-squared tests and save the output for each in a new object.
+
+```{r, echo = solution}
+conc_human_chisq <- chisq.test(conc_human_tab)
+
+conc_harm_chisq <- chisq.test(conc_harm_tab)
+```
+
+As we might have suspected from the graph, our results show that it's very unlikely that the pattern of an avatar's perceived consciousness (high vs low) is independent from its humanness or level of harm. 
+
+`r subtask()`Use subsetting to get a table of expected frequencies and format it nicely for both analyses. Have we met the assumptions for the chi-squared test?
+
+```{r, echo = solution}
+conc_harm_chisq$expected %>% 
+  kable(caption = "Expected Frequencies", digits = 2) %>% 
+  kable_styling()
+
+conc_human_chisq$expected %>% 
+  kable(caption = "Expected Frequencies", digits = 2) %>% 
+  kable_styling()
+
+# The assumption that all expected frequencies are greater than 5 has been met - all's well!
+```
+
+To complete our analysis, we need to report our results properly. This not only means writing down our interpretation, but also formally reporting the results of our analysis. As we've said before, it's very useful to do this using inline code.
+
+`r subtask()`Report the results of both chi-squared analyses using inline code. Refer to the tutorial for examples of phrasing and inline code, but try writing the text yourself.
+
+**Hint**: You can use `str()` to remind yourself of what's stored in the output.
+
+<div class="solText">
+<pre><code>
+We performed two chi-squared analyses to investigate whether rating of consciousness (high vs low) was associated with either humanness are harm. First, there was a significant association between humanness and consciousness, *&chi;*^2^(&#96;r conc_human_chisq$parameter&#96;) = &#96;r conc_human_chisq$statistic %>% round(2)&#96;, *p* < .001. There was also a significant association between harm and consciousnessness, *&chi;*^2^(&#96;r conc_harm_chisq$parameter&#96;) = &#96;r conc_harm_chisq$statistic %>% round(2)&#96;, *p* = &#96;r conc_harm_chisq$p.value %>% round(3)&#96;.
+</code></pre>
+
+Which should appear in Markdown as:
+
+We performed two chi-squared analyses to investigate whether rating of consciousness (high vs low) was associated with either humanness are harm. First, there was a significant association between humanness and consciousness, *&chi;*^2^(`r conc_human_chisq$parameter`) = `r conc_human_chisq$statistic %>% round(2)`, *p* < .001. There was also a significant association between harm and consciousnessness, *&chi;*^2^(`r conc_harm_chisq$parameter`) = `r conc_harm_chisq$statistic %>% round(2)`, *p* = `r conc_harm_chisq$p.value %>% rd(.,3)`.
+</div>
+
+\ 
+
+# Summary
+
+Well done! You are making excellent progress with your analysis skills in R. You can use this practical and the accompanying tutorial as a template for the analysis you should do and report in your lab report, if you are writing about the green study. If you are writing about the red study, you should instead use next week's tutorial and practical, covering *t*-tests
+
+In sum, we've practiced the following tasks:
+
+* How to prepare and visualise data for correlation and chi-squared analyses
+* How to run these analyses, read the output, and store them as `htest` objects
+* How to use the subsetting operator `$` to easily report results
+* How to interpret the statistical results of these tests in real-world terms
+
+\ 
+
+<font size="+3">**Good job!**</font>
+
+That's all for today. See you soon!
+
+\ 
+
+\ 
+
+\ 
+
+

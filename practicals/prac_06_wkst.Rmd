@@ -1,0 +1,603 @@
+---
+title: "Practical 5 - Data Inspection Revision"
+author: "Analysing data"
+---
+
+```{r setup_how_to_knit, include=F, eval=F}
+remotes::install_github("mivalek/teachR")
+teachR::make.sheet("[path to file]/ad_practical03.Rmd", "and", toc_depth = 3, tasks_to_headings = T)
+teachR::make.sheet("[path to file]/ad_practical03.Rmd", "and", toc_depth = 3, tasks_to_headings = T, solution = T)
+library(english)
+```
+
+```{r setup_wkst, include = F}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+library(tidyverse)
+library(cowplot)
+library(kableExtra)
+library(Hmisc)
+```
+
+```{r data_setup, include = F}
+harm <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/harm_data.csv")
+# inspect chunk
+
+harm <- harm %>%
+  filter(Age != "1y") %>% # filter out row with typo in Age
+  mutate(Age = as.numeric(Age), # turn into numeric
+# turn nominal variables into factors, giving them labels
+         ID = factor(ID),
+         Condition = factor(Condition, labels = c("Human_Unharmed", "Human_Harmed",
+                                                  "Robot_Unharmed", "Robot_Harmed")),
+         Humanness = factor(Humanness, labels = c("Human", "Robot")),
+         Harm = factor(Harm, labels = c("Unharmed", "Harmed")),
+         Gender = factor(Gender, labels = c("Male", "Female")))
+
+# Number of ppts we're about to remove due to outlying/unlikely ages
+too_young <- harm %>%
+  filter(Age < 17) %>%
+  nrow()
+too_old <- harm %>%
+  filter(Age > 90) %>%
+  nrow()
+
+# remove cases
+harm <- harm %>% filter(Age > 18 & Age < 90)
+# descriptives chunk
+
+# descriptives of Age
+age_desc <- harm %>%
+  summarise(mean = mean(Age),
+            sd = sd(Age),
+            min = min(Age),
+            max = max(Age)) %>%
+  modify(round, 2)
+
+# Ns + Age breakdown by gender
+gender_desc <- harm %>%
+  mutate(Gender = fct_explicit_na(Gender)) %>%
+  group_by(Gender) %>%
+  summarise(n = n(),
+            perc = n()/nrow(harm) * 100,
+            age_mean = mean(Age),
+            age_sd = sd(Age))
+
+# descriptives of measured variables by type
+type_desc <- harm %>%
+  group_by(Humanness) %>%
+  summarise(n = n(),
+            pain_m = mean(Pain),
+            exp_m = mean(Experience),
+            agency_m = mean(Agency),
+            consc_m = mean(Consciousness))
+
+# ... and by type for Unharmed avatars only
+unharm_desc <- harm %>%
+  filter(Harm == "Unharmed") %>%
+  group_by(Humanness) %>%
+  summarise(n = n(),
+            attr_m = mean(Attractiveness),
+            emp_m = mean(Empathy))
+```
+
+
+## Overview
+
+Today's practical worksheet gives you more practice with preparing, visualising, and analysing data for correlation and chi-squared tests. If you are planning to write your lab report on the green study, the chi-square 
+
+### Key steps in data inspection
+
+- Setup
+  + Code chunk options, load libraries, read in the data
+- Data checking
+  + Setting/correcting data types and errors
+- Data cleaning
+  + Removing strange or improbable values
+- Descriptives
+  + Creating tables and summaries
+- Visualisations
+  + Creating plots for inspection and presentation
+- Write-up
+  + Document what you have done and learned in a report
+
+### Today's example
+
+The data for today are from the paper ["The effect of interpersonal synchrony with a robot on likeability and social motivation"](https://psyarxiv.com/q9ku8/) by Henschel and Cross (2018). In this study, participants were asked to follow a rhythmically moving target with a pen on a tablet, while a robot named Pepper did the same task next to them. Pepper either moved at the same speed as the participant (in sync) or about 2.5 faster (out of sync). The study aimed to find out whether people would feel more positively towards Pepper when she was synchronised with them than when she wasn't, on a variety of different measures.
+
+The data we will use are a bit cleaned up, with some variables removed. You can find the entire, unedited dataset on the [Open Science Framework (OSF) page for this study](https://osf.io/q9d75/).
+
+## Setup
+
+### Getting Started
+
+As usual, make sure you do the following before you can start:
+
+- Log into Canvas and OneDrive
+- Download the Markdown file from the Week 5 page on Canvas and save it in the `r_docs` folder in your project folder
+- Open RStudio and your `analysing_data` project file
+- Open the Markdown file to do your work in.
+  + Unlike previous Markdown documents, this one is meant to look like a report when you knit it - so all instructions/information will be in this worksheet.
+
+`r task()`
+
+Before you do anything else, you should decide how you want the code in your document to be dealt with **by default**. You can review code chunk options in the [Week 2 practical](https://mivalek.github.io/adata/prac/prac_02_wkst.html#rmd_code_chunks). As a reminder, `echo = TRUE` means that the code will be displayed by default, unless you explicitly change it to `FALSE` for any given code chunk. There are rarely any reasons to show your code in the write up so normally, you would change the option to `FALSE` before generating the final version of your report. `warning = FALSE` and `message = FALSE` mean that any warnings/messages given by functions will not be displayed in the final document. It is very important to be aware of any warnings and know what they mean but they are for you, the analyst, not for the reader.
+
+Use the `setup` code chunk to set any global code chunk options if you would like. Normally, you would want to hide both this chunk and its output from the final document. You can do it by adding `, include=FALSE` right after the `{r setup` bit so that it reads `{r setup, include=FALSE}`.
+
+```{r setup, eval = F, echo = solution, sol = T}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+```
+
+`r task()`
+
+It's always useful to have a code chunk where you load all the packages you think you might need. If you decide to use another one later, you can come back here and add it. For now, in the `packages` code chunk, write code to load `tidyverse`, `kableExtra`, and `cowplot`. 
+
+<div class = "warn">
+Of these three packages, only `tidyverse` is necesary to complete the tasks in this practical, but you should use all three for your reports. If you are having trouble installing or loading any packages, make sure you get help with this as soon as possible so you can practice with and use these packages for your report. You can get help by coming to drop-in sessions or posting your questions on Discussions on Canvas. </div>
+
+```{r packages, eval = F, echo = solution, sol = T}
+library(tidyverse)
+library(cowplot)
+library(kableExtra)
+```
+
+`r task()`
+
+In the `read_in` code chunk, write code to load in the data from the following link: [http://users.sussex.ac.uk/~jm636/synchrony_short.csv]. It's also a good idea to view the dataset to make sure it's read in properly.
+
+```{r read_in, eval = F, echo = solution, sol = T}
+
+```
+
+## Data checking
+
+Before we can do anything with our data, a critical first step is to make sure that the data we have is what we think we should have. What does this mean? For example, numbers should be numbers, factors should be factors with correct labels, etc. Because R is smart, but not very clever, it will do its best to read in the data sensibly, but it doesn't always do this the way we want, or expect. It's our job to check the class of each variable and what's in our dataset before we dive into cleaning and describing.
+
+To do this, we also need to know what we expect our data to look like. This is easier if we've designed the study and collected the data ourselves, although it's always a good idea to keep clear notes about how we operationalised our variables! Otherwise, we'll need a codebook to compare to. Our current dataset is someone else's data, so a codebook is provided for you below. Codebooks usually contain the name of the variable, how it was measured, and information about how to interpret it - for example, how people were allocated to groups, or what question they were asked.
+
+`r task()`
+
+In the `checking` code chunk, check each variable in the dataset and compare it to the codebook. If the dataset and the codebook don't match, make changes to the dataset until it does. This may including:
+
+* Removing errors that are causing variables to be read as the wrong class
+* Checking/changing variable types (e.g. from character to number, from number to factor)
+* Preparing all variables, including adding labels to factors
+
+**Hint:** For help with data checking and cleaning, see the [Week 3 practical](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html#first_glance).
+
+### Codebook
+
+```{r sync_codebook, echo = F}
+sync.cb <- read_csv("../data/synchrony_codebook.csv")
+
+sync.cb %>% 
+  kable() %>% 
+  kable_styling()
+```
+
+```{r checking, eval = F, echo = solution, sol = T}
+#If you didn't already above, get a look at each variable using either or (preferably) both commands.
+sync %>% str()
+sync %>% summary()
+
+# First, age is a character again. (How does this keep happening?) 
+# We can fix this the same way we did before.
+#See the note at the end for why I pickd 300!
+
+sync %>% 
+  pull(Age) %>% 
+  table()
+
+sync <- sync %>% 
+  mutate(Age = recode(Age, "3p" = "300"),
+         Age = as.numeric(Age))
+
+# Next, our factors have been read in as numbers. 
+# Let's give them proper codes as well, based on the codebook.
+#Remember that R will apply the labels in ascending numeric order.
+
+sync <- sync %>% 
+  mutate(Px = factor(Px),
+         Gender = factor(Gender, labels = c("Male", "Female")),
+         condition = factor(condition, labels = c("Synchrony", "Asynchrony")))
+
+# For later use, let's record the number of people who participated to begin with
+# before we make any other changes/removals.
+
+px_total <- sync %>% nrow()
+```
+
+<!-- solution
+<div class = "warn">
+You might wonder what to do with the ambiguous age of "3p" in the dataset. On the one hand, it seems likely that this is a mistyping of 30 (since "p" and "0" are right next to each other). If we had the original data, for instance if participants had written their responses on a paper form, we could go back and check this typo, and correct it to the right number. Since we don't have that information available right now, it's better to change this to an "improbable" age (e.g. 300) so that it will be removed in the next step.
+</div>
+-->
+
+## Data cleaning
+
+Once we are sure that R has understood our data correctly, we can move onto data cleaning. Here, we are inspecting our data for values that don't make sense in the context of the study. We've often used the example of participant age, where we removed people who reported ages below 18 (for ethical reasons) or above 99 (because these are unlikely to be real). As another example, if we gave our participants a rating scale of 1 to 5, we should check that all their responses are between 1 and 5, because anything else will be an error. To R, these are just numbers like any other numbers; it's up to us to decide what we will and won't accept depending on the question we've asked participants to answer.
+
+`r task()`
+
+In the `cleaning` code chunk, inspect each variable to make sure that they are all correct with reference to the codebook above. If you find any errors or improbable values, clean them from your dataset to produce a final, inspected dataset ready to describe. This may include:
+
+* Removing or correcting improbable/impossible numeric values, including errors/typos
+* Think about whether these strange values are:
+  - A matter of ethics (e.g. age), in which case we must remove someone if we can't be sure of their age
+  - A matter of missing data (e.g. wrong/strange values on rating scales), in which case we could replace individual values with NAs. **HINT:** try `?na_if` for this, or use `recode` as we've done before.
+* Checking for NAs and removing participants with too much missing data
+
+```{r cleaning, sol = T, echo = solution, eval = F}
+# Let's take a closer look at the summaries of each of our variables
+# then, we can compare what we have to the codebook
+
+sync %>% summary()
+
+# Looking at the min and max value of our variables
+# we can see that we have improbable values in Age 
+# and impossible values in nars3
+# We also have NAs that we should have a look at.
+
+sync %>% 
+  pull(Age) %>% 
+  table()
+
+# It seems we have a couple improbable values in Age. 
+# Let's keep only the sensible ones. 
+#Don't forget to save the number you will remove before you do it!
+
+age_removed <- sync %>% filter(Age > 99) %>% nrow()
+
+sync <- sync %>% 
+  filter(Age < 100)
+
+# Let's do the same for nars3 now
+# we know the max possible score on this subscale is 15 (from the codebook) 
+# so we should remove any values above that. 
+# Here, there's no ethical problem with keeping this value, like there is with age
+# so instead, we could replace the strange value with an NA
+# and keep the rest of the participant's data.
+
+# Using recode()
+sync <- sync %>% 
+  mutate(nars3 = recode(nars3, 25 = "NA"))
+
+# Using na_if()
+sync <- sync %>% 
+  mutate(nars3 = na_if(nars3, 25))
+
+# We should also look into those NAs and remove people who didn't answer any of our questions. 
+# We can see there are no NAs in the demographic information
+# but there are some in our measures of interest, of which there are 6.
+# So, we should remove anyone who has 5-6 NAs.
+
+sync %>% is.na() %>% rowSums()
+
+# A few people have 1 NA but that's okay. 
+# Some have 6 so let's remove them, 
+# and save how many we'll remove before we do so.
+
+na_removed <- sync %>% filter(rowSums(is.na(sync)) > 5) %>% nrow()
+
+sync <- sync %>% 
+  filter(rowSums(is.na(sync)) < 6)
+
+```
+
+## Descriptives
+
+Once we are confident that the data we have are correct, we can start calculating some summaries to describe our data. It's useful to look at the descriptive statistics for every single variable to get a better feel for it. This is also a good time to prepare objects/tibbles you'll use for write-up and tables. 
+
+`r task()`
+
+In the `descriptives` code chunk, complete the code to create four new summary tables:
+
+* `age_desc`, which contains the overall mean, sd, min, and max of the participants' ages
+* `exp_desc`, which groups the data by `Gender` and `condition` and then counts the number of participants and calculates their mean and sd of age
+* `rate_desc`, which which groups the data by `Gender` and `condition` and then calculates the mean and sd of each of the three opinion scales (`liking`, `anth`, and `perc.int`)
+* `nars_desc`, which which groups the data by `Gender` and `condition` and then calculates the mean and sd of each of the three opinion scales (`nars1`, `nars2`, and `nars3`)
+
+```{r}
+rate_desc <- harm %>% 
+  filter(is.na(Gender) == FALSE) %>% 
+  group_by(Gender, Condition) %>%
+  summarise(
+    n = n(),
+    pain_m = mean(Pain, na.rm = T),
+    pain_sd = sd(Pain, na.rm = T),
+    exp_m = mean(Experience, na.rm = T),
+    exp_sd = sd(Experience, na.rm = T),
+    agency_m = mean(Agency, na.rm = T),
+    agency_sd = sd(Agency, na.rm = T)
+  )
+
+harm %>% 
+  filter(is.na(Gender) == FALSE) %>%
+  select(Gender, Harm) %>% 
+  group_by(Gender) %>% 
+  table()
+
+harm %>% 
+  filter(is.na(Gender) == FALSE) %>%
+  select(Gender, Humanness) %>% 
+  group_by(Gender) %>% 
+  table()
+
+# Hint: don't forget to turn into matrix first!!
+
+harm %>% 
+  filter(is.na(Gender) == FALSE) %>%
+  select(Pain, Experience, Agency, Consciousness, Empathy, Attractiveness) %>% 
+  as.matrix() %>% 
+  rcorr()
+
+harm %>%
+  ggplot(aes(x = Pain, y = Experience, colour = Harm)) +
+  geom_point(position = "jitter") +
+  facet_wrap(~Humanness) +
+  theme_bw()
+
+harm %>%
+  ggplot(aes(x = Pain, y = Agency, colour = Harm)) +
+  geom_point(position = "jitter") +
+  facet_wrap(~Humanness) +
+  theme_bw()
+
+
+
+harm %>% 
+  filter(Condition == "Robot_Harmed") %>%  
+  cor.test(~ Pain + Agency, ., alternative = "two.sided", method = "pearson")
+
+cor.test(~ Pain + Agency, ., alternative = "two.sided", method = "pearson")
+```
+
+```{r}
+pairs(harm[,7:10], pch = 19)
+```
+
+
+```{r descriptives, sol = T, echo = solution}
+
+
+age_desc <- sync %>% 
+  summarise(
+    mean_age = mean(Age),
+    sd_age = sd(Age),
+    min_age = min(Age),
+    max_age = max(Age)
+  )
+
+exp_desc <- sync %>% 
+  group_by(Gender, condition) %>% 
+  summarise(
+     n = n(),
+    mean_age = mean(Age),
+    sd_age = sd(Age)
+  )
+
+rate_desc <- sync %>% 
+  group_by(Gender, condition) %>% 
+  summarise(
+    mean_like = mean(liking, na.rm = T),
+    sd_like = sd(liking, na.rm = T),
+    mean_anth = mean(anth, na.rm = T),
+    sd_anth = sd(anth, na.rm = T),
+    mean_int = mean(perc.int, na.rm = T),
+    sd_int = sd(perc.int, na.rm = T)
+  )
+
+nars_desc <- sync %>% 
+  group_by(Gender, condition) %>% 
+  summarise(
+    mean_nars1 = mean(nars1, na.rm = T),
+    sd_nars1 = sd(nars1, na.rm = T),
+    mean_nars2 = mean(nars2, na.rm = T),
+    sd_nars2 = sd(nars2, na.rm = T),
+    mean_nars3 = mean(nars3, na.rm = T),
+    sd_nars3 = sd(nars3, na.rm = T)
+  )
+
+```
+
+## Visualisations
+
+For many people, it's easier to understand patterns visually rather than looking at numbers. Alongside your descriptives tables, it's always a good idea to create plots of your data. Some of these plots can be simple and not very nicely formatted since you only use them for analysing/checking purposes. In this same code chunk, though, you can also create the plots that you will actually include in your final knitted report.**Only include visualisations in the report itself if they add something of value to the body text or if they communicate information more concisely than words/tables.**
+
+`r task()`
+
+In the `visualisations` code chunk, complete the code to create the following:
+
+* Histograms of all continuous variables (two examples for `liking` and `nars` below)
+* A nicely labeled scatterplot of `liking` and `nars1` (third example below)
+* A nicely labeled scatterplot of `liking` and `nars1`, split up by `condition` (last example below)
+
+```{r visualisations, echo = solution, sol = T}
+
+# Example histograms of nars1 and liking
+sync %>% 
+  ggplot(aes(nars1)) +
+  geom_histogram()
+
+sync %>% 
+  ggplot(aes(liking)) +
+  geom_histogram()
+
+# Scatterplot of liking vs nars1
+sync %>% 
+  ggplot(aes(liking, nars1)) +
+  geom_point(position = "jitter") + # lets us see overlapping points
+  labs(x = "Rating of Liking", y = "Total Score on NARS subscale 1")
+
+# Scatterplot of liking vs nars1 by condition
+sync %>% 
+  ggplot(aes(liking, nars1, colour = condition)) +
+  geom_point(position = "jitter", ) + # lets us see overlapping points
+  labs(x = "Mean Rating of Liking", y = "Total Score on NARS subscale 1")
+
+```
+
+`r subtask()`
+
+**Challenge**: Create a plot of the **means** of `liking`, split up by `Gender` and with `condition` in separate plots, as below. Try changing the shape and fill of the points if you like as well. 
+
+Hint: look into `facet_wrap()`!
+
+Some helpful websites:
+
+* [Shapes and colours](http://www.sthda.com/english/wiki/ggplot2-point-shapes)
+* [Shape options](http://sape.inf.usi.ch/quick-reference/ggplot2/shape)
+
+```{r challenge_plot, echo = solution, sol = T}
+
+liking_mean_plot <- sync %>% 
+  ggplot(aes(x = Gender, y = liking)) + # set the variables on x and y
+  geom_point(stat = "summary", # tells R it needs to calculate a value for the points
+             fun.y = "mean", # tells R how to do that calculation
+             size = 3, # choose the size of the points
+             shape = 23, # choose the shape of the points - here, a diamond
+             fill = "blue") + # choose the fill colour for the diamond points
+  facet_wrap(~condition) + # get separate plots for condition
+  labs(x = "Participant Gender", y = "Ratings of Liking")
+
+liking_mean_plot
+
+```
+
+
+## Write-Up
+
+After all that work, only the write-up will actually appear in your knitted document. The write-up should succinctly summarise anything you did to clean the data, and present the key pieces of information describing your participants and the general pattern of results.
+
+`r task()`
+
+Complete each section of the write-up in the Markdown report document as follows. You should use inline code for any reporting of numbers in your text.
+
+**Hint:** Have a look at the example write-ups from previous practical Markdown documents for the sort of thing you should include. 
+
+**IMPORTANT**: You must rephrase any example write-up text in your own words! Everything you write in your reports must be unique to you. Make sure you review the [Misconduct Information on Canvas ](https://canvas.sussex.ac.uk/courses/9242/pages/assessment-and-misconduct-information) and [Academic Integrity on SkillsHub](http://www.sussex.ac.uk/skillshub/?id=287) for more information.
+
+`r subtask()`
+
+Complete your Method: Participants section by including:
+
+* The number of people who participated in the experiment initially
+* The mean, standard deviation, and range of the participants' ages
+* How many people of each gender there were
+* How many people you removed, and for what reason(s)
+* The final number of people whose data was included in your results
+* A table of participant descriptives by gender and experimental condition, like the one below
+
+<!-- solution
+<div class = "warn">
+Remember that this and the following writeup "solutions" are just examples of what you could say. Do not just copy and paste this text and change a few words - **that is still plagiarism!** You **must** write in your own words, both in this practice report and in your lab report assessment.
+</div>
+
+You might notice that the following example writeup chooses different numbers to present, for example giving the total who participated as well as how many were removed and finally included in the analysis. This isn't an error or inconsistency - instead, it's to demonstrate that different researchers will present the same information in different ways. Even within APA guidelines, there are no strict rules or checklists about what and how to report in sections like these. The most important thing to remember is that you should report, as succinctly as possible, all the key information about what decisions you made so your reader can understand and evaluate your results.
+
+<pre>
+<code>
+### Method
+
+#### Participants
+
+The study initially recruited &#96;r px_total&#96; participants (*M*~age~ = &#96;r age_desc %>% pull(mean_age) %>% round(2)&#96;, *SD*~age~ = &#96;r age_desc %>% pull(sd_age) %>% round(2)&#96;, range = &#96;r age_desc %>% pull(min_age)&#96; - &#96;r age_desc %>% pull(max_age)&#96;). Participants came to the lab and participated in the experiment in person. After testing concluded, data from &#96;r age_removed&#96; participants were excluded due to improbable reported ages, and a further &#96;r na_removed&#96; participants were removed due to refusing to respond to the rating scale questions. As a result, &#96;r sync %>% nrow()&#96; participants were included in the following analyses. Table 1 shows the number and age of participants in the two experimental conditions, broken down by gender.
+
+</code>
+</pre>
+
+The R Markdown above will appear as:
+
+#### Method
+
+##### Participants
+
+The study initially recruited `r px_total` participants (*M*~age~ = `r age_desc %>% pull(mean_age) %>% round(2)`, *SD*~age~ = `r age_desc %>% pull(sd_age) %>% round(2)`, range = `r age_desc %>% pull(min_age)` - `r age_desc %>% pull(max_age)`). Participants came to the lab and participated in the experiment in person. After testing concluded, data from `r age_removed` participants were excluded due to improbable reported ages, and a further `r na_removed` participants were removed due to refusing to respond to the rating scale questions. As a result, `r sync %>% nrow()` participants were included in the following analyses. Table 1 shows the number and age of participants in the two experimental conditions, broken down by gender. -->
+
+```{r table1, echo = solution, sol = T}
+
+exp_desc %>% 
+  kable(caption = "Summary of Participant Demographics by Experimental Condition",
+        col.names = c("Gender", "Condition", "Count", "*M*~age~", "*SD*~age~"),
+        digits = 2) %>% 
+  kable_styling()
+
+```
+
+`r subtask()`
+
+Complete your Method: Design section with a written description of all of the non-demographic variables in the codebook in your own words, including:
+
+* Whether each variable was a factor, a rating, etc.
+* How it was measured, such as its levels (for factors) or total possible score (for ratings)
+* How to interpret each variable, such as what a high/low score means
+
+<!-- solution
+
+#### Design
+
+Participants were randomly allocated to one of two experimental conditions. In the synchrony condition, they drew in sync with Pepper; in the asynchrony condition, they drew approximately 2.5 times faster than Pepper. After the drawing task, participants completed three ratings scales about their opinions of Pepper, all on Likert scales of 1 - 5 where a higher score indicted more positive opinions. These three scales captured how likable, human-like, and intelligent the participant percieved Pepper to be. Finally, participants also completed the Negative Attitudes to Robots Scale (NARS), also measured on a Likert scales of 1 - 5. The three NARS subscales had total possible scores of 30, 25, and 15 respectively, with a higher score indicating a more negative attitude towards robots for all three.
+
+<div class = "warn">
+Some of this information, such as which scales were used and how they were measured, you might typically put in a "Materials" section instead of Design. To keep things simple for practice (and avoid having to completely too many sections!), we'll just summarise in Design for now. In the future, once we start working on analyses, we can use the Design section to present our operationalised variables so the reader can understand our statistical analysis.
+</div>
+-->
+
+`r subtask()`
+
+Complete the Results: Descriptives section by including:
+
+* A written description of the patterns of results that you observed for the ratings of Pepper in `rate_desc` and NARS results in `nars_desc`
+* Nicely formatted versions of those tables, like the examples below
+* If you created it in the challenge task above, you could also include a nicely formatted figure presenting the means of `liking` by gender and condition
+
+<!-- solution
+
+#### Results
+
+##### Descriptives
+
+Participants' ratings of liking, anthropomorphism, and perceived intelligence for Pepper were analysed by condition and by gender. As Table 2 shows, means for each rating were very similar between genders and between conditions. Overall, there were very minimal differences between synchrony and asynchrony experimental conditions; but female participants tended to rate Pepper slightly higher on all three ratings than male participants. -->
+
+```{r like_table, echo = solution, sol = T}
+rate_desc %>% 
+  kable(caption = "*Table 2* Summary of mean ratings by gender and condition",
+        col.names = c("Gender", "Condition", "*M*~liking~", "*SD*~liking~", "*M*~anth~", "*SD*~anth~", "*M*~intelligence~", "*SD*~intelligence~"),
+        digits = 2) %>% 
+  kable_styling()
+```
+
+<!-- solution
+
+Similarly, participants' total score on each of the Negative Attitude to Robots Scale subscales were analysed by condition and gender. As Table 3 shows, female participants tended to have higher mean scores on the first and second NARS subscales than males, indicated slightly higher average negativity toward robots, with no difference between synchrony conditions. However, on the third NARS subscale, males in the asynchrony condition scored noticeably higher than any other group. -->
+
+```{r nars_table, echo = solution, sol = T}
+
+# This example shows a different way to present these tables, using grouped columns
+# Neither is right or wrong - whichever looks best or makes sense to you
+# See http://haozhu233.github.io/kableExtra/awesome_table_in_html.html#grouped_columns__rows for more examples
+
+nars_desc %>% 
+  kable(caption = "*Table 3* Summary of mean ratings by gender and condition",
+        col.names = c("Gender", "Condition", "*M*", "*SD*", "*M*", "*SD*","*M*", "*SD*"),
+        digits = 2) %>% 
+  kable_styling() %>% 
+  add_header_above(c(" " = 2, "NARS 1" = 2, "NARS 2" = 2, "NARS 3" = 2))
+```
+
+`r task()`
+
+Once your analysis and write-up is complete, knit your document and admire all of your good work!
+
+\ 
+
+This week we've revised every step of data preparation and inspection, from the moment you get the dataset till you're ready to analyse. Once you've got this far, you're well on your way to mastering the core skills you will need for almost any data analysis project, especially your lab report. That's good timing - from next week we'll start working on statistical analyses at last! 
+
+<font size="+4">**Well done!**</font>
+
+\ 
+
+\ 
+
+
+
