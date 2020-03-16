@@ -654,7 +654,7 @@ nars.lm
 
 These numbers should look familiar from the *t*-test analysis we ran before. You may notice that the value labeled `(Intercept)` is the same as the mean score for male participants that we saw before, i.e. `r nars.t$estimate[1] %>% round(2)`. The value under `GenderFemale` tells us how much the estimated mean score changes when we move from the category `Male`, the intercept, to `Female`. This value is the same as the difference in means that we saw before, namely `r (nars.t$estimate[1] - nars.t$estimate[2]) %>% round(2) %>% abs()`. Essentially, this model represents the following situation:
 
-```{r}
+```{r, echo = F}
 bracket <- sync %>%
   group_by(Gender) %>%
   summarise(y = mean(nars1)) %>%
