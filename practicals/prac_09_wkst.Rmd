@@ -1,0 +1,464 @@
+---
+title: "Practical 9: the Linear Model"
+author: "Analysing Data"
+---
+
+```{r setup, include=FALSE, message=F, warning=F}
+library(tidyverse)
+library(kableExtra)
+library(cowplot)
+library(weights)
+library(GGally)
+library(broom)
+knitr::opts_chunk$set(echo = T, fig.height=4, fig.width=5, fig.align = "center", message = F, warning = F, sol = T)
+```
+
+```{r report.p, include = F}
+report.p <- function(x){
+  ifelse(x > .001, paste0(" = ", rd(x, 3)), "< .001")
+}
+```
+
+This practical will help you practice preparing for, conducting, and reporting analyses that compare means between two groups in R. Before you start this practical, you should make sure you review the relevant lecture, as this practical assumes you already know what these analyses are and how to interpret the output. You should also use this practical in combination with the tutorial on the same topic.
+
+## Setting Up
+
+For this practical, you will need this worksheet, RStudio, and a new Markdown document. Remember that you can easily switch between windows with the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) and <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcuts.
+
+`r task()`Open your analysing_data `R` project in RStudio and open a new Markdown file. Since we will be practicing reporting using inline code, we will need Markdown later on. For the tasks, get into the habit of creating new code chunks as you go.
+
+\ 
+
+`r task()`Aside from loading `tidyverse`, we will also be using `GGally`, `cowplot` and `broom`. If you don't have any of these packages installed, do that now. **Remember that installing packages is a one-off thing** so don't put the command that does it in your Markdown. Simply type it into the console and press <kbd>&crarr;\ Enter</kbd>. The `library()` commands should always go in a separate code chunk at the beginning of your Markdown document, so that your code will run correctly.
+
+```{r, eval=F, echo = solution}
+library(tidyverse)
+library(cowplot)
+library(GGally)
+library(broom)
+```
+
+\ 
+
+`r task()`As usual, we will need some data to work with. Since there's so much interesting information in it, let's keep looking at the `gensex` dataset we've been using so far. Add the commands to read in the data, save it as `gensex`, and clean it [as we did in previous weeks](https://mivalek.github.io/adata/prac/prac_04_wkst.html#read-in_and_clean).
+
+```{r, class = solution}
+gensex <- read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
+
+# recode age and gender
+gensex <- gensex %>%
+  mutate(Age = recode(Age, "18 years" = "18", "19 years old" = "19"),
+         Age = as.numeric(Age),
+         Gender = factor(Gender))
+
+# count how many cases you're about to remove
+age_removed <- gensex %>% filter(Age > 99) %>% nrow()
+
+# count how many you're about to remove
+all_missing <- gensex %>% filter(rowSums(is.na(gensex)) > 10) %>% nrow()
+
+# remove them
+gensex <- gensex %>% filter(Age < 100 & rowSums(is.na(gensex)) < 11)
+```
+
+\ 
+
+`r subtask()`If, like me, you don't like the default variable names, you can change them using the `rename()` function from the `dplyr` package (the same one that does all of our other variable manipulations, like `mutate()` and `select()`). Use the example code below to do this.
+
+**Note**: This is optional, but if you don't do it, you'll have to use the original variable names rather than the changed names for the rest of this practical.
+
+```{r}
+# Use the same kind of syntax as we have seen with other dplyr functions
+# new_variable_name = existing_variable_name
+gensex <- gensex %>% 
+  rename(gen_comf = Gender_comfortable_1, gen_masc = Gender_masc_1, gen_fem = Gender_fem_1,
+         gen_stab = Gender_stability_1,
+         sex_str = Sexual_strength_1, sex_freq = Sexual_fewq_1, sex_pref = Sexual_gender_1,
+         rom_str = Romantic_strength_1, rom_freq = Romantic_freq_1, rom_pref = Romantic_gender_1)
+
+# Call your dataset to check this has worked!
+```
+
+\ 
+
+## Preparation
+
+As usual, you should remind yourself of what these variables actually mean before you start, using the codebook below. These variables should be familiar by now, but be sure to refresh your memory before you carry on.
+
+### Codebook
+
+```{r, echo = F}
+read_csv("https://users.sussex.ac.uk/~jm636/gensex_codebook.csv") %>% 
+  kable() %>% 
+  kable_styling()
+```
+
+`r task()`Using the codebook, **choose** two variables to use in your analysis and assign roles to them: 
+
+* An outcome you're interested in understanding better
+* A predictor that you think will have a relationship with that predictor.
+
+`r subtask()`Write down what you think the relationship between the predictor and outcome will be. Do you think it will be significant? Positive or negative?
+
+**Note**: You can choose any pair of variables you like, but you should think carefully about the relationship between them means, and what your statistical analysis would tell you.
+
+<!--solution
+I've chosen the relationship between sexual gender preference and romantic gender preference. I could hypothesize that sexual and romantic gender preference will be strongly positively related to each other. This means that someone who has a sexual preference for women will also have a romantic preference for women, and vice versa. My statistical analysis will tell me how strong this relationship is and whether it is in fact signficant.
+
+There are many more hypotheses of the same sort you could make using this dataset. All of these you are welcome to try out yourself!
+-->
+
+\ 
+
+From here on, I'm going to focus on the relationship between sexual preference (the predictor) and romantic preference (the outcome). I'd suggest that the first time through, you use these ones as well to practice. However, if you want to, you can choose a different predictor and outcome for all of the following tasks, or work through this practical again with the variables you're interested in. Just substitute your variables for the ones I'm using in each task. 
+
+## Graphing
+
+Once again, we should graph our data before we jump into running our analysis. Looking at summaries of numbers is good, but there's no substitute for a good graph to help you understand your data.
+
+`r task()`Use `GGally` to create a matrix of plots for the variables measuring the strength, frequency, and gender preference for both sexual and romantic attraction. 
+
+**Hint**: See [the tutorial](http://milton-the-cat.rocks/learnr/r/discovr_08/#section-visualizing-the-data) for how to do this.
+
+```{r, eval = F, echo = solution}
+# Using one command (as in the tutorial)
+GGally::ggscatmat(gensex, c("sex_str", "sex_freq", "sex_pref", "rom_str", "rom_freq", "rom_pref"))
+```
+
+```{r, echo = solution}
+# Using pipes (identical!)
+gensex %>% 
+  select(sex_str, sex_freq, sex_pref, rom_str, rom_freq, rom_pref) %>% 
+  ggscatmat()
+```
+
+`r subtask()`Look carefully at the (somewhat complex!) graph you've produced. What does it tell you?
+
+<!--solution
+This one graph gives us a lot of really useful information. We get essentially three things:
+
+* Scatterplots in the bottom/left
+* Distributions on the diagonal
+* Correlation values (*r*) in the top/right
+
+Notice that, just like we had for the correlation matrix we got with `rcorr()`, each variable in our dataset appears twice: once along the top of the graph, and again along the right side. As we also saw withe `rcorr()`, this means that each combination of variables appears twice: once above and once below the diagonal. The diagonal itself is each variable compared against itself.
+
+If you're confused about this, pick two variables - for example, sexual preference `sex_pref` and romantic preference `rom_pref`. Let's look at `sex_pref` first, which our codebook tells us is a measure of sexual preference for genders - 1 for women, 9 for men, and 5 for no preference. This variable appears third from the left along the top, and third from the top along the right side. So, if you find the third column and third row, both labeled `sex_pref`, and follow them to where they intersect in the grid, you can see the distribution of `sex_pref`. We can see that most people indicated a sexual preference for men, which is why there's such a tall peak on the right side of this distribution. If you want a closer look at this, we know how to create a histogram, which will give us exactly the same distribution. The only difference is that the output from `ggscatmat()` is a smooth line rather than bars.
+
+```{r, echo = solution}
+gensex %>% 
+  ggplot(aes(sex_pref)) + 
+  geom_histogram() +
+  labs(x = "Sexual Preference for Genders", y = "Frequency") +
+  scale_x_continuous(breaks = c(1:9)) +
+  theme_cowplot()
+```
+
+Next, we can compare `sex_pref` to `rom_pref` to see what their relationship is like. As I mentioned above, these two variables intersect twice: once above and once below the diagonal. Let's look below the diagonal first. Find the column labeled `sex_pref` and follow it down to the row labeled `rom_pref`. You should be looking at a scatterplot. This is just a small version of the scatterplots we've made before. Again, if you want to take a closer look, you can make your own scatterplot of the same two variables:
+
+```{r, echo = solution}
+gensex %>% 
+  ggplot(aes(x = sex_pref, y = rom_pref)) +
+  geom_point() +
+  labs(x = "Sexual Preference for Genders", y = "Romantic Preference for Genders") +
+  scale_x_continuous(breaks = c(1:9)) +
+  scale_y_continuous(breaks = c(1:9)) +
+  theme_cowplot()
+```
+
+Comparing this to the smaller plot in `ggscatmat()`, you should be able to see that the pattern of dots is identical. We can see that there seems to be a positive relationship between these variables, from the lower left to the upper right. In other words, as preference for genders increases (or rather, as people have less sexual preference for women and stronger preference for men), romantic preference also increases in the same way.
+
+Finally, we may like to quantify the positive relationship we've just observed, for example with the correlation coefficient *r*. We already have this in the output as well. Now, we instead look in the top part of the output from `ggscatmat()`, looking in the column labeled `rom_pref` and following it down to the row labeled `sex_pref`. Here we find a number, which is the value of *r* for these two variables. Once more, if we wanted more detail, we could calculate this ourselves as we've already done.
+
+```{r, echo = solution}
+pref_r <- gensex %>% 
+  cor.test(~ sex_pref + rom_pref, ., alternative = "two.sided", method = "pearson")
+pref_r
+```
+
+So, the correlation between sexual and romantic preference for genders is `r pref_r$estimate %>% round(2)`. This is a **very** strong relationship, which shouldn't surprise us too much!
+
+Overall, we already know how to do everything that `ggscatmat()` gives us, and how to interpret it. The advantage of using `ggscatmat()` is that you get all that information with a single line of code, instead of writing long chunks of code to check every single combination of variables one by one. 
+-->
+
+`r task()`Create a nicely formatted, properly labeled, and jittered scatterplot of the two variables of interest.
+
+**Hint**: See the Week 4 practical for how to do this.
+
+```{r, echo = solution}
+gensex %>% 
+  ggplot(aes(x = sex_pref, y = rom_pref)) +
+  geom_point(position = "jitter", alpha = .4) +
+  labs(x = "Sexual Preference for Genders", y = "Romantic Preference for Genders") +
+  scale_x_continuous(breaks = c(1:9)) +
+  scale_y_continuous(breaks = c(1:9)) +
+  theme_cowplot()
+```
+
+`r subtask()`Before you move on, stop and think about what this plot tells you about the relationship between these variables.
+
+<!--solution
+We've already covered this above, but the jittering gives us an extra piece of information, now that the points are not all on top of each other: namely, how **many** people fall in which parts of the graph. We can see immediately that this isn't even - there's a big cluster of points in the upper right corner, which represents strong attraction to men, both sexual and romantic. This is due to the fact that, as we have talked about many times before, the participants in this study were mostly female.
+-->
+
+Let's investigate this just a bit further, before we go on to constructing the model.
+
+`r subtask()`Colour-code the scatterplot you just made by gender.
+
+```{r, echo = solution}
+gensex %>% 
+  ggplot(aes(x = sex_pref, y = rom_pref, colour = Gender)) +
+  geom_point(position = "jitter", alpha = .4) +
+  labs(x = "Sexual Preference for Genders", y = "Romantic Preference for Genders") +
+  scale_x_continuous(breaks = c(1:9)) +
+  scale_y_continuous(breaks = c(1:9)) +
+  theme_cowplot()
+```
+
+`r subtask()`Before you move on, stop and think about what this plot tells you about the relationship between these variables.
+
+<!--solution
+As we suspected, a lot of that big cluster of dots in the upper right corner (strong sexual and romantic preference for men) were female-ID people. But not all of them! Some of them are also male-ID people. Conversely, most of the dots in the lower left corner (strong sexual and romantic preference for women) are male-ID people, but some are also female-ID people. We can also see blue dots, representing people who did not ID as male or female, throughout the graph.
+
+You may also notice a few data points that do not follow the general positive trend that we discussed before. For example, there is one participant who indicated a strong sexual preference for men, but a strong romantic preference for women. This data point may be an **outlier** - a very unusual data point given how most people tended to respond to these questions. That doesn't mean that this pattern of responses is wrong, or an error; just unusual. We'll come back to outliers, and what we should do about them (if anything), next year.
+-->
+
+`r subtask()`If you were to draw a line that best captures the relationship between your two variables (ignoring gender), what would it look like? Take a moment to imagine it, or even copy your plot into drawing software (such as Paint, if you have it) and draw your best-guess line over the scatterplot. (You can right-click on your plot and select "Copy plot" to copy and then paste it elsewhere.)
+
+`r subtask()`Add the code below to the first plot (without splitting the data up by gender) to ask R to draw the line for you. How close was your guess?
+
+```{r, eval = F}
+geom_smooth(method = "lm")
+```
+
+<!--solution
+
+```{r, echo = solution}
+gensex %>% 
+  ggplot(aes(x = sex_pref, y = rom_pref)) +
+  geom_point(position = "jitter", alpha = .4) +
+  geom_smooth(method = "lm") +
+  labs(x = "Sexual Preference for Genders", y = "Romantic Preference for Genders") +
+  scale_x_continuous(breaks = c(1:9)) +
+  scale_y_continuous(breaks = c(1:9)) +
+  theme_cowplot()
+```
+
+As we suspected from looking at the plot and from the correlation we saw earlier, we have a positive relationship between sexual and romantic preference for genders. This line captures that relationship, and allows us to predict someone's romantic gender preference, if we know their sexual gender preference. 
+-->
+
+## Linear Modelling
+
+Now that we have a clear idea of what the relationship between our variables is, we can construct a linear model that captures that relationship. We can use this model to 
+
+`r task()`Use the `lm()` and `summary()` functions to create a linear model and produce some useful information about it.
+
+```{r, include = F}
+pref_lm_tidy <- gensex %>% 
+  lm(rom_pref ~ sex_pref, .) %>% 
+  tidy()
+pref_lm_glance <-gensex %>% 
+  lm(rom_pref ~ sex_pref, .) %>% 
+  glance()
+```
+
+```{r, echo = solution}
+pref_lm <- gensex %>% 
+  lm(rom_pref ~ sex_pref, .)
+summary(pref_lm)
+```
+
+`r subtask()`How can you interpret the two values in the "Estimate" column for the rows labeled `(Intercept)` and `sex_pref`?
+
+<!--solution
+Remember that we need two values to describe a line: the intercept (where the line starts from) and the slope, or angle, of the line from that point. These two values give us numbers for both of these things.
+
+First, the row labeled `(Intercept)` gives us the value of our outcome, `rom_pref`, when our predictor, `sex_pref`, is 0. You can even see this on the scatterplot we drew with a line in the task above - if you extend the line further down to the left, it should cross the vertical *y* axis at `r pref_lm_tidy %>% filter(term == "(Intercept)") %>% pull(estimate) %>% round(2)`. This tells us that when sexual gender preference is rated 0, romantic gender preference is also very low (less than one). This is the intercept of the line: essentially, this tells us the value we are starting from.
+
+Next, the row labeled `sex_pref` tells us how much our predicted value of romantic gender preference **changes** for every unit change in sexual gender preference. So, if sexual gender preference increases by one (say, from 0 to 1), then our model predicts that romantic gender preference will also increase by 0.91. We know that this is an increase because the value of this estimate is positive. This is the slope of the line: essentially, this tells us what the relationship between our two variables is estimated to be.
+
+The reason that both these values are labeled "Estimates" is because they are an estimate, or best guess, of what the parameters of this relationship are given the data that we have. We can only estimate because we are basing this model on a sample, not on the whole population. Whether our model would generalise well to the population depends on a lot of things, not least of which is whether our sample is representative of the population of interest. We can use various methods, as we will see, to evaluate how good and useful these estimates are; but they are always estimates, and will always have some degree of error.
+
+<div class = "why">
+##### What does a "unit change" mean?
+
+In this case, we have measured both variables in rating scales with 9 points. So, our *units* are, essentially, "rating points", and one unit is one rating point. So, a "unit change" in sexual gender preference just means an increase of one rating point. 
+
+We say "unit change" because units may be defined differently in different studies. If our predictor was age measured in years, for example, a "unit change" would be an increase of one year. If our predictor was different experimental conditions, a "unit change" would be a change from one condition to another. This is why it's always very important to make careful note of how variables are measured, and what their units are.
+</div>
+-->
+
+`r subtask()`Using this output, write down the equation of the linear model for this analysis.
+
+<!--solution
+Remember that the basic form of the linear model is: 
+
+<center>outcome = *b*~0~ + *b*~1~(predictor) + error</center>
+
+We know everything we need to update this equation, by replacing each of the four following elements with their values from the output:
+
+* Outcome: Romantic gender preference
+* Predictor: Sexual gender preference
+* *b*~0~: value of romantic gender preference when sexual gender preference is 0 (the intercept)
+* *b*~1~: change in romantic gender preference associated with a unit change in sexual gender preference (the slope)
+
+So, the equation of the linear model for this analysis is:
+
+<center>romantic gender preference = `r pref_lm_tidy$estimate[1] %>% round(2)` + `r pref_lm_tidy$estimate[2] %>% round(2)`(sexual gender preference) + error</center>
+-->
+
+`r subtask()`According to this model, is the relationship between sexual and romantic gender preference significant? What does this mean?
+
+<!--solution
+To find out, we must look at the line in the output that tells us about the relationship between our predictor and the outcome - that is, our *b*~1~ value. In the "Coefficients" section, this is listed under the name of the predictor, which here is `sex_pref`. The null hypothesis, in this study, would be that there is no relationship at all between sexual and romantic gender preference - in other words, *b*~1~ would be exactly 0. We know that *b*~1~ is not 0, because this row tells us that the estimated value is in fact `r pref_lm_tidy$estimate[2] %>% round(2)`. But is this value different **enough** from 0 to believe that it is unlikely to really be 0 in the population?
+
+Remember that in order to find the significance of *b*~1~, we divide by its standard error to produce the test statistic *t*. Then, we get the probability of finding a value of *t* this big, or bigger, if the null hypothesis is true. Our output gives us both *t* and the probability of *t*, which is our *p*-value. So, we can see that our *p*-value is extremely small; R gives us the unhelpful value of < 2e-16, which we could read as "*p* is some value smaller than .0000000000000002". Instead, we should report *p* to three decimal places as usual, and simply say that *p* < .001.
+
+Because *p* is very small, and definitely much smaller than our standard significance level of .05, we can say that there is a **significant** positive relationship between sexual and romantic gender preference.
+
+As an extra note, notice that next to this *p*-value there are three asterisks. Directly underneath, R tells you how read these in the line "Signif. codes", which means "Significance codes". In this line you can see that the number of asterisks corresponds to different values of *p*. We can read these codes as follows:
+
+* *p* < .001: ***
+* .001 < *p* < .01: **
+* .01 < *p* <.05: *
+* .05 < *p* < .01: .
+* .01 < *p*: [nothing]
+-->
+
+`r subtask()`Use the model to make a prediction: for people who have no sexual gender preference, what does the model predict their romantic gender preference will be?
+
+**Hint**: Refer to the codebook to help you interpret your variables.
+
+<!--solution
+First, we have to figure out what our predictor value should be. Referring to the codebook, we can see that a value of 5 for `sex_pref` indicates no preference. (Remember, a value of 0 would indicate strong preference for women!) So, all we need to do is replace the predictor in our equation with the number 5. Start with the equation of the model for this study:
+
+<center>romantic gender preference = `r pref_lm_tidy$estimate[1] %>% round(2)` + `r pref_lm_tidy$estimate[2] %>% round(2)`(sexual gender preference) + error</center>
+
+Because we want to predict romantic gender preference when sexual gender preference is 5, we just replace the predictor, "sexual gender preference", with the value 5:
+
+<center>romantic gender preference = `r pref_lm_tidy$estimate[1] %>% round(2)` + `r pref_lm_tidy$estimate[2] %>% round(2)`(5) + error</center>
+
+We can use R as a calculator, just by typing in the console:
+
+```{r}
+0.61 + 0.91*5
+```
+
+So, people who have no sexual gender preference have essentially no romantic gender preference either! This shouldn't be surprising, because our value for *b*~1~ was almost 1 (more precisely, it was `r pref_lm_tidy$estimate[2] %>% round(2)`). This means that as ratings of sexual gender preference increase by 1, predicted romantic gender preference also increases by about 1. 
+-->
+
+`r subtask()`Using the output from your `lm()` analysis, what can you conclude about how well the model fits the data, and how well it might generalise to the population?
+
+<!--solution
+To answer this, we have to look at the values of R^2^ and adjusted R^2^ in the output. We can see that value of R^2^ for this model is `r (pref_lm_glance$r.squared) %>% round(4)`. So, we can say that this model explains `r (pref_lm_glance$r.squared*100) %>% round(2)`% of the variance in romantic gender preference. This is quite a large portion of the variance that we can explain, and it tells us that our model fits our data quite well.
+
+We can also interpret the adjusted R^2^ in a similar way. We can see that value of R^2^ for this model is `r (pref_lm_glance$adj.r.squared) %>% round(4)`. So, we can say that if we were to generalise this model from our sample to the whole population, we would expect it to be able to explain `r (pref_lm_glance$adj.r.squared*100) %>% round(2)`% of the variance in romantic gender preference. This number is almost the same as the value for R^2^, which is a good sign - it indicates our model would generalise well.
+-->
+
+\ 
+
+That's most of what we want out of the `summary()` output. We now have a clear idea of what our model is telling us and what each piece of it means. However, we still might want to report this information nicely!
+
+`r task()`As we learned in the tutorial, use `tidy()` to produce and save a tibble of values for this model.
+
+```{r, echo = solution}
+pref_lm_tidy <- gensex %>% 
+  lm(rom_pref ~ sex_pref, .) %>% 
+  tidy()
+pref_lm_tidy
+```
+
+These are the same values we had before, but now they're in an easily accessible tibble. We are missing something, though - we'd also like to have confidence intervals for *b* so we can report and interpret these as well.
+
+`r subtask()`Ask for confidence intervals for this model using `tidy()` and re-save the output into the same object.
+
+```{r, echo = solution}
+pref_lm_tidy <- gensex %>% 
+  lm(rom_pref ~ sex_pref, .) %>% 
+  tidy(conf.int = T)
+pref_lm_tidy
+```
+
+Great! Now we can use what we know about subsetting, using either `pull()` or `$`, to report values from this table.
+
+`r subtask()`Write a short (1-2 sentences) report on your model, using inline code to report any numbers. You should include:
+
+* *b*~1~ and its standard error
+* The confidence intervals around *b*
+* *t* and its *p*-value
+
+<!--solution
+<pre><code>
+We constructed a linear model to capture the relationship between sexual and romantic gender preference. The model indicated that sexual gender preference has a significant positive relationship with romantic gender preference (*b* = &#96;r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(estimate) %>% round(2)&#96;, SE(*b*) = &#96;r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(std.error) %>% round(2)&#96;, 95% CIs [&#96;r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(conf.low) %>% round(2)&#96;, &#96;r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(conf.high) %>% round(2)&#96;], *t* = &#96;r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(statistic) %>% round(2)&#96;, *p* &#96;r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(p.value) %>% report.p()&#96;.
+</code></pre>
+
+This will be rendered in Markdown as:
+
+We constructed a linear model to capture the relationship between sexual and romantic gender preference. The model indicated that sexual gender preference has a significant positive relationship with romantic gender preference (*b* = `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(estimate) %>% round(2)`, SE(*b*) = `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(std.error) %>% round(2)`, 95% CIs [`r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(conf.low) %>% round(2)`, `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(conf.high) %>% round(2)`], *t* = `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(statistic) %>% round(2)`, *p* `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(p.value) %>% report.p()`.
+-->
+
+\ 
+
+That's a great way to report the model itself. We'd also like to report the R^2^ value as well, and we can get this and some other model statistics easily with `glance()`.
+
+`r task()`Use `glance()` to produce and save a tibble of model statistics.
+
+```{r, echo = solution}
+pref_lm_glance <-gensex %>% 
+  lm(rom_pref ~ sex_pref, .) %>% 
+  glance()
+pref_lm_glance
+```
+
+This has a lot of information in it that you'll be learning about in the next lecture. For now, let's just focus on the R^2^ and adjusted R^2^ values.
+
+`r subtask()`Write a sentence reporting the R^2^ and adjusted R^2^ values for this model. Use inline code for any numbers.
+
+<!--solution
+<pre><code>
+This model fit the data very well (R^2^ = &#96;r pref_lm_glance %>% pull(r.squared) %>% round(2)&#96;), and would be expected to generalise well (R^2^~adj~ = &#96;r pref_lm_glance %>% pull(adj.r.squared) %>% round(2)&#96;).
+</pre></code>
+
+This will be rendered in Markdown as: 
+
+This model fit the data very well (R^2^ = `r pref_lm_glance %>% pull(r.squared) %>% round(2)`), and would be expected to generalise well (R^2^~adj~ = `r pref_lm_glance %>% pull(adj.r.squared) %>% round(2)`).
+-->
+
+\ 
+
+Altogether, we can write an overall report for our model that might look something like this:
+
+### Results
+
+We constructed a linear model to capture the relationship between sexual and romantic gender preference. The model indicated that sexual gender preference has a significant positive relationship with romantic gender preference (*b* = `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(estimate) %>% round(2)`, SE(*b*) = `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(std.error) %>% round(2)`, 95% CIs [`r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(conf.low) %>% round(2)`, `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(conf.high) %>% round(2)`]), *t* = `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(statistic) %>% round(2)`, *p* `r pref_lm_tidy %>% filter(term == "sex_pref") %>% pull(p.value) %>% report.p()`. This model fit the data very well (R^2^ = `r pref_lm_glance %>% pull(r.squared) %>% round(2)`), and would be expected to generalise well (R^2^~adj~ = `r pref_lm_glance %>% pull(adj.r.squared) %>% round(2)`). A plot of the data and the model are presented in Figure 1.
+
+```{r, echo = F, fig.cap = "*Fig. 1* Scatterplot of romantic gender preference by sexual gender preference, with a line of best fit"}
+gensex %>% 
+  ggplot(aes(x = sex_pref, y = rom_pref)) +
+  geom_point(position = "jitter", alpha = .4) +
+  geom_smooth(method = "lm") +
+  labs(x = "Sexual Preference for Genders", y = "Romantic Preference for Genders") +
+  scale_x_continuous(breaks = c(1:9)) +
+  scale_y_continuous(breaks = c(1:9)) +
+  theme_cowplot()
+```
+
+\ 
+
+## Summary
+
+Whew! Well done. If you are keen to do more linear modelling, you're very welcome to work through these steps again with a different predictor and/or outcome. This is an excellent way to practice using and interpreting the model, which (as I've mentioned a few times) will be essential for next year.
+
+In sum, today we've practiced:
+
+* How to use `ggscatmat()` to get lots of information about many combinations of variables at once
+* How to drill down to a particular pair of variables and interpret the relationship between them
+* How to construst, report, and interpret a linear model, including:
+  + Creating the model equation
+  + Using the equation to make predictions
+  + Finding and interpreting the values of *b*~0~, *b*~1~, *t*, *p*, R^2^, and adjusted R^2^
+  + Reporting results using the `tidy()` and `glance()` functions
+  
+That's all for today. I hope you are safe and well.
+
+\ 
