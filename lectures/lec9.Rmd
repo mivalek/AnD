@@ -22,6 +22,8 @@ library(weights)
 to_math <- function(x) {
   gsub(" ", "\\\\ ", x)
 }
+
+# slidify("analysing_data/lectures/lec9.Rmd", "and", color = "#ba3e8a")
 ```
 
 ```{r eg1a_setup}
@@ -537,7 +539,7 @@ plot_grid(scatter.choc.ssm, scatter.cabbage.ssm)
 
 \ 
 
-<section>
+<section style="text-align: center;">
 <img width=400px src="pics/scatter.choc.ssr.png" style="display: inline-block">
 <img width=400px src="pics/scatter.choc.lm.worse.png" style="display: inline-block">
 </section>
@@ -587,12 +589,14 @@ Y&=b+0 + b_1\times Predictor_1 + \varepsilon\\
 - *b*~1~: change in outcome associated with a unit change in predictor 1
 - *b*~2~: change in outcome associated with a unit change in predictor 2 
 
-## How multiple predictors (don't really) change the linear model equation
+## How multiple predictors (don't really) change the equation
 
 - 1 predictor linear model = regression line
 - 2+ predictor model = regression plane
 
-![](pics/reg_plane.jpg){width=200px}
+<div class="plot_ly">
+<iframe frameborder="0" seamless='seamless' scrolling=no style="height: 450px" src="https://mivalek.github.io/adata/plot_3d.html"></iframe>
+</div>
 
 
 ## Predicting "bullshit receptivity"
