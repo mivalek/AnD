@@ -534,7 +534,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <h2>Overview</h2>
 <ul>
 <li>Week 8: The Linear Model</li>
-<li>TODAY: The Linear Model with multiple predictors</li>
+<li>TODAY: Extending the Linear Model</li>
 <li>[3 weeks for Spring vacation]</li>
 <li>Week 10: Effect sizes</li>
 <li>Week 11: Consolidation</li>
@@ -612,7 +612,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>Let’s add a predictor</li>
 <li>Error in model
 <ul>
-<li>between prediction (using mean) and observed data</li>
+<li>Between prediction (using mean) and observed data</li>
 </ul></li>
 </ul>
 <p><img src="lec9_slides_files/figure-revealjs/F_vis_meanmod2-1.png" width="480" /></p>
@@ -623,7 +623,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>Let’s add a predictor</li>
 <li>Error in model
 <ul>
-<li>between prediction (using mean) and observed data</li>
+<li>Between prediction (using mean) and observed data</li>
 </ul></li>
 </ul>
 <p><img src="lec9_slides_files/figure-revealjs/F_vis_meanmod3-1.png" width="480" /></p>
@@ -700,7 +700,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <ul>
 <li>This is the <em>F</em>-statistic!</li>
 </ul>
-<p><span class="math display">\[F =\frac{what\ the model\ can\ explain}{what\ the\ model\ cannot\ explain  }=\frac{signal}{noise}\]</span></p>
+<p><span class="math display">\[F =\frac{what\ the\ model\ can\ explain}{what\ the\ model\ cannot\ explain}=\frac{signal}{noise}\]</span></p>
 <ul>
 <li>We want <strong>signal</strong> to be as big as possible</li>
 <li>We want <strong>noise</strong> to be as small as possible</li>
@@ -780,16 +780,16 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <section id="model-fit-f-statistic" class="slide level2">
 <h2>Model fit: <em>F</em>-statistic</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">##  fit the linear model</span></a>
-<a class="sourceLine" id="cb1-2" title="2">eg4.mod1.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>puppies, <span class="dt">data =</span> eg4.data.tib)</a>
+<a class="sourceLine" id="cb1-2" title="2">eg4.mod1.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>fluffy, <span class="dt">data =</span> eg4.data.tib)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="co">##  get fit statistics</span></a>
 <a class="sourceLine" id="cb1-4" title="4">broom<span class="op">::</span><span class="kw">glance</span>(eg4.mod1.lm)</a>
 <a class="sourceLine" id="cb1-5" title="5"><span class="co"># A tibble: 1 x 11</span></a>
 <a class="sourceLine" id="cb1-6" title="6">  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC</a>
 <a class="sourceLine" id="cb1-7" title="7">      <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">         </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="dv">1</span>     <span class="fl">0.744</span>         <span class="fl">0.730</span>  <span class="fl">1.63</span>      <span class="fl">52.4</span> <span class="fl">9.90e-7</span>     <span class="dv">2</span>  <span class="fl">-37.1</span>  <span class="fl">80.2</span>  <span class="fl">83.2</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="dv">1</span>     <span class="fl">0.547</span>         <span class="fl">0.493</span>  <span class="fl">1.84</span>      <span class="fl">10.2</span> <span class="fl">0.00120</span>     <span class="dv">3</span>  <span class="fl">-38.9</span>  <span class="fl">85.8</span>  <span class="fl">89.8</span></a>
 <a class="sourceLine" id="cb1-9" title="9"><span class="co"># ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></a></code></pre></div>
 <ul>
-<li>The <em>F</em>-statistic is 52.38</li>
+<li>The <em>F</em>-statistic is 18.41</li>
 <li>The associated p-value is &lt; .001
 <ul>
 <li>Adding predictors significantly improved model fit</li>
@@ -800,23 +800,23 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <section id="model-fit-r2-value" class="slide level2">
 <h2>Model fit: <em>R</em><sup>2</sup> value</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co">##  fit the linear model</span></a>
-<a class="sourceLine" id="cb2-2" title="2">eg4.mod1.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>puppies, <span class="dt">data =</span> eg4.data.tib)</a>
+<a class="sourceLine" id="cb2-2" title="2">eg4.mod1.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>fluffy, <span class="dt">data =</span> eg4.data.tib)</a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="co">##  get fit statistics</span></a>
 <a class="sourceLine" id="cb2-4" title="4">broom<span class="op">::</span><span class="kw">glance</span>(eg4.mod1.lm)</a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="co"># A tibble: 1 x 11</span></a>
 <a class="sourceLine" id="cb2-6" title="6">  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC</a>
 <a class="sourceLine" id="cb2-7" title="7">      <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">         </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="dv">1</span>     <span class="fl">0.744</span>         <span class="fl">0.730</span>  <span class="fl">1.63</span>      <span class="fl">52.4</span> <span class="fl">9.90e-7</span>     <span class="dv">2</span>  <span class="fl">-37.1</span>  <span class="fl">80.2</span>  <span class="fl">83.2</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="dv">1</span>     <span class="fl">0.547</span>         <span class="fl">0.493</span>  <span class="fl">1.84</span>      <span class="fl">10.2</span> <span class="fl">0.00120</span>     <span class="dv">3</span>  <span class="fl">-38.9</span>  <span class="fl">85.8</span>  <span class="fl">89.8</span></a>
 <a class="sourceLine" id="cb2-9" title="9"><span class="co"># ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></a></code></pre></div>
 <ul>
-<li>The <em>R</em><sup>2</sup> is 0.74
+<li>The <em>R</em><sup>2</sup> is 0.51
 <ul>
-<li>74% of the variance in happiness was explained by puppies <strong>and</strong> fluffy ratings</li>
+<li>51% of the variance in happiness was explained by puppies <strong>and</strong> fluffy ratings</li>
 </ul></li>
 <li>This is just in our observed data!</li>
-<li>Our adjusted <em>R</em><sup>2</sup> value was 0.73
+<li>Our adjusted <em>R</em><sup>2</sup> value was 0.478
 <ul>
-<li>If we used the same model with the population, we should be able to explain 73% of the variance in happiness</li>
+<li>If we used the same model with the population, we should be able to explain 48% of the variance in happiness</li>
 </ul></li>
 </ul>
 </section>
@@ -864,10 +864,10 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <h2>Even more puppies!</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">##  Model 1</span></a>
-<a class="sourceLine" id="cb3-3" title="3">eg4.mod1.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>puppies, <span class="dt">data =</span> eg4.data.tib)</a>
+<a class="sourceLine" id="cb3-3" title="3">eg4.mod1.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>fluffy, <span class="dt">data =</span> eg4.data.tib)</a>
 <a class="sourceLine" id="cb3-4" title="4"></a>
 <a class="sourceLine" id="cb3-5" title="5"><span class="co">##  Model 2</span></a>
-<a class="sourceLine" id="cb3-6" title="6">eg4.mod2.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>dirt <span class="op">+</span><span class="st"> </span>wet, <span class="dt">data =</span> eg4.data.tib)</a></code></pre></div>
+<a class="sourceLine" id="cb3-6" title="6">eg4.mod2.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>fluffy <span class="op">+</span><span class="st"> </span>dirt, <span class="dt">data =</span> eg4.data.tib)</a></code></pre></div>
 <ul>
 <li>First, which is the <strong>better</strong> model?</li>
 <li>Second, <strong>how useful</strong> is the best model?</li>
@@ -895,7 +895,7 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <a class="sourceLine" id="cb4-2" title="2"><span class="co"># A tibble: 1 x 11</span></a>
 <a class="sourceLine" id="cb4-3" title="3">  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC</a>
 <a class="sourceLine" id="cb4-4" title="4">      <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">         </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="dv">1</span>     <span class="fl">0.744</span>         <span class="fl">0.730</span>  <span class="fl">1.63</span>      <span class="fl">52.4</span> <span class="fl">9.90e-7</span>     <span class="dv">2</span>  <span class="fl">-37.1</span>  <span class="fl">80.2</span>  <span class="fl">83.2</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="dv">1</span>     <span class="fl">0.547</span>         <span class="fl">0.493</span>  <span class="fl">1.84</span>      <span class="fl">10.2</span> <span class="fl">0.00120</span>     <span class="dv">3</span>  <span class="fl">-38.9</span>  <span class="fl">85.8</span>  <span class="fl">89.8</span></a>
 <a class="sourceLine" id="cb4-6" title="6"><span class="co"># ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></a></code></pre></div>
 <p> </p>
 <p>Model 2:</p>
@@ -903,15 +903,15 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <a class="sourceLine" id="cb5-2" title="2"><span class="co"># A tibble: 1 x 11</span></a>
 <a class="sourceLine" id="cb5-3" title="3">  r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC</a>
 <a class="sourceLine" id="cb5-4" title="4">      <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">         </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="dv">1</span>     <span class="fl">0.971</span>         <span class="fl">0.965</span> <span class="fl">0.583</span>      <span class="fl">178.</span> <span class="fl">1.68e-12</span>     <span class="dv">4</span>  <span class="fl">-15.3</span>  <span class="fl">40.7</span>  <span class="fl">45.7</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="dv">1</span>     <span class="fl">0.957</span>         <span class="fl">0.949</span> <span class="fl">0.583</span>      <span class="fl">119.</span> <span class="fl">3.84e-11</span>     <span class="dv">4</span>  <span class="fl">-15.3</span>  <span class="fl">40.7</span>  <span class="fl">45.7</span></a>
 <a class="sourceLine" id="cb5-6" title="6"><span class="co"># ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></a></code></pre></div>
 </section>
 <section id="r2-change-1" class="slide level2">
 <h2>R<sup>2</sup>-change</h2>
 <ul>
-<li>The R<sup>2</sup> for Model 2 is 0.97
+<li>The R<sup>2</sup> for Model 2 is 0.96
 <ul>
-<li>97% of the variance in happiness is explained by puppies <em>and</em> fluffy).</li>
+<li>96% of the variance in happiness is explained by puppies <em>and</em> fluffy.</li>
 </ul></li>
 </ul>
 </section>
@@ -920,9 +920,9 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <ul>
 <li>We can calculate the <em>change</em> in R<sup>2</sup> between Model 1 and Model 2
 <ul>
-<li>0.97 - 0.74 = 0.23</li>
-<li>Model 2 explains 23% more variance than Model 1</li>
-<li>We accounted for 23% more variance in happinessby adding dirt to the model</li>
+<li>0.96 - 0.51 = 0.45</li>
+<li>Model 2 explains 45% more variance than Model 1</li>
+<li>We accounted for 45% more variance in happiness by adding dirt to the model</li>
 </ul></li>
 </ul>
 </section>
@@ -931,16 +931,16 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">eg4.anova &lt;-<span class="st"> </span><span class="kw">anova</span>(eg4.mod1.lm,eg4.mod2.lm) <span class="op">%&gt;%</span><span class="st"> </span>broom<span class="op">::</span><span class="kw">tidy</span>()</a>
 <a class="sourceLine" id="cb6-2" title="2">eg4.anova</a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="co"># A tibble: 2 x 6</span></a>
-<a class="sourceLine" id="cb6-4" title="4">  res.df   rss    df sumsq statistic       p.value</a>
-<a class="sourceLine" id="cb6-5" title="5">   <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">         </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="dv">1</span>     <span class="dv">18</span> <span class="fl">47.8</span>     <span class="ot">NA</span>  <span class="ot">NA</span>        <span class="ot">NA</span>   <span class="ot">NA</span>           </a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="dv">2</span>     <span class="dv">16</span>  <span class="fl">5.43</span>     <span class="dv">2</span>  <span class="fl">42.4</span>      <span class="fl">62.4</span>  <span class="fl">0.0000000278</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-4" title="4">  res.df   rss    df sumsq statistic  p.value</a>
+<a class="sourceLine" id="cb6-5" title="5">   <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="dv">1</span>     <span class="dv">17</span> <span class="fl">57.3</span>     <span class="ot">NA</span>  <span class="ot">NA</span>         <span class="ot">NA</span>  <span class="ot">NA</span>      </a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="dv">2</span>     <span class="dv">16</span>  <span class="fl">5.43</span>     <span class="dv">1</span>  <span class="fl">51.8</span>      <span class="fl">153.</span>  <span class="fl">1.35e-9</span></a></code></pre></div>
 <ul>
 <li>Does Model 2 explain more variance compared to Model 1?
 <ul>
 <li>Does adding more predictors significantly improve model fit?</li>
 </ul></li>
-<li>The <em>F</em>-change statistic is 62.39 with a <em>p</em>-value of &lt; .001</li>
+<li>The <em>F</em>-change statistic is 152.65 with a <em>p</em>-value of &lt; .001</li>
 <li>Model 2 was <em>significantly better</em> at explaining variability in happiness than Model 1</li>
 </ul>
 </section>
@@ -961,10 +961,10 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <a class="sourceLine" id="cb7-2" title="2"><span class="co"># A tibble: 4 x 7</span></a>
 <a class="sourceLine" id="cb7-3" title="3">  term        estimate std.error statistic  p.value conf.low conf.high</a>
 <a class="sourceLine" id="cb7-4" title="4">  <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">          </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="dv">1</span> (Intercept)    <span class="fl">3.74</span>     <span class="fl">0.438</span>       <span class="fl">8.55</span> <span class="fl">2.33</span>e<span class="op">-</span><span class="st"> </span><span class="dv">7</span>   <span class="fl">2.81</span>       <span class="fl">4.67</span> </a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="dv">2</span> puppies        <span class="fl">0.995</span>    <span class="fl">0.0566</span>     <span class="fl">17.6</span>  <span class="fl">7.01e-12</span>   <span class="fl">0.875</span>      <span class="fl">1.11</span> </a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="dv">3</span> dirt           <span class="fl">0.181</span>    <span class="fl">0.0744</span>      <span class="fl">2.43</span> <span class="fl">2.75</span>e<span class="op">-</span><span class="st"> </span><span class="dv">2</span>   <span class="fl">0.0228</span>     <span class="fl">0.338</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="dv">4</span> wet           <span class="fl">-0.796</span>    <span class="fl">0.0726</span>    <span class="fl">-11.0</span>  <span class="fl">7.59</span>e<span class="op">-</span><span class="st"> </span><span class="dv">9</span>  <span class="fl">-0.950</span>     <span class="fl">-0.642</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-5" title="5"><span class="dv">1</span> (Intercept)    <span class="fl">3.74</span>     <span class="fl">0.438</span>       <span class="fl">8.55</span> <span class="fl">2.33</span>e<span class="op">-</span><span class="st"> </span><span class="dv">7</span>    <span class="fl">2.81</span>      <span class="fl">4.67</span> </a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="dv">2</span> puppies        <span class="fl">0.995</span>    <span class="fl">0.0566</span>     <span class="fl">17.6</span>  <span class="fl">7.01e-12</span>    <span class="fl">0.875</span>     <span class="fl">1.11</span> </a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="dv">3</span> fluffy         <span class="fl">0.304</span>    <span class="fl">0.0726</span>      <span class="fl">4.18</span> <span class="fl">7.00</span>e<span class="op">-</span><span class="st"> </span><span class="dv">4</span>    <span class="fl">0.150</span>     <span class="fl">0.458</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="dv">4</span> dirt          <span class="fl">-0.919</span>    <span class="fl">0.0744</span>    <span class="fl">-12.4</span>  <span class="fl">1.35</span>e<span class="op">-</span><span class="st"> </span><span class="dv">9</span>   <span class="fl">-1.08</span>     <span class="fl">-0.762</span></a></code></pre></div>
 <ul>
 <li>puppies significantly predicted happiness
 <ul>
@@ -980,15 +980,15 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <a class="sourceLine" id="cb8-2" title="2"><span class="co"># A tibble: 4 x 7</span></a>
 <a class="sourceLine" id="cb8-3" title="3">  term        estimate std.error statistic  p.value conf.low conf.high</a>
 <a class="sourceLine" id="cb8-4" title="4">  <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">          </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="dv">1</span> (Intercept)    <span class="fl">3.74</span>     <span class="fl">0.438</span>       <span class="fl">8.55</span> <span class="fl">2.33</span>e<span class="op">-</span><span class="st"> </span><span class="dv">7</span>   <span class="fl">2.81</span>       <span class="fl">4.67</span> </a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="dv">2</span> puppies        <span class="fl">0.995</span>    <span class="fl">0.0566</span>     <span class="fl">17.6</span>  <span class="fl">7.01e-12</span>   <span class="fl">0.875</span>      <span class="fl">1.11</span> </a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="dv">3</span> dirt           <span class="fl">0.181</span>    <span class="fl">0.0744</span>      <span class="fl">2.43</span> <span class="fl">2.75</span>e<span class="op">-</span><span class="st"> </span><span class="dv">2</span>   <span class="fl">0.0228</span>     <span class="fl">0.338</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="dv">4</span> wet           <span class="fl">-0.796</span>    <span class="fl">0.0726</span>    <span class="fl">-11.0</span>  <span class="fl">7.59</span>e<span class="op">-</span><span class="st"> </span><span class="dv">9</span>  <span class="fl">-0.950</span>     <span class="fl">-0.642</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-5" title="5"><span class="dv">1</span> (Intercept)    <span class="fl">3.74</span>     <span class="fl">0.438</span>       <span class="fl">8.55</span> <span class="fl">2.33</span>e<span class="op">-</span><span class="st"> </span><span class="dv">7</span>    <span class="fl">2.81</span>      <span class="fl">4.67</span> </a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="dv">2</span> puppies        <span class="fl">0.995</span>    <span class="fl">0.0566</span>     <span class="fl">17.6</span>  <span class="fl">7.01e-12</span>    <span class="fl">0.875</span>     <span class="fl">1.11</span> </a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="dv">3</span> fluffy         <span class="fl">0.304</span>    <span class="fl">0.0726</span>      <span class="fl">4.18</span> <span class="fl">7.00</span>e<span class="op">-</span><span class="st"> </span><span class="dv">4</span>    <span class="fl">0.150</span>     <span class="fl">0.458</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="dv">4</span> dirt          <span class="fl">-0.919</span>    <span class="fl">0.0744</span>    <span class="fl">-12.4</span>  <span class="fl">1.35</span>e<span class="op">-</span><span class="st"> </span><span class="dv">9</span>   <span class="fl">-1.08</span>     <span class="fl">-0.762</span></a></code></pre></div>
 <ul>
 <li>fluffy significantly predicted happiness
 <ul>
 <li><em>b</em><sub>2</sub> is fluffy is a positive: as fluffy increases, happiness increases</li>
-<li>For every unit increase in fluffy, happiness increases by 0.18 units</li>
+<li>For every unit increase in fluffy, happiness increases by 0.3 units</li>
 </ul></li>
 </ul>
 </section>
@@ -998,15 +998,15 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <a class="sourceLine" id="cb9-2" title="2"><span class="co"># A tibble: 4 x 7</span></a>
 <a class="sourceLine" id="cb9-3" title="3">  term        estimate std.error statistic  p.value conf.low conf.high</a>
 <a class="sourceLine" id="cb9-4" title="4">  <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">          </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="dv">1</span> (Intercept)    <span class="fl">3.74</span>     <span class="fl">0.438</span>       <span class="fl">8.55</span> <span class="fl">2.33</span>e<span class="op">-</span><span class="st"> </span><span class="dv">7</span>   <span class="fl">2.81</span>       <span class="fl">4.67</span> </a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="dv">2</span> puppies        <span class="fl">0.995</span>    <span class="fl">0.0566</span>     <span class="fl">17.6</span>  <span class="fl">7.01e-12</span>   <span class="fl">0.875</span>      <span class="fl">1.11</span> </a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="dv">3</span> dirt           <span class="fl">0.181</span>    <span class="fl">0.0744</span>      <span class="fl">2.43</span> <span class="fl">2.75</span>e<span class="op">-</span><span class="st"> </span><span class="dv">2</span>   <span class="fl">0.0228</span>     <span class="fl">0.338</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="dv">4</span> wet           <span class="fl">-0.796</span>    <span class="fl">0.0726</span>    <span class="fl">-11.0</span>  <span class="fl">7.59</span>e<span class="op">-</span><span class="st"> </span><span class="dv">9</span>  <span class="fl">-0.950</span>     <span class="fl">-0.642</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-5" title="5"><span class="dv">1</span> (Intercept)    <span class="fl">3.74</span>     <span class="fl">0.438</span>       <span class="fl">8.55</span> <span class="fl">2.33</span>e<span class="op">-</span><span class="st"> </span><span class="dv">7</span>    <span class="fl">2.81</span>      <span class="fl">4.67</span> </a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="dv">2</span> puppies        <span class="fl">0.995</span>    <span class="fl">0.0566</span>     <span class="fl">17.6</span>  <span class="fl">7.01e-12</span>    <span class="fl">0.875</span>     <span class="fl">1.11</span> </a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="dv">3</span> fluffy         <span class="fl">0.304</span>    <span class="fl">0.0726</span>      <span class="fl">4.18</span> <span class="fl">7.00</span>e<span class="op">-</span><span class="st"> </span><span class="dv">4</span>    <span class="fl">0.150</span>     <span class="fl">0.458</span></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="dv">4</span> dirt          <span class="fl">-0.919</span>    <span class="fl">0.0744</span>    <span class="fl">-12.4</span>  <span class="fl">1.35</span>e<span class="op">-</span><span class="st"> </span><span class="dv">9</span>   <span class="fl">-1.08</span>     <span class="fl">-0.762</span></a></code></pre></div>
 <ul>
 <li>dirt significantly predicted happiness
 <ul>
 <li><em>b</em><sub>3</sub> is dirt is a negative: as dirt increases, happiness decreases</li>
-<li>For every unit increase in dirt, happiness decreases by -0.8 units</li>
+<li>For every unit increase in dirt, happiness decreases by -0.92 units</li>
 </ul></li>
 </ul>
 </section>
@@ -1016,7 +1016,7 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <li>We <strong>CANNOT</strong> interpret the relative contribution from these <em>b</em>s!</li>
 <li>We can’t say that puppies caused happiness to change by a greater amount than dirt
 <ul>
-<li>puppies and fluffy were measured in different units</li>
+<li>All predictors were measured in different units</li>
 <li>We can only compare predictors measured in the same unit (e.g. cm or £)</li>
 </ul></li>
 </ul>
@@ -1037,19 +1037,19 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">lm.beta<span class="op">::</span><span class="kw">lm.beta</span>(eg4.mod2.lm)</a>
 <a class="sourceLine" id="cb10-2" title="2"></a>
 <a class="sourceLine" id="cb10-3" title="3">Call<span class="op">:</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="kw">lm</span>(<span class="dt">formula =</span> happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>dirt <span class="op">+</span><span class="st"> </span>wet, <span class="dt">data =</span> eg4.data.tib)</a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="kw">lm</span>(<span class="dt">formula =</span> happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>fluffy <span class="op">+</span><span class="st"> </span>dirt, <span class="dt">data =</span> eg4.data.tib)</a>
 <a class="sourceLine" id="cb10-5" title="5"></a>
 <a class="sourceLine" id="cb10-6" title="6">Standardized Coefficients<span class="op">::</span></a>
-<a class="sourceLine" id="cb10-7" title="7">(Intercept)     puppies        dirt         wet </a>
-<a class="sourceLine" id="cb10-8" title="8">  <span class="fl">0.0000000</span>   <span class="fl">0.8326795</span>   <span class="fl">0.1149789</span>  <span class="fl">-0.4675909</span> </a></code></pre></div>
+<a class="sourceLine" id="cb10-7" title="7">(Intercept)     puppies      fluffy        dirt </a>
+<a class="sourceLine" id="cb10-8" title="8">  <span class="fl">0.0000000</span>   <span class="fl">1.0130140</span>   <span class="fl">0.2172606</span>  <span class="fl">-0.7124191</span> </a></code></pre></div>
 <ul>
-<li>The standardized beta for puppies (standardized <em>b</em><sub>1</sub>) is 0.83
+<li>The standardized beta for puppies (standardized <em>b</em><sub>1</sub>) is 1.01
 <ul>
-<li>As puppies increase by 1 <em>SD</em>, happiness increases by 0.83 <em>SD</em>s</li>
+<li>As puppies increase by 1 <em>SD</em>, happiness increases by 1.01 <em>SD</em>s</li>
 </ul></li>
-<li>The standardized beta for fluffy (standardized <em>b</em><sub>2</sub>) is 0.11
+<li>The standardized beta for fluffy (standardized <em>b</em><sub>2</sub>) is 0.22
 <ul>
-<li>As fluffy increases by 1 <em>SD</em>, happiness increases by 0.11 <em>SD</em>s</li>
+<li>As fluffy increases by 1 <em>SD</em>, happiness increases by 0.22 <em>SD</em>s</li>
 </ul></li>
 </ul>
 </section>
@@ -1058,15 +1058,15 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">lm.beta<span class="op">::</span><span class="kw">lm.beta</span>(eg4.mod2.lm)</a>
 <a class="sourceLine" id="cb11-2" title="2"></a>
 <a class="sourceLine" id="cb11-3" title="3">Call<span class="op">:</span></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="kw">lm</span>(<span class="dt">formula =</span> happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>dirt <span class="op">+</span><span class="st"> </span>wet, <span class="dt">data =</span> eg4.data.tib)</a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="kw">lm</span>(<span class="dt">formula =</span> happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>fluffy <span class="op">+</span><span class="st"> </span>dirt, <span class="dt">data =</span> eg4.data.tib)</a>
 <a class="sourceLine" id="cb11-5" title="5"></a>
 <a class="sourceLine" id="cb11-6" title="6">Standardized Coefficients<span class="op">::</span></a>
-<a class="sourceLine" id="cb11-7" title="7">(Intercept)     puppies        dirt         wet </a>
-<a class="sourceLine" id="cb11-8" title="8">  <span class="fl">0.0000000</span>   <span class="fl">0.8326795</span>   <span class="fl">0.1149789</span>  <span class="fl">-0.4675909</span> </a></code></pre></div>
+<a class="sourceLine" id="cb11-7" title="7">(Intercept)     puppies      fluffy        dirt </a>
+<a class="sourceLine" id="cb11-8" title="8">  <span class="fl">0.0000000</span>   <span class="fl">1.0130140</span>   <span class="fl">0.2172606</span>  <span class="fl">-0.7124191</span> </a></code></pre></div>
 <ul>
-<li>The standardized beta for dirt (standardized <em>b</em><sub>2</sub>) is -0.47
+<li>The standardized beta for dirt (standardized <em>b</em><sub>2</sub>) is -0.71
 <ul>
-<li>As dirt increases by 1 <em>SD</em>, happiness decreases by -0.47 <em>SD</em>s</li>
+<li>As dirt increases by 1 <em>SD</em>, happiness decreases by -0.71 <em>SD</em>s</li>
 </ul></li>
 </ul>
 </section>
@@ -1075,14 +1075,14 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">lm.beta<span class="op">::</span><span class="kw">lm.beta</span>(eg4.mod2.lm)</a>
 <a class="sourceLine" id="cb12-2" title="2"></a>
 <a class="sourceLine" id="cb12-3" title="3">Call<span class="op">:</span></a>
-<a class="sourceLine" id="cb12-4" title="4"><span class="kw">lm</span>(<span class="dt">formula =</span> happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>dirt <span class="op">+</span><span class="st"> </span>wet, <span class="dt">data =</span> eg4.data.tib)</a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="kw">lm</span>(<span class="dt">formula =</span> happiness <span class="op">~</span><span class="st"> </span>puppies <span class="op">+</span><span class="st"> </span>fluffy <span class="op">+</span><span class="st"> </span>dirt, <span class="dt">data =</span> eg4.data.tib)</a>
 <a class="sourceLine" id="cb12-5" title="5"></a>
 <a class="sourceLine" id="cb12-6" title="6">Standardized Coefficients<span class="op">::</span></a>
-<a class="sourceLine" id="cb12-7" title="7">(Intercept)     puppies        dirt         wet </a>
-<a class="sourceLine" id="cb12-8" title="8">  <span class="fl">0.0000000</span>   <span class="fl">0.8326795</span>   <span class="fl">0.1149789</span>  <span class="fl">-0.4675909</span> </a></code></pre></div>
+<a class="sourceLine" id="cb12-7" title="7">(Intercept)     puppies      fluffy        dirt </a>
+<a class="sourceLine" id="cb12-8" title="8">  <span class="fl">0.0000000</span>   <span class="fl">1.0130140</span>   <span class="fl">0.2172606</span>  <span class="fl">-0.7124191</span> </a></code></pre></div>
 <ul>
 <li>All predictors (<em>b</em>s) are now in the same unit - standard deviations - Now we can <strong>directly compare</strong> their relative contribution</li>
-<li>0.83 is the largest standardized beta</li>
+<li>1.01 is the largest standardized beta</li>
 <li>So each <em>SD</em> increase in puppies predicts a larger <em>SD</em> change in happiness than the other predictors</li>
 </ul>
 </section>
@@ -1108,8 +1108,8 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 </ul></li>
 </ul>
 </section>
-<section id="summary-1" class="slide level2">
-<h2>Summary</h2>
+<section id="overall-summary" class="slide level2">
+<h2>Overall summary</h2>
 <ul>
 <li>The LM captures the relationship between at one or more predictors, <em>x</em>, and an outcome, <em>y</em>
 <ul>
