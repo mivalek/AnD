@@ -13,11 +13,7 @@ library(tidyverse)
 library(cowplot)
 library(lm.beta)
 library(broom)
-# library(kableExtra)
-# library(gridExtra)
 library(weights)
-# library(adata)
-#colour = #03a7a7
 
 to_math <- function(x) {
   gsub(" ", "\\\\ ", x)
@@ -174,81 +170,12 @@ scatter.choc.ssm <- choc.tib %>%
 
 ```
 
-```{r eg2_setup}
-eg2.outcome = "bullshit receptivity"
-eg2.pred1 = "paranormal beliefs"
-eg2.pred2 = "complementary & alternative medicine beliefs"
-eg2.pred2.short = "alternative medicine"
-eg2.pred2.med = "alternative medicine beliefs"
-
-set.seed(150385)
-myN = 800
-myM <- c(2.6, 5, 8)
-myCov <- matrix(c(1, .3, .24,
-                  .3, 1, .58, 
-                  .24, .58, 1 ), ncol=3)
-bullshit <- data.frame(mvrnorm(n = myN, mu=myM, Sigma=myCov, empirical=TRUE))
-names(bullshit)[1:3] <- c("BSR", "PB", "CAM")
-
-bullshit.model <- lm(BSR ~ PB + CAM, data = bullshit, na.action = na.exclude) #rep
-bullshit.out <- summary(bullshit.model) #rep
-
-eg2.r2 <- bullshit.out$r.squared %>% round(3)
-eg2.adjr2 <- bullshit.out$adj.r.squared %>% round(3)
-
-```
-
-```{r eg3_setup}
-eg3.outcome = "impulse control" 
-eg3.pred1 = "bladder fullness"
-eg3.pred2 = "inhibition"
-
-set.seed(42)
-myN <- 20
-
-eg3.b0 <- 0.7
-eg3.b1 <- 0.9
-eg3.b2 <- 1.37
-eg3.sigma <- 0.7
-
-bladder <- rnorm(myN, 3, 2)
-inhibition <- rnorm(myN, 4.5, 1.8)
-eps <- rnorm(inhibition, 0, eg3.sigma) 
-impulse = eg3.b0 + eg3.b1*bladder + eg3.b2*inhibition + eps
-eg3.data.tib <- tibble(impulse, bladder, inhibition)
-
-eg3.mod1.lm <- lm(impulse ~ bladder)
-eg3.mod2.lm <- lm(impulse ~ bladder + inhibition)
-eg3.mod1.fit <- broom::glance(eg3.mod1.lm)
-eg3.mod2.fit <- broom::glance(eg3.mod2.lm)
-eg4.anova <- anova(eg3.mod1.lm,eg3.mod2.lm) %>% broom::tidy()
-eg3.mod2.stdbeta <- lm.beta::lm.beta(eg3.mod2.lm)
-
-eg3.sum <- eg3.data.tib %>% 
-  summarise_at(c(1:3), .funs = c(mean = "mean", sd = "sd", max = "max", min = "min"))
-
-
-eg3.mod2.out <- broom::tidy(eg3.mod2.lm, conf.int = TRUE)
-eg3.mod2.pred1.p <- eg3.mod2.out$p.value[2]
-eg3.mod2.pred2.p <- eg3.mod2.out$p.value[3] 
-eg3.mod2.pred1.beta <- eg3.mod2.out$estimate[2]
-eg3.mod2.pred2.beta <- eg3.mod2.out$estimate[3] 
-eg3.mod2.beta.largest.name <- if_else(eg3.mod2.pred1.beta > eg3.mod2.pred2.beta, eg3.pred1, eg3.pred2)
-eg3.mod2.beta.smallest.name <- if_else(eg3.mod2.pred1.beta > eg3.mod2.pred2.beta, eg3.pred2, eg3.pred1)
-
-eg3.mod2.pred1.stdbeta <- eg3.mod2.stdbeta$standardized.coefficients[2]
-eg3.mod2.pred2.stdbeta <- eg3.mod2.stdbeta$standardized.coefficients[3] 
-eg3.mod2.stdbeta.largest.name <- if_else(eg3.mod2.pred1.stdbeta > eg3.mod2.pred2.stdbeta, eg3.pred1, eg3.pred2)
-eg3.mod2.stdbeta.smallest.name <- if_else(eg3.mod2.pred1.stdbeta > eg3.mod2.pred2.stdbeta, eg3.pred2, eg3.pred1)
-
-
-```
 
 ```{r eg4_setup}
 eg4.outcome = "happiness" #????
 eg4.pred1 = "puppies"
-eg4.pred2 = "dirt"
-eg4.pred3 = "wet"
+eg4.pred2 = "fluffy"
+eg4.pred3 = "dirt"
 #eg4.pred2.short = "alternative medicine"
 #eg4.pred2.med = "alternative medicine beliefs"
 
@@ -257,7 +184,7 @@ myN <- 20
 
 eg4.b0 <- 4
 eg4.b1 <- 1
-eg4.b2 <- -.2
+eg4.b2 <- .2
 eg4.b3 <- -.9
 eg4.sigma <- 0.7
 
@@ -397,68 +324,63 @@ report.p <- function(x){
 - Week 11: Consolidation
 
 
-## RECAP
+## Linear Models (LM): recap
 
-- Trying to make predictions about the world using linear models
-- Fit a line to capture the relationship between predictor & outcome
+- Trying to make predictions about the world 
+- Capture the relationship between predictor & outcome
 - Linear model (line) is described by an intercept (*b*~0~) and a slope (*b*~1~)
 
 $$Outcome = b_0 + b_1\times Predictor_1 + \varepsilon$$
 
-
-- The outcome 'starts' at *b*~0~
-- The outcome will increase by *b*~1~ for every unit change in predictor 1
-- Always some error in model
 - Use the model to see: 
     - *R*^2^: proportion of variance in outcome that model explains
     - *t*-statistic and associated *p*-value: is *b*~1~ different from 0?
-    - Direction of relationship between predictor/outcome (positive/negative)
+    - Direction of relationship between predictor & outcome 
 
-## Today's Topics
+## Today's Topics 
 
 - How good *is* our model? 
     - Our model vs the mean
     - Error in the model
-- Throwing more predictors into the mix
+- Throwing more predictors into the mix!
 - Comparing hierarchical models
 - Comparing predictors in a model
 - Bringing it all together: what can our model tell us?
 
 ## How good *is* our model?
 
-- How do we tell?
-- *R*^2^: what (proportion of variance) can our model explain
-- How much better is our model than the simplest model possible?
-- How much error in prediction is there in our model?
+- A good linear model (LM):
+    - Explains a lot about our outcome
+    - Captures more than using the simplest model possible
+    - Doesn't contain much error in prediction 
 
 ### Keep is simple, stupid: The mean model
 
 ![](pics/kiss.jpg){width=400px}
 
 
-- We want a linear model that explains more than the simplest model possible
-- The simplest model we can use is the mean...
-- Mean chocolate bars eaten per week is `r choc.sum$choc_mean %>% round(2)`  
-- Predict how much chocolate your neighbour eats a week... you'd predict `r choc.sum$choc_mean %>% round(2)` bars!
+- We want a LM that explains more than the simplest model possible
+- The simplest model is the **mean**...
+    - Mean chocolate bars eaten per week is `r choc.sum$choc_mean %>% round(2)`  
+    - Predict how much chocolate your neighbour eats a week... 
 
 ### Keep is simple, stupid: The mean model
 
 - Let's plot this
-    - Chocolate eaten is our outcome variable, predicted from the mean: `r choc.sum$choc_mean %>% round(2)`
+    - Chocolate eaten is our outcome variable
     - Not a great model!
     
 ```{r F_vis_meanmod1}
 meanmod.choc + 
-  labs(y = "Chocolate (n per week)", x = "Chocolate liking (1-10)") 
+  labs(y = "Chocolate (n per week)", x = " ") 
 ```
 
 ### Keep is simple, stupid: The mean model
 
 - Let's add a predictor
-    - Liking along x axis
-    - Error between prediction (using mean) and observed data (actual
-scores) 
-
+- Error in model
+    - between prediction (using mean) and observed data 
+    
 ```{r F_vis_meanmod2}
 meanmod.choc +  
   geom_point(alpha = .3, size = 2.5) + 
@@ -469,9 +391,8 @@ meanmod.choc +
 ### Keep is simple, stupid: The mean model
 
 - Let's add a predictor
-    - Liking along x axis
-    - Error between prediction (using mean) and observed data (actual
-scores) 
+- Error in model
+    - between prediction (using mean) and observed data 
 
 ```{r F_vis_meanmod3}
 meanmod.choc + geom_point(alpha = .3, size = 2.5) +
@@ -483,10 +404,10 @@ meanmod.choc + geom_point(alpha = .3, size = 2.5) +
 
 ### We can do better, probably...
 
-- Let's construct a linear model between chocolate liking and eating
-    - The line that explains our data with as little error as possible
-    - Compare that to the line representing our mean model
-    - Very different!
+- Let's construct a LM between chocolate liking and eating
+    - The line explaining our data with the least error
+    - Compare to the line representing our mean model
+    - Shows the **improvement in prediction** from LM (vs mean)
 
 ```{r F_vis_reg_ssm1}
 scatter.choc.lm
@@ -494,48 +415,45 @@ scatter.choc.lm
 
 ### We can do better, probably...
 
-- Let's construct a linear model between chocolate liking and eating
-    - The line that explains our data with as little error as possible
-    - Compare that to the line representing our mean model
-    - Very different!
+- Let's construct a LM between chocolate liking and eating
+    - The line explaining our data with the least error
+    - Compare to the line representing our mean model
+    - Shows the **improvement in prediction** from fitting a LM 
 
 ```{r F_vis_reg_ssm2}
 scatter.choc.lm + 
   geom_hline(yintercept=choc.sum$choc_mean, linetype="dashed", color = "red") 
 ```
 
-- Shows the **improvement in prediction** of the outcome from fitting a linear model
-- A larger difference = a greater improvement!
-- We want a linear model that explains more than the simplest model - the mean model
+### We can do better, probably...
+
+- Larger difference = greater improvement!
+- We want a LM that **explains more** than the mean model
 
 ```{r F_vis_ssm_size_compare, fig.width=8}
 plot_grid(scatter.choc.ssm, scatter.cabbage.ssm)
 ```
 
 
-## Interim summary
+### Interim summary
 
-- Is our linear model is better than the simplest model possible?
-    - The mean model is the simplest model we can fit to our data     
-    - We want a linear model that predicts the outcome better than the mean model
-    - Difference between linear model & mean model = improvement
-- A linear model better than the mean still contains error in prediction
-- But...how much error is still in the model?
+- Is our LM is better than the simplest model possible?
+    - The mean model is the simplest model     
+    - We want a LM that **explains more** than the mean model
+- But...a LM better than the mean still contains error
+- How much error is okay?
     - Does the model explain more than it doesn't explain?
-    - How well does the linear model predict the outcome
+    - How well does the LM predict the outcome?
 
-## Error in the model
+### Error in the model
 
-- We now know whether the linear model we fitted is better than the mean model
-    - But there will still be error in the model
-- Fit a line to **best** capture the relationship between predictors and outcome 
-- In the real world, no model will fit the data perfectly
-    - Want the **least error** possible between the predicted and observed points
+- No model will fit the data perfectly
+- Fit a line to **best** capture relationships between variables
+- Want the **least error** possible 
+    - Compare predicted and observed data points
 
+### Error in the model
 
-## Error in the model
-
-- Let's look at how much error our linear model contains
 
 \ 
 
@@ -544,26 +462,21 @@ plot_grid(scatter.choc.ssm, scatter.cabbage.ssm)
 <img width=400px src="pics/scatter.choc.lm.worse.png" style="display: inline-block">
 </section>
 
- 
 
 ### Bringing it all together: the *F*-statistic
 
-- Conceptually, we now have what we need for the *F*-statistic:
+- This is the *F*-statistic!
 
-$$F =\frac{what\ the model\ can\ explain\ (compared\ to\ the\ worst\ model)}{what\ the\ model\ cannot\ explain\ (error\ left\ in\ model)}=\frac{signal}{noise}$$
+$$F =\frac{what\ the model\ can\ explain}{what\ the\ model\ cannot\ explain  }=\frac{signal}{noise}$$
 
-- Signal = the improvement in variance explained by the model (vs the mean-model)
-    - How much variance the model explains
-    - We want this to be as big as possible
-- Noise = the varience unexplained by the model
-    - The error our model cannot explain
-    - We want this to be as small as possible
-    
+- We want **signal** to be as big as possible
+- We want **noise** to be as small as possible
+
 ### Bringing it all together: the *F*-statistic
 
-- A **ratio** of **variance explained** relative to **varience unexplained**
-- If the ratio > 1, our model can explain more than it cannot explain
-- The associated *p*-value tells us the probability of getting an *F*-statistic at least that large if fitting our model *did not* improve our ability to predict the outcome variable
+- A **ratio** of ***variance explained*** relative to ***varience unexplained***
+- Ratio > 1 means our model can explain more than it cannot explain
+- Associated *p*-value of how likely we are to find a *F*-statistic as large as the observed if the null hypothesis is true 
 
 
 ## Why you gotta complicate things?
@@ -572,16 +485,16 @@ $$F =\frac{what\ the model\ can\ explain\ (compared\ to\ the\ worst\ model)}{wha
 
 \ 
 
-- First, multiple predictors are not much more complicated!
-  - We build models to try and predict what is happening in the world
+- Multiple predictors are **not** much more complicated!
+  - We build models to predict what is happening in the world
 - Simple explainations for complex relationships?  
 - Multiple predictors = greater explanatory power 
   
-## How multiple predictors (don't really) change the equation 
+### How multiple predictors (don't really) change the LM equation 
 
 $$\begin{aligned}Outcome &= Model + Error\\
-Y&=b+0 + b_1\times Predictor_1 + \varepsilon\\
-&=b+0 + b_1\times Predictor_1 + b_2\times Predictor_2 + \varepsilon\end{aligned}$$
+Y&=b_0 + b_1\times Predictor_1 + \varepsilon\\
+&=b_0 + b_1\times Predictor_1 + b_2\times Predictor_2 + \varepsilon\end{aligned}$$
 
   
 - Y: outcome  
@@ -589,112 +502,118 @@ Y&=b+0 + b_1\times Predictor_1 + \varepsilon\\
 - *b*~1~: change in outcome associated with a unit change in predictor 1
 - *b*~2~: change in outcome associated with a unit change in predictor 2 
 
-## How multiple predictors (don't really) change the equation
+## How multiple predictors (don't really) change the LM equation
 
-- 1 predictor linear model = regression line
-- 2+ predictor model = regression plane
+- One predictor LM = regression line
+- Two+ predictor LM = regression plane
 
 <div class="plot_ly">
-<iframe frameborder="0" seamless='seamless' scrolling=no style="height: 450px" src="https://mivalek.github.io/adata/plot_3d.html"></iframe>
+<iframe frameborder="0" seamless='seamless' scrolling=no style="height: 500px" src="https://mivalek.github.io/adata/plot_3d.html"></iframe>
 </div>
 
 
-## Predicting "bullshit receptivity"
+## Puppies, puppies everywhere!
 
-![](pics/Deepak_words.jpg){width=400px}
+The outcome:
+![](pics/happy.jpg){width=400px}
 
-> "Attention and intention are the mechanics of manifestation"<br>
-"Hidden meaning transforms unparalleled abstract beauty"<br>
-"Unparalleled transforms meaning beauty hidden abstract" ~Deepak Chopra
 
-## Predicting "bullshit receptivity" 
+## Puppies, puppies everywhere!
 
-$$\begin{aligned}`r to_math(eg2.outcome)`\ = &\ b_0 + b_1\times `r to_math(eg2.pred1)`\ +\\ &\ b_2\times `r to_math(eg2.pred2.short)` + \varepsilon\end{aligned}$$
+Predictor 1:
+![](pics/puppyattack.gif){width=400px}
 
-- Y: `r eg2.outcome`  
-- *b*~0~: value of `r eg2.outcome`when `r eg2.pred1` and `r eg2.pred2.short` are 0 (the intercept)  
-- *b*~1~: change in `r eg2.outcome` associated with a unit change in `r eg2.pred1` when `r eg2.pred2.med` is 0
-- *b*~2~: change in `r eg2.outcome` associated with a unit change in `r eg2.pred2.med` when `r eg2.pred1` is 0
+## Puppies, puppies everywhere!
 
-## Predicting "bullshit receptivity"
+Predictor 2:
+![](pics/fluffy.jpg){width=400px}
 
-              
-```{r bullshit_lm, echo = T}
-bullshit.model <- lm(BSR ~ PB + CAM, data = bullshit, na.action = na.exclude)
-broom::glance(bullshit.model)
+## Puppies, puppies everywhere!
+
+$$`r to_math(eg4.outcome)`\ =\ b_0 + b_1\times `r to_math(eg4.pred1)`\ +\ b_2\times `r to_math(eg4.pred2)` + \varepsilon$$
+
+- Y: `r eg4.outcome`  
+- *b*~0~: value of `r eg4.outcome` when `r eg4.pred1` and `r eg4.pred2`  are 0 (the intercept)  
+- *b*~1~: change in `r eg4.outcome` associated with a unit change in `r eg4.pred1` when `r eg4.pred2` is 0
+- *b*~2~: change in `r eg4.outcome` associated with a unit change in `r eg4.pred2` when `r eg4.pred1` is 0
+
+## Model fit: *F*-statistic
+
+```{r puppy_m1, echo = T}
+# fit the linear model
+eg4.mod1.lm <- lm(happiness ~ puppies, data = eg4.data.tib)
+# get fit statistics
+broom::glance(eg4.mod1.lm)
 ```
 
-```{r}
-bullshit.out <- broom::glance(bullshit.model)
+
+- The *F*-statistic is `r eg4.mod1.fit$statistic %>% round(2)`
+- The associated p-value is `r eg4.mod1.fit$p.value %>% report.p`
+    - Adding predictors significantly improved model fit
+    - Explained significantly more variance than could not explain
+
+## Model fit: *R*^2^ value
+
+```{r puppy_m1.2, echo = T}
+# fit the linear model
+eg4.mod1.lm <- lm(happiness ~ puppies, data = eg4.data.tib)
+# get fit statistics
+broom::glance(eg4.mod1.lm)
 ```
 
-
-- The *F*-statistic is `r bullshit.out$statistic %>% round(2)`
-- The associated p-value is `r bullshit.out$p.value %>% report.p`
-    - This means that adding predictors to the mean model significantly improved the fit of our model
-    - We were able to explain significantly more variance in our outcome than we were not able to explain
-
-## Predicting "bullshit receptivity"
-
-```{r bullshit_lm2, echo = T}
-bullshit.model <- lm(BSR ~ PB + CAM, data = bullshit, na.action = na.exclude)
-broom::glance(bullshit.model)
-```
-
-- The *R*^2^ is `r bullshit.out$r.squared %>% round(2)` 
-    - This means `r bullshit.out$r.squared %>% round(2) * 100`% of the variance in bullshit receptivity ratings was explained by paranormal belief **and** complementary and alternative medicine belief ratings
+- The *R*^2^ is `r eg4.mod1.fit$r.squared %>% round(2)` 
+    - `r eg4.mod1.fit$r.squared %>% round(2) * 100`% of the variance in `r eg4.outcome` was explained by `r eg4.pred1` **and** `r eg4.pred2` ratings
     
 - This is just in our observed data!
-- Our adjusted *R*^2^ value was `r bullshit.out$adj.r.squared %>% round(3)`
-    - If we used the same model with the population, we should be able to explain `r eg2.adjr2*100`% of the variance in bullshit receptivity
+- Our adjusted *R*^2^ value was `r eg4.mod1.fit$adj.r.squared %>% round(3)`
+    - If we used the same model with the population, we should be able to explain `r eg4.mod1.fit$adj.r.squared %>% round(2) * 100`% of the variance in `r eg4.outcome`
+
 
 
 ## Interim summary, mark II 
 
-- The linear model can be expanded to include additional predictors
-- The model is still described by an intercept (*b*~0~) but now includes slopes (*b*s) for each predictor
+- The LM can be expanded to include additional predictors
+- The model is still described by an intercept (*b*~0~) 
+- It now includes slopes (*b*s) for *each* predictor
 - This creates a regression plane instead of a line
 - We can assess how good this model is 
     - *F*-ratio and associated *p*-value
     - *R*^2^
-- What if we want to compare two models, to see which better explains varience in our outcome?
-    
-## Comparing hierarchical models
+- What if we want to compare two linear models?
+
+## Comparing linear models
 
 - We can compare models with different numbers of predictors
     - See which model better captures our outcome
-- We looked at how we can compare a simple model (the mean) and  a more complex model (the linear model)
-    - Can also compare simpler linear models and more complex linear models
-    - But the models must be 'hierarchical'
+    - The models must be 'hierarchical'
         - 2^nd^ model has the same predictors as the 1^st^ model plus extra
         - 3^rd^ model has the same predictors as the 2^nd^ model plus extra
+          
+## Even more puppies!
 
-## Predicting impulse control from bladder fullness
+Predictor 3:
+![](pics/huck.gif){width=400px}
 
-![](pics/bladder.jpg){height=200px}
+
+## Even more puppies!
 
 Model 1:
 
-$$`r to_math(eg3.outcome)` = b_0 + b_1\times `r to_math(eg3.pred1)` + \varepsilon$$
-
-\ 
+$$\begin{aligned}`r to_math(eg4.outcome)`\ = &\ b_0\ +\\&\ b_1\times `r to_math(eg4.pred1)`\ +\\ &\ b_2\times `r to_math(eg4.pred2)` + \varepsilon\end{aligned}$$
 
 Model 2:
 
-$$`r to_math(eg3.outcome)` = b_0 + b_1\times `r to_math(eg3.pred1)` + b_2\times `r to_math(eg3.pred2)` + \varepsilon$$  
+$$\begin{aligned}`r to_math(eg4.outcome)`\ = &\ b_0\ +\\&\ b_1\times `r to_math(eg4.pred1)`\ +\\ &\ b_2\times `r to_math(eg4.pred2)`\ +\\ &\ b_3\times `r to_math(eg4.pred3)` + \varepsilon\end{aligned}$$
 
-## Predicting impulse control from bladder fullness
+## Even more puppies!
 
-- Y: `r eg3.outcome`  
-- *b*~0~: value of `r eg3.outcome` when `r eg3.pred1` and `r eg3.pred2` are 0 (the intercept)  
-- *b*~1~: change in `r eg3.outcome` associated with a unit change in `r eg3.pred1` when `r eg3.pred2` is 0
-- *b*~2~: change in `r eg3.outcome` associated with a unit change in `r eg3.pred2` when `r eg3.pred1` is 0
+```{r eg4_lm, echo = T}
 
-## Predicting impulse control from bladder fullness
+# Model 1
+eg4.mod1.lm <- lm(happiness ~ puppies, data = eg4.data.tib)
 
-```{r eg3_lm, echo = T}
-eg3.mod1.lm <- lm(impulse ~ bladder, data = eg3.data.tib)
-eg3.mod2.lm <- lm(impulse ~ bladder + inhibition, data = eg3.data.tib)
+# Model 2
+eg4.mod2.lm <- lm(happiness ~ puppies + dirt + wet, data = eg4.data.tib)
 ```
 
 - First, which is the **better** model?
@@ -703,8 +622,8 @@ eg3.mod2.lm <- lm(impulse ~ bladder + inhibition, data = eg3.data.tib)
 ## With great (predictive) power comes great responsibility
 
 - Need to assess which is the best model
-- Want to *compare* Model 1 (1 predictor) and Model 2 (2 predictors)
-    - See the amount of improvement from adding extra predictors into the model
+- Want to *compare* Model 1 (2 predictors) and Model 2 (3 predictors)
+    - Do extra predictors improve the model?
     - Look at ***R*^2^-change** and ***F*-change**
   
 
@@ -717,173 +636,135 @@ eg3.mod2.lm <- lm(impulse ~ bladder + inhibition, data = eg3.data.tib)
 
 Model 1:
 
-```{r eg3_fit.m1, echo = T}
-broom::glance(eg3.mod1.lm)
+```{r eg4_fit.m1, echo = T}
+broom::glance(eg4.mod1.lm)
 ```
 
 \ 
 
 Model 2:
 
-```{r eg3_fit.m2, echo = T}
-broom::glance(eg3.mod2.lm)
+```{r eg4_fit.m2, echo = T}
+broom::glance(eg4.mod2.lm)
 ```
 
 
 ### R^2^-change
 
-- The R^2^ for Model 1 is `r eg3.mod1.fit$r.squared %>% round(2)`  
-    - `r eg3.mod1.fit$r.squared %>% round(2) * 100`% of the variance in `r eg3.outcome` is explained by `r eg3.pred1`) 
-
-- The R^2^ for Model 2 is `r eg3.mod2.fit$r.squared %>% round(2)` 
-    - `r eg3.mod2.fit$r.squared %>% round(2) * 100`% of the variance in `r eg3.outcome` is explained by `r eg3.pred1` *and* `r eg3.pred2`). 
+- The R^2^ for Model 2 is `r eg4.mod2.fit$r.squared %>% round(2)` 
+    - `r eg4.mod2.fit$r.squared %>% round(2) * 100`% of the variance in `r eg4.outcome` is explained by `r eg4.pred1` *and* `r eg4.pred2`). 
 
 ### R^2^-change
 
 - We can calculate the *change* in R^2^ between Model 1 and Model 2
-    - `r eg3.mod2.fit$r.squared %>% round(2)` - `r eg3.mod1.fit$r.squared %>% round(2)` = `r (eg3.mod2.fit$r.squared %>% round(2)) - (eg3.mod1.fit$r.squared %>% round(2))`
-    - So Model 2 explains `r ((eg3.mod2.fit$r.squared %>% round(2)) - (eg3.mod1.fit$r.squared %>% round(2)))*100`% more variance than Model 1
-    - Adding an extra predictor to the model, `r eg3.pred2`, allowed us to account for `r ((eg3.mod2.fit$r.squared %>% round(2)) - (eg3.mod1.fit$r.squared %>% round(2)))*100`% more variance in `r eg3.outcome` than `r eg3.pred1` alone
-
+    - `r eg4.mod2.fit$r.squared %>% round(2)` - `r eg4.mod1.fit$r.squared %>% round(2)` = `r (eg4.mod2.fit$r.squared %>% round(2)) - (eg4.mod1.fit$r.squared %>% round(2))`
+    - Model 2 explains `r ((eg4.mod2.fit$r.squared %>% round(2)) - (eg4.mod1.fit$r.squared %>% round(2)))*100`% more variance than Model 1
+    - We accounted for `r ((eg4.mod2.fit$r.squared %>% round(2)) - (eg4.mod1.fit$r.squared %>% round(2)))*100`% more variance in `r eg4.outcome`by adding `r eg4.pred3` to the model 
+    
 ### *F*-change
 
-```{r eg3_anova,  echo = T}
-eg3.anova <- anova(eg3.mod1.lm,eg3.mod2.lm) %>% broom::tidy()
-eg3.anova
+``` {r eg4_anova,  echo = T}
+eg4.anova <- anova(eg4.mod1.lm,eg4.mod2.lm) %>% broom::tidy()
+eg4.anova
 ```
 
-- Is there an improvement in the variance in the outcome explained by Model 2 compared to Model 1?
-    - Does adding more predictors significantly improve the fit of the model?
-
-- The *F*-change statistic (under "statistic"!) is `r eg4.anova$statistic[2] %>% round(2)` and has a *p*-value of `r eg4.anova$p.value[2] %>% report.p`
-
-
-### *F*-change
-
-- This means that Model 2 (with `r eg3.pred1` and `r eg3.pred2` as predictors) was *significantly better* at explaining variability in `r eg3.outcome` than Model 1 (with only `r eg3.pred1` as a predictor)
+- Does Model 2 explain more variance compared to Model 1?
+    - Does adding more predictors significantly improve model fit?
+- The *F*-change statistic is `r eg4.anova$statistic[2] %>% round(2)` with a *p*-value of `r eg4.anova$p.value[2] %>% report.p`
+- Model 2 was *significantly better* at explaining variability in `r eg4.outcome` than Model 1
     
-
-## Relative contribution of predictor variables
+### Relative contribution of predictor variables
 
 - Now we know Model 2 is the best model...
 - Which predictors explain **most** variance in the outcome variable?
     - Assess the **relative contribution** of our predictor variables
     - Look at the *b*-values and associated *p*-values for each predictor
 
-## Relative contribution of predictor variables
+## Number of puppies...
 
 ```{r}
-eg3.mod2.out <- broom::tidy(eg3.mod2.lm, conf.int = TRUE)
+eg4.mod2.out <- broom::tidy(eg4.mod2.lm, conf.int = TRUE)
 ```
 
 ```{r DO_MOD_NAME, echo = T}
-broom::tidy(eg3.mod2.lm, conf.int = TRUE)
+broom::tidy(eg4.mod2.lm, conf.int = TRUE)
 ```
 
-- `r eg3.pred1` `r ifelse(eg3.mod2.pred1.p < .05, "significantly predicted", "did not significantly predict")` `r eg3.outcome` 
-    - The *b* for `r eg3.pred1` is a `r ifelse(eg3.mod2.pred1.beta > 0, "positive", "negative")` value: as `r eg3.pred1` increases, `r eg3.outcome` `r ifelse(eg3.mod2.pred1.beta > 0, "increases", "decreases")` (a `r ifelse(eg3.mod2.pred1.beta > 0, "positive", "negative")` relationship)
-    - For every unit increase in `r eg3.pred1`, `r eg3.outcome` `r ifelse(eg3.mod2.pred1.beta > 0, "increases", "decreases")` by `r eg3.mod2.out$estimate[2] %>%  round(2)` units (when all other predictors are held constant)
+- `r eg4.pred1` `r ifelse(eg4.mod2.pred1.p < .05, "significantly predicted", "did not significantly predict")` `r eg4.outcome` 
+    - *b*~1~ is `r ifelse(eg4.mod2.pred1.beta > 0, "positive", "negative")`: as `r eg4.pred1` increases, `r eg4.outcome` `r ifelse(eg4.mod2.pred1.beta > 0, "increases", "decreases")`
+    - For every unit increase in `r eg4.pred1`, `r eg4.outcome` `r ifelse(eg4.mod2.pred1.beta > 0, "increases", "decreases")` by `r eg4.mod2.out$estimate[2] %>%  round(2)` units 
+    - When all other predictors are held constant!
 
-## Relative contribution of predictor variables
+## Fluffiness of puppies...
 
 ```{r DO_MOD_NAME_2, echo = T}
-broom::tidy(eg3.mod2.lm, conf.int = TRUE)
+broom::tidy(eg4.mod2.lm, conf.int = TRUE)
 ```
 
-- `r eg3.pred2` `r ifelse(eg3.mod2.pred2.p < .05, "significantly predicted", "did not significantly predict")` `r eg3.outcome` 
-    - The *b* for `r eg3.pred2` is a `r ifelse(eg3.mod2.pred2.beta > 0, "positive", "negative")` value: as `r eg3.pred2` increases, `r eg3.outcome` `r ifelse(eg3.mod2.pred2.beta > 0, "increases", "decreases")` (a `r ifelse(eg3.mod2.pred2.beta > 0, "positive", "negative")` relationship)
-    - For every unit increase in `r eg3.pred2`, `r eg3.outcome` `r ifelse(eg3.mod2.pred2.beta > 0, "increases", "decreases")` by `r eg3.mod2.out$estimate[2] %>%  round(2)` units (when all other predictors are held constant)
+- `r eg4.pred2` `r ifelse(eg4.mod2.pred2.p < .05, "significantly predicted", "did not significantly predict")` `r eg4.outcome` 
+    - *b*~2~ is `r eg4.pred2` is a `r ifelse(eg4.mod2.pred2.beta > 0, "positive", "negative")`: as `r eg4.pred2` increases, `r eg4.outcome` `r ifelse(eg4.mod2.pred2.beta > 0, "increases", "decreases")`
+    - For every unit increase in `r eg4.pred2`, `r eg4.outcome` `r ifelse(eg4.mod2.pred2.beta > 0, "increases", "decreases")` by `r eg4.mod2.out$estimate[3] %>%  round(2)` units 
+
+## Dirtiness of puppies...
+
+```{r DO_MOD_NAME_3, echo = T}
+broom::tidy(eg4.mod2.lm, conf.int = TRUE)
+```
+
+- `r eg4.pred3` `r ifelse(eg4.mod2.pred3.p < .05, "significantly predicted", "did not significantly predict")` `r eg4.outcome` 
+    - *b*~3~ is `r eg4.pred3` is a `r ifelse(eg4.mod2.pred3.beta > 0, "positive", "negative")`: as `r eg4.pred3` increases, `r eg4.outcome` `r ifelse(eg4.mod2.pred3.beta > 0, "increases", "decreases")`
+    - For every unit increase in `r eg4.pred3`, `r eg4.outcome` `r ifelse(eg4.mod2.pred3.beta > 0, "increases", "decreases")` by `r eg4.mod2.out$estimate[4] %>%  round(2)` units 
     
 ## Relative contribution of predictor variables
 
-- We **CANNOT** interpret this to mean that `r eg3.mod2.beta.largest.name` caused `r eg3.outcome` to increase by a greater amount than each unit increase in `r eg3.mod2.beta.smallest.name`
-    - `r eg3.pred1` and `r eg3.pred2` were measured in different units
-    - We can only compare the relative contribution of predictors measured in the same unit (e.g. cm or £) 
+- We **CANNOT** interpret the relative contribution from these *b*s! 
+- We can't say that `r eg4.mod2.beta.largest.name` caused `r eg4.outcome` to change by a greater amount than `r eg4.mod2.beta.smallest.name`
+    - `r eg4.pred1` and `r eg4.pred2` were measured in different units
+    - We can only compare predictors measured in the same unit (e.g. cm or £) 
     
 ## Relative contribution of predictor variables
 
-- Instead, we need to look at **standardized** versions of our betas
-    - These are measured in standard deviations
-- Remember: $`r to_math(eg3.outcome)` = b_0 + b_1\times `r to_math(eg3.pred1)` + b_2\times `r to_math(eg3.pred2)` + \varepsilon$
-  - **unstandardized *b*~1~** is the number of **units** that `r eg3.outcome` `r ifelse(eg3.mod2.pred1.beta > 0, "increases", "decreases")` for every unit increase in `r eg3.pred1`
-  - **standardized *b*~1~** is the number of **standard deviations** (*SD*s) that `r eg3.outcome` `r ifelse(eg3.mod2.pred1.beta > 0, "increases", "decreases")` for every standard deviation increase in `r eg3.pred1`
+- Instead, need to look at **standardized** versions of our betas
+    - These are 'measured' in **standard deviations**
+- **Unstandardized *b*~1~** = number of **units** that `r eg4.outcome` `r ifelse(eg4.mod2.pred1.beta > 0, "increases", "decreases")` for every unit increase in `r eg4.pred1`
+- **Standardized *b*~1~** = number of **standard deviations** (*SD*s) that `r eg4.outcome` `r ifelse(eg4.mod2.pred1.beta > 0, "increases", "decreases")` for every standard deviation increase in `r eg4.pred1`
   
 ## Relative contribution of predictor variables  
 
-```{r eg3_lm.beta, echo = T}
-lm.beta::lm.beta(eg3.mod2.lm)
+```{r eg4_lm.beta, echo = T}
+lm.beta::lm.beta(eg4.mod2.lm)
 ```
 
-- The standardized beta for `r eg3.pred1` (standardized *b*~1~) is `r eg3.mod2.stdbeta$standardized.coefficients[2] %>% round(2)`
-    - As `r eg3.pred1` increases by 1 *SD*, `r eg3.outcome` `r ifelse(eg3.mod2.pred1.stdbeta > 0, "increases", "decreases")` by `r eg3.mod2.stdbeta$standardized.coefficients[2] %>% round(2)` *SD*s
+- The standardized beta for `r eg4.pred1` (standardized *b*~1~) is `r eg4.mod2.stdbeta$standardized.coefficients[2] %>% round(2)`
+    - As `r eg4.pred1` increase by 1 *SD*, `r eg4.outcome` `r ifelse(eg4.mod2.pred1.stdbeta > 0, "increases", "decreases")` by `r eg4.mod2.stdbeta$standardized.coefficients[2] %>% round(2)` *SD*s
 
-- The standardized beta for `r eg3.pred2` (standardized *b*~2~) is `r eg3.mod2.stdbeta$standardized.coefficients[3] %>% round(2)`
-    - As `r eg3.pred2` increases by 1 *SD*, `r eg3.outcome` `r ifelse(eg3.mod2.pred2.stdbeta > 0, "increases", "decreases")` by `r eg3.mod2.stdbeta$standardized.coefficients[3] %>% round(2)` *SD*s
+- The standardized beta for `r eg4.pred2` (standardized *b*~2~) is `r eg4.mod2.stdbeta$standardized.coefficients[3] %>% round(2)`
+    - As `r eg4.pred2` increases by 1 *SD*, `r eg4.outcome` `r ifelse(eg4.mod2.pred2.stdbeta > 0, "increases", "decreases")` by `r eg4.mod2.stdbeta$standardized.coefficients[3] %>% round(2)` *SD*s
 
 ## Relative contribution of predictor variables  
 
-```{r eg3_lm.beta_2, echo = T}
-lm.beta::lm.beta(eg3.mod2.lm)
+```{r eg4_lm.beta2, echo = T}
+lm.beta::lm.beta(eg4.mod2.lm)
 ```
 
-- The influence of both predictors on the outcome (*b*s) are now measured in the same unit (*SD*s)
-    - We can **directly** compare their relative contribution 
-    - `r if_else(eg3.mod2.pred1.stdbeta > eg3.mod2.pred2.stdbeta, eg3.mod2.pred1.stdbeta, eg3.mod2.pred2.stdbeta) %>%  round(2)` is larger than `r if_else(eg3.mod2.pred1.stdbeta > eg3.mod2.pred2.stdbeta, eg3.mod2.pred2.stdbeta, eg3.mod2.pred1.stdbeta) %>%  round(2)`
-    - So each *SD* increase in `r eg3.mod2.stdbeta.largest.name` predicts a larger *SD* increase in `r eg3.outcome` than each *SD* increase in `r eg3.mod2.stdbeta.smallest.name`
+- The standardized beta for `r eg4.pred3` (standardized *b*~2~) is `r eg4.mod2.stdbeta$standardized.coefficients[4] %>% round(2)`
+    - As `r eg4.pred3` increases by 1 *SD*, `r eg4.outcome` `r ifelse(eg4.mod2.pred3.stdbeta > 0, "increases", "decreases")` by `r eg4.mod2.stdbeta$standardized.coefficients[4] %>% round(2)` *SD*s
 
-## Interim summary, the third of its name
+### Relative contribution of predictors
 
-- We can directly compare linear models that are **hierarchical**
-    - The second model has the same predictors as the first plus extra
-    - The third model has the same predictrs as the second plus extra
+```{r, echo = T}
+lm.beta::lm.beta(eg4.mod2.lm)
+```
 
-- We can use statistics to see whether additional predictors:
-    - Change the proportion of variance explained in the outcome  (*R*^2^ change)
-    - Explain significantly more variability with less error  (*F*-change and associated *p*-value)
-
-- We can see which variables: 
-    - Significantly predicted the outcome (*t*-statistic and associated *p*-value) and by how much (*b*s)
-    - Contributed most to variablity in the outcome (standardized *b*s)
+- All predictors (*b*s) are now in the same unit - standard deviations - Now we can **directly compare** their relative contribution 
+- `r eg4.mod2.stdbeta.largest %>%  round(2)` is the largest standardized beta
+- So each *SD* `r ifelse(eg4.mod2.stdbeta.largest > 0, "increase", "decrease")` in `r eg4.mod2.stdbeta.largest.name` predicts a larger *SD* change in `r eg4.outcome` than the other predictors
 
 
-## Putting it all into practice
-
-- Lets go through one more example
-
-![](pics/puppyattack.gif){width=400px}
-
-
-## Putting it all into practice
-
-![](pics/huck.gif){width=400px}
-
-## Putting it all into practice
-
-![](pics/wet_dog.gif){width=400px}  
-
-
-### Model 1
-
-$$`r eg4.outcome` = b_0 + b_1\times `r eg4.pred1` + \varepsilon$$
-
-- Y: `r eg4.outcome`  
-- *b*~0~: value of `r eg4.outcome` when `r eg4.pred1` is 0 (the intercept)  
-- *b*~1~: change in `r eg4.outcome` associated with a unit change in `r eg4.pred1` 
-
-### Model 2
-
-$$`r eg4.outcome` = b_0 + b_1\times `r eg4.pred1` +  b_2\times `r eg4.pred2` + b_3\times `r eg4.pred3` + \varepsilon$$
-
-- Y: `r eg4.outcome`  
-- *b*~0~: value of `r eg4.outcome` when `r eg4.pred1` and `r eg4.pred2` and `r eg4.pred3` are 0 (the intercept)  
-- *b*~1~: change in `r eg4.outcome` associated with a unit change in `r eg4.pred1` when `r eg4.pred2` and `r eg4.pred3` are 0
-- *b*~2~: change in `r eg4.outcome` associated with a unit change in `r eg4.pred2` when `r eg4.pred1` and `r eg4.pred3` are 0
-- *b*~3~: change in `r eg4.outcome` associated with a unit change in `r eg4.pred3` when `r eg4.pred1` and `r eg4.pred2` are 0
-
-### Da code
+### Summary
 
 - Run hierarchical models
-- Assess whether either model is better than the mean model (without too much error):
+- Assess if either model is better than the mean model:
     - *F*-statistic and associated *p*-value
 - Assess which is better model
     - *R*^2^-change, *F*-change statistic and associated *p*-value
@@ -892,137 +773,16 @@ $$`r eg4.outcome` = b_0 + b_1\times `r eg4.pred1` +  b_2\times `r eg4.pred2` + b
 - Assess which variables have largest  contribution to the outcome
     - Standardized *b*s
 
-### Da code
-
-```{r eg4_lm, echo = T}
-
-# Model 1
-eg4.mod1.lm <- lm(happiness ~ puppies, data = eg4.data.tib)
-
-# Model 2
-eg4.mod2.lm <- lm(happiness ~ puppies + dirt + wet, data = eg4.data.tib)
-```
-
-### Model fit
-
-Model 1:
-
-```{r eg4_fit.m1, echo = T}
-broom::glance(eg4.mod1.lm)
-```
-
-
-- As the *p*-value associated with the *F*-statistic for Model 1 is `r ifelse(eg4.mod1.fit$p.value <= .05, "significant", "non-significant")`, we can infer that the probability of getting an *F*-statistic of `r eg4.mod1.fit$statistic %>%  round(2)` or larger if the null hypothesis is 'true' is sufficiently `r ifelse(eg4.mod1.fit$p.value <= .05, "unlikely", "likely")`, and that Model 1 is `r ifelse(eg4.mod1.fit$p.value <= .05, "likely", "unlikely")` to be better than the mean-model (a model with no predictors)   
-
-
-### Model fit
-
-Model 2:
-
-```{r eg4_fit.m2, echo = T}
-broom::glance(eg4.mod2.lm)
-```
-
-- As the *p*-value associated with the *F*-statistic for Model 2 is `r ifelse(eg4.mod2.fit$p.value <= .05, "significant", "non-significant")`, we can infer that the probability of getting an *F*-statistic of `r eg4.mod2.fit$statistic  %>%  round(2)` or larger if the null hypothesis is 'true' is sufficiently `r ifelse(eg4.mod2.fit$p.value <= .05, "unlikely", "likely")`, and that Model 1 is `r ifelse(eg4.mod2.fit$p.value <= .05, "likely", "unlikely")` to be better than the mean-model (a model with no predictors) 
-
-### Which is better model?
-
-```{r eg4_anova, echo = T}
-eg4.anova <- anova(eg4.mod1.lm, eg4.mod2.lm) %>% 
-broom::tidy() #needs to be written nicer with names
-```
-
-- The *F*-change statistic is `r eg4.anova$statistic[2] %>% round(2)` and has a p-value of `r eg4.anova$p.value[2] %>% report.p`
-- This means that Model 2 (with `r eg4.pred1`, `r eg4.pred2`, and `r eg4.pred3` as predictors) was `r ifelse(eg4.anova$p.value[2] <= .05, "significantly", "not significantly")` better at explaining variability in `r eg4.outcome` than Model 1 (with only `r eg4.pred1` as a predictor)
-
-### Which is better model?
-
-```{r eg4_anova_2, echo = T}
-eg4.anova <- anova(eg4.mod1.lm, eg4.mod2.lm) %>% 
-broom::tidy() #needs to be written nicer with names
-```
-
-- *I.e.,* there is `r eg4.anova$p.value[2] %>% report.p` probabilty of getting an *F*-change statistic at least as large as `r eg4.anova$statistic[2] %>% round(2)` if the null hypothesis (there is no improvement in [the varience in the outcome] explained by Model 2 compared to Model 1) is true
-
-### Did any variables significantly predict the outcome?
-
-```{r, eg4_bs}
-eg4.mod2.out <- broom::tidy(eg4.mod2.lm, conf.int = TRUE)
-```
-
-```{r, echo = T}
-broom::tidy(eg4.mod2.lm, conf.int = TRUE)
-```
-
-- `r eg4.pred1` `r ifelse(eg4.mod2.pred1.p < .05, "significantly predicted", "did not significantly predict")` `r eg4.outcome` (at `r eg4.mod2.out$p.value[2] %>% report.p`)
-- The beta (*b*~1~) for `r eg4.pred1` (`r eg4.mod2.out$estimate[2] %>% round(2)`) is a `r ifelse(eg4.mod2.pred1.beta > 0, "positive", "negative")` value: as `r eg4.pred1` increases, `r eg4.outcome` `r ifelse(eg4.mod2.pred1.beta > 0, "increases", "decreases")` (a `r ifelse(eg4.mod2.pred1.beta > 0, "positive", "negative")` relationship)
-- For every unit increase in `r eg4.pred1`, `r eg4.outcome` `r ifelse(eg4.mod2.pred1.beta > 0, "increases", "decreases")` by `r eg4.mod2.out$estimate[2] %>% round(2)` units (when all other predictors are held constant)
-
-### Did any variables significantly predict the outcome?
-
-```{r, echo = T}
-broom::tidy(eg4.mod2.lm, conf.int = TRUE)
-```
-
-- `r eg4.pred2` `r ifelse(eg4.mod2.pred2.p < .05, "significantly predicted", "did not significantly predict")` `r eg4.outcome` (at `r eg4.mod2.out$p.value[3] %>% report.p`)
-- The beta (*b*~1~) for `r eg4.pred2` (`r eg4.mod2.out$estimate[3] %>% round(2)`) is a `r ifelse(eg4.mod2.pred2.beta > 0, "positive", "negative")` value: as `r eg4.pred2` increases, `r eg4.outcome` `r ifelse(eg4.mod2.pred2.beta > 0, "increases", "decreases")` (a `r ifelse(eg4.mod2.pred2.beta > 0, "positive", "negative")` relationship)
-- For every unit increase in `r eg4.pred2`, `r eg4.outcome` `r ifelse(eg4.mod2.pred2.beta > 0, "increases", "decreases")` by `r eg4.mod2.out$estimate[3] %>% round(2)` units (when all other predictors are held constant)
-
-### Did any variables significantly predict the outcome?
-
-```{r, echo = T}
-broom::tidy(eg4.mod2.lm, conf.int = TRUE)
-```
-
-- `r eg4.pred3` `r ifelse(eg4.mod2.pred3.p < .05, "significantly predicted", "did not significantly predict")` `r eg4.outcome` (at `r eg4.mod2.out$p.value[4] %>% report.p`)
-- The beta (*b*~1~) for `r eg4.pred3` (`r eg4.mod2.out$estimate[4] %>% round(2)`) is a `r ifelse(eg4.mod2.pred3.beta > 0, "positive", "negative")` value: as `r eg4.pred3` increases, `r eg4.outcome` `r ifelse(eg4.mod2.pred3.beta > 0, "increases", "decreases")` (a `r ifelse(eg4.mod2.pred3.beta > 0, "positive", "negative")` relationship)
-- For every unit increase in `r eg4.pred3`, `r eg4.outcome` `r ifelse(eg4.mod2.pred3.beta > 0, "increases", "decreases")` by `r eg4.mod2.out$estimate[4] %>% round(2)` units (when all other predictors are held constant)
-
-### Relative contribution of predictors
-
-```{r eg4_lm.beta, echo = T}
-lm.beta::lm.beta(eg4.mod2.lm)
-```
-
-- The standardized beta for `r eg4.pred1` (standardized *b*~1~) is `r eg4.mod2.stdbeta$standardized.coefficients[2] %>% round(2)`
-    - So as `r eg4.pred1` increases by 1 standard deviation, `r eg4.outcome` `r ifelse(eg4.mod2.pred1.beta > 0, "increases", "decreases")` by `r eg4.mod2.stdbeta$standardized.coefficients[2] %>% round(2)` standard deviations
-
-### Relative contribution of predictors
-
-```{r, echo = T}
-lm.beta::lm.beta(eg4.mod2.lm)
-```
-
-- The standardized beta for `r eg4.pred2` (standardized *b*~2~) is `r eg4.mod2.stdbeta$standardized.coefficients[3] %>% round(2)`
-    - So as `r eg4.pred2` increases by 1 standard deviation, `r eg4.outcome` `r ifelse(eg4.mod2.pred2.beta > 0, "increases", "decreases")` by `r eg4.mod2.stdbeta$standardized.coefficients[3] %>% round(2)` standard deviations
-
-### Relative contribution of predictors
-
-```{r, echo = T}
-lm.beta::lm.beta(eg4.mod2.lm)
-```
-
-- The standardized beta for `r eg4.pred3` (standardized *b*~3~) is `r eg4.mod2.stdbeta$standardized.coefficients[3] %>% round(2)`
-    - So as `r eg4.pred3` increases by 1 standard deviation, `r eg4.outcome` `r ifelse(eg4.mod2.pred3.beta > 0, "increases", "decreases")` by `r eg4.mod2.stdbeta$standardized.coefficients[3] %>% round(2)` standard deviations
-
-### Relative contribution of predictors
-
-```{r, echo = T}
-lm.beta::lm.beta(eg4.mod2.lm)
-```
-
-- Now the influence of all predictors on the outcome (*b*s) are measured in the same unit - standard deviations - so we can directly compare their relative contribution within the model
-- `r eg4.mod2.stdbeta.largest %>%  round(2)` is the largest standardized beta, so each standard deviation `r ifelse(eg4.mod2.stdbeta.largest > 0, "increase", "decrease")` in `r eg4.mod2.stdbeta.largest.name` predicts a larger change in `r eg4.outcome` than the change in standard deviations in `r eg4.outcome` attributable to the other predictors in Model 2.
-
 
 ## Summary
 
-- The linear model captures the relationship between at one or more predictors, *x*, and an outcome, *y*
-    - Linear model equation: Outcome = *b*~0~ + *b*~1~ &times; Predictor 1 + *b*~2~&times; Predictor 2 + *b*~n~ &times; Predictor *n*... + Error
+- The LM captures the relationship between at one or more predictors, *x*, and an outcome, *y*
+    - LM equation: Outcome = *b*~0~ + *b*~1~ &times; Predictor 1 + *b*~2~&times; Predictor 2 + *b*~n~ &times; Predictor *n*... + Error
 - Is our model useful? Assess model fit:
     - *F*-statistic (or *F*-change) and associated *p*-value 
     - *R*^2^ (or *R*^2^-change)
 - What does our model tell us? 
     - Unstandardized *b*s, *t*-statistic and associated *p*-value
     - Standardized *b*s 
+
 

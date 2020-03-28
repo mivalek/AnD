@@ -43,7 +43,8 @@ plot_3d <- plot_ly(my_df,
             type = "surface",
             # opacity = .8,
             colorscale = list(c(0, 1), rep(complementary("#ba3e8a99", plot = F)[2], 2))) %>%
-  layout(paper_bgcolor="#fdfdfd",
+  layout(paper_bgcolor="#fdfdfd", 
+         margin = list(b = 0, l = 0, r = 0, t = 0, pad = 0, autoexpand = TRUE),
          scene = list(
            xaxis = list(title = "Predictor 1"),
            yaxis = list(title = "Predictor 2"),
