@@ -521,7 +521,7 @@ The outcome:
 ## Puppies, puppies everywhere!
 
 Predictor 1:
-![](pics/puppyattack.gif){width=400px}
+![](pics/puppyattack_small.gif){width=400px}
 
 ## Puppies, puppies everywhere!
 
@@ -592,7 +592,7 @@ broom::glance(eg4.mod1.lm)
 ## Even more puppies!
 
 Predictor 3:
-![](pics/huck.gif){width=400px}
+![](pics/huck_small.gif){width=400px}
 
 
 ## Even more puppies!
