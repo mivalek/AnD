@@ -525,8 +525,8 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <h2>Overview</h2>
 <style>
 :root {
---theme-col: #ba3e8a;
---hover-col: #3EBA6E;
+--theme-col: #b38ed2;
+--hover-col: #ADD28E;
 }
 </style>
 </section>
@@ -789,8 +789,8 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <a class="sourceLine" id="cb1-8" title="8"><span class="dv">1</span>     <span class="fl">0.547</span>         <span class="fl">0.493</span>  <span class="fl">1.84</span>      <span class="fl">10.2</span> <span class="fl">0.00120</span>     <span class="dv">3</span>  <span class="fl">-38.9</span>  <span class="fl">85.8</span>  <span class="fl">89.8</span></a>
 <a class="sourceLine" id="cb1-9" title="9"><span class="co"># ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></a></code></pre></div>
 <ul>
-<li>The <em>F</em>-statistic is 18.41</li>
-<li>The associated p-value is &lt; .001
+<li>The <em>F</em>-statistic is 10.25</li>
+<li>The associated p-value is = .001
 <ul>
 <li>Adding predictors significantly improved model fit</li>
 <li>Explained significantly more variance than could not explain</li>
@@ -809,14 +809,14 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <a class="sourceLine" id="cb2-8" title="8"><span class="dv">1</span>     <span class="fl">0.547</span>         <span class="fl">0.493</span>  <span class="fl">1.84</span>      <span class="fl">10.2</span> <span class="fl">0.00120</span>     <span class="dv">3</span>  <span class="fl">-38.9</span>  <span class="fl">85.8</span>  <span class="fl">89.8</span></a>
 <a class="sourceLine" id="cb2-9" title="9"><span class="co"># ... with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</span></a></code></pre></div>
 <ul>
-<li>The <em>R</em><sup>2</sup> is 0.51
+<li>The <em>R</em><sup>2</sup> is 0.55
 <ul>
-<li>51% of the variance in happiness was explained by puppies <strong>and</strong> fluffy ratings</li>
+<li>55% of the variance in happiness was explained by puppies <strong>and</strong> fluffy ratings</li>
 </ul></li>
 <li>This is just in our observed data!</li>
-<li>Our adjusted <em>R</em><sup>2</sup> value was 0.478
+<li>Our adjusted <em>R</em><sup>2</sup> value was 0.493
 <ul>
-<li>If we used the same model with the population, we should be able to explain 48% of the variance in happiness</li>
+<li>If we used the same model with the population, we should be able to explain 49% of the variance in happiness</li>
 </ul></li>
 </ul>
 </section>
@@ -920,9 +920,9 @@ Y&amp;=b_0 + b_1\times Predictor_1 + \varepsilon\\
 <ul>
 <li>We can calculate the <em>change</em> in R<sup>2</sup> between Model 1 and Model 2
 <ul>
-<li>0.96 - 0.51 = 0.45</li>
-<li>Model 2 explains 45% more variance than Model 1</li>
-<li>We accounted for 45% more variance in happiness by adding dirt to the model</li>
+<li>0.96 - 0.55 = 0.41</li>
+<li>Model 2 explains 41% more variance than Model 1</li>
+<li>We accounted for 41% more variance in happiness by adding dirt to the model</li>
 </ul></li>
 </ul>
 </section>

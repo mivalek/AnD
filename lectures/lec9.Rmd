@@ -195,7 +195,7 @@ eps <- rnorm(puppies, 0, eg4.sigma)
 happiness = eg4.b0 + eg4.b1*puppies + eg4.b2*fluffy + eg4.b3*dirt + eps
 
 eg4.data.tib <- tibble(happiness, puppies, fluffy, dirt)
-eg4.mod1.lm <- lm(happiness ~ puppies, data = eg4.data.tib)
+eg4.mod1.lm <- lm(happiness ~ puppies + fluffy, data = eg4.data.tib)
 eg4.mod2.lm <- lm(happiness ~ puppies + fluffy + dirt, data = eg4.data.tib)
 #eg4.mod1.lm %>% summary()
 #eg4.mod2.lm %>% summary()
