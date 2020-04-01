@@ -1,0 +1,264 @@
+---
+title: "What the FAQ?"
+author: "Analysing Data 2020"
+date: "01/04/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# How to use this document
+
+# Working with Data in R
+
+## Setup and Data
+
+**Error in loadNamespace(name) : there is no package called '...'**
+
+This is an informative error: R is telling you that whatever package you have tried to load has not been installed. The solution is to install it (remember: in the console, NOT in yoru Markdown!) and then try loading it again.
+
+**I've made a mistake in my code and now my data is gone/overwritten with something else/only NAs. How do I get it back?**
+
+All you have to do is run each code chunk from the beginning of your document onwards. Rerunning the `{r data}` code chunk will import the original dataset, good as new. Then, you can re-run your code up until the point where it was last okay and proceed from there.
+
+**In the report Markdown document, where says "load the packages you need for the report here", what is it that goes here?**
+
+If you are using functions from packages, you need to include commands that load those packages in that code chunk. There are examples of this in every practical form this module. If you aren't clear on how and why to load packages, you can review the PAAS practicals where the concept of packages was covered.
+
+### Installing packages
+
+**Error: failed to install 'adata' from GitHub: (converted from warning) cannot remove prior installation of package 'rlang' execution halted**
+
+All you need to do is manually remove the rlang package from your library folder. The R command `.libPaths()` will tell you where R installs packages. Close and reopen RStudio and run the command to see what the path is. Then, just navigate there and delete the `rlang` folder.
+
+If you then encounter an error loading `tidyverse` because there is no package called `rlang` you should install it again using `install.packages("rlang")`, then try loading tidyverse again.
+
+**Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : namespace ‘rlang’ 0.4.0 is already loaded, but >= 0.4.5 is required**
+
+As above, you must delete and reinstall the `rlang` package. Then, try loading tidyverse again.
+
+**When I enter my candidate number and run the code chunk it gets to half way in terms of loading but then stops.**
+
+You can just run the individual lines 20 and 27 in the first code chunk to enter your candidate number and install a package needed for the data. Bear in mind installing a package requires Internet connection.
+
+## Data Checking and Cleaning
+
+**I've tried to make a change to my dataset using `data %>% ...` but it doesn't work**
+
+You must tell R to keep any changes you want to make to your dataset by assigning the output into an object. This is demonstrated in the [Week 3 practical](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html); look into when to use the assignment operator `<-` to save the output of a pipeline.
+
+**How do I round my data to two decimal places?**
+
+Rounding data is not a good idea. You only need to round values for reporting in text and tables. 
+
+**In my dataset, there are two participants with the same ID code; both codes have a different set of data linked to them.**
+
+A few people may have ID codes, due to these codes being generated randomly. You do not need to remove any cases for this reason, and simply ignore the repeated codes.
+
+**My total participants after cleaning and number of participants removed don't match up.**
+
+This is likely due missing values in the variable(s) you're cleaning. Make sure you also count how many have NAs that will be removed by your `filter()` or other commands.
+
+### Age variable
+
+**Do we have to remove all participants under the age of 18, or could we use the data of 13 years olds for example?**
+
+You must only include data from participants 18 or older, for ethical reasons.
+
+**Using `filter()` to keep people only with specific ages removes NAs as well.**
+
+This isn't really undesirable behaviour. If you don't know a participant's age (ie it's NA), it's best to remove them anyway, because you can't be sure that they are in fact old enough to ethically participate. In the absence of other information (such as us telling you, for example, that a study has high-risk ethical clearance to test minors, which is not the case here), you should assume that your participants must have a minimum age of 18.
+
+However, you should also be aware that `filter()` does this, and count participants removed for **both** unacceptable ages and missing values. It's generally a good idea to keep separate records of cases removed due to different reasons. Removing participants' data because they were younger than 18 is not quite the same as removing data from someone who has not declared their age.
+
+You can use the is.na() function just like we did in the [Week 3 practical](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html) to test whether or not any value in your age variable is missing.
+
+**Error in UseMethod("filter_") : no applicable method for 'filter_' applied to an object of class "c('integer', 'numeric')"**
+
+This error usually appears because you are trying to use the `filter()` function on something that you think is a variable but isn't anymore. 
+This may be because you have accidentally overwritten your dataset with some other value (a number or word, for instance).
+
+You can check this by typing the name of your dataset (ie "data") into your console and pressing Enter. 
+This will show you what is stored in the object called "data".
+This should be a tibble of your data. 
+If it isn't, you must go back through your code and find where you have overwritten your dataset. 
+Then, read in your data again from the beginning.
+
+As a hint, remember that whenever you use the assignment operator to save changes to your dataset (e.g. `data <- data %>% ...`) the object `data` will be overwritten by whatever the output is at the end of the pipe.
+
+### Experiment condition variable
+
+**There is an extra misspelled condition with only one participant. What should I do with it?**
+
+This is part of cleaning your data. Since it is clear which condition this should be, you do not have to exclude it, simply recode it so it is spelled correctly. The [Week 3 practical](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html) covers how to do this.
+
+## Tables
+
+## Graphs
+
+**Which plot(s) should we use?**
+
+Review the [Week 7 lecture](https://canvas.sussex.ac.uk/courses/9242/pages/week-7), in which I gave examples of the kind of plots you should make for each study, and what you should NOT make. The instructions for making these plots are in the associated tutorials.
+
+## Analysis
+
+### Red study
+
+#### Outcome variable/composite score
+
+**There are three variables in the dataset that all contain ratings. Which one do I use as my outcome variable?**
+
+You must create a composite score by calculating the mean of these three ratings for each participant.
+
+**Should the data come with a composite score or do I have to create it?**
+
+You must create it. The instructions how to do this are in the [Week 7 tutorial](https://users.sussex.ac.uk/~jm636/tut_06_ttest_deets.html#creating_a_composite_score).
+
+#### *t*-tests
+
+**Should we use a one or two sided t-test?**
+
+You should run the analysis as demonstrated in the lecture and tutorial. 
+
+**I have checked the correlations between the three ratings and they are very low/not significant.**
+
+
+**In the original study, participants were asked at the end if they could guess the aim of the experiment. As we have no data on the responses from this, do we assume it wasn't done?**
+
+You should just ignore it (ie no need to mention it) since as you say, you have no information in your dataset about this. As it says on the [Lab Report Info page](https://canvas.sussex.ac.uk/courses/9242/pages/lab-report-information-and-resources), you don't have to report anything you don't have data on.
+
+### Green study
+
+**Error in chisq.test(...) : 'x' is wrong**
+
+Most likely, you are passing an invalid object to chisq.test(). Make sure your `...` object actually contains what you want it to contain.
+
+## Reporting and In-Line Code
+
+**When reporting a *p*-value that is extremely small e.g. < 0.0005, if I use code to round this to 2 or 3dp, then the result is 0 which looks misleading. Do we need to automate the process of bringing all data from our calculations in to our Markdown files, or in exceptional cases like this can we manually enter the value, e.g. *p* < .01 or < .001?**
+
+This is covered in depth in the [Week 6 tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#reporting_htest_objects) - in short, you can either use [a custom function in that tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#bonus:_creating_functions) for reporting small values of *p* correctly, or simply type the correct value (i.e. "*p* < .001"). Keep in mind that the **only** time this should be done is when *p* is smaller than .001; in all other cases; you should report the exact value of *p*.
+
+**Do we have to use inline code to report results? How does this work?**
+
+Yes! 
+In essence, the only thing in-line code chunks do is print out a single number or string. 
+That means that whatever you put inside `r ....` must be a valid piece of code that produces the desired outcome. 
+So if, in one of my code chunks I create an object called `x` that contains the value 253.3333:
+
+`x <- 253.3333`
+
+and I want to print the value rounded to 2 decimal places in body text, all I need to do is type:
+
+`r round(x, 2)`
+
+in the Rmd body anywhere below the code chunk that created the object and, when knitted, this will be displayed as 253.33.
+
+Guidance on how to include in-line code has been given to you throughout the term in practical worksheets and some tutorials. 
+Look through those and compare the markdown with the output.
+
+**My plot/table runs fine when I create it, but it won't appear when I try to put in a code chunk and knit.**
+
+There are a few possible reasons for this, including but not limited to:
+
+* You have set your global chunk options not to display output (for instance, using `include = FALSE`).
+You must override this in the individual chunk where you want the table or plot to be displayed.
+* The object where you think you have stored your plot or table doesn't contain what you think it contains.
+You can check this by typing the object name in the console and pressing Enter.
+
+**error in use method("pull "):  no applicable method for 'pull' applied to an object of class "c('kableExtra', 'knitr_kable') **
+
+`pull()` is a function that will only work on tibbles. 
+Once you have fed your tibble into the `kable()` function to format it, it isn't a tibble anymore.
+Best practice is to save your descriptives tables as tibbles, then pipe them into `kable()` when you want them to appear in your document.
+This way, you can use your descriptives tables both to report values (using `pull()`) and to present results (using `kable()`).
+
+For example, you SHOULD do this:
+
+```{r, eval = F}
+desc.table <- data %>% 
+  ...
+  summarise(...)
+  
+desc.table %>% kable(...)
+```
+
+You should NOT do this:
+
+```{r, eval = F}
+desc.table <- data %>% 
+  ...
+  summarise(...) 
+  %>% kable()
+```
+
+
+# Producing the Report
+
+## What to Include
+
+**The [outline for the report](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0#outline) does not include an introduction. Do we need one?**
+
+You don't need to write an introduction - only a short methods, results, and discussion.
+
+**What should go into the table of participant descriptives by experimental condition?**
+
+This is slightly different for the two studies, because they have different information.
+
+* Red study: descriptives divided up by experimental condition and gender
+* Green study: descriptives divided up by experimental condition
+
+This is because the dataset for the green study does not include gender.
+
+## Writing the Discussion
+
+**My results that indicate that the control group actually scored higher than the experimental group - i.e., the reverse pattern from the previously reported findings in the original paper.**
+
+It is possible in the datasets we have given you that some people will have the "expected" pattern (ie as reported in the original paper), and some will have the reverse. 
+It does not necessarily indicate you have made a mistake. You should always double check all of your codings as a matter of course.
+If you are confident they are correct, then those results are what they are, and you should treat them as accurate.
+
+No matter which pattern of results you have, you should report and interpret them as the tutorials have instructed you.
+If you have the reverse pattern, here is some additional guidance about how to write your discussion:
+
+* When you're writing your discussion, it's useful to present your results in two ways. 
+First, assume that the results of your study are in fact correct. 
+Talk about what this result means, and how it compares to other studies. 
+Then, second, consider possible criticisms or objections to your study, and respond to them. 
+So, what aspects of the study design might be a problem, or unreliable? 
+What other possible explanations might there be for this pattern of results? 
+There's no clear "right" answer here, so you don't have to worry about "figuring it out", as it were. 
+What we will be looking for in the report is whether you understand what the results mean, and you've thoroughly investigated the possible explanations.
+* To do this, you should compare your study to other studies that have a different pattern of results, and then point out differences in the study design that may have led to different results. 
+(For this you can assume that your study design and testing etc. was identical to the original Elliot study). 
+Then have a look not only at the limitations of your study, but alternative explanations - things you can't have controlled for, or other explanations that would result in the pattern of results you found. 
+For this you need to be familiar with the field. 
+So think about: what are other associations with the colours red and white, for instance, that might have impacted the attractiveness results? 
+Look into other studies on the connotations of colours, or the factors that affect someone's attractiveness, and see if you can suggest any reasonable alternative explanations. 
+Then it would be REALLY great if you could also suggest an experiment that test whether your suggestion is right.
+* This isn't an easy thing to do - discussions are difficult to write, but they can also be a lot of fun because you get to have Opinions :) 
+The number one problem I see in discussions is "this is all rubbish and none of it means anything". 
+I'm willing to believe that a study is fundamentally flawed and its results are unreliable, if that's what you think is the case - but don't just rip your study apart and say it's all rubbish, unless you can provide a thorough, well-evidenced argument that that is the case!
+
+
+## Formatting and Knitting
+
+**My document won't knit and says there's an error on a particular line, but there isn't anything on that line that should cause a problem.**
+
+
+
+**Should we keep a copy of our cleaned data in our knitted document as well as describing it , or just describe the data and what we have done to clean it?**
+
+You are not supposed to submit the knitted document but the .Rmd file. There is no need for the data set to be printed in the document.
+
+## References
+
+**The ProQuest link for the original study says that access is not authorised.**
+
+Use the PDF posted in [the same section directly above](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0#red), or Google the paper.
+
+**How do I connect Zotero to R Studio and how do I make a reference list?**
+
+We have not covered how to do this. You should add your references to a word document, generate a list and then copy it to your R Markdown. There is more information on this in the [Week 7 lecture](http://users.sussex.ac.uk/~jm636/lec_07_report_slides.html#/references).

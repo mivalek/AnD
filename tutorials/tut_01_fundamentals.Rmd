@@ -1,0 +1,129 @@
+---
+title: 'Tutorial 1: R Fundamentals'
+subtitle: 'Analysing Data'
+date: "30/03/2020"
+output: html_document
+---
+
+```{r setup}
+# setting up default code chunk behaviour
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Overview
+
+## Why R?
+
+# Working in R
+
+## Console
+
+## Scripts
+
+## Markdown
+
+## Comments
+
+# Objects
+
+R is called a "language" for a reason - it is actually a language, or a way of talking to computers to ask it to do things for you. Like any language, learning to "speak" R takes lots and lots of practice. In this section, we'll cover the basic "grammar" of R, including some important ideas about how R understands what you ask it to do. However, just like any language you learn, the best way to really understand what each of these things do is to try them out for yourself, make mistakes, and keep using them until they're familiar.
+
+Objects are the basic elements that R is built around - the equivalent of words. An "object" in R is any bit of information that is stored with a particular name. Objects can hold anything, from a single number or word to huge datasets with thousands of data points or complex graphs.
+
+## Creating an Object
+
+Let's start simple, by creating a new object. Here we'll also formally meet a very important piece of R code: the assignment operator `<-`. 
+
+**Note**: At the moment your environment should be empty, which you can see by looking under the "Environment" tab in RStudio. If it isn't empty, click the broom icon to clear everything from your environment before you get started.
+
+`r task()`First, let's create a new object called `current_year`, that contains (as you might expect) the current year. 
+
+```{r}
+current_year <- 2020
+```
+
+Let's have a look at that command. On the left side I've written the name I want my new object to have, which I've called `current_year`. Then, I've written the assignment operator `<-`, which looks like an arrow. Then, I've written the current year, 2020.
+
+The important thing is that this arrow is pointing at the new object name. This tells R to **assign** whatever comes after the arrow to the object name `current year`. Right now, the only thing we're assigning is a single number, 2020 - but we could have much more complicated instructions, which we'll see later on.
+
+`r subtask()`If you haven't yet, type the code above in your console and press Enter. 
+
+You should see that, in the console, nothing interesting happens; you simply get a new line, with the `>` symbol and blinking cursor so you can type more. This apparent total lack of response is actually a good sign! It means that whatever you've asked R to do, it's done without errors. If you look in your environment you should see a new object, called `current_year`. Success!
+
+## Calling an Object
+
+For any object, from the most simple to the most complex, you can always see what's in it by calling the object. This simply means that you type the name of the object in the console and press Enter. R will print out in the console whatever is stored in the object. Let's try it:
+
+`r task()`Call the `current_year` object to see what's in it.
+
+```{r}
+current_year
+```
+
+So, R tells you that there is one value in the `current_year` object, which is the number 2020.
+
+This example actually highlights a very important distinction in writing R code. When you successfully **create** an object using the assignment operator, it will seem like nothing happens. This is because R always does only and exactly what you ask it to do, and using the assignment operator only tells R to assign something to an object, not to print it out. When you **call** an object, the result of this call is printed out in the console, but this doesn't make any changes to the object itself. This distinction will be essentially for checking and writing code later on.
+
+For now, let's practice a bit more with objects, to get the hang of how they work.
+
+## Using Objects
+
+`r task()`Create an object called `birth_year` that contains the year you were born.
+
+```{r, toggle = T}
+birth_year <- 1988
+```
+
+I have used my own birth year here, but you should replace the number with your own birth year. Again, when you type this in your console and press Enter to run the command, it will seem like nothing happens. However, you will be able to see the new object in your Environment.
+
+Now we have two objects, `current_year` and `birth_year`. Since both of these objects contain a number, we can use them **as if they were numbers**. Have a go at calculating your own age using these two objects.
+
+```{r, toggle = T}
+current_year - birth_year
+```
+
+So, this line of code subtracts `birth_year` from `current_year`. Because these objects contain numbers, R treats them as if they were numbers, and outputs the difference between them - which indicates that I'm 32 years old. (This isn't quite right, because my birthday is in May - but R doesn't know that!)
+
+We can also do any other mathematical operations on objects that contain numbers:
+
+```{r}
+current_year*5
+current_year+5
+current_year^3
+```
+
+This is all well and good, but there's no real benefit to doing this with an object called `current_year`, rather than just using the number 2020. Instead, we can take advantage of objects by storing multiple pieces of information in a single object.
+
+`r task()`Type the code below in your console, replacing the numbers with the ages of yourself and all your family members, in whatever order you like.
+
+```{r}
+ages <- c(31, 26, 61, 87)
+```
+
+Again, when I run this command in the console, a new object appears in my environment, called `ages`. This one looks a bit different than the other two, though. In Environment, I can see that this object contains numbers ("num"); that there are four of them ([1:4]); and that those numbers are 31, 26, 61, and 87. This new object is called a **vector** - a sequence of values all stored in a single object.
+
+So, what happens if we try to do the same maths we did before? For instance, I might want to calculate the birth **year** of each of my family members, using their ages. To do this, I have to subtract each of their ages from the current year. I could do this one at a time - or all at once using my `ages` object.
+
+`r task()`Calculate each of your family members' birth years using your `ages` object.
+
+```{r, toggle = T}
+2020 - ages
+```
+
+Very cleverly, R does the same calculation for each of the values stored in this vector, and prints out the result for us. We didn't have to tell R to do this; it just does it by default.
+
+`r task()`Save the birth years you've just calculated in an object called `birth_year`.
+
+```{r}
+birth_year <- 2020 - ages
+```
+
+Again, because we've used the assignment operator, R doesn't print out the years this time, like it did before. Instead, the output of our calculation is saved as the object `birth_year`.
+
+Now, you might notice that we already had an object called `birth_year` that we created above. R, again, does only and exactly what you ask it to do. Unlike, say, a word processing document, R won't ask you if you're sure you want to overwrite an existing object with new information - it will just do it! This can be a good thing, because you can easily update the information stored in an object with changes, edits, or new information. However, it also means that you can overwrite or replace data when you don't want to. This is why it is so important to keep track of all of the commands and changes you make using a script.
+
+### 
+
+## Functions
+
+

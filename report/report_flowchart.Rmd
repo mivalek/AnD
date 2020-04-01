@@ -1,0 +1,126 @@
+---
+title: "Lab Report Diagram"
+author: "Dr Jennifer Mankin"
+date: "01/04/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+library(DiagrammeR)
+```
+
+
+
+```{r}
+my_graphviz <- grViz("digraph{
+         
+                     graph[rankdir = TD]
+                     
+                     node[shape = rectangle, style = filled]
+                     
+                     aa[label = 'START']
+                     
+         subgraph cluster_4 {
+         graph[shape = rectangle]
+         style = rounded
+         bgcolor =paleturquoise
+    
+         label = 'Setup'
+                     
+                     node[fillcolor = honeydew, margin = 0.25]
+                     
+                     A[label = 'Download report Markdown file\and save with your candidate number as the file name']
+                     B[label = 'Read in data in Markdown file']
+                     C[label = 'Set document options and load all package']
+         }
+         
+         subgraph cluster_5 {
+         graph[shape = rectangle]
+         style = rounded
+         bgcolor = thistle
+    
+         label = 'Data Cleaning'
+                     
+                     node[fillcolor = ghostwhite, margin = 0.25]
+                     E[label = 'Remove typo in age variable and change to numeric']
+                     G[label = 'Remove unethical participant ages']
+                     H[label = 'Recode typo in condition variable']
+                     I[label = 'Create descriptives table of age by condition\nand (if you have it) gender']
+                     J[label = 'Write up participants and design section']
+         }
+                    
+         subgraph cluster_1 {
+         graph[shape = rectangle]
+         style = rounded
+         bgcolor = cornsilk
+    
+         label = 'Analysis'
+                     
+                     subgraph cluster_2 {
+                     graph[shape = rectangle]
+                     style = rounded
+                     bgcolor = LightCoral
+                     
+                     label = 'Red Study'
+                     node[shape = rectangle, fillcolor = MistyRose, margin = 0.25]
+         
+                     L[label = 'Create composite score out of\nthree rating variables']
+                     Q[label = 'Create one means plot of\ncomposite score by colour group']
+                     N[label = 'Perform *t*-test analysing\ncomposite score by colour group']
+                     O[label = 'Report results of *t*-test']
+                     }
+                     
+                     subgraph cluster_3 {
+                     graph[shape = rectangle]
+                     style = rounded
+                     bgcolor = '#79ba2d'
+    
+                     label = 'Green Study'
+                     node[shape = rectangle, fillcolor = '#e4faca', margin = 0.25]
+                     
+                     R[label = 'Create bar plots of\nproduct choice by story type\n(one for each product)']
+                     S[label = 'Perform chi-squared test of\nproduct choice by story type\n(one for each product)']
+                     T[label = 'Report results of chi-squared tests']
+                     }
+            }
+                     
+         subgraph cluster_6 {
+         graph[shape = rectangle]
+         style = rounded
+         bgcolor = cornsilk
+    
+         label = 'Discussion'
+         node[shape = rectangle, fillcolor = grey]
+                     V[label = 'Discussion']
+                     W[label = 'Short summary of main findings']
+                     X[label = 'Implications for research area and future research']
+                     Y[label = 'Limitations of the study']
+                     Z[label = 'Overall conclusion']
+                     
+         }
+                     node[shape = rectangle, fillcolor = grey]
+                     b[label = 'FINISH!']
+                     
+                     edge[color = black]
+                     #Start and setup
+                     aa -> A -> B -> C
+                     
+                     #Data cleaning
+                     E -> G -> H -> I -> J
+                     
+                     #Analysis: Red
+                     L -> Q -> N -> O
+                     #Analysis: Green
+                     R -> S -> T
+                     
+                     #Discussion and finish
+                     V -> W -> X -> Y -> Z -> b
+                                          }")
+
+my_graphviz
+```
+
