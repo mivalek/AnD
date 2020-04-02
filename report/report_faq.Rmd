@@ -1,7 +1,6 @@
 ---
-title: "What the FAQ?"
+title: "Lab Report FAQs"
 author: "Analysing Data 2020"
-date: "01/04/2020"
 output: html_document
 ---
 
@@ -11,72 +10,145 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # How to use this document
 
+## Browse for answers
+
+If you're not sure exactly how you would phrase the problem that you're having, you can browse through answers based on what you're trying to do. Use the table of contents to jump to the right section.
+
+## Search for answers
+
+If you're looking for help with a specific problem, or even a specific error code, you can try searching this document. You can search this page using your browser's search function. You can open the search function by pressing Ctrl + F (on PC) or Cmd + F (Mac).
+
+When you use the search function, it's a good idea to search for key words or phrases, rather than an entire error code, which may differ slightly between individuals. For instance, if you're getting an error loading tidyverse because of a problem with the `rlang` package, try searching for "rlang".
+
+## If your question isn't answered in this document...
+
+### Check the help documentation
+
+R has inbuilt help for all of the functions you have loaded. You can get help for any function by typing `help(function_name)` or `?function_name` in the console and pressing Enter. The help documentation usually includes a formal definition of the function, a list of arguments it takes and what their default values are (if any), and at the end, examples of how to use the function.
+
+### Google the problem or error message
+
+There is a huge amount of information, including blogs, tutorials, explainers, and guides, easily available online. Some of these are quite technical, but some of them are written for beginneRs. Simply by pasting the error message that R gives you into a search, you can often find many examples of people with the same problem, an explanation of what the problem is, and how to fix it. This is the best way to get immediate answers to your questions. It's also exactly the same thing that any of us do when we encounter an error we don't understand!
+
+### Ask someone
+
+Reach out to your classmates who are also working on the same thing. You are welcome and encouraged to work on the report together and to help each other - as long as you write your own code yourself.
+
+If you can't find an answer elsewhere, you can get in touch with the teaching team in a few different ways:
+
+* Post on the relevant [Discussion board](https://canvas.sussex.ac.uk/courses/9242/discussion_topics). Make sure you read the instructions for the board carefully before you post.
+* Arrange to meet with us to get help. You can find available appointments on the Calendar starting on the 8th of April.
+
+## Transcription note
+
+In the original discussion posts, some people had pasted their names, or unique objects they had created. I have replaced these with '...' to show that the exact value doesn't matter.
+
 # Working with Data in R
+
+<details class="faq"> <summary>I can't get RStudio to work on my computer/I can't download packages on my computer/I can't figure out how to connect to OneDrive, etc.</summary> <ans>
+You should use the cloud version of RStudio, which requires no installation or downloading. There is an in-depth video guide for using the cloud version of RStudio on the [R Resources page](https://canvas.sussex.ac.uk/courses/9242/pages/r-resources).
+</ans> </details>
+
+<details class="faq"> <summary>Where can I find the code for...?</summary> <ans>
+Please have a look through the resources we've provided for examples of whatever code you need. We can help with specific questions or errors, but you must write your code yourself.
+</ans> </details>
+
+<details class="faq"> <summary>I have no knit button and command shift K doesn't work (on Mac)</summary> <ans>
+Usually this happens because when you downloaded the Markdown file as a text file instead of .rmd. To change this, close the Markdown file in R and navigate to the folder where the file is located on your computer (probably the r_docs folder in your project folder). You should see that the file is called something like prac_2_rmd.rmd.txt. Edit the file name to remove the .txt ending (so it is called something like prac_2_rmd.rmd) and when your computer asks you if you want to change the file type, say yes (do not keep as .txt). When you open the file again in R, you should see the knit button etc.
+</ans> </details>
+
+<details class="faq"> <summary>How do I create a new code chunk?</summary> <ans>
+If you're having trouble creating a code chunk to insert your table, you can try any of the file:
+
+1. Put your cursor where you'd like the chunk to appear, then click Code > Insert Chunk on the RStudio toolbar (along the top). Then, call your tibble in that chunk.
+
+2. Copy a code chunk elsewhere in your document, paste it where you want the table, and put the code inside it.
+
+3. Look carefully at the other code chunks in your document and try to type exactly the same symbols in exactly the same way.
+
+Every now and then, I find that my RStudio has a bit of trouble with recognising new code chunks. For me, saving my doc and then shutting down/restarting RStudio always solves this problem.
+</ans> </details>
+
+<details class="faq"> <summary>I've made a mistake in my code and now my data is gone/overwritten with something else/only NAs. How do I get it back?</summary> <ans>
+All you have to do is run each code chunk from the beginning of your document onwards. Rerunning the `{r data}` code chunk will import the original dataset, good as new. Then, you can re-run your code up until the point where it was last okay and proceed from there.
+</ans> </details>
 
 ## Setup and Data
 
-**Error in loadNamespace(name) : there is no package called '...'**
-
-This is an informative error: R is telling you that whatever package you have tried to load has not been installed. The solution is to install it (remember: in the console, NOT in yoru Markdown!) and then try loading it again.
-
-**I've made a mistake in my code and now my data is gone/overwritten with something else/only NAs. How do I get it back?**
-
-All you have to do is run each code chunk from the beginning of your document onwards. Rerunning the `{r data}` code chunk will import the original dataset, good as new. Then, you can re-run your code up until the point where it was last okay and proceed from there.
-
-**In the report Markdown document, where says "load the packages you need for the report here", what is it that goes here?**
-
+<details class="faq"> <summary>In the report Markdown document, where says "load the packages you need for the report here", what is it that goes here?</summary> <ans>
 If you are using functions from packages, you need to include commands that load those packages in that code chunk. There are examples of this in every practical form this module. If you aren't clear on how and why to load packages, you can review the PAAS practicals where the concept of packages was covered.
+</ans> </details>
 
-### Installing packages
+### Packages and functions
 
-**Error: failed to install 'adata' from GitHub: (converted from warning) cannot remove prior installation of package 'rlang' execution halted**
+<details class="faq"> <summary>Error in loadNamespace(name) : there is no package called '...'</summary> <ans>
+This is an informative error: R is telling you that whatever package you have tried to load has not been installed. The solution is to install it (remember: in the console, NOT in yoru Markdown!) and then try loading it again.
+</ans> </details>
 
+<details class="faq"> <summary>Error in ... : could not find function ...</summary> <ans>
+This is an informative error: R is telling you that whatever function you have tried to use is not currently available. This may be because you have not yet loaded the package, or installed it. Try loading the package first; if you get the error above this one, then follow the guidance there. Otherwise, rerun the command you were trying to run originally.
+</ans> </details>
+
+<details class="faq"> <summary>Error in contrib.url(repos, "source") : trying to use CRAN without setting a mirror calls: ,Anonymous. ... withVisible -> eval -> eval -> install.packages -> contrib.url Execution halted.</summary> <ans>
+This is an error in `install.packages()` These commands should not be in your Rmd files unless you know how to prevent them from being run every time you knit the document (this is prevented in the lab report Rmd file for the "remotes" and "adata" packages). Remove the install.packages() command in the file you are trying to knit and try again.
+</ans> </details>
+
+<details class="faq"> <summary>Error: failed to install 'adata' from GitHub: (converted from warning) cannot remove prior installation of package 'rlang' execution halted</summary> <ans>
 All you need to do is manually remove the rlang package from your library folder. The R command `.libPaths()` will tell you where R installs packages. Close and reopen RStudio and run the command to see what the path is. Then, just navigate there and delete the `rlang` folder.
 
 If you then encounter an error loading `tidyverse` because there is no package called `rlang` you should install it again using `install.packages("rlang")`, then try loading tidyverse again.
+</ans> </details>
 
-**Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : namespace ‘rlang’ 0.4.0 is already loaded, but >= 0.4.5 is required**
+<details class="faq"> <summary>Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : namespace ‘rlang’ 0.4.0 is already loaded, but >= 0.4.5 is required</summary> <ans>
 
 As above, you must delete and reinstall the `rlang` package. Then, try loading tidyverse again.
+</ans> </details>
 
-**When I enter my candidate number and run the code chunk it gets to half way in terms of loading but then stops.**
+<details class="faq"> <summary>Error in install.packages : ERROR: failed to lock directory ‘C:\Users\...\Documents\R\win-library\3.6’ for modifying Try removing ‘C:\Users\...\Documents\R\win-library\3.6/00LOCK’</summary> <ans>
+This is an informative error: R is telling you that you need to remove the file called "00LOCK" in the folder that it's given you. To resolve this, follow the file path and delete 00LOCK, then try again.
+</ans> </details>
 
+<details class="faq"> <summary>When I enter my candidate number and run the code chunk it gets to half way in terms of loading but then stops.</summary> <ans>
 You can just run the individual lines 20 and 27 in the first code chunk to enter your candidate number and install a package needed for the data. Bear in mind installing a package requires Internet connection.
+</ans> </details>
 
 ## Data Checking and Cleaning
 
-**I've tried to make a change to my dataset using `data %>% ...` but it doesn't work**
-
+<details class="faq"> <summary>I've tried to make a change to my dataset using `data %>% ...` but it doesn't work</summary> <ans>
 You must tell R to keep any changes you want to make to your dataset by assigning the output into an object. This is demonstrated in the [Week 3 practical](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html); look into when to use the assignment operator `<-` to save the output of a pipeline.
+</ans> </details>
 
-**How do I round my data to two decimal places?**
-
+<details class="faq"> <summary>How do I round my data to two decimal places?</summary> <ans>
 Rounding data is not a good idea. You only need to round values for reporting in text and tables. 
 
-**In my dataset, there are two participants with the same ID code; both codes have a different set of data linked to them.**
+</ans> </details><details class="faq"> <summary>In my dataset, there are two participants with the same ID code; both codes have a different set of data linked to them.</summary> <ans>
 
 A few people may have ID codes, due to these codes being generated randomly. You do not need to remove any cases for this reason, and simply ignore the repeated codes.
+</ans> </details>
 
-**My total participants after cleaning and number of participants removed don't match up.**
-
-This is likely due missing values in the variable(s) you're cleaning. Make sure you also count how many have NAs that will be removed by your `filter()` or other commands.
+<details class="faq"> <summary>My total participants after cleaning and number of participants removed don't match up.</summary> <ans>
+This is likely due missing values in the variable(s) you're cleaning. Make sure you also count how many have NAs that will be removed by your `filter()` or other commands
+.</ans> </details>
 
 ### Age variable
 
-**Do we have to remove all participants under the age of 18, or could we use the data of 13 years olds for example?**
-
+<details class="faq"> <summary>Do we have to remove all participants under the age of 18, or could we use the data of 13 years olds for example?</summary> <ans>
 You must only include data from participants 18 or older, for ethical reasons.
+</ans> </details>
 
-**Using `filter()` to keep people only with specific ages removes NAs as well.**
-
+<details class="faq"> <summary>Using `filter()` to keep people only with specific ages removes NAs as well.</summary> <ans>
 This isn't really undesirable behaviour. If you don't know a participant's age (ie it's NA), it's best to remove them anyway, because you can't be sure that they are in fact old enough to ethically participate. In the absence of other information (such as us telling you, for example, that a study has high-risk ethical clearance to test minors, which is not the case here), you should assume that your participants must have a minimum age of 18.
 
 However, you should also be aware that `filter()` does this, and count participants removed for **both** unacceptable ages and missing values. It's generally a good idea to keep separate records of cases removed due to different reasons. Removing participants' data because they were younger than 18 is not quite the same as removing data from someone who has not declared their age.
 
 You can use the is.na() function just like we did in the [Week 3 practical](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html) to test whether or not any value in your age variable is missing.
+</ans> </details>
 
-**Error in UseMethod("filter_") : no applicable method for 'filter_' applied to an object of class "c('integer', 'numeric')"**
+<details class="faq"> <summary>The values in my descriptives table only comes up with NA or NaN.</summary> <ans>
+This is likely because there are NAs in the variables you are trying to find the mean of. Have a look at `?mean` and the example means tables in Practical 3 for help with this. You should also check your data for NAs and decide what to do with them (remove or ignore, depending on which variables they are in).
+</ans> </details>
 
+<details class="faq"> <summary>Error in UseMethod("filter_") : no applicable method for 'filter_' applied to an object of class "c('integer', 'numeric')"</summary> <ans>
 This error usually appears because you are trying to use the `filter()` function on something that you think is a variable but isn't anymore. 
 This may be because you have accidentally overwritten your dataset with some other value (a number or word, for instance).
 
@@ -87,95 +159,172 @@ If it isn't, you must go back through your code and find where you have overwrit
 Then, read in your data again from the beginning.
 
 As a hint, remember that whenever you use the assignment operator to save changes to your dataset (e.g. `data <- data %>% ...`) the object `data` will be overwritten by whatever the output is at the end of the pipe.
+</ans> </details>
+
+<details class="faq"> <summary>is.na() applied to non-(list or vector) of type 'closure' Error in rowSums(is.na(data)) : 'x' must be an array of at least two dimensions</summary> 
+<ans>
+For errors like these, the "x" in "'x' must be an array of at least two dimensions" is typically the data you have put into the function. Your data should already be an array of at least two dimensions - that is, it should be a tibble with rows and columns in it. R is telling you that it's not, so the error seems to be saying that your data doesn't have data in it!
+
+So, to start, just type the name of your dataset (ie "data") into the console and press Enter. You should see the tibble of data printed out in the console.
+
+If you call your dataset and you don't see the tibble printed out, it's possible that you overwrote the dataset accidentally, earlier on in your code. Whatever is in the "data" object now will help you figure out where this happened. As another tip, look for any code where you overwrite your dataset: that is, any line that starts `data <- data %>% ...` Remember that when you use the assignment operator `<-` like this, whatever the output of your pipe is will be stored under the name `data`.
+</ans> </details>
+
+<details class="faq"> <summary>Warning: NAs introduced by coercion</summary> 
+<ans>
+This is not an error, in that the code that generates it will still run. What it means is that there were some values that R didn't know what to do with when you tried to change the variable (usually to numeric), so it changed them to NAs. The warning is to let you know that R has done this. You should check your age variable again - it sounds like whatever the problem was originally (by which I mean, the value(s) in the age variable that weren't numbers), you haven't solved it yet, so they are still being turned into NAs when you try to change the data to numeric.
+
+It might seem odd that you have to change values to numeric when they are all numbers already. The reason is that when R imported the data, the age variable had at least one element in it that was NOT a number. So, R couldn't make it into a numeric variable, because numeric variables can ONLY contain numbers. Instead, R saved it as "character" (which is a type of variable that can contain both letters and numbers). When you are trying to change this, the first step is to recode the data point that contains a letter, as you did, so that the age variable contains only numbers. But, character variables can contain letters or numbers, so R kept age as a character variable. You then have to tell R that actually this variable only contains numbers, and R should read the values in it as numbers instead of words. This doesn't change the variable itself, but it does change the way that R interprets the values stored in that variable. Once you have told R to change age into a numeric variable, R can recognise that the values are numbers, and will be able to do calculations like `mean` and `sd`.
+</ans> </details>
 
 ### Experiment condition variable
 
-**There is an extra misspelled condition with only one participant. What should I do with it?**
-
+<details class="faq"> <summary>What should I do with the extra misspelled condition with only one participant in it?</summary> <ans>
 This is part of cleaning your data. Since it is clear which condition this should be, you do not have to exclude it, simply recode it so it is spelled correctly. The [Week 3 practical](https://mivalek.github.io/adata/prac/sol/prac_03_wkst_sol.html) covers how to do this.
+</ans> </details>
 
-## Tables
+<details class="faq"> <summary>How do I recode the misspelled condition? We never covered this!</summary> 
+<ans>
+You can do this exactly the same way that we recoded the typo in the age variable.
+</ans> </details>
 
-## Graphs
+<details class="faq"> <summary>Can I recode my `experiment` and `control` groups with different names?</summary> 
+<ans>
+Yes - you can change any of your variable names, or group codings, as you like. You should be careful not to change any data values, and make sure that your graphs, tables, and in-line reporting are all labeled correctly.
+</ans> </details>
 
-**Which plot(s) should we use?**
+## Tables and Graphs/Plots
 
+<details class="faq"> <summary>Which plot(s) should we use?</summary> <ans>
 Review the [Week 7 lecture](https://canvas.sussex.ac.uk/courses/9242/pages/week-7), in which I gave examples of the kind of plots you should make for each study, and what you should NOT make. The instructions for making these plots are in the associated tutorials.
+</ans> </details>
 
-## Analysis
+<details class="faq"> <summary>I set the *y*-axis scale using ylim(0,9), but the *y*-axis shows up to 7.5 and has a scale of every 2.5. How can I change it to appear in one-point increments?</summary> <ans>
+Look into `scale_y_continuous()` for how to specify the breaks in your plot.
+</ans> </details>
 
-### Red study
+<details class="faq"> <summary>My plot appears in my environment as a "list of 9".</summary> <ans>
+The plot object is supposed to be a list. To see the actual plot, you just need to call the object name in a chunk.
+</ans> </details>
 
-#### Outcome variable/composite score
+<details class="faq"> <summary>How do I use inline code to insert a plot in my document?</summary> <ans>
+You should definitely use code chunks to print out your figures and tables, rather than inline code. See the [Week 2 materials](https://canvas.sussex.ac.uk/courses/9242/pages/week-2) for setting chunk options for figures/tables.
+</ans> </details>
 
-**There are three variables in the dataset that all contain ratings. Which one do I use as my outcome variable?**
-
-You must create a composite score by calculating the mean of these three ratings for each participant.
-
-**Should the data come with a composite score or do I have to create it?**
-
-You must create it. The instructions how to do this are in the [Week 7 tutorial](https://users.sussex.ac.uk/~jm636/tut_06_ttest_deets.html#creating_a_composite_score).
-
-#### *t*-tests
-
-**Should we use a one or two sided t-test?**
-
-You should run the analysis as demonstrated in the lecture and tutorial. 
-
-**I have checked the correlations between the three ratings and they are very low/not significant.**
-
-
-**In the original study, participants were asked at the end if they could guess the aim of the experiment. As we have no data on the responses from this, do we assume it wasn't done?**
-
-You should just ignore it (ie no need to mention it) since as you say, you have no information in your dataset about this. As it says on the [Lab Report Info page](https://canvas.sussex.ac.uk/courses/9242/pages/lab-report-information-and-resources), you don't have to report anything you don't have data on.
-
-### Green study
-
-**Error in chisq.test(...) : 'x' is wrong**
-
-Most likely, you are passing an invalid object to chisq.test(). Make sure your `...` object actually contains what you want it to contain.
-
-## Reporting and In-Line Code
-
-**When reporting a *p*-value that is extremely small e.g. < 0.0005, if I use code to round this to 2 or 3dp, then the result is 0 which looks misleading. Do we need to automate the process of bringing all data from our calculations in to our Markdown files, or in exceptional cases like this can we manually enter the value, e.g. *p* < .01 or < .001?**
-
-This is covered in depth in the [Week 6 tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#reporting_htest_objects) - in short, you can either use [a custom function in that tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#bonus:_creating_functions) for reporting small values of *p* correctly, or simply type the correct value (i.e. "*p* < .001"). Keep in mind that the **only** time this should be done is when *p* is smaller than .001; in all other cases; you should report the exact value of *p*.
-
-**Do we have to use inline code to report results? How does this work?**
-
-Yes! 
-In essence, the only thing in-line code chunks do is print out a single number or string. 
-That means that whatever you put inside `r ....` must be a valid piece of code that produces the desired outcome. 
-So if, in one of my code chunks I create an object called `x` that contains the value 253.3333:
-
-`x <- 253.3333`
-
-and I want to print the value rounded to 2 decimal places in body text, all I need to do is type:
-
-`r round(x, 2)`
-
-in the Rmd body anywhere below the code chunk that created the object and, when knitted, this will be displayed as 253.33.
-
-Guidance on how to include in-line code has been given to you throughout the term in practical worksheets and some tutorials. 
-Look through those and compare the markdown with the output.
-
-**My plot/table runs fine when I create it, but it won't appear when I try to put in a code chunk and knit.**
-
+<details class="faq"> <summary>My plot/table runs fine when I create it, but it won't appear when I try to put in a code chunk and knit.</summary> <ans>
 There are a few possible reasons for this, including but not limited to:
 
 * You have set your global chunk options not to display output (for instance, using `include = FALSE`).
 You must override this in the individual chunk where you want the table or plot to be displayed.
 * The object where you think you have stored your plot or table doesn't contain what you think it contains.
 You can check this by typing the object name in the console and pressing Enter.
+</ans> </details>
 
-**error in use method("pull "):  no applicable method for 'pull' applied to an object of class "c('kableExtra', 'knitr_kable') **
+<details class="faq"> <summary>Error: stat_summary requires the following missing aesthetics: y</summary> <ans>
+This is typically caused by using a geom that requires more aesthetics than you are giving it. In this case, your graph needs both an *x* and a *y*, but you've only specified the *x* in the `aes()` command.
+</ans> </details>
+
+<details class="faq"> <summary>Error: Aesthetics must be either length 1 or the same as the data (125): y</summary> <ans>
+This is a very informative error telling you that something is wrong with the aesthetics - that is, the variables you are trying to plot. Look at what you have put into your `aes()` function and make sure that these are both variables from your dataset.
+</ans> </details>
+
+<details class="faq"> <summary>Error: Don't know how to add '...' to a plot</summary> <ans>
+You can add layers in ggplot by simply using the `+` symbol at the end of each new layer. However, this only works if what you are adding is a valid plot layer. Check both the plot you are adding to (to make sure it is what you think it is) and the new layer.
+</ans> </details>
+
+<details class="faq"> <summary>Warning: Ignoring unknown parameters: fun.y</summary> <ans>
+Try changing `fun.y` to `fun`. This is just a compatibility issue. The `fun.y=` argument has been deprecated in favour of `fun=` in the most recent version of ggplot2.
+</ans> </details>
+
+## Analysis
+
+<details class="faq"> <summary>I am confused about which p-value that I need to compare mine to to know if it is significant or not - .05 or the significance reported in the original study.</summary> <ans>
+Remember that there's a difference between the significance level that you choose, which you must decide before you see your results; and the actual value for p that your test produces.
+
+The "standard" significance level in psychology studies is often (but not always) .05. We then collect data and perform an analysis, which yields the p value for our particular study. We then compare the p-value we have to our predetermined significance level. If it is below that significance level, the result can be considered "statistically significant", ie unlikely to find a test statistic as large as the one we found, or larger, if the null hypothesis is true. The significance level, which we decided beforehand, helps us determine what we will accept as "unlikely".
+
+In both the lecture and the Elliot study, the significance level is the same: .05. However, the analysis in the lecture and the analysis reported in the Elliot paper produced two different p-values, because the data they were using was different. The way that the p-value that these two analyses were reported may have differed; Elliot report "p < .05", which means their calculated value for p was below .05, but we don't know what the exact value is. In general, this is bad form; you should always report the exact value of p to three decimal places. In the lecture, however, we had a value of p that was so small that three decimal places couldn't capture anything except 0s. In this case, when p is very very small so that three decimal places can't express it, you should simply write "p < .001". This is the only circumstance in which you should use "less than" rather than writing out the exact number.
+
+For your report, keep in mind clearly that you have a predetermined significance level and then the p-value that you calculate using your statistical test. You should report your p-value as we have taught you, and then interpret it with reference to your significance level.</ans> </details>
+
+### Red study
+
+#### Outcome variable/composite score
+
+<details class="faq"> <summary>There are three variables in the dataset that all contain ratings. Which one do I use as my outcome variable?</summary> <ans>
+You must create a composite score by calculating the mean of these three ratings for each participant. You should read the [original paper](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0#red)'s methods carefully so you understand what you're doing.
+</ans> </details>
+
+<details class="faq"> <summary>Should the data come with a composite score or do I have to create it?</summary> <ans>
+You must create it. The instructions how to do this are in the [Week 7 tutorial](https://users.sussex.ac.uk/~jm636/tut_06_ttest_deets.html#creating_a_composite_score).
+</ans> </details>
+
+<details class="faq"> <summary>Before creating the composite score, I have checked the correlations between the three ratings and they are very low/not significant.</summary> <ans>
+Checking the correlations between the items is a great idea, and it's definitely something you can include in your results and discussion. Your interpretation is correct - as I said in the tutorial, we would expect reasonably high correlations between these three ratings if they were in fact all measuring attractiveness. However, the assessment (and dataset!) weren't designed for this analysis. So, regardless of the actual wisdom of using the composite score, you should still calculate it and do the t-test on it. You can definitely use the complete results of your analysis, including these correlation checks, to determine whether you believe the results are reliable. This would be a very useful thing to examine in your discussion, alongside your comparisons to other studies.
+</ans> </details>
+
+#### *t*-tests
+
+<details class="faq"> <summary>Should we use a one or two-tailed t-test?</summary> <ans>
+The original study also conducts a two-tailed test, and this is what you should always do as default. You should only conduct a one-tailed test when you not only have a directional hypothesis, but it does not matter if the results go the other way. As some people have found, their data shows that e.g. the white condition actually had higher ratings that the red condition. If you had conducted a one-tailed test to test the hypothesis that red would have a higher rating than white, you would be required to **ignore** a result with the opposite pattern. This is usually inadvisable and we only use one-tailed tests in highly specific circumstances. So, as the tutorial instructs, stick with a two-tailed test.
+</ans> </details>
+
+<details class="faq"> <summary>In the original study, participants were asked at the end if they could guess the aim of the experiment. As we have no data on the responses from this, do we assume it wasn't done?</summary> <ans>
+You should just ignore it (ie no need to mention it) since as you say, you have no information in your dataset about this. As it says on the [Lab Report Info page](https://canvas.sussex.ac.uk/courses/9242/pages/lab-report-information-and-resources), you don't have to report anything you don't have data on.
+</ans> </details>
+
+<details class="faq"> <summary>Error in t.test.default( : 'mu' must be a single number</summary> <ans>
+This error comes up when the value of `mu` is NA. From the help documentation (which we can see via `?t.test`) the value `mu` is the expected true value of the difference in means, which by default is 0. So, one or both of your variables has NAs in it, or is only NAs.
+
+Have a look at your `data` tibble either by calling the tibble in the console, or by using `summary()`, and check that the two variables you are using contain your condition codes and mean values of your composite score, respectively. If they don't, you will need to fix that first.
+</ans> </details>
+
+### Green study
+
+<details class="faq"> <summary>Error in chisq.test(...) : 'x' is wrong</summary> <ans>
+Most likely, you are passing an invalid object to chisq.test(). Make sure your `...` object actually contains what you want it to contain.
+</ans> </details>
+
+## Reporting and In-Line Code
+
+<details class="faq"> <summary>What information should we write about participants?</summary> <ans>
+This is explained in detail on the [Lab Report Information and Resources](https://canvas.sussex.ac.uk/courses/9242/pages/lab-report-information-and-resources) page.
+</ans> </details>
+
+<details class="faq"> <summary>When reporting a *p*-value that is extremely small e.g. < 0.0005, if I use code to round this to 2 or 3dp, then the result is 0 which looks misleading. Do we need to automate the process of bringing all data from our calculations in to our Markdown files, or in exceptional cases like this can we manually enter the value, e.g. *p* < .01 or < .001?</summary> <ans>
+This is covered in depth in the [Week 6 tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#reporting_htest_objects) - in short, you can either use [a custom function in that tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#bonus:_creating_functions) for reporting small values of *p* correctly, or simply type the correct value (i.e. "*p* < .001"). Keep in mind that the **only** time this should be done is when *p* is smaller than .001; in all other cases; you should report the exact value of *p*.
+</ans> </details>
+
+<details class="faq"> <summary>I'm writing up my results and trying to round my *p*-value into 3 decimals from < 2.2e-16 using `round(., digits = 3)`. However, when I knit the document, it says *p* = 0.</summary> <ans>
+This is covered in depth in the [Week 6 tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#reporting_htest_objects) - in short, you can either use [a custom function in that tutorial](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html#bonus:_creating_functions) for reporting small values of *p* correctly, or simply type the correct value (i.e. "*p* < .001"). Keep in mind that the **only** time this should be done is when *p* is smaller than .001; in all other cases; you should report the exact value of *p*.
+</ans> </details>
+
+<details class="faq"> <summary>Do we have to use inline code to report results? How does this work?</summary> <ans>
+Yes! 
+In essence, the only thing in-line code chunks do is print out a single number or string. 
+That means that whatever you put inside <code>&#96;r ....&#96;</code> must be a valid piece of code that produces the desired outcome. 
+So if, in one of my code chunks I create an object called `x` that contains the value 253.3333:
+
+`x <- 253.3333`
+
+and I want to print the value rounded to 2 decimal places in body text, all I need to do is type:
+
+<code>&#96;r round(x, 2)&#96;</code>
+
+in the Rmd body anywhere below the code chunk that created the object and, when knitted, this will be displayed as 253.33.
+
+Guidance on how to include in-line code has been given to you throughout the term in practical worksheets and some tutorials. 
+Look through those and compare the markdown with the output.
+</ans> </details>
+
+<details class="faq"> <summary>error in use method("pull "):  no applicable method for 'pull' applied to an object of class "c('kableExtra', 'knitr_kable') </summary> <ans>
 
 `pull()` is a function that will only work on tibbles. 
 Once you have fed your tibble into the `kable()` function to format it, it isn't a tibble anymore.
 Best practice is to save your descriptives tables as tibbles, then pipe them into `kable()` when you want them to appear in your document.
 This way, you can use your descriptives tables both to report values (using `pull()`) and to present results (using `kable()`).
 
-For example, you SHOULD do this:
+That is, you SHOULD do this:
 
 ```{r, eval = F}
 desc.table <- data %>% 
@@ -193,28 +342,36 @@ desc.table <- data %>%
   summarise(...) 
   %>% kable()
 ```
-
+</ans> </details>
 
 # Producing the Report
 
 ## What to Include
 
-**The [outline for the report](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0#outline) does not include an introduction. Do we need one?**
-
+<details class="faq"> <summary>The [outline for the report](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0#outline) does not include an introduction. Do we need one?</summary> <ans>
 You don't need to write an introduction - only a short methods, results, and discussion.
+</ans> </details>
 
-**What should go into the table of participant descriptives by experimental condition?**
+<details class="faq"> <summary>What does the final word count include?</summary> <ans>
+The word count includes all headings and text in the knitted document, although not including text in figures/tables or their captions, or references.
+</ans> </details>
 
+<details class="faq"> <summary>What should go into the table of participant descriptives by experimental condition?</summary> <ans>
 This is slightly different for the two studies, because they have different information.
 
 * Red study: descriptives divided up by experimental condition and gender
 * Green study: descriptives divided up by experimental condition
 
 This is because the dataset for the green study does not include gender.
+</ans> </details>
+
+<details class="faq"> <summary>Do we have to write a Codebook in the design section?</summary> <ans>
+You don't need to create a codebook. In your design section, you should explain how you created or measured the variables (ie, how they were operationalised) and how to interpret them. 
+</ans> </details>
 
 ## Writing the Discussion
 
-**My results that indicate that the control group actually scored higher than the experimental group - i.e., the reverse pattern from the previously reported findings in the original paper.**
+<details class="faq"> <summary>My results that indicate that the control group actually scored higher than the experimental group - i.e., the reverse pattern from the previously reported findings in the original paper.</summary> <ans>
 
 It is possible in the datasets we have given you that some people will have the "expected" pattern (ie as reported in the original paper), and some will have the reverse. 
 It does not necessarily indicate you have made a mistake. You should always double check all of your codings as a matter of course.
@@ -240,25 +397,59 @@ Look into other studies on the connotations of colours, or the factors that affe
 Then it would be REALLY great if you could also suggest an experiment that test whether your suggestion is right.
 * This isn't an easy thing to do - discussions are difficult to write, but they can also be a lot of fun because you get to have Opinions :) 
 The number one problem I see in discussions is "this is all rubbish and none of it means anything". 
-I'm willing to believe that a study is fundamentally flawed and its results are unreliable, if that's what you think is the case - but don't just rip your study apart and say it's all rubbish, unless you can provide a thorough, well-evidenced argument that that is the case!
-
+I'm willing to believe that a study is fundamentally flawed and its results are unreliable, if that's what you think is the case - but don't just rip your study apart and say it's all rubbish, unless you can provide a thorough, well-evidenced argument that that is the case!</ans> </details>
 
 ## Formatting and Knitting
 
-**My document won't knit and says there's an error on a particular line, but there isn't anything on that line that should cause a problem.**
+<details class="faq"> <summary>My document won't knit and says there's an error on a particular line, but there isn't anything on that line that should cause a problem.</summary> <ans>
+The best way to find the source of an error that comes up in knitting is to switch to Output view. Where the error came up in RStudio, you should see two buttons next to each other called "Output" and "Issues", in the upper right corner of the R Markdown pane. If you click on Output, what you will see is the progress R makes through the document as it's trying to knit. This can help you find where the problem is because you need to look in your document in the section R was working on when it quit. This is because the line numbers don't always match up.
+</ans> </details>
 
+<details class="faq"> <summary>There is output appearing in my knitted document that I don't want. How do I get rid of it?</summary> <ans>
 
+You could fix this two ways:
 
-**Should we keep a copy of our cleaned data in our knitted document as well as describing it , or just describe the data and what we have done to clean it?**
+1. Remove any commands from your code that are only for you to check your data You will need to identify which line(s) are producing this output and either delete or comment them out.
 
+2. Set the options on your code chunks not to show output. We explained how to do this, with examples, in the guided part of the Week 2 practical.
+
+Bonus tip: even if you go for (1) above to fix this particular problem, I'd suggest you look into (2) anyway, because it will help you format your Markdown document and your code chunks the way you want them to appear throughout your document.
+</ans> </details>
+
+<details class="faq"> <summary>Error in vapply(x, format_sci_one, character(1L), ..., USE.NAMES = FALSE): the length of the value must be 1，but in FUN(X[[1]]) was 102</summary> <ans>
+This error is typically caused by incorrect inline code. In order for inline code to successfully print a value when knitted, each piece of code must only result in a single value. You can do this either by saving a single value in an object name - as we have done for `age_removed` in the Week 3 practical, for example - or by using a pipe in inline code to calculate or extract a particular value from a table - as we have done in the reporting sections of the tutorials and practicals.
+
+To resolve this error, double check what's in the object you are calling, and the other objects in your inline code. You should have a single number in this object; if there's anything else in it, that could be the cause of the error. You can check what value any piece of inline code will produce by clicking on it (so your cursor is inside the backticks) and pressing ctrl + Enter.
+</ans> </details>
+
+<details class="faq"> <summary>Error in eval(parse_only(code), envir = envir) : object '...' not found</summary> <ans>
+This error will appear if you have called an object in your inline code that R cannot find. This might be because:
+
+* You have not written the code in your document that creates it
+* The code that creates this object is in a code chunk *after* the inline code
+
+To fix this, make sure that any objects in your inline code are created in your code chunks (spelled precisely the same way), and that the code chunk precedes the inline code that uses it.
+</ans> </details>
+
+<details class="faq"> <summary>No LaTeX installation detected (LaTeX is required to produce PDF output)</summary> <ans>
+This error will appear if you change the YAML header to knit your Markdown as a PDF. You **should not do this** - do not change the YAML header, and if you have, you should replace it with the original version. This error will go away if you instead knit to HTML.
+</ans> </details>
+
+<details class="faq"> <summary>Should we keep a copy of our cleaned data in our knitted document as well as describing it, or just describe the data and what we have done to clean it?</summary> <ans>
 You are not supposed to submit the knitted document but the .Rmd file. There is no need for the data set to be printed in the document.
+</ans> </details>
 
 ## References
 
-**The ProQuest link for the original study says that access is not authorised.**
+<details class="faq"> <summary>The ProQuest link for the original study says that access is not authorised.</summary> <ans>
+The links have now been updated. If you can still not access the linked paper, you should Google the name of the paper.
+</ans> </details>
 
-Use the PDF posted in [the same section directly above](https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0#red), or Google the paper.
+<details class="faq"> <summary>How do I connect Zotero to R Studio, and how do I make a reference list?</summary> <ans>
+We have not covered how to automatically insert citations and create a reference list, so you don't have to do this. You should add your references to a Word document, generate a list, and then copy it to your R Markdown. There is more information on this in the [Week 7 lecture](http://users.sussex.ac.uk/~jm636/lec_07_report_slides.html#/references).
+</ans> </details>
 
-**How do I connect Zotero to R Studio and how do I make a reference list?**
+# Miscellaneous
 
-We have not covered how to do this. You should add your references to a word document, generate a list and then copy it to your R Markdown. There is more information on this in the [Week 7 lecture](http://users.sussex.ac.uk/~jm636/lec_07_report_slides.html#/references).
+<details class="faq"> <summary>The original paper had multiple studies - which of these are we replicating?</summary> <ans>
+For both studies, you should be reading and basing your write-up on Study 1. This is explained in detail on the [Lab Report Information and Resources](https://canvas.sussex.ac.uk/courses/9242/pages/lab-report-information-and-resources) page, under each study.</ans></details>
