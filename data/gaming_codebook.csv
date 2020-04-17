@@ -1,0 +1,12 @@
+Variable,Type,Description
+hrs_gaming ,Continuous,"Hours spent gaming ""on average"" per week "
+game,Factor,Which Game did participant play the most? 
+social_anx,Continuous,Social Phobia Inventory scale. Composite score 0 - 68
+gen_anx,Continuous,Generalized Anxiety Disorder scale. Composite score of 0 (no anxiety) to 21 (severe anxiety)
+life_sat,Continuous,Satisfaction with life scale. Composite score 0 - 35
+narcissism,Continuous,Single item Narcassism scale. Score 0-5
+residence,Factor,Country of Residence
+age,Continuous,Participant age (in years)
+work,Factor,"Occupation status: employed, university, school, unemployed"
+degree,Factor,"Highest degree: none, high_school, bachelor, masters, phd_md_etc"
+gender,Factor,"Participant gender identity: female, male, other"
