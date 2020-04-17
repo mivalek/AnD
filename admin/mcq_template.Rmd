@@ -1,0 +1,50 @@
+---
+title: "Title"
+subtitle: "Subtitle"
+author: "Analysing Data"
+date: "10/04/2020"
+output:
+  word_document:
+    reference_docx: mcq_format_ref.docx
+    df_print: kable
+    fig_height: 5
+    fig_width: 6
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=F, fig.align='center')
+library(tidyverse)
+```
+
+
+# Heading 1
+
+## Heading 2
+
+Body text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+inline `code`
+
+1. Question stem
+    (a) Option 1
+    (a) Option 2
+    (a) Option 3 (correct)
+    (a) Option 4.
+
+\ 
+
+2. Another stem
+    (a) Option 1
+    (a) Option 2
+
+\ 
+
+```{r}
+# code chunk
+"blah" %in% 7
+tibble(name = LETTERS[1:4], value = rnorm(4))
+```
+
+\ 
+
+Evaluated inline code `r rnorm(1)`.
