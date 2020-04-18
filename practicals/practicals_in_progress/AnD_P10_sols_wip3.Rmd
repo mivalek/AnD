@@ -1,0 +1,486 @@
+---
+title: 'Practical 10: Extending the Linear Model'
+author: "Analysing Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE)
+library(tidyverse)
+library(kableExtra)
+#make.sheet("C:/Users/scruffybumblebee/Desktop/analysing_data/practicals/AnD_P10_2.rmd", course = "and")
+```
+
+```{r report.p, include = F}
+report.p <- function(x){
+  ifelse(x > .001, paste0(" = ", rd(x, 3)), "< .001")
+}
+```
+
+This practical will help you practice preparing for, conducting, reporting and interpreting linear model analyses with multiple predictors in R. Before you start this practical, you should make sure you review the relevant lecture, as this practical assumes you already know what these analyses are and how to interpret the output. You should also use this practical in combination with the tutorial on the same topic.
+
+# Setting Up
+For this practical, you will need this worksheet, RStudio, and a new Markdown document. Remember that you can easily switch between windows with the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) and <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcuts.
+
+`r task()`Open your analysing_data `R` project in RStudio and open a new Markdown file. Since we will be practicing reporting using inline code, we will need the Markdown later on. For the tasks, get into the habit of creating new code chunks as you go.
+
+`r task()`Aside from loading `tidyverse`, we will also be using `XXX` and `XXX`. If you don't have any of these packages installed, do that now. **Remember that installing packages is a one-off thing** so don't put the command that does it in your Markdown. Simply type it into the console and press <kbd>&crarr;\ Enter</kbd>. The `library()` commands should always go in a separate code chunk at the beginning of your Markdown document, so that your code will run correctly.
+
+```{r, eval=F, echo = solution}
+library(tidyverse)
+# library(Hmisc)
+# library(here)
+#library(kableExtra)
+# library(cowplot)
+```
+
+\ 
+
+# The dataset
+As usual, we will need some data to work with. This week we will use the dataset "Gaming Habits and Psychological Well-being: An international dataset about the Anxiety, Life Satisfaction and Social Phobia of over 13000 gamers". 
+
+The data from this study is from an international online survey with participants from over 100 countries. The survey comprised questionnaires assessing general anxiety disorders, social phobia, as well as overall life satisfaction, to allow for the investigation of whether there is a relationship between excessive video game usage, well-being,and psychological disorders. 
+
+Here is [a preprint describing the database](https://psyarxiv.com/mfajz/) (for the curious, have a look at [what a preprint is and how it differs from a journal article](https://help.osf.io/hc/en-us/articles/360019930493-Preprint-FAQs)). As described in the preprint, the authors already conducted a lot of data cleaning for us (how nice!). However, we should still check the data looks the way we expect. You can find the data from the study at https://raw.githubusercontent.com/mivalek/AnD/master/data/gamers.csv. 
+
+`r task()`Add the commands to read in the data and save it in an object called `gaming`. Have a look at what the dataset contains.
+
+```{r, echo = solution}
+gaming <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/gaming.csv")
+gaming %>% str()
+
+```
+
+<!--solution 
+At this point, we've shown you a number of ways to have a look at what your dataset contains. 
+- reminder, diff ways to 'look' at data
+--> 
+
+\ 
+
+# Data cleaning
+As you can see, there are a **lot** of variables in this study! I will do some of the data preperation steps for you, so that you have a more manageable dataset.
+
+Whenever you use someone elses code (and it is both common and useful to 'borrow' and edit code to achieve your own aims!) it is important to make sure you understand **what** each step of any 'borrowed' code does and **why**. 
+
+`r task()`Run the code below: 
+
+```{r, include=T}
+
+gaming <- gaming %>%
+  dplyr::select(Hours, Game, SPIN_T, GAD_T, SWL_T, Narcissism, Residence, Age, Work, Degree, Gender) %>%
+  dplyr::mutate(Work = recode(Work, "Employed" = "employed",
+                              "Student at college / university" = "university",
+                              "Student at school" = "school",
+                              "Unemployed / between jobs" = "unemployed")) %>%
+  dplyr::mutate(Game = str_replace(Game, " ", "_")) %>% 
+  dplyr::mutate(Game = factor(Game),
+                Residence = factor(Residence),
+                Work = factor(Work),
+                Degree = factor(Degree),
+                Gender = factor(Gender)) %>% 
+  dplyr::rename(hrs_gaming = Hours,
+                life_sat = SWL_T, 
+                social_anx = SPIN_T,
+                gen_anx = GAD_T)
+
+names(gaming) <- tolower(names(gaming))
+
+all_missing <- sum(is.na(gaming))
+
+gaming <- gaming %>% drop_na()
+
+# As always, call your objects to check they contain what you think they should contain!
+```
+
+`r subtask()`There is at least one function you haven't used before. Work out what any unfamiliar functions do and write down what packages they belong to. 
+
+**Hint**: Either use the help code in your console (e.g. ?select) or use a search engine to find out what they do (e.g. google: R select function). 
+
+`r subtask()`Make sure you understand **what** each step does and **why** I did it. E.g. why might I have recoded the factors in the `work` variable?
+
+<!--solution 
+- describe code, and new functions, mostly highlighting where/how they could find this out
+- remind them that spaces are not ok 
+- remind them case sensitive, lower case pref
+- highlight issues removing NA from entire dataset rather than using exact row cutoff
+--> 
+
+\ 
+
+# Preperation
+
+We're going to be investigating whether there is a relationship between life satisifaction and 'recreational gaming' in working adults. Before we go any further, however, you should use the codebook below to check what variables we'll be working with.
+
+\ 
+
+## Codebook
+
+```{r, echo= T}
+read_csv("C:/Users/scruffybumblebee/Desktop/analysing_data/practicals/gaming_codebook.csv") %>%
+  kable() %>%
+  kable_styling()
+```
+
+
+`r task()`Now that the dataset is more manageable, take a look at the data again. Can you spot any issues with the variables? Write any issues down, but don't do anything to correct them yet.
+
+**Hint**: Check the class of your variables is correct, and look for any typos or improbable values.
+
+```{r, echo = solution}
+
+# get an overview:
+gaming %>% str()
+# or
+summary(gaming)
+
+# take a closer look at problematic variables:
+gaming %>%
+  pull(hrs_gaming) %>%
+  table()
+
+```
+
+\ 
+
+## Inclusion criteria
+
+You should have noticed that `hrs_gaming` had some very large and impossible values (there are only 168 hours in a week!), unless someone has invented timetravel for the sole purpose of XP farming. Normally, we would deal with these impossible values. However, we first need to remove some participants, based on the inclusion criteria for our study - the key participant characteristics researchers select (*prior* to running a study or analysing [secondary data](https://methods.sagepub.com/reference/the-sage-encyclopedia-of-communication-research-methods/i13206.xml)) to answer the research question. As it turns out, removing participants that don't meet our inclusion/exclusion criteria will remove these values anyway!
+
+Our inclusion criteria are **working adults** who game **recreationally**. This means we only want to keep participants who:
+
+- are in employment or at university in our dataset
+- are over 18 
+- do not play more than 8 hours of games per day (a pre-selected cut-off value as this should be the most leisure time someone with a 'standard' 8hr work day and 8hr sleep pattern would have!)
+
+You should already have noticed our dataset already only contains people over 18, so we don't need to worry about excluding participants aged under 18. Let's go ahead and deal with the other two inclusion criteria. 
+
+`r task()`Exclude participants from the dataset that are 1) not employed or at university (i.e. remove unemployed participants and school students); 2) play **8 or more** hrs of games per day. Remember that `hrs_gaming` is per week, so you will need to calculate a weekly value to exclude participants. Instead of calculating this seperately and using the number in your code, **include the calculation** in the code you use to exclude participants. 
+
+**Hint**: Use the logical operator "less than or equal to" to complete this task [see PAAS week 7 practical](https://paas.mindsci.net/week7/#40). You will also need to use either the oporator %in% (covered in the [Tutorial 5](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html)) or you could use the logical operator "or".
+
+```{r, echo = solution}
+
+# checking the code will do what I want it to, step by step - not reassigned to object yet
+gaming %>% 
+  filter(hrs_gaming <= 8*7) %>% 
+  pull(hrs_gaming) %>%
+  table()
+
+gaming %>% 
+  filter(work == "employed" | work == "university") %>% 
+  pull(work) %>%
+  table()
+# OR
+gaming %>% 
+  filter(work %in% c("employed", "university")) %>% 
+  pull(work) %>%
+  table()
+
+# saving the changes I want back into the dataset (reassigning changes to object)  
+gaming <- gaming %>% 
+  filter(work == "employed" | work == "university") %>% 
+  filter(hrs_gaming <= 8*7)
+
+
+
+```
+
+<!--solution 
+- describe 
+- info on filter(Work == "employed" | Work == "university") OR filter(Work %in% c("employed", "university"))
+- info logical ops
+- info on calcs
+- reiterate all exclusion criteria/cutoffs must be done in advance of seeing the data
+--> 
+
+\ 
+
+# Analysis: Linear Model 1
+
+Great, now we have a clean and shiny dataset! We selected variables of interest, removed participants with missing data, renamed problematic/unclear variables, checked the classes of our variables, and excluded particpants who didn't fit our inclusion criteria. 
+
+Our overall research question is whether there is a relationship between life satisifaction and 'recreational gaming' in working adults. We're also interested in whether additional factors are better at explaining variance in life satisfaction than hours spent gaming. Our outcome variable will be `life_sat` and our predictors will be `hrs_gaming` and `social_anx`. 
+
+`r task()`Create a linear model to capture the relationship between `life_sat` (the outcome), `hrs_gaming` (predictor 1) and `social_anx` (predictor 2). Save the linear model in an object called `satisf_lm1`. 
+
+```{r, echo = solution}
+
+satisf_lm1 <- lm(life_sat ~ hrs_gaming + social_anx, data = gaming)
+# OR
+satisf_lm1 <- lm(gaming$life_sat ~ gaming$hrs_gaming + gaming$social_anx)
+# OR
+satisf_lm1 <- gaming %>% 
+  lm(life_sat ~ hrs_gaming + social_anx, .)
+
+```
+
+<!--solution 
+- pipes no pipes info reminder?
+- subsetting with $ reminder?
+--> 
+
+```{r names_setup}
+
+satisfac_param <- broom::tidy(satisf_lm1, conf.int = TRUE)
+outcome <- "life satisfaction"
+OUTCOME <- "Life satisfaction"
+pred1 <- "hours gaming"
+pred2 <- "social anxiety"
+
+```
+
+`r subtask()`Run some code to see the overall fit statistics for your linear model (`satisf_lm1`), using a function from the `broom` package. How would you interpret the *F*-statistic for this model?
+
+**Hint**:  Check the [GLM tutorial](http://milton-the-cat.rocks/learnr/r/discovr_08/#section-one-predictor) if you don't remember which function to use.
+
+
+```{r, echo = solution}
+
+broom::glance(satisf_lm1)
+
+```
+
+<!--solution 
+- also could use summary() - describe why asking for glance and difference
+- did in two steps as want to first see if the model is significantly better than mean mod etc *before* interpreting the values of the parameters
+- put some stuff about ratios for those that can't maths here, and s-t-n ratios?
+--> 
+
+`r subtask()`Now run the code to see the model parameters, making sure to tell R to produce confidence intervals. Let's focus on just one predictor. How would you interpret the relationship between `r pred1` and `r outcome`? 
+
+**Hint**: Think about confidence intervals, the *t*-statistic and associated *p*-value, and the size and direction of *b*~1~.
+
+- The relationship between `r pred1` and `r outcome` is...
+- The statistical interpretation of *b*~1~ is ...
+- The 'real world' or 'plain language' interpretation of *b*~1~ is ...
+
+```{r, echo = solution}
+
+broom::tidy(satisf_lm1, conf.int = TRUE)
+
+```
+<!--solution
+- The rel between ...
+
+- The statistical interpretation of *b*~1~ is that `r pred1` `r ifelse(satisfac_param$p.value[2] < .05, "significantly predicted", "did not significantly predict")` `r outcome`. This was a 
+`r ifelse(satisfac_param$estimate[2] > 0, "positive", "negative")` relationship: as `r pred1` increased by one unit, `r outcome` `r ifelse(satisfac_param$estimate[2] > 0, "increased", "decreased")` by `r satisfac_param$estimate[2] %>% round(2)` units (when `r pred2` score is at 0)
+
+- The 'real-world' meaning of *b*~1~ is that for every extra hour of gaming, `r outcome` 
+`r ifelse(satisfac_param$estimate[2] > 0, "increases", "decreases")` by one point on the `r outcome` rating scale (when `r pred2` score is 0)
+
+****key lm2 thing to highlight, value of outcome when b1 is 0****
+-->
+
+
+`r task()` Using the output you've generated, write down the equation for this linear model. 
+
+**Hint**: Include the values for *b*~0~, *b*~1~, and *b*~2~, and the variable names. 
+
+
+
+<!--solution
+****key lm2 thing to highlight, value of outcome when others are 0****
+
+The general linear model equation is:
+$$\begin{aligned}Y &= b_0 + b_1(Predictor_1) + b_2(Predictor_2) + \varepsilon\end{aligned}$$
+
+Based on the values from the lm output, we can replace the elements of the equation. For this linear model, the equation would therefore look like this:
+
+$$\begin{aligned}{Life\ satisfaction} &= `r satisfac_param$estimate[1] %>% round(2)` + `r satisfac_param$estimate[2] %>% round(2)`({hours\ gaming\ per\ week}) + `r satisfac_param$estimate[3] %>% round(2)`(social\ anxiety) + \varepsilon\end{aligned}$$
+
+-->
+
+
+
+```{r, unique_ss}
+# make sure not too few duplicate values
+n3 <- gaming %>% 
+  group_by(hrs_gaming) %>%
+  filter(n() == 3) %>% 
+  summarise()
+
+count3 <- gaming %>% 
+  group_by(hrs_gaming) %>%
+  filter(n() == 3) %>% 
+  filter(hrs_gaming == n3$hrs_gaming[1])
+
+ss3 <- gaming %>% 
+  filter(hrs_gaming == count3$hrs_gaming[3] 
+         & social_anx == count3$social_anx[3])
+
+ss3.y <- satisfac_param$estimate[1] + 
+  (satisfac_param$estimate[2]*ss3$hrs_gaming) + 
+  (satisfac_param$estimate[3]*ss3$social_anx)
+
+ss3.resid <- count3$life_sat[3] - ss3.y
+
+
+gaming %>%
+  filter(hrs_gaming == 37 & social_anx == 8)
+
+```
+
+`r subtask()`One participant spends `r ss3$hrs_gaming` `r pred1` per week and has a `r pred2` score of `r ss3$social_anx`. Solve the linear model equation to predict `r outcome` for this participant. 
+
+<!--solution
+The linear model equation you calculated earlier looked like this:
+
+$$\begin{aligned}{Life\ satisfaction} &= `r satisfac_param$estimate[1] %>% round(2)` + `r satisfac_param$estimate[2] %>% round(2)`({hours\ gaming\ per\ week}) + `r satisfac_param$estimate[3] %>% round(2)`(social\ anxiety) + \varepsilon\end{aligned}$$
+
+We can replace our predictors with this participant's values:
+
+$$\begin{aligned}{Life\ satisfaction} &= `r satisfac_param$estimate[1] %>% round(2)` + (`r satisfac_param$estimate[2] %>% round(2)` * `r ss3$hrs_gaming`) + (`r satisfac_param$estimate[3] %>% round(2)`* `r ss3$social_anx`) + \varepsilon\end{aligned}$$
+$$\begin{aligned}`r ss3.y %>%  round(2)` &= `r satisfac_param$estimate[1] %>% round(2)` + (`r satisfac_param$estimate[2] %>% round(2)` * `r ss3$hrs_gaming`) + (`r satisfac_param$estimate[3] %>% round(2)`* `r ss3$social_anx`) + \varepsilon\end{aligned}$$
+
+Now we know the predicted value for this participant is `r ss3.y %>%  round(2)`. 
+
+-->
+
+`r subtask()`Find this participant in the database. What is their actual value for `life_sat`? Compare the value of `r outcome` predicted by the linear model, and their actual value. What does this comparison tell you?
+
+**Hint**: The filter function and logical operators are your friends here. You don't need to save the outcome into an object.
+
+```{r, echo = solution}
+
+gaming %>%
+  filter(hrs_gaming == 37 & social_anx == 8)
+
+```
+
+<!--solution
+The score predicted (by the linear model) for the participant and their actual, observed `r outcome` score, were not identical. In fact, the actual score was `r ss3.resid %>%  round(2)` `r ifelse(ss3.resid > 0, "higher", "lower")` than the predicted value (i.e. the model predicted a rating `r ss3.resid %>%  round(2) ` points `r ifelse(ss3.resid > 0, "lower", "higher")` on the `r outcome` scale than the participants actual score).
+
+- reminder about residuals
+-->
+\ 
+
+# Analysis: Linear Model 2
+
+There will nearly always be a difference between a predicted and observed value (the residual) as there will always be error in a linear model. However, we want that difference to be as small as possible. Maybe there are additional variables in our dataset that will help us better explain the variance in `r outcome`, and reduce the error in our model. 
+
+`r task()`Use the codebook to select an additional predictor you think will have a relationship with life satisfaction. Think carefully about what you think the relationship will be between predictors and outcome. 
+
+- What direction do you think these relationships will be?
+- Do you think they will be significant relationships?
+- Which predictor do you think will explain most variance in the outcome?
+
+
+<!--solution 
+
+--> 
+
+I will use `narcissism` as my third predictor. You can choose whatever you think is reasonable, but be aware I will be referencing `narcissism` as the third predictor from here onwards. 
+
+`r task()`Create a linear model to capture the relationship between `life_sat` (the outcome), `hrs_gaming` (predictor 1), `social_anx` (predictor 2) and `narcissism` (predictor 3). Save the linear model in an object called `satisf_lm2`. 
+
+```{r, echo = solution}
+
+satisf_lm2 <- lm(life_sat ~ hrs_gaming + social_anx + narcissism, data = gaming)
+
+# OR
+
+satisf_lm2 <- gaming %>% 
+  lm(life_sat ~ hrs_gaming + social_anx + narcissism, .)
+
+```
+
+`r subtask()`Run the code to **compare** Model 1 and Model 2. Which model is better able to explain the outcome variable, `r outcome`? 
+
+**Hint**: You need to produce the F-change statistic and associated *p*-value. Check the [GLM tutorial](http://milton-the-cat.rocks/learnr/r/discovr_08/#section-several-predictors) if you're unsure how to do this.
+
+```{r, echo = solution}
+
+anova(satisf_lm1, satisf_lm2)
+
+# OR
+
+anova(satisf_lm1, satisf_lm2) %>% 
+  broom::tidy()
+
+```
+
+<!--solution 
+*****MUST show anova table AND broom in the solution - as anova table in MCQ*****
+** highlight secod model not always better **
+- REPORT RESULTS
+- not significant, so look at model 1 
+--> 
+
+`r subtask()`Now that you know which is the best model (Model 1 or Model 2), have a look at the R^2^ value for each model. How much **more** variance in `r outcome` does the **best** model explain than the model with poorer fit?
+
+**Hint**: You need to work out the R^2^-change. 
+
+**Bonus hint**: You already used the function you need once today! 
+
+```{r, echo = solution}
+fit1 <- broom::glance(satisf_lm1)
+fit2 <- broom::glance(satisf_lm2)
+fit1 
+fit2
+```
+
+<!--solution 
+- describe can use console to do calc, or inline (eg of the inline)
+- explain because model 2 not significant, the two models didn't differ in how much varience they explained `r fit2$r.squared-fit1$r.squared %>% round(2)`
+--> 
+
+`r subtask()`Which predictors in the **best** model made the greatest releative contribution to explaining the variance in the `r outcome`? Run the necessary code to find out, saving the output into an object.
+
+**Hint**: Remember there are two types of betas - unstandardized and standardized. Make sure you understand how the interpretation changes depending on the beta you're looking at, and which beta is good for which task!
+
+```{r, echo = solution}
+
+std.beta_lm1 <- lm.beta::lm.beta(satisf_lm1)
+
+```
+
+`r subtask()`Report what you know about the standardized betas in the **best** model, using what you know about subsetting using $ and inline code.
+
+**Hint**: For an example, see how they are summarised in the [GLM tutorial](http://milton-the-cat.rocks/learnr/r/discovr_08/#section-several-predictors).
+
+
+<!--solution 
+showing inline and what would look like 
+Follow Andy tutorial eg so nice and consistent
+--> 
+
+
+\ 
+
+`r task()`Finally, what conclusions can we draw based on our analysis? 
+
+Do we have evidence for a **relationship** between our predictor variables and our outcome variable? Do we have evidence that our predictors **caused** a change in our outcome variable? 
+
+<!--solution 
+- no causal without manip
+--> 
+
+\ 
+
+# Summary
+
+You made it, well done! There are more variables in the `gaming` dataset, so play around constructing, comparing, and interpreting linear models with additional predictors if you want. This is a great way to improve your statistical skills and your R skills. 
+
+Today you practiced:
+
+[TO CHECK & reword]
+
+- Interpretting borrowed code (how phrase?!)
+- How to find help with functions 
+- Using logical operators and %in%
+- Using calculations within data cleaning code (how phrase?!)
+- Excluding participants from the dataset
+- Using tidyverse functions to find certain values in the dataset
+- Evaluating the difference between causal and correlational designs
+- How to construct, report, and interpret a linear model with multiple predictors:
+    - Using the broom package and lm.beta()
+    - Creating the model equation
+    - Using the equation to make predictions
+    - Evaluating model fit using the *F*-statistic
+    - Finding and interpreting the values of *b*~0~, *b*~1~, *b*~2~, *t*, *p*, and CIs
+    - Comparing models using *F*-change statistic and *R*^2^
+    - Interpreting and reporting the relative contribution of predictors in a linear model using 
+    
+
+That's all for today. I hope you are safe and well.
