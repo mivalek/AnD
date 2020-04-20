@@ -33,7 +33,7 @@ library(broom)
 library(lm.beta)
 ```
 
-```{r, eval=F, toggle = solution, message=F}
+```{r, eval=F, echo=solution, toggle = solution, message=F}
 library(tidyverse)
 library(broom)
 library(lm.beta)
