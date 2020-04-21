@@ -1,32 +1,320 @@
 ---
 title: 'Tutorial 1: R Fundamentals'
 subtitle: 'Analysing Data'
-date: "30/03/2020"
 output: html_document
 ---
 
-```{r setup}
+```{r setup, include = F}
 # setting up default code chunk behaviour
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = T)
+library(Hmisc)
+library(tidyverse)
+
+#make.sheet("tutorials/tut_01_fundamentals.Rmd", "and", solution = T)
 ```
 
-# Overview
+# Using This Tutorial
 
-## Why R?
+This tutorial will walk you through all of the steps of installing R and RStudio, becoming familiar with working in RStudio, running your first commands, and writing your first script. To use it effectively, follow along with each step by doing it yourself. It might be tempting, but **don't just read along, and don't just copy and paste!** Whenever you see R code, type it into RStudio yourself. This will help you become comfortable with typing commands in R and reading the output.
 
-# Working in R
+## A Warning
 
-## Console
+This tutorial is very long and very wordy, because it's intended to cover many of the basic skills and ideas for using R. You don't have to sit down and do the whole thing at once! Instead, work through a section or two at a time, and if you have questions about anything, [ask us](https://canvas.sussex.ac.uk/courses/9242/discussion_topics)!
 
-## Scripts
+## How do I...?
 
-## Markdown
+Some of the tasks in this tutorial will ask you to try to do things that you haven't explicitly learned. Don't worry! Just give it a shot and see what happens. If it doesn't work or you get an error, that's fine - it's all a part of learning. The solutions are all provided for you, but you will learn best if you think through the problem and try to apply what you are learning before you look at the solution.
 
-## Comments
+# Getting Started
+
+## Installing R and RStudio
+
+Both R and RStudio are freely available online to download. The home websites are:
+
+* R: https://www.r-project.org/
+* RStudio: https://rstudio.com/
+
+You should be able to download and install both from their home websites easily. If you need help with this, [this video tutorial](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-installing-r-and-rstudio) will walk you through the setup and installation for both.
+
+### Using the Cloud
+
+If at all possible, it's preferable to install R and RStudio on your own computer directly. Amongst other reasons, once they are installed you can work in RStudio even when you are not connected to the Internet. However, for a small number of people this might not be possible (problems installing, admin rights, using an old OS, etc.), so you can also use the cloud version of RStudio.
+
+[The RStudio Cloud](https://rstudio.cloud/) is a free online version of RStudio. It works exactly like RStudio installed on your computer directly, but it requires an Internet connection to work. All of your work is stored in an online instance of RStudio, which you can access from any computer with an Internet connection. [This help page on Canvas](https://canvas.sussex.ac.uk/courses/9242/pages/r-resources) contains a video tutorial for getting started in the RStudio Cloud, as well as more help on installing R/RStudio directly.
+
+### What's the difference?
+
+We sometimes talk about R and RStudio as if they were the same thing, but they're not. In short, R refers to both the software itself, and the language we use to communicate with it. RStudio is a separate application that makes it easier and more convenient to work in R.
+
+## The RStudio Environment
+
+Once you set up and open RStudio, the first thing to do is simply to have a poke around. Once you've had a look, work through [this video tutorial](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-a-quick-tour-of-r-studio), which will give you a tour of the important sights and help you get RStudio set up properly.
+
+Once you've done that, we'll get started actually Doing Things in the Console below.
+
+## The Console
+
+The Console is deceptively simple: just the `>` symbol with a flashing cursor after it, waiting for you to type something. However, the Console is is the heart of R, where anything you want to do actually happens. Every command that you type, anything you want R to do, goes through here.
+
+That sounds pretty intense, so let's get a couple of things straight right away. You will, inevitably, make typos and mistakes using R. You will write commands that make sense to you that R doesn't understand; you will write commands that **don't** make sense to you, that R **does** understand; and you will see all kinds of exciting errors, warning messages, and - once we get to the fun stuff - beautiful plots and results for our studies. So, right now, let's get over the fear of doing something "wrong" in R. You will do many, many things wrong, just like someone saying their first few words in a new language. Who cares? You're learning.
+
+`r task()`Type literally any gibberish, words, keysmashes etc into the Console and press Enter.
+```{r}
+asdfklfj;alejoi;b
+```
+```{r}
+Hi we're going to learn R today!
+```
+
+```{r}
+¯\_(ツ)_/¯
+```
+
+Oh dear, R is very unhappy with me. Luckily, R has a very short memory (that is to say, no memory at all!) and is always ready to do the next thing I ask straightaway, even if it's nonsense - which is lucky for me, I can assure you.
+
+If you haven't tried this yet, and the cursor in the Console is just blinking balefully at you, I'm serious - smash your head into the keyboard if you have to, or let your cat walk on it, or play it as if it were a piano, and press Enter. There are two important things that we are learning here:
+
+1. To ask R to do something - that is, to "run" or "execute" the commands you write - you must write them out in the Console and press Enter.
+2. Eventually, inevitably, something that you type WILL produce an error. This is no cause for panic, fear, or alarm, so get it out of the way now!
+
+From our gleeful keysmashing above, you will have seen that `asdfklfj;alejoi;b`, `Hi we're going to learn R today!`, and `¯\_(ツ)_/¯` are not valid commands in R. In other words, although each of these has [a communicative function for humans](https://www.cjr.org/language_corner/keysmash-qwerty-asdf.php), R can't understand them. In order to get the answer that we want, we have to  ask R to do something in a way it can understand, by writing commands it can parse (i.e. decipher) using the R language. 
+
+### GlossoRlia[^1]
+
+[^1]: People who work with R love making dumb puns using the letter R - or at least, the people I work with and I do! I thought this one was rather clever, but in case I'm the only one (not unlikely), [here's what I'm referring to](https://en.wikipedia.org/wiki/Glossolalia).
+
+Just like learning any other language, learning to communicate with R takes time and practice, and it can be very frustrating when you and R can't seem to understand each other. However, one advantage of learning to talk to R vs learning to speak a human language is that R always works the same way. It doesn't get angry or sullen or sarcastic; it won't ignore you or get impatient even if you ask it the same question a thousand times; and even if the response it gives doesn't make sense to you, there's always a logical reason for what it does. 
+
+What I am trying to tackle right away is the idea that R is scary or incomprehensible. R is just a system for doing tasks that computers are great at - sifting through thousands of data points in a second, making systematic changes to huge datasets, creating complex mathematical models, drawing elaborate plots. It's powerful, and the very fact that you can do so much with it also means there's a lot to learn. But although R can likely do maths a lot quicker than you, it can't design studies, or critically evaluate an argument, or appreciate a well-chosen emoji, or have sudden bursts of inspiration, or use the results it produces to improve society - all things you **can** do. Ultimately it's just a tool to help you achieve your goals.
+
+Right, enough philosophizing. Let's prove the point by jumping into R and learning about how it works!
+
+# Types of Data
+
+One key concept for using R is the different ways it categorises data. By "data", I mean any piece of information you put into R - a word, a number, the result of a command or calculation, a dataset, etc. Depending on the type of data you have, R will treat it differently, and some operations only work on certain types of data. So, let's have a look at how R codes and deals with different types of data. There are lots of types of data in R, but we'll stick to three of the most common and important: numbers, characters, and logical.
+
+## Numbers
+
+The first, and most obvious, type of data in R is numbers. Once again, let's go straight the Console and see what happens.
+
+`r task()`Type any single number into the Console and press Enter to run.
+
+```{r, toggle = solution}
+# Pick any number at random - that's what I did.
+
+3958
+```
+
+Not unexpected, eh? We've essentially just asked R, "Give me 3958" (or whatever number you put in) and R obliges. The only thing that might be a surprise is the [1] marker. Basically, R has replied, "The first thing ([1]) that you asked me for is 3958." This marker will be important later on, but we don't have to worry about it by now.
+
+`r subtask()`Try putting in another number that's at least 4 digits long, including the commas to separate the thousands and hundreds places.
+
+```{r, toggle = solution}
+3,958
+```
+
+Oops! No good there. This is because commas have a very important role to play in functions, as we will see later on. For now, we've just learned that for long numbers, we need to give them to R without any commas. (Full stops to mark decimal places are just fine; try it if you like.)
+
+Next, let's try doing some basic maths. 
+
+`r subtask()`Add together your shoe size and the number of windows in your current residence.
+
+```{r, toggle = solution}
+40 + 5
+```
+
+Important to note here is that we don't need to type an = to get the answer; we just type the equation we want to solve and press Enter. Again, we've just asked R, "Give me 40 + 5" and R replies with the answer.
+
+You will not be surprised to learn that you can use R as a calculator to subtract, divide, and multiply as well. 
+
+`r subtask()`Try doing each of these things with the same two numbers.
+
+```{r, toggle = solution}
+40 - 5
+40/5
+40*5
+```
+
+Now, let's say I wanted to have a bunch of different numbers to use for my analysis. In fact I want every number between 1 and 200. I could do this by typing every number out one by one, but this is exactly the kind of tedious nonsense that computers are great at. Instead, we'll use the operator `:`, which means "every whole number between".
+
+`r subtask()`Print out every whole number between 1 and 50.
+
+```{r, toggle = solution}
+1:50
+```
+
+Nice and easy! Once thing to notice here is that the markers I mentioned earlier have come up again. The first element after the [*n*] marker is the *n*th element. Let's have a look at this some more.
+
+`r subtask()`Print out all the numbers 12 through 58; all of the numbers 23 through 106; and 36.
+
+<details>
+<summary>Solution</summary>
+
+You may have tried something like this:
+
+```{r}
+12:58
+23:106
+36
+```
+
+As you can see from the markers, this is three separate commands, because the number marking starts over from [1] each time. I'd actually like to have all of those numbers in a single list. To do this, I'm going to use a **function** called `c()`:
+
+```{r}
+c(12:58, 23:106, 36)
+```
+
+As you can see from the markers, when I put the numbers I want inside `c()`, separated by commas, R **c**ollects (or **c**oncatenates, or **c**ombines) all of the numbers into a single **vector**. A vector is essentially just a series of pieces of data.
+
+If I want the *n*th number in this vector (say, the 88th), I can even get it out by using the markers:
+
+```{r}
+c(12:58, 23:106, 36)[88]
+```
+
+What I've essentially asked is, "Put all of these numbers into a single vector, and then give me the 88th number." As it turns out, the 88th number in that vector of numbers is `r c(12:58, 23:106, 36)[88]`.
+</details>
+
+`r subtask()`Create a vector of every whole number between 37 and 86, and subtract 7 from each one.
+
+<details>
+<summary>Solution</summary>
+```{r}
+c(37:86) - 7
+```
+
+This could again, be a very tedious process, but R has our back here. We first create the vector, then we tell R we want to subtract 7. R very conveniently applies the "- 7" command to each item in the vector individually.
+
+</details>
+
+We can do a lot more than this with numbers and data in R, but this is an excellent start. Just one note before we move on about the order in which R performs its calculations.
+
+### Order of Operations
+
+As you may remember from school, mathematical expressions are evaluated in a certain order. You can use brackets to tell R which part of a longer calculation to do first, e.g.:
+
+```{r}
+59 * (401+5)
+```
+
+Without the brackets, the expression is evaluated from left to right, which in this case would give a different answer:
+
+```{r}
+59 * 401 / 5
+```
+
+## Characters
+
+Characters are a more general data category that also includes letters and words. In R, strings of letters or words must be enclosed in either 'single' or "double" quotes, otherwise R will try to read them as code:
+
+```{r}
+Hello world!
+```
+```{r}
+"Hello world!"
+```
+
+As you can see here, the first command without quotes throws an error, whereas the second prints out our command just like it did with the single numbers before.
+
+An important thing to note is that R sees everything inside a pair of quotes as a single element, regardless of how long it is. You can see this in the markers we saw before:
+
+```{r}
+"Hi!"
+"It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness..."
+```
+
+Just like we saw with numbers, above, you can combine multiple character strings into a vector. You can also use the numbered markers to extract the *n*th element in that vector.
+
+`r task()`Create a vector containing the first ten animals you think of, then print the 8th one.
+
+```{r}
+c("monkey", "rhino", "sheep", "dog", "dolphin", "bumblebee", "squid", "falcon", "flea", "seagull")[8]
+```
+
+The placement of the quotes is very important here - they can't include the commas. As we said before, R uses commas to separate different elements. So, if you didn't enclose each word in quotes separately with commas in between, you would have had this odd message:
+
+```{r}
+c("monkey, rhino, sheep, dog, dolphin, bumblebee, squid, falcon, flea, seagull")[8]
+```
+
+`NA` is a very special sequence of letters in R. It indicates that something is **n**ot **a**pplicable, and it usually represents missing data, or that a calculation has gone wrong or can't be performed properly. 
+
+Why have we got it here? Essentially, we asked R for the eighth element in a vector that, as far as R can tell, only contained one. This is because there's only one pair of quotes, so all ten animals and the commas between them are considered to be one element. Since there isn't an eighth element, R has informed us so accordingly - the answer to our query is `NA`, doesn't exist. This isn't what we wanted, but R is not in the wrong here, because it's done precisely what we told it to do.
+
+## Logical
+
+The final type of data that we'll look at for now is logical data. In addition to performing calculations and printing out words, R can also tell you whether a particular statement is `TRUE` or `FALSE`. To do this, we can use logical operators to form a statement, and then R will tell us the result.
+
+`r task()`Ask R whether:
+
+* 5 is greater than 10
+* 6 is less than 12
+* 27 is less than or equal to 27
+* 420 equals 42
+
+```{r, toggle = solution}
+5 > 10
+6 < 12
+27 <= 27
+420 == 42
+```
+
+`r subtask()`Use a single command to ask R whether the numbers 2 through 10 are less than or equal to 6.
+
+```{r, toggle = solution}
+c(2:10) <= 6
+```
+
+Here R prints out a value of `TRUE` or `FALSE` for each comparison it's asked to make. So, the first element in the output (`TRUE`) corresponds to the statement `2 <= 6`, the second to `3 <= 6`, and so on.
+
+It might not seem like it at the moment, but this can be staggeringly useful for selecting and filtering data that meet particular requirements, or checking our data to find problems. For now, one thing to notice is that I used a double equals `==` to express "is (exactly) equal to". You must be careful with this one, because if you do a single equals sign R will give you a strange error:
+
+```{r}
+420 = 42
+```
+
+This seems like a weird error to give for a simple question! The problem is that in R, the single equals sign `=` is equivalent to the assignment operator `<-`, which we'll learn how to use in just a moment. For now, you just need to know that `=` is a special operator that doesn't do what we wanted it to do here. Instead, if you want to ask R whether two things are equal, you have to use the double equals `==`.
+
+## Which Type?
+
+With these simple examples, it may be obvious just by looking that `25` is a number and `porcupine` is a word. However, this isn't always so straightforward, and there are some situations - such as data checking/cleaning, or debugging - where I might want to ask R to tell me what type of data a certain thing is. To do this, I can use another function, `class()`. R will simply print out, as a character, the name of the data type of whatever I put into the brackets.
+
+`r task()`Use `class()` and get R to print the value "numeric".
+
+```{r, toggle = solution}
+# You can use any number for this!
+
+class(23049825)
+
+# You can also use a vector of numbers
+# as long as they are all numbers
+
+class(c(4:602, 290:506, 20, -1))
+```
+
+`r subtask()`What data type does R give you if you combine numbers and characters in `c()`?
+
+```{r, toggle = solution}
+# Again, anything will do!
+
+class(c(93, 1:406, "tomato"))
+```
+
+This is an important note about numeric vs character data. Numeric data is essentially a special subtype of character data. As we've seen here, if the two are mixed, R stores them as characters. Even though we can do mathematical operations on numbers, we can't do them on characters; it should be clear that asking for e.g. what is `"tomato" - 7` is nonsense. However, this is the case **even if all of the data are numerals!** For example:
+
+```{r}
+# No problem here; all numbers
+c(2:31, 45) - 7
+
+# Doesn't work
+c(2:31, "45") - 7
+```
+
+Even though "45" looks like a number, because it's in quotes, R thinks that it's a character, and will refuse to do the calculation, in the same way that it would refuse to do it with "tomato".
 
 # Objects
 
-R is called a "language" for a reason - it is actually a language, or a way of talking to computers to ask it to do things for you. Like any language, learning to "speak" R takes lots and lots of practice. In this section, we'll cover the basic "grammar" of R, including some important ideas about how R understands what you ask it to do. However, just like any language you learn, the best way to really understand what each of these things do is to try them out for yourself, make mistakes, and keep using them until they're familiar.
+R is called a "language" for a reason - it is actually a language, or a way of talking to computers to ask it to do things for you. Like any language, learning to "speak" R takes lots of practice. In this section, we'll cover the basic "grammar" of R, including some important ideas about how R understands what you ask it to do. However, just like any language you learn, the best way to really understand what each of these things do is to try them out for yourself, make mistakes, and keep using them until they're familiar.
 
 Objects are the basic elements that R is built around - the equivalent of words. An "object" in R is any bit of information that is stored with a particular name. Objects can hold anything, from a single number or word to huge datasets with thousands of data points or complex graphs.
 
@@ -38,13 +326,13 @@ Let's start simple, by creating a new object. Here we'll also formally meet a ve
 
 `r task()`First, let's create a new object called `current_year`, that contains (as you might expect) the current year. 
 
-```{r}
+```{r, toggle = solution}
 current_year <- 2020
 ```
 
-Let's have a look at that command. On the left side I've written the name I want my new object to have, which I've called `current_year`. Then, I've written the assignment operator `<-`, which looks like an arrow. Then, I've written the current year, 2020.
+Let's have a look at that command. On the left side I've written the name I want my new object to have, which I've called `current_year`. (I could have called it anything, like `shawn.spencer` or `maranta` or anything else that follows R's naming conventions; but it's a good idea to name your objects something useful, so you can remember what they contain.) Then, I've written the assignment operator `<-`, which looks like an arrow. Then, I've written a number, `2020`, that I want this object to contain.
 
-The important thing is that this arrow is pointing at the new object name. This tells R to **assign** whatever comes after the arrow to the object name `current year`. Right now, the only thing we're assigning is a single number, 2020 - but we could have much more complicated instructions, which we'll see later on.
+The important thing is that this arrow is pointing at the new object name. This tells R to **assign** whatever comes after the arrow to the name `current_year`. Right now, the only thing we're assigning is a single number, `2020` - but we could have much more complicated instructions, which we'll see later on.
 
 `r subtask()`If you haven't yet, type the code above in your console and press Enter. 
 
@@ -56,11 +344,11 @@ For any object, from the most simple to the most complex, you can always see wha
 
 `r task()`Call the `current_year` object to see what's in it.
 
-```{r}
+```{r, toggle = solution}
 current_year
 ```
 
-So, R tells you that there is one value in the `current_year` object, which is the number 2020.
+So, R tells you that there is one value in the `current_year` object, which is the number `2020`. No surprises so far!
 
 This example actually highlights a very important distinction in writing R code. When you successfully **create** an object using the assignment operator, it will seem like nothing happens. This is because R always does only and exactly what you ask it to do, and using the assignment operator only tells R to assign something to an object, not to print it out. When you **call** an object, the result of this call is printed out in the console, but this doesn't make any changes to the object itself. This distinction will be essentially for checking and writing code later on.
 
@@ -70,60 +358,845 @@ For now, let's practice a bit more with objects, to get the hang of how they wor
 
 `r task()`Create an object called `birth_year` that contains the year you were born.
 
-```{r, toggle = T}
+```{r, toggle = solution}
 birth_year <- 1988
 ```
 
 I have used my own birth year here, but you should replace the number with your own birth year. Again, when you type this in your console and press Enter to run the command, it will seem like nothing happens. However, you will be able to see the new object in your Environment.
 
-Now we have two objects, `current_year` and `birth_year`. Since both of these objects contain a number, we can use them **as if they were numbers**. Have a go at calculating your own age using these two objects.
+Now we have two objects, `current_year` and `birth_year`. Since both of these objects contain a number, we can use them **as if they were numbers**. 
 
-```{r, toggle = T}
+`r subtask()`Have a go at calculating your own age using these two objects.
+
+```{r, toggle = solution}
 current_year - birth_year
 ```
 
-So, this line of code subtracts `birth_year` from `current_year`. Because these objects contain numbers, R treats them as if they were numbers, and outputs the difference between them - which indicates that I'm 32 years old. (This isn't quite right, because my birthday is in May - but R doesn't know that!)
+So, this line of code subtracts `birth_year` from `current_year`. Because these objects contain numbers, R treats them as if they were numbers, and outputs the difference between them - which indicates that I'm 32 years old. (This isn't quite right as of the time of this writing, because my birthday is in May - but R doesn't know that!)
 
-We can also do any other mathematical operations on objects that contain numbers:
+We can also do any other mathematical operations on objects that contain numbers.
 
-```{r}
+`r subtask()`Write some mathematical equations using the `current_year` object.
+
+```{r, toggle = solution}
 current_year*5
 current_year+5
 current_year^3
 ```
 
-This is all well and good, but there's no real benefit to doing this with an object called `current_year`, rather than just using the number 2020. Instead, we can take advantage of objects by storing multiple pieces of information in a single object.
+This is all well and good, but there's no real benefit to doing this with an object called `current_year`, rather than just using the number `2020`. Instead, we can take advantage of objects by storing multiple pieces of information in a single object. In fact, **everything** that you do in R uses objects, some very simple (like our `current_year` example) and some very complex, like functions that run sophisticated analyses or create plots.
 
-`r task()`Type the code below in your console, replacing the numbers with the ages of yourself and all your family members, in whatever order you like.
+`r subtask()`Type the code below in your console, replacing the numbers with the ages of yourself and all your family members, in whatever order you like.
 
 ```{r}
 ages <- c(31, 26, 61, 87)
 ```
 
-Again, when I run this command in the console, a new object appears in my environment, called `ages`. This one looks a bit different than the other two, though. In Environment, I can see that this object contains numbers ("num"); that there are four of them ([1:4]); and that those numbers are 31, 26, 61, and 87. This new object is called a **vector** - a sequence of values all stored in a single object.
+Again, when I run this command in the console, a new object appears in my environment, called `ages`. This one looks a bit different than the other two, though. In Environment, I can see that this object contains numbers ("num"); that there are four of them ([1:4]); and that those numbers are 31, 26, 61, and 87. This new object is another **vector** - a sequence of values all stored in a single object.
 
 So, what happens if we try to do the same maths we did before? For instance, I might want to calculate the birth **year** of each of my family members, using their ages. To do this, I have to subtract each of their ages from the current year. I could do this one at a time - or all at once using my `ages` object.
 
-`r task()`Calculate each of your family members' birth years using your `ages` object.
+`r subtask()`Calculate each of your family members' birth years using your `ages` object.
 
-```{r, toggle = T}
+```{r, toggle = solution}
 2020 - ages
 ```
 
 Very cleverly, R does the same calculation for each of the values stored in this vector, and prints out the result for us. We didn't have to tell R to do this; it just does it by default.
 
-`r task()`Save the birth years you've just calculated in an object called `birth_year`.
+`r subtask()`Save the birth years you've just calculated in an object called `birth_year`.
 
-```{r}
+```{r, toggle = solution}
 birth_year <- 2020 - ages
 ```
 
-Again, because we've used the assignment operator, R doesn't print out the years this time, like it did before. Instead, the output of our calculation is saved as the object `birth_year`.
+Again, because we've used the assignment operator, R doesn't print out the years this time, like it did before. Instead, the output of our calculation is saved as the object `birth_year`. This is a very important idea that we will come across many times - namely you can write whatever instructions or information you want after the `<-` operator, from very simple (like single numbers) to multiple lines of code; and whatever the output of those commands is, that output will be stored in the object before the `<-`.
 
-Now, you might notice that we already had an object called `birth_year` that we created above. R, again, does only and exactly what you ask it to do. Unlike, say, a word processing document, R won't ask you if you're sure you want to overwrite an existing object with new information - it will just do it! This can be a good thing, because you can easily update the information stored in an object with changes, edits, or new information. However, it also means that you can overwrite or replace data when you don't want to. This is why it is so important to keep track of all of the commands and changes you make using a script.
+#### Overwriting Objects
 
-### 
+A side note here before we continue. You might notice that we already had an object called `birth_year` that we created above. R, again, does only and exactly what you ask it to do. Unlike, say, a word processer, that will give you a warning if you try to save two documents in the same folder with the same name, R won't ask you if you're sure you want to overwrite an existing object with new information - it will just do it! 
 
-## Functions
+This can be a good thing, because you can easily update the information stored in an object with changes, edits, or new information. However, it also means that you can overwrite or replace data when you don't want to, if you use the same object name. If we call the `birth_year` object, we can see that it now contains the birth years that we calculated, and not the value I put into it before:
 
+```{r}
+birth_year
+```
+
+This is why it is so important to keep track of all of the commands and changes you make to your data. If you accidentally replace your dataset with, say, a single word or number with an error in your code, you can easily retrace your steps and avoid redoing work. We'll learn how to do this in the "Writing Code" section below.
+
+If you are interested in understanding this process of assigning and replacing the contents of objects better, the aside below explains it in more depth.
+
+<div class = "why">
+
+#### You can't *really* change an object
+
+Think of objects as boxes.
+The names of the objects are only *labels*, and you can store anything you like inside them.
+However, unlike in the physical world, objects in R cannot truly change.
+You can put stuff in, take stuff out and that's pretty much it.
+Unlike boxes, though, when you take stuff out of objects, you only take out a **copy** of its contents.
+The original contents of the box remain intact.
+Of course, you can do whatever you want (within limits) to the stuff once you've taken it out of the box, but you are only modifying the copy.
+The key thing to remember is that unless you put that modified stuff into a box, R will forget about it as soon as it's done with it.
+In other words, if you want to "save" any changes you make, you must assign them to an object in order to keep them.
+
+Now, as you probably know, you can call your boxes (objects) whatever you want (again, within certain limits).
+This means that that you can call the new box the same as the old one, as we saw with `birth_year` above.
+When that happens, `R` basically takes the label off the old box, pastes it on the new one, and burns the old box.
+So even though some operations in R may look like they change objects, what's actually happening is that R copies their content, modifies it, stores the result in a different object, puts the same label on it, and discards the original object.
+Understanding this mechanism will make things much easier!
+
+Putting the above into practice, this is how you "change" an `R` object:
+
+```{r}
+# put 1 into an object (box) called a
+a <- 1
+
+# copy the content of a, add 1 to it and store it in an object b
+b <- a + 1
+
+# copy what's inside b and put it in a new object called a
+# discarding ("overwriting") the old object a
+a <- b
+
+# now see what's inside of a
+# (by copying its content and pasting it in the console)
+a
+```
+
+\ 
+
+Of course, you can just cut out the middleman (creating an object `b`).
+So to increment `a` by another `1`, we can do:
+
+```{r}
+a <- a + 1
+
+a
+```
+</div>
+
+\ 
+
+We will talk further about using scripts and writing multiple commands below; but first, we'll need to have a look at a very important type of object in R: the function.
+
+\ 
+
+# Functions
+
+You can think of functions like verbs in the R language - they're how R *does* anything. Functions may not look exactly like verbs in the language you speak because they have a different syntax (i.e., a different order and grammar), but they work in a very similar way. In order to use them, you need to learn how to "translate" the command you want to give R into a verb (function) it can understand.
+
+## Rounding the Bases
+
+Let's look at an example of how functions are like verbs, drawing on some basic linguistics. We'll start with the English command, "Round the number 7.3928 to two decimal places." If we want R to do this for us, we have to write this command in a way that R can understand. First, we need to know what function corresponds to the English verb "round" - that is, what function will do the same action that we want R to perform. We're lucky in this case: the function in R is also called `round()`. (See the box below for more on how to find the function you want.) 
+
+We know that we're looking at a function in R because functions always have a name followed by brackets. That is, they always have the general form `function_name()`. Inside the brackets, we can add more information to the function to complete our command, although not all functions require any more information. 
+
+`r task()`Try running the `round()` function.
+
+```{r, toggle = solution}
+round()
+```
+
+Unsurprisingly, R has given us an error. This is an **informative** error, though - it tells us that `round()` can't just work without additional information (i.e. "required arguments"). Imagine, for instance, if you wanted a friend of yours to help you with your coursework by rounding 7.3928 to two decimal places, and in order to ask them to do that, you just shouted "ROUND!" at them. Just like your friend would, R has objected to this, telling you that it needs more information in order to do what you've asked it to.
+
+Our original command, "Round the number 7.3928 to two decimal places", has two more important pieces of information that we need to tell R: what number we want to round (7.3928) and how many decimal places we want to round it to (2). So, how do we say this in R? To find out, let's look at the help documentation.
+
+## Using Help Documentation
+
+Help documentation is information built into R about how functions work. They vary wildly in helpfulness and completeness, but they're a useful place to check first if you want to find out what a function does. You can access the help documentation in a few different ways: by running `?function_name` or `help(function_name)` in the console, or by clicking on the "Help" tab in the Files section of RStudio and using the Find box to search for the function.
+
+`r task()`Pull up the help documentation for `round()` in RStudio.
+
+```{r, toggle = solution}
+?round
+```
+
+The first section, "Description", varies quite a bit in intelligibility, depending on how complex the function is. Here, if we ignore the information about the other function including in this document, we can see that we have a useful description of `round()` that tells us that it rounds numbers (yay!) to a certain number of decimal places. That's exactly what we want, so how do we use it?
+
+Let's scroll down to "Usage", which gives examples of what the default version of the function looks like. You can see that the basic structure of this function is `round(x, digits = 0)`. It seems like we need to add some more information in the brackets of our function - but how do we interpret `x` and `digits = 0`?
+
+## Arguments
+
+The information inside a function's brackets to give it the information it needs to work are called **arguments**. Each argument in a function is separated by a comma, so we can see from `round(x, digits = 0)` that the `round()` function can take two arguments. How many arguments a function has depends on the function; some (like `Sys.Date()`) don't need any arguments to run. One of the most useful parts of a function's help documentation is the "Arguments" section, which tells you what each of the function's arguments are and how to use them. 
+
+There are two main types of arguments: named and unnamed arguments. Conveniently, the arguments of `round()` give us one example of each.
+
+### Unnamed Arguments
+
+The first argument to `round()` is simply `x`. Just like in maths, `x` is a placeholder for some number or numbers (a "numeric vector") that you want to pass to the function. This is common notation in many functions: `x`, often the first argument in a function, is often the placeholder for the information you want to use the function on. In our case, we just have one number we want to round, so that's what we should replace with `x`.
+
+### Named Arguments
+
+The second argument of `round()` is a named argument, `digits = 0`. You can think of named arguments like settings that change the way a function works, often with only certain allowable values. Here we can see that the name of the argument is `digits`; the name before the `=` sign tells R which setting we want to change. 
+
+The help documentation tells us that `digits` should be an "integer indicating the number of decimal places". We can also see that this argument has a **default value** of 0 - that means that if we don't explicitly include the argument `digits` when we use the function, by default the `round()` function will round the number you give it to 0 decimal places.
+
+Default values of arguments are really useful, because the default is usually the most frequently used setting. It means you don't have to specify every single aspect of a function every time you use it, as long as you want the function to work that way! In our case, we actually wanted `round()` to round to two decimal places, not 0. So, in our command, we should change the setting from the default, 0, to 2.
+
+## Using Functions
+
+Now that we know what both of these arguments mean, we can change them to actually translate the English sentence "Round the number 7.3928 to two decimal places" into a command that R can work with. We'll explicitly write out each argument so we know what they are doing.
+
+`r task()`Run the command to round 7.3928 to two decimal places.
+
+```{r, toggle = solution}
+round(x = 7.3928, digits = 2)
+```
+
+Success! We have now given R everything it needs to actually execute the command and give us the information we wanted.
+
+### Order of Arguments
+
+If you want to, you can achieve the same result by changing the order of the arguments. Because we have written the names of both arguments, R can still do what we want it to do:
+
+```{r}
+round(digits = 2, x = 7.3928)
+```
+
+We can also, to some degree, drop the names of the arguments, as long as R can still understand what we're trying to do:
+
+```{r}
+round(digits = 2, 7.3928)
+```
+
+Here I left out the `x =`. R can still understand this because `round()` only takes two arguments, and we explicitly told it what value belongs to `digits`, so it assumes the second number must be `x`.
+
+```{r}
+round(7.3928, 2)
+```
+
+This time I dropped both argument names. R can still understand this because when you don't specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 7.3928 to `x` and 2 to `digits`, which is what we wanted.
+
+When you get more proficient at using functions and writing code quickly, you can write code like this without including argument names. However, for now, I wouldn't recommend dropping them, because it's easy to forget what each of the numbers is doing. For example, if you forget the order of arguments and don't specify what they are, you might write this:
+
+```{r}
+round(2, 7.3928)
+```
+
+Here, since we didn't specify, R assumed that 2 was the number we wanted to round. This isn't what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.
+
+### Arguments as Boxes
+
+A last important aspect of using functions is to remember that each argument in a function can only take a single object. For example, we saw above that we put the single value 7.3928 into the `x` argument of `round()`. But what if we wanted to round more than one number? We don't want to have to write a new `round()` command for every number, even though we could do this if we particularly enjoyed doing a lot of tedius and repetitive typing:
+
+```{r}
+round(7.3928, 2)
+round(59.54, 2)
+round(0.198, 2)
+```
+
+So what happens if we try to put all of those numbers into `round()`? We might first try this:
+
+```{r}
+round(7.3928, 59.54, 0.198, 2)
+```
+
+Once again, R tells us that this doesn't work by throwing an error. R has tried to do what we wanted, but the `round()` function only allows a max of two arguments, and we've given it four. Behind the scenes, R has tried to run `round(x = 7.3928, digits = 59.54...` and can't proceed from there because it doesn't know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first `x` argument together. If only there was a way to put them in some sort of container, *like a box*...
+
+You may have guessed where this is going: one method we could use would be to put the three numbers we want to round into a single object, and then pass that object to `round()` as the `x` argument. In the section on Objects above, we already saw that we can **c**ombine any number of things together using the `c()` function. 
+
+`r subtask()`Use `c()` to create a new object containing the three numbers 7.3928, 59.54, and 0.198, then use `round()` to round them to two decimal places.
+
+```{r, toggle = solution}
+numbers <- c(7.3928, 59.54, 0.198)
+round(x = numbers, digits = 2)
+```
+
+Perfect! This time, all three numbers together went into the `x` argument. 
+
+We could also simplify this even further by removing the intermediate step of creating the `numbers` object.
+
+`r subtask()`Use `c()` and `round()` together in a single command to get the same output as above.
+
+```{r, toggle = solution}
+round(x = c(7.3928, 59.54, 0.198), digits = 2)
+```
+
+Here we can see a good example of a function inside another function. You can "stack" functions inside each other like this as much as you like, although it can become difficult to read the code or keep track of what it's doing. In the "Next Steps" section at the end of this tutorial, you can find links to tutorial on the pipe operator `%>%`, which allows you to string functions together much more easily. 
+
+\ 
+
+### Help Documentation, redux
+
+Finally, let's take a look at two more useful sections of the help documentation. Depending on what you are trying to do, the "Details" section can tell you more about how exactly the function works - how it behaves in certain situations, or how it handles unusual or difficult cases. If a function isn't doing what you expect it to, this is a good place to look for an explanation.
+
+Finally, at the end of the documentation you can find the "Examples" section. The examples are designed so you can copy and paste them directly into the console and run them to get an idea of how the code works. If you are learning to use a new function, this section can give you a template for writing your own commands.
+
+<div class = "solText">
+### How do you know the right function to use? 
+
+This isn't a simple question! Just like learning a new language, when you start out your "vocabulary" of functions will be small, and you'll only be able to "speak" a small number of commands from memory. As you work more in R and practice using more functions, your vocabulary will grow. However, if you are trying to do something new or unusual in R, finding the right function that does what you want it to do often takes some work and research. This is just like having to look up a new word or phrase in the dictionary if you don't know how to say something in the language you're learning.
+
+If you don't know what function to use, your first step can be to Google it with a search like "function to [whatever you want to do] in R". If you did this search for "function to round numbers in R", you would find that the first result is a link to the [help documentation for the `round()` function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Round), with examples and lot of other useful information. 
+</div>
+
+# Packages
+
+Let's say at this point that we're not entirely happy with the way `round()` did the rounding on our four numbers. We actually wanted the output to drop the leading 0, so instead of "0.20", we wanted ".20". Looking at the documentation for `round()`, there doesn't seem to be a way to change this in the `round()` function itself. So, we'll need to find another function that does what we want it to do[^2].
+
+[^2]: You may not be able to find a function that does what you want to do - in that case, of course, you'll have to make one yourself! But that's a task for another day...
+
+## Rounding, Redux
+
+With a bit of industrious Googling, we can find that there's a different function, `rd()`, that does drop the leading 0. Fantastic! Let's do it.
+
+`r task()`Use [the help documentation for `rd()`](https://www.rdocumentation.org/packages/weights/versions/1.0.1/topics/rd) to round the same three numbers as above.
+
+```{r, toggle = solution}
+rd(x = c(7.3928, 59.54, 0.198), digits = 2)
+```
+
+Uh oh. What happened? We know we spelled the function correctly (it's only two letters!) and we can see from the help documentation that the arguments are the same as for `round()`. Why doesn't this work?
+
+There's a hint in the upper right corner of the help documentation that says: "From [weights v1.0.1](https://www.rdocumentation.org/packages/weights/versions/1.0.1)". This is the name of the **package** that contains the function `rd()`. From the error message that R gave us above, we can tell that R doesn't come with this package pre-loaded. So, even though the function does exist, we don't currently have access to it.
+
+## Installing packages
+
+Once you know the name of the package you want to install (as we found out above), you can then ask R to go on the Internet, find the package, and install it. Luckily, the function that does this is very easy to remember!
+
+`r task()`Run the code below to install the `weights` package.
+
+**Hint**: Notice the quote marks. This function won't work properly if you don't put in the quotes!
+
+```{r, eval = F}
+install.packages("weights")
+```
+
+You should see a lot of code come up very quickly. Don't worry, nothing's going to explode! There will be lots of `trying URL` and then `installing *binary* package` and finally `The downloaded source packages are in` followed by a file name. If this is what happened when you ran this function, congratulations! You are now the proud owner of a copy of the `weights` package, successfully installed on your computer.
+
+(Note: If R throws an error and tells you that the package failed to install, see [this troubleshooter for solving package installation errors](https://support.rstudio.com/hc/en-us/articles/200554786-Problem-Installing-Packages).)
+
+Now that we have the package that contains the `rd()` function, let's try using it again.
+
+`r subtask()`Run the same `rd()` command as above.
+
+**Hint**: You can easily retrieve commands that you've already executed in the console by pushing the up and down arrow keys to scroll through your command history.
+
+```{r, toggle = solution}
+rd(x = c(7.3928, 59.54, 0.198), digits = 2)
+```
+
+The same `cannot find function` error comes up again, even though we're sure now that we have the correct package installed. What happened?
+
+## Loading Packages
+
+Even though we've installed the package, we haven't yet loaded it into our current session of R. To do this, we need a second command that will tell R that we want to access the `weights` package and the functions in it.
+
+`r task()`Run the following code to load the `weights` package.
+
+**Hint**: No quote marks this time!
+
+```{r}
+library(weights)
+```
+
+If you installed the package successfully, you should find that nothing (apparently) happens when you execute this command. That's a good thing - it means the command has run without errors. However, if we want to check, let's have a look at the packages that are currently loaded.
+
+To do this, look at the "Packages" tab (next to the "Files" and "Plots" tabs). Here you can see a list of all of the packages that are currently **installed** in R. The ones with a tick mark next to them are currently **loaded**. If you scroll down, you should see `weights` in this list with a tick. Pick another random package and click on the tick box; you should see that RStudio automatically runs another `library()` command in the console for you.
+
+`r subtask()`Now that the `weights` package is loaded, run the same `rd()` command again.
+
+```{r, toggle = solution}
+rd(x = c(7.3928, 59.54, 0.198), digits = 2)
+```
+
+Success!
+
+## Installing vs Loading
+
+Installing vs loading packages is often a source of confusion when starting out with R, so let's look at this in a bit more depth.
+
+When you install R and RStudio at first, this is a lot like buying a new mobile phone. When you get a new phone, it comes with some apps pre-installed, like a messaging app, a camera, a calculator, etc. If you only ever wanted to take pictures and do basic maths with your phone, you could probably leave it at that. Most likely, though, you want to use other apps that don't come with the phone - like WhatsApp, or Facebook. Let's say you've just got a new phone and you want to post about it on Facebook. To do this, you'll need to:
+
+1. Go to your phone's app store and download the Facebook app.
+2. Once the download is complete, you have to open the app to use it.
+
+You must complete both of these steps in order to use the Facebook app. You might recognise that these correspond almost exactly to `install.packages()` and `library()` respectively. In order to use a package that doesn't come pre-installed with R, you have to do both of these things.
+
+An important point to note here is that you typically only have to download the Facebook app to your phone once, the first time you want to use it. After that, you can just open the app that you've already downloaded. This is the **exactly** the same way that you should use `install.packages()` and `library()`. You typically only need to use `install.packages()` **once** per device, and you should always run the command in the console, **not** in your scripts. However, you will need to load the packages you want to use for any particular script with `library()` every time you want to use them.
+
+In summary:
+
+1. `install.packages()`: downloads and installs a package; run only once in the console
+2. `library()`: loads a package for current use; run at the start of every session, include at the beginning of every script
+
+## Package FAQs
+
+### Why don't all packages come with R?
+
+The answer to this is the same as why your phone doesn't come with every app in the app store pre-installed. There are thousands and thousands of packages for R, many that are very complex, or highly specialised, that you will never need. If they all came pre-installed, it would be impossible to download R.
+
+R is also an open-source and collaborative project. People write and update their own packages all the time, so including all of them in the first installation of R isn't only unwieldy, it's unfeasible.
+
+### How do I know what package a function belongs to?
+
+When you find a function you want to use by searching online, the package it's included in will almost always be noted on the same page, so just have a look in the documentation to find it.
+
+You can also see what packages your installed functions come from via some useful notation provided by R. In the console, try typing `roun` and then press Tab. What you should see is a list of functions pop up that all start with `roun`. Top of the list is our friend `round()`, and in the grey curly brackets, we can see that this function is part of the `{base}` package. As you might guess, this is a pre-installed and automatically loaded package that contains a lot of fundamental operations in R.
+
+You can scroll up and down through this list of functions with the arrow keys. You may also notice that when you highlight a function name, R also gives you a preview of the help documentation for that function. If you press F1 while a function is highlighted, the help documentation will open for you. You can also press Enter to auto-fill the function for you to use it easily.
+
+### What if there is more than one function with the same name loaded at the same time?
+
+This is called a **conflict** and it can cause some real problems! As I said above, there are many, many people in the R community designing functions and packages, and although they try to avoid giving functions the same name, sometimes it happens.
+
+As a general rule, whichever package you've loaded most recently will be the one that R uses by default. It will also give you a warning to this effect, although those warnings can be easy to miss. For example, I happen to know that both the packages `tidyverse` and `Hmisc`, which we use in this module, contain a function called `summarize()` which does different things. `tidyverse` will even tell you this when you load it.
+
+`r subtask()`**If you have not done so before**, install the `Hmisc` and `tidyverse` packages as described above in the "Packages" section. Then, load them as well.
+
+```{r, eval = F, toggle = solution}
+# Remember to run the install.packages command in the console once only!
+install.packages("Hmisc")
+install.packages("tidyverse")
+
+library(Hmisc)
+library(tidyverse)
+```
+
+When it loads successfully, `tidyverse` gives a summary of the packages that it loads. In the second half of this output we see a section labeled "Conflicts", which notes that "`dplyr::summarize()` masks `Hmisc::summarize()`" (among others):
+
+```{r}
+tidyverse_conflicts()
+```
+
+What the `tidyverse` package is telling us is that if we are trying to use both packages at the same time, R will use the `summarize()` function from `tidyverse` rather than the function with the same name from `Hmisc`. The function from `Hmisc` is covered up, or "masked", by the function from `tidyverse`.
+
+However, if we have `Hmisc` loaded as well, we can specifically tell R that we want to use `summarize()` from `Hmisc` by using the same notation we saw above: `Hmisc::summarize`. The package name before the `::` tells R which package to use, and the function name comes after the `::`. You could use this same notation for every command you write, for instance:
+
+```{r}
+base::round(x = c(7.3928, 59.54, 0.198), digits = 2)
+```
+
+If you wrote every function like this, you would never have any problem with accidentally using the wrong function, so some people recommend it as best practice (especially if you are writing packages for other people to use). However, it also makes your code harder to read at a glance and more onerous to type, and usually isn't necessary. You can do it either way - it's up to you!
+
+## More Help
+
+For more on installing and loading packages, you can also review [this video tutorial](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-installing-and-loading-packages) which covers the same topic.
+
+# Writing Commands in R
+
+Now that we know how to get and use the functions we want to do things in R, we can start actually doing them! 
+
+There are essentially three ways you can write and execute commands in R. The first, the console, you should already be familiar with. However, you may have noticed that the console isn't a very good way to keep a record of your commands, and it doesn't allow you to run more than one command at once. As you can see, working in R involves writing a lot of commands, some of which don't work the first time you write them. No matter what kind of task you are working on in R - practicing new techniques, working with data, creating plots, etc. - it is always a good idea to keep a record of the commands you write.
+
+Keeping a document of your commands has a lot of important benefits. First, it will not help you remember and duplicate your own analyses, so you can report or share them later. You can also use and adapt commands you've already written for another task in the future. If you make a mistake and overwrite or delete what you are working on, you can easily retrieve and redo everything you've already done by simply re-running the script. Finally, you can more easily debug your code by referring to a documented series of commands. (Note: "debug" means finding and resolving problems or errors with your code.)
+
+There are two common document types that you will make use of: scripts and Markdown documents. Markdown documents are covered in depth in Week 2 of Analysing Data, and in [this video tutorial from Psychology as a Science](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-r-markdown), so here we will focus on creating and using scripts instead.
+
+## Scripts
+
+A script is simply a text document that R reads as commands. Everything you write in a script must be valid a command written in R. Let's start one now!
+
+`r task()`Create a new script in one of the following ways:
+
+* Click File > New file > R Script
+* Click the new document button in the upper left corner of RStudio (a white page with a green + symbol) and select R Script
+* Press Ctrl + Shift + Alt + N (PC) or Cmd + Shift + Alt + N (iOS)
+
+R will open a new blank script for you, which is just a blank document with a few extra bits. Each numbered line on a script contains a command.
+
+You can think of an R script like a recipe for a cake. However, writing "Add four eggs" in your recipe is different than actually cracking four eggs into your batter. Just because you write a command in your code, that doesn't mean R has actually executed it. For a command to run, you must run it as well as writing it. Every time you "run" the script, R will start at the top of the script and execute each of the commands that you have written in the script from the beginning onwards, in sequence.
+
+Let's put these ideas together and get an idea of how commands written in a script work. **IMPORTANT**: before you start, clear your Environment. To do this, click the broom icon under the Environment tab; or on the toolbar, click Session > Clear workspace.
+
+`r subtask()`Write a script that does the following things in order. Don't run any of the commands yet; just write them down.
+
+* Create a new object, `pineapple`, that contains the numbers 1, 2, 3, and 4
+* Multiply `pineapple` by 2 and save the result as `slice`
+* Add together `pineapple` and `slice` and save the result as `pineapple`
+* Save your script in your analysing_data folder as `the_answer_is_pineapple`
+
+```{r, toggle = solution}
+
+pineapple <- c(1, 2, 3, 4)
+slice <- pineapple*2
+pineapple <- pineapple + slice
+
+# You can save your script by clicking the blue save icon
+# and then navigating to the right folder and entering the name
+```
+
+`r subtask()`Take a look at your Environment. You should see that even though you have written the commands to create the object `pineapple` and `slice`, neither of them exist in your Environment.
+
+`r subtask()`Run **ONLY** the first command to create the `pineapple` object. 
+
+You can do this by highlighting that command in the script, or just clicking on it to put your cursor inside, and then pressing Ctrl + Enter (PC) or Cmd + Enter (Mac).
+
+You should see that only the `pineapple` object exists, with the four numbers you put into it (1, 2, 3, and 4). At this point, the instructions for creating the object `pineapple` are written down in your script; and because we have run that command as well, the object `pineapple` also exists in your RStudio Environment.
+
+`r subtask()`Run the following command in the console: `pineapple < 5`.
+
+The output in the console will be either `TRUE` or `FALSE`, four times - one for each of the numbers in `pineapple`. It will be `TRUE` for each number that is less than 5, and `FALSE` for each number that isn't, so you should see `TRUE TRUE TRUE TRUE`.
+
+`r subtask()`Run all of the commands in your script. You can do this by selecting all of the commands then pressing Ctrl + Enter (or Cmd + Enter); or by pressing Ctrl/Cmd + Shift + Enter.
+
+You should now see that there are two objects in your environment: `pineapple`, as you had before, and `slice`, both containing four numbers. However, notice that the value of the numbers in the `pineapple` object have changed. You can confirm this by calling the `pineapple` object again. This is because the last line of your script added together `slice` and `pineapple` and assigned the result back to `pineapple`, changing the numbers stored inside it. (See the section on Objects, above, for a reminder of what's happening here.)
+
+`r subtask()`Run the command `pineapple < 5` in the console again. Is the answer the same as before? Why or why not?
+
+<details>
+<summary>Solution</summary>
+You should see that even though the command `pineapple < 5` is identical to the last time we ran it, the output it gives us is different: `TRUE FALSE FALSE FALSE`. Why?
+
+Have a look at what's in the `pineapple` object, either by looking at it in the Environment or by calling it in the console. You can see that the numbers stored in this object are different now. This is because the commands that we ran from our script made changes to the `pineapple` object, so it now only contains one number that is less than 5.
+</details>
+
+`r subtask()`Run **ONLY** the last command in your script again and see what happens to the `pineapple` object. You can do this as many times as you want.
+
+What's happening? Every time you run this same command, R does the same thing: it takes the object `pineapple`, adds `slice` to those numbers, and saves the resulting four numbers as the object `pineapple`, replacing the numbers that were there before. The key thing to remember is that to do this, R uses the objects that are stored in your Environment at the moment you run the command. So, the `pineapple` object changes every time.
+
+## Environment vs Script
+
+You would be forgiven all of this is a lot of esoteric nonsense, but this is actually a really important idea. In short, the order in which you write (and run) the commands in your script, and in the console, makes a huge difference to the response R gives you to any given command. If you change or overwrite an object in your console - changing what the object contains in your Environment - then any subsequent analysis you run using that object may give you a different answer than if you only used the commands in the script in order.
+
+If you find this a bit confusing, consider the following analogy. Imagine you are baking a cake in your kitchen, and writing down the recipe as you go. First, you put two cups of flour in a bowl, and then write down "Add 2C flour". Then you add two cups of sugar, and write "Add 2C sugar". Then, you add two eggs and mix, and write "Mix in two eggs". However, at this point you decide that two eggs aren't enough, so you add another egg. If you don't change the recipe, the cake that you will produce in this particular baking session will be different than the cake that the recipe actually gives directions to produce. In the same way, if you change or rerun commands in your console, that changes the objects in your Environment (the cake that you are currently making). But, if you just ran your script from beginning to end, you would not end up with the same result.
+
+In short, you must always write your scripts as if you were writing recipes: it must include all of the correct steps, in the correct order, from beginning to end.
+
+## Comments
+
+You may have noticed in the pieces of code earlier in this tutorial, I've included some things that are not code, but regular text. This is an example of a comment that you can include in your code by writing a hash `#` in front of it. When it is running commands, R will simply ignore any comments:
+
+```{r}
+# This is a comment!
+# I can use them to write anything I want in my code
+```
+
+Why is this useful? For a couple reasons that are very good practice.
+
+### Annotate Your Code
+
+As I mentioned above, writing down your code is a very good idea for referring to in the future. However, it's very typical to forget what individual lines or pieces of code do, and double for long, complicated code that it takes you a long time to write! To help you remember what your code does and find useful or important commands easily, you can use comments to annotate your code by adding notes, explanations, and reminders.
+
+`r subtask()`Use comments to annotate the script you wrote earlier.
+
+```{r, toggle = solution}
+# You can write whatever you like in your comments, for instance:
+
+# Create a new object containing four numbers
+pineapple <- c(1, 2, 3, 4)
+
+# Create another object containing those numbers times two 
+slice <- pineapple*2
+
+# Add to pineapple and save as pineapple
+pineapple <- pineapple + slice
+```
+
+Although you might feel that you don't really need comments on this code if you already understand what it does, it's a very good habit to get into. It will make your scripts much easier to read and much more useful for the future.
+
+### Save Extra Code
+
+Besides writing notes and comments to yourself, you can also use comments to keep records of code that doesn't work, or you don't want to use at this particular moment. You may figure out how write some code that isn't exactly what you want for your current project, but could be useful in the future. In this case, you can "comment out" that code by putting `#`s in front of it. R will ignore it when you run the script, but you still have a record for it in the future.
+
+As a protip, you can comment out large chunks of code by highlighting as many lines of code as you like and pressing Ctrl/Cmd + Shift + C.
+
+# Working with Data
+
+Finally, we have the basics we need to start using R for real. To actually utilise R's full potential, though, we don't just want to work with single numbers or strings. Instead, we want to make use of datasets that contain lots of different types of data. In this section, you'll not only revise and put into practice what you've learned so far, but you'll also have a template for each step that you should take whenever you are working in R.
+
+## Getting Started
+
+Before we begin, we will need to set up RStudio and make sure that we have everything we need in place to work easily.
+
+`r task()`Open your `analysing_data` project file, if you are not working in the RStudio Cloud.
+
+`r subtask()`If you've continued working from the tutorial above, clear your Environment by clicking the broom icon in the Environment tab. You should see only the message "Environment is empty" if you've done this successfully.
+
+`r subtask()`Open a new script and save it as whatever you like - for example, "tutorial_01" - in your "rdocs" folder.
+
+`r subtask()`On the first line of your script, write the command to load `tidyverse` and run it straightaway.
+
+**IMPORTANT**: If you have already installed `tidyverse`, you **do not** need to do it again!
+
+```{r, eval = F, toggle = solution}
+library(tidyverse)
+```
+
+Now we're ready to go!
+
+## Reading in Data
+
+First, we'll need a dataset to use. We're not going to do too much analysis or cleaning right now, so really anything will do.
+
+One thing you'll discover is that learning R is a valuable skill not just for research and psychology. For instance, Buzzfeed has [a Github repository](https://github.com/BuzzFeedNews/everything#data-and-analyses)[^3] where they publically post the data and code for some of their articles, including the code to produce the graphics. The dataset we're going to use, which contains women's Olympic athletics results from an article about gender gaps in sports, comes from [this repository](https://github.com/BuzzFeedNews/2016-08-sports-gender-gaps). 
+
+[^3]: If you're not familiar with it, Github is essentially an interactive archive where people can share data and code and work together on projects. A repository is one of these archives. The one linked here contains links to data and code, and to the corresponding Buzzfeed article.
+
+`r task()`Copy the following command into your script and run it. 
+
+```{r}
+athletics <- read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv")
+```
+
+Before we move on, let's look at what this command is doing, using what we've learned so far. Let's take it one bit at a time:
+
+* We are creating a new object called `athletics`. Remember, we can call our objects anything we like (within reason), but it's a good idea to call them something sensible.
+* The new `athletics` object will contain the results of whatever commands are on the other side of the assignment operator `<-`.
+* We next have a new function, `read_csv()`. This function does what you might expect: it reads CSV files and turns them into datasets that R can use.
+* Inside the brackets, and inside quotation marks, we have a URL address for the dataset from the repository.
+
+So, altogether what we're saying to R is: "Look in this URL for some data online, make a copy of it, and save that copied data in the object `athletics`."
+
+**Note**: if you're a bit confused about what's going on here, you can watch [this video tutorial](http://milton-the-cat.rocks/learnr/r/r_getting_started/#section-getting-data-into-rstudio) that explains more about datasets and how to use `read_csv()`.
+
+## Looking at Datasets
+
+If the previous `read_csv()` command ran successfully, it might have looked like nothing happened. That's because we didn't ask R to actually show us the dataset - only to read a copy of it and save it. If we want to have a look at it, we'll have to ask R to do that. There are lots of different ways to do this, each of which gives us different information.
+
+`r task()`Look in your Environment tab for the `athletics` object.
+
+You should see the object `athletics` listed under "Data", with the description "310 obs. of 9 variables". This tells us that we have a dataset that is 310 rows long, with 9 variables (columns), which we already knew from the preview in the Console. It does tell us at a glance that our dataset has been imported successfully. It would be great if we could look at the entire dataset easily...!
+
+`r subtask()`Click on the `athletics` object in your Environment.
+
+Two things just happened. First, you can see in your Console that R has run the command `View(athletics)` for you. Second, this has opened a new tab next your script also called `athletics`. If you switch to this tab, you will see an Excel-like spreadsheet of your data, which lets you get an idea of what it looks like. Unlike Excel, however, you can't actually change the values in this spreadsheet; it's only for an overview. 
+
+`r subtask()`Call the `athletics` object in the Console.
+
+```{r, toggle = solution}
+athletics
+```
+
+Remember that when we call an object in the Console, we're essentially asking R to get that object for us and show us what it is. Before, we just did this with single numbers or words. This time, we're calling a whole dataset. 
+
+R makes this a bit easier on us by only printing out a preview of the dataset, instead of all of it. Let's look at what we can learn from the printout of the data here.
+
+First, we see `# A tibble: 310 x 9`. Because we have used `read_csv()`, R has imported the data in a special format called a "tibble". A tibble is like a table (or dataset) with some extra perks; one of them is the nice formatting we can see here. Tibbles are specific to `tidyverse`, and you can only create or use them if you have the `tidyverse` package loaded.
+
+Next, we can see a preview of the first 10 row of the data, and however many columns will fit in the Console window. I can see six: `Games`, `Year`, `Gender`, `Event`, `Participant`, and `Country`, but you may be able to see more or less. Under each of these column names, there's some tags: for instance, under `Games` we can see *`<chr>`*, which is short for *character*. This tells us that the data stored in this variable is character-type data, which makes sense - we can see in the preview rows that the data in the first ten rows are all from the Rio Games. The next column over, `Year`, has the tag *`<dbl>`*, which is a particular type of number; that tells us that the data stored in this column is all numbers. Sure enough, we can see that each of these rows contains the year 2016. So, the preview of the data gives us an idea not only of what's in each variable, but how R has stored that data.
+
+`r subtask()`Use the following code to produce a summary of the `athletics` object in the Console.
+
+```{r}
+summary(athletics)
+```
+
+The output from this function gives us an overview of some basic summaries for each variable. For some of them, like `Games` and `Gender`, we learn only that there are 310 entries and that they are character variables, because we can't do these calculations on characters (how would find the mean of words?). For the numeric variables, we get the minimum and maximum value, the mean, and some other information. This output also tells us how many, if any, missing values there are. For example, in the `Time_S` variable, there are 168 `NA`s. This is very useful information if you wanted to clean and analyse this dataset.
+
+## Creating Changes
+
+As you are working with data, you can take advantage of the way that R works when you write commands. Let's have a look at some examples.
+
+In order to make changes to your dataset, we're going to make use of a new function. `mutate()` belongs to the `dplyr` package, which is part of `tidyverse`, so you need to have `tidyverse` loaded to use it; and it only works with tibbles. You can use `mutate()` to make changes to a dataset by adding or changing the variables in it.
+
+This function takes the following general format:
+
+```{r, eval = F}
+mutate(dataset_name, new_variable = instructions)
+```
+
+Let's have a go using this and see how it works.
+
+`r task()`In your script, write a `mutate()` command that creates a new variable called `Time_Min`, which is the time in minutes that each person completed their event, and run it.
+
+**Hint**: Use the existing variable `Time_S`, which is time in seconds.
+
+<details>
+<summary>Solution</summary>
+```{r}
+mutate(athletics, Time_Min = Time_S/60)
+```
+
+Let's break this command apart and understand what it does.
+
+First, we have to write `mutate(` to start the command. Then, we need to put in the name of the dataset that we want to add to or change, which is `athletics`, followed by a comma. Next, we add the name we want our new variable to have, which is `Time_Min`, followed by `=`. Finally, we write the instructions for how R should create this new variable - namely, by taking the values in `Time_S` and dividing them by 60. 
+
+When you run this command, you should see that R prints out your dataset in the Console, like it did when we called the `athletics` object. You can see the `Time_Min` variable in this preview.
+</details>
+
+Success! It looks like this command does what we want it to do. 
+
+`r subtask()`Replace values in the variable `Year` with how many years ago the event took place.
+
+```{r, toggle = solution}
+mutate(athletics, Year = 2020 - Year)
+```
+
+\ 
+
+In this case, we've just made a small tweak to our command. Instead of creating a new variable with a new name, as we did with `Time_Min`, we gave our new variable the same name as one that already existed in the dataset. So, R does the calculation `2020 - Year` and assigns the result back to the same variable name, overwriting the original values in `Year`. This is only a good idea if we're sure that our code does what we want it to, and we don't any use for the original values.
+</details>
+
+Let's get some more practice before we move on.
+
+`r subtask()`In your script, write another command to create another new variable, `Time_Hr`, which is (you guessed it) time expressed in hours.
+
+**Hint**: Use the `Time_Min` variable we've just created.
+
+<details>
+<summary>Solution</summary>
+```{r}
+mutate(athletics, Time_Hr = Time_Min/60)
+```
+
+Huh, that's weird. We just created this variable, and we saw it in the Console preview. Let's check our `athletics` dataset to see it.
+
+```{r}
+athletics
+```
+
+Only 9 variables, and `Time_Min` isn't one of them. You may also notice that `Year` is back to its original value as well. What happened? Did we hallucinate creating those variables just now?
+
+Don't worry, you're not seeing things. We'll come back to creating `Time_Hr` in a minute.
+</details>
+
+So, what's happening? R is actually doing exactly what you ask it to do! This seems confusing at first, but remember what I said at the start: even if the response R gives doesn't make sense at first, there's always a logical reason for what it does.
+
+When we write and run the command `mutate(athletics, Time_Min = Time_S/60)`, R does exactly what we asked it to. Namely, we've asked it: "Get me the dataset `athletics`, but with a new variable `Time_Min`, created dividing the variable `Time_S` by 60." What you may notice is at no point in that command did we tell R that we want it to keep those changes. So, the object `athletics` hasn't actually changed. If we want to keep the changes we made, we'll need to assign the output from our command to an object.
+
+## Assigning Changes
+
+In order to keep the changes we're making, we need to assign the output from our `mutate()` command to an object. We have two choices here: assign them to a new object, or overwrite the old one. 
+
+### Assigning to a New Object
+
+We can do this in exactly the same way that we created objects before. All we have to do is add `object_name <-` before the `mutate()` command. This will redirect the output from `mutate()` into our new object.
+
+`r task()`In your script, write a command to create a new object that stores the output from `mutate()`that creates `Time_Min`.
+
+```{r, toggle = solution}
+# You can call the new object anything you want!
+
+athletics_min <- mutate(athletics, Time_Min = Time_S/60)
+```
+
+In your Environment, you should now see a new dataset called `athletics_min` (or whatever you called the new dataset! Remember, you can call it anything you like, more or less). If you check it with any of the methods we learned above (calling it in the Console, clicking on it to open it with `View()`, looking at a summary), you should see that it now contains all the same information as `athletics`, except that it contains the additional variable `Time_Min`.
+
+However, if you check the original `athletics` variable, you'll see that it hasn't changed. That's because the `athletics_min <- mutate(...)` command essentially created a copy of the data, made a change to it, and then saved the changed dataset under a new name, leaving the original `athletics` object unchanged. This is more or less equivalent to the "Save As..." command in other programmes you may be familiar with.
+
+### Overwriting the Old Object
+
+The second option is to overwrite the existing object with the output from `mutate()`. Instead of creating a new object, we simply assign the output to the same object name.
+
+`r subtask()`In your script, write a command that saves the output of `mutate()` to the `athletics` object.
+
+```{r, toggle = solution}
+athletics <- mutate(athletics, Time_Min = Time_S/60)
+```
+
+This time, we've replaced the contents of the `athletics` object with the output from mutate. The plus side of this is that you don't have to create lots of nearly identical datasets with only small differences between them; it's really easy to lose track of which is which! On the downside, there's no way to "undo" overwriting the object, so if you make a mistake in your code, you can easily replace your data with something completely different! This is more or less equivalent to the "Save" command in other programmes you may be familiar with.
+
+`r subtask()`Using what you now know, modify the command in your script to create the `Time_Hr` variable and change the `Year` variable in the `athletics` dataset.
+
+```{r, toggle = solution}
+# Option 1: two separate commands
+athletics <- mutate(athletics, Time_Hr = Time_Min/60)
+athletics <- mutate(athletics, Year = 2020 - Year)
+
+# Option 2: one `mutate` command
+# with each change separated by commas
+athletics <- mutate(athletics, 
+                    Time_Hr = Time_Min/60, 
+                    Year = 2020 - Year)
+
+# You only need ONE of these options in your script!
+```
+
+## Working with Scripts, Redux
+
+This may seem like a weird quirk of R, but it's actually very useful. It means you can test your commands before you make them "permanent" by assigning them to an object. That is, you can write the command, run it, and look at the results to make sure they are what you want, before you actually "save" those changes to an object. However, it can be easy to forget to assign your changes, or to accidently assign changes that aren't correct, overwriting your dataset.
+
+Luckily, this is what a script is for. If you find a problem with one of your commands - even if you've completely overwritten all of your data! - all you have to do is read in the data again from the beginning. Then, you can recreate each change you've made to the data step by step.
+
+You should now have a script that looks something like this:
+
+```{r, eval = F}
+library(tidyverse)
+
+athletics <- read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv")
+
+athletics <- mutate(athletics,
+                    Time_Min = Time_S/60)
+
+athletics <- mutate(athletics, 
+                    Time_Hr = Time_Min/60, 
+                    Year = 2020 - Year)
+```
+
+Notice that there was a lot that we did that we didn't put in the script - for example `View(athletics)`, or `summary(athletics)`, or all of our practice code like `mutate(athletics, Time_Hr = Time_Min/60)`. Why not?
+
+These commands are things you do to understand and explore your data and construct the right commands to work with your data. However, your final script should **only** include the commands that actually make changes to your data, or produce useful output (like plots or analyses). This is because your script should contain all and only the commands that reproduce your data analysis, and not everything you did along the way.
+
+However, I said before that you could use comments to 1) annotate your script and 2) keep a record of commands that you don't want the script to run. This is a useful way to still write down those extra commands in your script, without R actually executing those commands when you run the script.
+
+`r task()`Annotate your script and add in the extra commands to view and summarise the data, commented out.
+
+```{r, toggle = solution}
+# The following comments are examples
+# You can write anything you find helpful!
+
+# Load packages
+library(tidyverse)
+
+# Read in data and store under `athletics`
+athletics <- read_csv("https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv")
+
+# Looking at the data
+# View(athletics)
+# athletics
+# summary(athletics)
+
+# Make changes to the data:
+# Create new timing variables
+# Change year of competition to years SINCE competition
+athletics <- mutate(athletics,
+                    Time_Min = Time_S/60)
+
+athletics <- mutate(athletics, 
+                    Time_Hr = Time_Min/60, 
+                    Year = 2020 - Year)
+```
+
+As we saw before, the comments in the script contain both commentary to remind me what each bit does (e.g. `# Make changes to the data`) and actual code that's been "commented out" (e.g. `# View(athletics)`). As a reminder, the commented-out commands will be ignored when R runs the script. You can run them whenever you want by removing the `#`, or by selecting only the command itself (minus the `#`) and pressing Ctrl/Cmd + Enter.
+
+# Next Steps
+
+You've already learned a lot so far: you know how to do maths, combine elements into vectors, pull out particular elements, and ask whether statements are true or false. You've also written your first script and learned how to build sequential code. Most importantly, though, you've **done something** in R. No matter how much you understand so far, the key to mastering R is simply practice practice practice!
+
+You have a few options about how to proceed from this tutorial:
+
+## More basics
+
+### Read
+
+There are a lot of great resources and explainers of the basic principles of R out there - and by "a lot", I mean *a lot*. Some of the ones I think are particularly useful are listed in the "Resources" section of the [Reading List](https://canvas.sussex.ac.uk/courses/9242/external_tools/328) for this module. If these don't work for you, though, you are welcome to look online for your own resources.
+
+In particular, I highly recommend "Learning Statistics with R" by Danielle Navarro. There are two versions, both freely available online. The [first edition](https://learningstatisticswithr.com/) is a friendly, accessible, and easy-to-follow walkthrough of the basics of R; I would recommend working through chapters 1 to 7. The [second edition](https://djnavarro.github.io/tidylsrbook/index.html), which is revised to use `tidyverse`, is still in progress; but the first two chapters are complete, and provide another good introduction to R.
+
+### Practice
+
+There are also many interactive courses you can take to practice R online for free. Again, you can try a few of them and decide which one suits you best. Here are some suggestions:
+
+* [DataQuest](http://dataquest.io/) (recommended) has an excellent R pathway. You can get started on their Data Analyst in R course for free, which will reinforce and expand what we cover in this module. DataQuest's interface is also compatible with screenreaders.
+* Other, similar options are [Coursera](https://www.coursera.org/search?query=R&), [Educative](https://www.educative.io/courses/learn-r-from-scratch), [Codecademy](https://www.codecademy.com/courses/learn-r/), [EdX Harvard's R Basics](https://www.edx.org/course/data-science-r-basics) (and [other free R courses](https://www.edx.org/learn/r-programming)), or [look into others](https://hackernoon.com/5-free-r-programming-courses-for-data-scientists-and-ml-programmers-5732cb9e10)).
+* Khan Academy does not offer R courses, but it does offer [other computer programming courses](https://www.khanacademy.org/computing) to look into if you enjoy working on R.
+* Datacamp offers a similar R-learning service, but is not recommended due to [recent problems with sexual harassment within the company](https://www.buzzfeednews.com/article/daveyalba/datacamp-sexual-harassment-metoo-tech-startup).
+
+## Working with data
+
+Prof Andy Field has written more interactive tutorials to help you build your skills, which you may remember from Psychology as a Science:
+
+* [The first `discovr` tutorial](http://milton-the-cat.rocks/learnr/r/discovr_01/#section-overview) covers packages and functions, `tidyverse`, tibbles, and more topics that this tutorial has touched on briefly
+* [The second tutorial](http://milton-the-cat.rocks/learnr/r/discovr_02/) focuses on summarising data, with some plots.
+* [The third tutorial](milton-the-cat.rocks/learnr/r/discovr_05/) covers plots in much more depth.
+
+If you feel confident with the skills covered in these tutorials, you can move on to the subsequent materials in this module.
+
+* [Week 2](https://canvas.sussex.ac.uk/courses/9242/pages/week-2) covers how to use Markdown documents to integrate R code (like the scripts we've written here) with written text.
+* [Week 3](https://canvas.sussex.ac.uk/courses/9242/pages/week-3) goes deeper into how to work with data:
+  + The tutorial covers a very important aspect of `tidyverse` and writing good code: namely, the pipe (`%>%`)
+  + The practical covers how to import, check, and clean a dataset to prepare for analysis.
+* [Week 4](https://canvas.sussex.ac.uk/courses/9242/pages/week-4) again covers plotting with `ggplot2`
+
+## Datasets
+
+If you want to practice your skills in R with other datasets, there are tons of datasets like these freely available online. 
+
+I found the one in this tutorial via [this list of free datasets](https://www.dataquest.io/blog/free-datasets-for-projects/). For any dataset you want to use, you only have to find the URL (web address) where the data is hosted, and use that in your `read_csv()` command.
+
+## Godspeed
+
+I wish you much success with R. Stick with it and you will gain a very valuable skillset, and a much deeper understanding of how data and statistics work. Good luck!
 

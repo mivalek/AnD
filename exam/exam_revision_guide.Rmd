@@ -1,0 +1,381 @@
+---
+title: "Exam Revision Guide"
+subtitle: "Analysing Data 2020"
+date: "03/04/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Revision Tips
+
+### Practice definitions
+
+The glossary below is provided to help you get started on your revision. Fill in the box below each concept or term with its definition and everything you know about it. Then, as you revise, you can correct or add to this information until you have a detailed guide to the topics on this module.
+
+### Test yourself
+
+You should test your knowledge regularly as you are revising. You can do this however you find most useful. For instance, write out flashcard by hand, or [make them online](https://quizlet.com/en-gb). Use the datasets we've looked at this term to run analyses in R and practice interpreting the output. Quiz your friends using your glossary.
+
+### Short and frequent
+
+Just like with learning R, small amounts of regular practice will help you consolidate what you're learning and avoid fatigue. Try to focus on just one topic or idea for a little while (20-30 minutes), then quiz yourself. Don't try to cram it all in at once!
+
+### Use feedback
+
+Look through your quizzes several times as you are revising. When you begin, use them to identify things you don't know, or find confusing, and focus on those topics. Then, once you've done some revision, look through the questions and answers again and see if you understand them better.
+
+### Ask questions
+
+All of the lecturers on this module will be happy to explain in more depth if you're confused. Post your questions on [the Discussion board](https://canvas.sussex.ac.uk/courses/9242/discussion_topics) and we'll get back to you as soon as we can.
+
+## Topics to Revise
+
+The following list of topics are drawn from the lectures, tutorials, and practicals throughout the term. To be well prepared for the exam, you should revise all of the following.
+
+### Scientific Method and Study Design
+
+Resources: Week 1 lecture
+
+* The Scientific Method
+* Predictions and hypotheses
+* Reliability, validity, and replication
+* Establishing causality
+
+### Samples, Populations, and Distributions
+
+Resources: Week 2 lecture, Week 4 tutorial
+
+* What a distribution is, and how to interpret graphs of distributions
+* The properties and characteristics of:
+  + Normal distributions
+  + Sampling distributions
+  + Means, standard deviations, and standard errors
+  + Scaling and centring
+* The central limit theorem and how the sampling distribution of the mean is related to its population distribution
+
+### Estimates and Confidence Intervals
+
+Resources: Week 3 lecture and Week 4 tutorial
+
+* Point and interval estimates
+* What confidence intervals are and how they are interpreted
+* How confidence intervals are constructed
+* The characteristics of the sampling distribution and the *t*-distribution
+
+### Testing Hypotheses
+
+Resources: Week 4 lecture
+
+* Types of hypotheses, including their definitions and characteristics
+* The definitions and characteristics of the null and alternative hypotheses
+* The definition of the *p*-value, where it comes from, and what it does and does not tell you
+* How to use *p*-values and significance levels to assess hypotheses
+
+### Measures of Association
+
+Resources: Week 5 lecture, Week 6 tutorial and practical
+
+For both correlation and chi-squared tests:
+
+* What kind of data each test typically requires
+* What the null hypothesis of each test is
+* How to read tables and graphs of the data
+* How to read and interpret output from `rcorr()`, `cor.test()`, and `chisq.test()`
+* How to correctly report the results of these tests
+
+### Comparing Two Means
+
+Resources: Week 6 lecture, Week 7 practical and tutorial
+
+Revise how the t-test works, including:
+
+* What kind of design it's appropriate for
+* What the null and alternative hypotheses of this test are
+* How to interpret graphs of the data
+* What *t* represents and how to interpret it
+* How *t* and *r* are related, as described in the lecture
+* How to read and interpret output from `t.test()` and `lm()`
+* How to correctly report the results from `t.test()`
+
+### The Linear Model
+
+Resources: Weeks 8 and 9 lectures; Week 9 and 10 tutorial and practicals
+
+* The general model equations
+* The linear model equation, with one or multiple predictors
+* What each element of the linear equation means, especially beta values
+* How to use the linear model to make predictions
+* How to create and interpret a linear model in R, including:
+  + Specifying the correct formula and using the `lm()` function
+  + the beta values associated with each predictor and the intercept, standardised and unstandardised
+  + *t* and its associated *p* (for each predictor)
+  + R^2^ and adjusted R^2^ (for model fit)
+  + *F* and its associated *p* (for comparing models)
+
+### Effect Sizes and Conclusions
+
+Resources: Week 10 lecture; Week 11 tutorial and practical
+
+* What an effect size is and why they are useful
+* How to use and interpret the correlation coefficient *r* as an effect size
+* How to use and interpret Cohen's *d*, including:
+  + How to calculate *d*
+  + What constitute small, medium, and large values
+* The difference between *p*-values and effect sizes
+
+## Glossary
+
+To get started on your revision, try writing down everything you know about the following terms and concepts we have covered in this module. Then, check your memory against the lectures and tutorials. If you're correct, well done! If not, revise the materials, or ask for clarification on the Discussion board.
+
+### Steps of the scientific method
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Reliability
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Validity
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Replication
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Replication crisis
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### How causality is established
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Distribution
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Normal distribution
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Sampling distribution
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Mean
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Standard deviation
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Standard error
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Confidence interval
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Scaling
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Centring
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### The Central Limit Theorem
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Point estimate
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Interval estimate
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### *t*-distribution
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Degrees of freedom
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Conceptual hypothesis
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Operational hypothesis
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Statistical hypothesis
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Null hypothesis
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Alternative hypothesis
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Significance (alpha) level
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### *p*-value
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Correlation coefficient *r*
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Scatterplot
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Chi-squared test
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Bar plot
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### *t*-test
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Means plot
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Error bars
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### General model equation
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Linear model equation
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Linear model with a categorical predictor
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Linear model with a continuous predictor
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### *b*~0~
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### *b*~1~
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Unit change
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Standardised beta
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### R^2^
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Adjusted R^2^
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### *F*-ratio
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Signal-to-noise ratio
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Effect size
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Cohen's *d*
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Statistical significance
+
+<div class="noteBox" contenteditable="true">
+</div>
+
+### Standarisation
+
+<div class="noteBox" contenteditable="true">
+</div>

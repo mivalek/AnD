@@ -273,12 +273,6 @@ The original study also conducts a two-tailed test, and this is what you should 
 You should just ignore it (ie no need to mention it) since as you say, you have no information in your dataset about this. As it says on the [Lab Report Info page](https://canvas.sussex.ac.uk/courses/9242/pages/lab-report-information-and-resources), you don't have to report anything you don't have data on.
 </ans> </details>
 
-<details class="faq"> <summary>Error in t.test.default( : 'mu' must be a single number</summary> <ans>
-This error comes up when the value of `mu` is NA. From the help documentation (which we can see via `?t.test`) the value `mu` is the expected true value of the difference in means, which by default is 0. So, one or both of your variables has NAs in it, or is only NAs.
-
-Have a look at your `data` tibble either by calling the tibble in the console, or by using `summary()`, and check that the two variables you are using contain your condition codes and mean values of your composite score, respectively. If they don't, you will need to fix that first.
-</ans> </details>
-
 ### Green study
 
 <details class="faq"> <summary>Error in chisq.test(...) : 'x' is wrong</summary> <ans>

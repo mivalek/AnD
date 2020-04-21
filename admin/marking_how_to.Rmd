@@ -17,11 +17,11 @@ As you know, students are supposed to upload R Markdown files for this assignmen
 
 Enter API, or Application Programming Interface. Simply put, an API is a way of retreiving information from and sending information to web applications *programmatically* (using code). If a web application provides an API to the average Jacinda, she can basically do anything her level of authorisation allowes her to do using the standard web interface without as much as opening her browser window. No clicking, no browsing through pages, just good old code. APIs are also very useful for web-scraping and analytics of all sorts. And Twitter and Facebook bots... :/
 
-As luck would have it, Canvas provides a fully exposed [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer "Honestly, who comes up with these names?!") API whcih means that uploading all the 500+ marked submissions so that they are only visible to their author can be a matter of seconds rather than hours. In order to access the API, we first need to set up a few things.
+As luck would have it, Canvas provides a fully exposed [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer "Honestly, who comes up with these names?!") API which means that uploading all the 500+ marked submissions so that they are only visible to their author can be a matter of seconds rather than hours. In order to access the API, we first need to set up a few things.
 
 ### Get access token
 
-First of all you will need a Canvas access token so that you can authenticate your requests. This will allow Canvas to know who is sending the requests and check if you have the privileges to perform the actions you are attempting.
+First of all, you will need a Canvas access token so that you can authenticate your requests. This will allow Canvas to know who is sending the requests and check if you have the privileges to perform the actions you are attempting.
 
 To do this, log into [Canvas](https://canvas.sussex.ac.uk/) and follow these steps:
 
@@ -30,7 +30,7 @@ To do this, log into [Canvas](https://canvas.sussex.ac.uk/) and follow these ste
 1. Click on "+ New access token"
 1. Put something informative in the Purpose field
 1. Choose and expiry date or leave blank for a permanent token (recommended)
-1. Click on "Generate token
+1. Click on "Generate token"
 1. **Copy the token and paste it into a text file BEFORE you close the pop-up window**
 1. Save the text file (*e.g.,* canvas_token.txt) somewhere where you'll be able to find it.
 
@@ -45,7 +45,7 @@ To do this, log into [Canvas](https://canvas.sussex.ac.uk/) and follow these ste
 Unless you're good enough a coder to write your own API code (and I am certainly not), you'll need to install the `rcanvas` package from GitHub.
 
 ```{r}
-# installing from GitHub requires eiother package remotes or devtools
+# installing from GitHub requires either package remotes or devtools
 remotes::install_github("daranzolin/rcanvas")
 ```
 
@@ -55,7 +55,7 @@ Feel free to peruse the [package documentation](https://github.com/daranzolin/rc
 
 ### `googlesheets4`
 
-This nifty package provides an interface for the Google sheets API and allows you to read Google sheets from your drive straight into `R`. Install the CRAN version using `install.packages()`.
+This nifty package provides an interface for the Google sheets API and allows you to read Google sheets from your Drive straight into `R`. Install the CRAN version using `install.packages()`.
 
 \ 
 
@@ -63,7 +63,7 @@ This nifty package provides an interface for the Google sheets API and allows yo
 
 While `rcanvas` can do some pretty nifty stuff, it isn't perfectly tailored to our needs. For instance, it doesn't provide a function to upload assignment feedback which is basically the main thing we're after. That's why you will also need the `teachR` package that extends its functionality to what we need. This is also the package we use to create the teaching materials for the module, in case you're interested in that.
 
-Again, you'll have to install `teachR` from GitHub
+Again, you'll have to install `teachR` from GitHub:
 
 ```{r}
 remotes::install_github("mivalek/teachR")
@@ -84,7 +84,7 @@ red <- adata::red_data(123456)
 green <- adata::green_data(123456)
 ```
 
-The package only contains two functions `red_data()` and `green_data()`. They both take a canidate number as their first argument and generate a dataset for the given student.
+The package only contains two functions `red_data()` and `green_data()`. They both take a candidate number as their first argument and generate a dataset for the given student.
 
 \ 
 
@@ -98,7 +98,7 @@ You will have received links to a marking master spread sheet hosted on Google S
 
 ### Rubric and grade descriptors
 
-Marking is done according to the follwing rubric criteria:
+Marking is done according to the following rubric criteria:
 
 - *Analysis:* This component reflects the quality of your statistical analysis and your ability to present and interpret data. To score highly in this area, you must write your code and run your analysis thoroughly and correctly, report all the relevant statistics clearly and correctly, visualise your data appropriately, and demonstrate how well you understand what the results mean.
 - *Critical Thinking:* This component captures your ability to evaluate your own and other studies' findings with a critical eye. To score highly in this area, you must discuss evidence-based criticisms of your own and other studies (not just speculations about what might have gone wrong!); and make insightful, novel, or theoretically interesting suggestions for how to continue this research in the future.
@@ -106,7 +106,7 @@ Marking is done according to the follwing rubric criteria:
 - *Organisation:* This component captures your writing, both of text and of R script, and your ability to communicate clearly and scientifically. To score highly in this area, you must write clear, error-free, efficient R code; submit an RMarkdown file that knits correctly and produces a consistently and correctly formatted document; organise your report into sections, each of which summarises the relevant information accurately and succinctly; and communicate your ideas, findings, and evidence in a logical, scientific, and understandable way.
 - *Research:* This component reflects the design and grounding of the study you are presenting. To score highly in this area, you must read and reference a variety of academic sources, beyond those given as suggested readings or on the reading list; draw on these wider readings to inform your ideas and understanding of the study; and implement a research design that is appropriate to answer the research question.
 
-The grade descriptors for each criterion can be found (here)[https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37]
+You should also have a look at [grade descriptors for each criterion](https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37)
 
 
 <span style="color:red; font-weight:bold">[ TO BE COMPLETED ]</span>
@@ -157,7 +157,7 @@ The R Markdown files in your Box folder are slightly edited versions of the orig
 - If word limit is exceeded a line of HTML code is inserted
 - A block of feedback HTML and Markdown is appended to the end of the file
 
-The latter looks like this
+The latter looks like this:
 
 ```
 </div>
@@ -181,7 +181,7 @@ This is where you enter your general feedback on students' work.
 
 <div class="warn">**Please do not delete any part of this code!**</div>
 
-An example Rmd file corresponding to the HTML document above can be find [here](https://mivalek.github.io/adata/marking/marking_example.Rmd) (link will download the file).
+An example Rmd file corresponding to the HTML document above can be found [here](https://mivalek.github.io/adata/marking/marking_example.Rmd) (link will download the file).
 
 \ 
 
@@ -189,13 +189,13 @@ An example Rmd file corresponding to the HTML document above can be find [here](
 
 ### In-line comments
 
-The marked .Rmd files are knitted using the `tachR::mark()` function that allows additional markdown for comments in body text. These comments are fenced off with <code>&lt;--tag [your comment]--&gt;</code>. Tere are 6 recognised tags: `warn` for general comments/warnings and `c1` to `c5` for comments on each of the marking rubric criteria.
+The marked .Rmd files are knitted using the `teachR::mark()` function that allows additional markdown for comments in body text. These comments are fenced off with <code>&lt;--tag [your comment]--&gt;</code>. There are 6 recognised tags: `warn` for general comments/warnings and `c1` to `c5` for comments on each of the marking rubric criteria.
 
 To illustrate, the following comments:
 
 <pre>
 <code>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. <sep style="color:red">&lt;--warn This is how you include comments. A comment wih a warn tag (right after the opening double-arrow) will not be associated with a marking criterion. Use if for general/minor comments--&gt;</sep> Sed neque enim, tempor et venenatis eget, faucibus sit amet libero. Vestibulum finibus tincidunt nulla in vehicula. Praesent ac tristique tortor. Cras at massa eu lectus faucibus mollis. Aliquam erat volutpat. Nam enim magna, venenatis ut luctus ac, tempus in risus.<sep style="color:red">&lt;--c1 This is a Criterion 1 comment (notice the c1 tag). Once rendered, you can hover over it to see the criterion appear in the panel on the right margin--&gt;</sep> Duis finibus neque eget augue vestibulum dignissim. Nam aliquet turpis dolor. Curabitur finibus ipsum justo, aliquam accumsan ex ornare ac. Duis fermentum tempus gravida. Sed porta ipsum sit amet lectus ultrices, non finibus turpis eleifend. Maecenas sollicitudin leo eu augue ultricies, non ornare lacus commodo. Praesent finibus diam dolor, in ullamcorper ipsum dignissim faucibus. Nam aliquet est sit amet libero dictum, eu elementum enim fringilla. Nunc facilisis dapibus turpis, sagittis cursus enim consequat quis.<sep style="color:red">&lt;--c2 This is a Criterion 2 comment...--&gt;</sep>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. <sep style="color:red">&lt;--warn This is how you include comments. A comment with a warn tag (right after the opening double-arrow) will not be associated with a marking criterion. Use it for general/minor comments--&gt;</sep> Sed neque enim, tempor et venenatis eget, faucibus sit amet libero. Vestibulum finibus tincidunt nulla in vehicula. Praesent ac tristique tortor. Cras at massa eu lectus faucibus mollis. Aliquam erat volutpat. Nam enim magna, venenatis ut luctus ac, tempus in risus.<sep style="color:red">&lt;--c1 This is a Criterion 1 comment (notice the c1 tag). Once rendered, you can hover over it to see the criterion appear in the panel on the right margin--&gt;</sep> Duis finibus neque eget augue vestibulum dignissim. Nam aliquet turpis dolor. Curabitur finibus ipsum justo, aliquam accumsan ex ornare ac. Duis fermentum tempus gravida. Sed porta ipsum sit amet lectus ultrices, non finibus turpis eleifend. Maecenas sollicitudin leo eu augue ultricies, non ornare lacus commodo. Praesent finibus diam dolor, in ullamcorper ipsum dignissim faucibus. Nam aliquet est sit amet libero dictum, eu elementum enim fringilla. Nunc facilisis dapibus turpis, sagittis cursus enim consequat quis.<sep style="color:red">&lt;--c2 This is a Criterion 2 comment...--&gt;</sep>
 
 Quisque consequat ante quis lectus gravida accumsan. Donec fermentum ante consectetur nibh condimentum commodo. Vestibulum rhoncus facilisis eros nec facilisis. Nunc<sep style="color:red">&lt;--c3 ...and Criterion 3 comment...--&gt;</sep> ultricies dapibus orci, eget consequat urna vehicula sit amet. Morbi ultrices egestas dui vel tempor. Etiam ut nibh id ipsum imperdiet aliquet. Ut tempor velit vel lorem consectetur bibendum. Integer eu odio eu risus ullamcorper tincidunt a nec orci. Vivamus id tincidunt magna. Suspendisse potenti. Praesent eleifend nec arcu id faucibus.<sep style="color:red">&lt;--c4 ...and Criterion 4, you get the idea...--&gt;</sep>Cras imperdiet ligula et faucibus molestie.
 
@@ -226,12 +226,12 @@ For instance, the following code chunk:
 
 ### Feedack
 
-As mentioned [above][.Rmd files to mark], there's some extra HTML/Markdown appended to the end of the studetns' .Rmd files. This is where you give general summary feedback on their performance. Any R Markdown will work normally. In post-processing, the three placeholders (<code><i>&lt;!&ndash;- THE GOOD -&ndash;&gt;</i></code>, <code><i>&lt;!&ndash;- THE BAD &ndash;-&gt;</i></code>, and <code><i>&lt;!&ndash;- RECOMMENDATIONS &ndash;-&gt;</i></code>) will get replaced by boilerplate text (see bottom of the example document <a href="#marked-html">below</a>). That means that it's enough for you just to include a few bulletpoints highlighting the report's streangths, weeknesses, and giving some general recommendations for improvement.
+As mentioned [above][.Rmd files to mark], there's some extra HTML/Markdown appended to the end of the students' .Rmd files. This is where you give general summary feedback on their performance. Any R Markdown will work normally. In post-processing, the three placeholders (<code><i>&lt;!&ndash;- THE GOOD -&ndash;&gt;</i></code>, <code><i>&lt;!&ndash;- THE BAD &ndash;-&gt;</i></code>, and <code><i>&lt;!&ndash;- RECOMMENDATIONS &ndash;-&gt;</i></code>) will get replaced by boilerplate text (see bottom of the example document <a href="#marked-html">below</a>). That means that it's enough for you just to include a few bulletpoints highlighting the report's strengths, weaknesses, and giving some general recommendations for improvement.
 
 \ 
 
 <a name="marked-html"></a>
-Once a marked and commented .Rmd file has been knitted, it will look like the example below (you can see the full-size document with a wider layout [here](https://mivalek.github.io/adata/marking/marked_example_marked.html)). As mentioned, the in-line comments are interactive and reveal the matching rubric criterion description on hover. The boxes with partial grades per criterion are also interactive an when clicked, deveal the grade descriptor.
+Once a marked and commented .Rmd file has been knitted, it will look like the example below (you can see the full-size document with a wider layout [here](https://mivalek.github.io/adata/marking/marked_example_marked.html)). As mentioned, the in-line comments are interactive and reveal the matching rubric criterion description on hover. The boxes with partial grades per criterion are also interactive and when clicked, reveal the grade descriptor.
 
 <div class="iframe"><iframe src="https://mivalek.github.io/adata/marking/marked_example_marked.html" height="700px"></iframe></div>
 
@@ -239,7 +239,7 @@ Once a marked and commented .Rmd file has been knitted, it will look like the ex
 
 ## Awarding marks
 
-Even though the mark scale spans the [0, 100] interval, the university marking policy doesn't allow all the values within this range. Please only award marks listed in (the grade descriptor document)[https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37], namely:
+Even though the mark scale spans the [0, 100] interval, the university marking policy doesn't allow all the values within this range. Please only award marks listed in [the grade descriptor document](https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37), namely:
 
 - 0, 10, 20, 30
 - 35, 38
@@ -250,13 +250,13 @@ Even though the mark scale spans the [0, 100] interval, the university marking p
 - 82, 88,
 - 95
 
-Mark the reports on each of the rubric criteria and award a numeric mark, entering it in the Google sheet. The spreadsheet then calculates the average of the five marks and shows it in the "suggested_grade" column. This mark is not binding for you as the marker but you should have a good reason for big departures from it in the total grade you enter in the "grade" column. Please bear in mind that the total grade should also follow the marking policy and its numeric value should only be one of the allowed ones.
+Mark the reports on each of the rubric criteria and award a numeric mark, entering it in the Google sheet. The spreadsheet then calculates the average of the five marks and shows it in the "suggested_grade" column. This mark is not binding for you as the marker but you should have a good reason for big departures from it in the total grade you enter in the "grade" column. Please bear in mind that the total grade should also follow the marking policy and its numeric value should only be one of the allowed ones. For example, you can use the suggest grade to help you decide whether to mark up or down on a grade boundary (e.g. either a 62 or a 58, since you cannot give a 60).
 
 \ 
 
 ## Knitting marked .Rmd files
 
-Once you have commented all .Rmd files and entered all the partial and total grades in the marking spreadsheet, you will need to knit the files to produce the augmented HTML documents. The code for this will ahve been shared with you (marking_script.R).
+Once you have commented all .Rmd files and entered all the partial and total grades in the marking spreadsheet, you will need to knit the files to produce the augmented HTML documents. The code for this will have been shared with you (marking_script.R).
 
 The only thing you need to edit in the script before your run it is the bit towards the beginning:
 
@@ -293,7 +293,7 @@ set_canvas_token("")
 #############################################################################
 ```
 
-The code will then amend any marks that have been changed in moreration <span style="color:red; font-weight:bold">[ TO DO! ]</span> and upload the HTML documents as feedback attachemts to each individual student submission. Again, this may take a minute.
+The code will then amend any marks that have been changed in moderation <span style="color:red; font-weight:bold">[ TO DO! ]</span> and upload the HTML documents as feedback attachments to each individual student submission. Again, this may take a minute.
 
 \ 
 
@@ -305,7 +305,7 @@ Now that you are familiar with the individual components of the marking protocol
 1. Complete the setup detailed above.
     - Get and save a [Canvas access token][Get access token]
     - Install the `rcanvas`, `googlesheets4`, `teachR`, and `adata` [packages][Install required `R` packages].
-1. Folow the Box link and download the .R, .Rmd and .html files from your folder.
+1. Follow the Box link and download the .R, .Rmd and .html files from your folder.
 1. Open the marking master Google spreadsheet.
 1. Read the HTML file while commenting on the report inside the .Rmd file as detailed [above][Commenting on .Rmd files].
     - **Do not change the file names!**
