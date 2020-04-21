@@ -1,0 +1,253 @@
+---
+title: "Marking example"
+subtitle: "Analysing Data coursework"
+output:
+  html_document:
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=F, warning=F)
+```
+
+```{r cand_no}
+candidate_number <- 123456
+
+# Ordinary code comments will render like this. You can use them to point out mistakes in code.
+# Don't use HTML code/entities as it wll not render right, e.g., &and; will not produce '&'
+
+```
+
+```{r packages, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(cowplot)
+library(weights)
+```
+
+```{r data}
+data <- adata::red_data()
+names(data) <- c("id", "age", "condition", "item_1", "item_2", "item_3")
+```
+
+```{r checking, include = FALSE}
+data <- data %>% 
+  mutate(age = as.numeric(age))
+
+data <- data %>% 
+  mutate(age = as.numeric(age),
+         condition = recode(condition, "expermental" = "experimental"))
+```
+
+```{r cleaning, include = FALSE}
+all_missing <- data %>% filter(rowSums(is.na(data)) > 0) %>% nrow()
+data <- data %>% filter(rowSums(is.na(data)) < 1)
+
+age_removed <- data %>% filter(age<18) %>% nrow()
+data <- data %>% filter(age > 17)
+
+```
+
+```{r descriptives}
+
+age_desc <- data %>% 
+  summarise(
+    mean_age = mean(age),
+    sd_age = sd(age),
+    min_age = min(age),
+    max_age = max(age)
+  )
+age_desc <- age_desc %>% modify(round, 2)
+
+condition_desc <- data %>% 
+  group_by(condition) %>% 
+  summarise(
+    n = n(),
+    mean_age = mean(age),
+    sd_age = sd(age)
+  )
+
+rate_desc <- data %>% 
+  group_by(condition) %>% 
+  summarise(
+    mean_item1 = mean(item_1, na.rm = T),
+    sd_item1 = sd(item_1, na.rm = T),
+    mean_item2 = mean(item_2, na.rm = T),
+    sd_item2 = sd(item_2, na.rm = T),
+    mean_item3 = mean(item_3, na.rm = T),
+    sd_item3 = sd(item_3, na.rm = T)
+  )
+
+library(kableExtra)
+table2<- condition_desc %>% kable(col.names = c("Condition", "N", "Mean age", "SD of age"), caption = "Table 2. Descriptive statistics by Condition",
+                        digits = 2) %>% kable_styling()
+
+table1 <- age_desc %>% kable(col.names = c("Mean age", "SD of age", "Minimum age", "Maximum age"), caption = "Table 1. Descriptive statistics of Participants", 
+                   digits = 2) %>% kable_styling()
+
+table3<- rate_desc %>% kable(col.names = c("Condition", "Item 1 Mean", "Item 1 SD", "Item 2 Mean", "Item 2 SD", "Item 3 Mean", "Item 3 SD"), caption = "Table 3. Descriptive statistics of Item ratings per condition", 
+                    digits = 2) %>% kable_styling()
+```
+
+```{r plots}
+data <- data %>% 
+  group_by(id) %>% 
+  mutate(attractiveness = mean(c(item_1, item_2, item_3))) %>% 
+  select(id, condition, item_1, item_2, item_3, attractiveness)
+
+library(cowplot)
+rating.plot <- data %>% 
+  ggplot(aes(x = condition, y = attractiveness)) + labs(x = "Experimental Condition", y = "Mean Attractiveness Rating") +
+  theme_cowplot()
+
+
+rating.plot.final <- rating.plot + 
+  stat_summary(fun.data="mean_cl_boot", geom="errorbar", width = .25) +
+  geom_point(stat = "summary", 
+             fun.y = "mean",
+             size = 5,
+             shape = 23,
+             fill = c("white", "red")) +
+  scale_y_continuous(name = "Mean Attracitveness Rating", limits = c(1,9), breaks = c(1,2,3,4,5,6,7,8,9))
+```
+
+```{r analysis}
+attractiveness.t <- t.test(attractiveness ~ condition, data = data, alternative = "two.sided", var.equal = T)
+
+```
+
+# Methods
+
+## Participants
+
+<!-- Keep it simple, concise and accurate. See the Lab Report Information and Resources page for guidance on how to complete this section -->
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. <--warn This is how you include comments. A comment wih a warn tag (right after the opening double-arrow) will not be associated with a marking criterion. Use if for general/minor comments--> Sed neque enim, tempor et venenatis eget, faucibus sit amet libero. Vestibulum finibus tincidunt nulla in vehicula. Praesent ac tristique tortor. Cras at massa eu lectus faucibus mollis. Aliquam erat volutpat. Nam enim magna, venenatis ut luctus ac, tempus in risus.<--c1 This is a Criterion 1 comment (notice the c1 tag). Once rendered, you can hover over it to see the criterion appear in the panel on the right margin--> Duis finibus neque eget augue vestibulum dignissim. Nam aliquet turpis dolor. Curabitur finibus ipsum justo, aliquam accumsan ex ornare ac. Duis fermentum tempus gravida. Sed porta ipsum sit amet lectus ultrices, non finibus turpis eleifend. Maecenas sollicitudin leo eu augue ultricies, non ornare lacus commodo. Praesent finibus diam dolor, in ullamcorper ipsum dignissim faucibus. Nam aliquet est sit amet libero dictum, eu elementum enim fringilla. Nunc facilisis dapibus turpis, sagittis cursus enim consequat quis.<--c2 This is a Criterion 2 comment...-->
+
+Quisque consequat ante quis lectus gravida accumsan. Donec fermentum ante consectetur nibh condimentum commodo. Vestibulum rhoncus facilisis eros nec facilisis. Nunc<--c3 ...and Criterion 3 comment...--> ultricies dapibus orci, eget consequat urna vehicula sit amet. Morbi ultrices egestas dui vel tempor. Etiam ut nibh id ipsum imperdiet aliquet. Ut tempor velit vel lorem consectetur bibendum. Integer eu odio eu risus ullamcorper tincidunt a nec orci. Vivamus id tincidunt magna. Suspendisse potenti. Praesent eleifend nec arcu id faucibus. <--c4 ...and Criterion 4, you get the idea...-->Cras imperdiet ligula et faucibus molestie.
+
+Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, viverra ut mauris. Integer suscipit, sapien et dapibus tincidunt, nisi massa hendrerit felis, in ornare enim nisi vel nisl. Praesent laoreet metus tortor, sed vulputate enim convallis eu. Donec sed magna lacinia, feugiat neque et, porttitor eros.<--c5 ...and just for completion's sake, a Criterion 5 comment.--> Aenean dictum risus nunc. Suspendisse quis sem quam. Fusce neque mi, pretium molestie mattis vitae, mattis vitae eros. Nulla non imperdiet tellus, nec rhoncus ex. Etiam eget pulvinar odio. Phasellus enim ligula, placerat nec molestie vitae, varius aliquet eros. Aenean viverra egestas nisl, et malesuada lorem tincidunt sed. Nunc lorem arcu, pellentesque eget risus eget, consequat blandit nunc. Donec condimentum vel mi eu viverra. Duis malesuada sagittis scelerisque.
+
+Etiam euismod dictum justo, vitae rhoncus lorem consectetur non. Nam ligula erat, placerat tincidunt malesuada ac, varius et orci. Praesent congue finibus diam, vel sodales lectus ultrices non. Pellentesque malesuada nec dolor id efficitur. Nunc faucibus arcu vitae eros placerat, sed egestas ante aliquet. Vestibulum varius efficitur augue, sed euismod erat tempus eu. Proin elit magna, cursus placerat viverra a, eleifend et lorem. Sed aliquet sed metus ac fermentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut ac tristique tortor. Quisque molestie odio at arcu porttitor suscipit.
+
+Nullam bibendum lobortis sagittis. Ut eget tempor lorem. Sed ac egestas odio, ac lacinia sem. Suspendisse luctus lorem eu dui ornare, nec maximus purus commodo. Donec pellentesque elit quis libero fermentum feugiat. Nullam efficitur luctus dui, id gravida erat luctus finibus. Suspendisse quis auctor sem. Praesent at semper tellus, ac iaculis ante. Maecenas hendrerit, nisi nec consequat lobortis, sapien massa interdum mauris, in luctus mi magna mattis orci. Mauris placerat posuere orci quis tempus. Duis et mollis mauris, at vehicula lacus. Fusce velit nibh, lobortis ut elit a, lacinia euismod mi. 
+
+Table 1. displays the range, mean and standard deviation of the final number of participants ages who took part in the experiment. 
+
+```{r}
+table1
+```
+
+Table 2. presented below provides descriptive statistics of the participants by experimental condition. 
+
+```{r}
+table2
+```
+
+
+## Design
+
+<!-- Keep it simple, concise and accurate. See the Lab Report Information and Resources page for guidance on how to complete this section -->
+
+ Curabitur nec leo lectus. Nulla mollis velit vel eros pulvinar, in congue nunc cursus. Curabitur facilisis odio in consequat pulvinar. Curabitur ut est turpis. Nulla semper aliquet elit, ac tristique odio. Cras sem nisi, vestibulum nec libero sed, aliquam lacinia urna. Quisque eu nisi interdum, pellentesque nulla sed, mattis lectus.
+
+Ut fermentum, orci et malesuada lacinia, nulla felis gravida felis, quis pretium purus ex sed ex. Duis mattis fermentum purus eget luctus. Proin at nisl ullamcorper risus ultrices sollicitudin vitae eget lectus. Nullam scelerisque vitae eros non mollis. Sed id congue lorem. Curabitur sollicitudin libero ultrices ultricies varius. Proin metus metus, tempor in orci id, elementum dapibus turpis. Sed vel orci tempor, fermentum mi sed, aliquam sapien. Maecenas ornare porta dui mattis lacinia. Sed nec interdum mi, et sagittis elit. Quisque pretium dapibus massa sit amet tempor. Phasellus faucibus iaculis lectus, vel fermentum dolor placerat et. Pellentesque et vehicula odio.
+
+Nunc aliquet nulla id tortor auctor sagittis. Aenean pulvinar ligula vel sollicitudin pulvinar. Nam maximus condimentum luctus. Curabitur fermentum sed urna sed dignissim. Morbi nec dapibus diam, nec tempus nunc. Morbi condimentum, nunc eget interdum malesuada, elit ligula sodales nulla, sed mollis arcu nisi ut arcu. Etiam laoreet eu quam ac maximus. Vivamus iaculis nisl lacus, ut suscipit turpis auctor ac. Aenean ornare dui velit, nec ultrices elit convallis viverra. Suspendisse non felis at elit ullamcorper vehicula a quis enim. Aliquam tortor neque, egestas sed sodales a, sodales quis mauris. Aenean tincidunt sapien id mollis egestas.
+
+Duis blandit, erat sit amet placerat molestie, ante mauris mollis nisl, eget pulvinar risus enim et orci. Aliquam tincidunt vel justo eget porta. Duis condimentum pretium lacus, eu porttitor ipsum auctor et. Vestibulum venenatis mauris nibh, nec posuere purus molestie eget. Nullam condimentum elit ut massa viverra sollicitudin. Donec sapien sem, ullamcorper vitae mi ut, varius gravida urna. Pellentesque ac eros nisl. Vestibulum consectetur eget risus quis interdum. Quisque vehicula ipsum in neque feugiat, semper placerat lorem sollicitudin.
+
+Mauris quis magna vel odio consequat laoreet. Aliquam eget enim aliquam, fringilla arcu ac, fringilla tortor. Aenean metus urna, varius a arcu id, fringilla ullamcorper ante. Duis congue tortor at lorem suscipit posuere. Nunc et nulla ac odio maximus ultricies vitae at sapien. Sed semper scelerisque nunc in fermentum. Nullam scelerisque sapien vitae varius finibus. Mauris ultrices egestas est. Cras non purus sed lectus hendrerit pellentesque id ut risus. Donec est tortor, pretium nec dapibus lacinia, ultricies sit amet nunc. 
+
+# Results
+
+<!-- Complete this section in your own words, using inline reporting from your saved analysis output. For help with running these analyses, see the Week 5 tutorial if you are doing the Green study and the Week 6 tutorial if you are doing the Red study -->
+
+<!-- Add code chunks if necessary to insert and format tables and figures. For help with doing this, see the Weeks 3 and 4 tutorials and practicals -->
+
+ Pellentesque at tristique nulla, sed tempus lectus. Cras posuere tincidunt volutpat. Etiam ultricies sed eros ac tempus. Nam pulvinar finibus lectus. Maecenas sit amet lectus eu augue bibendum elementum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus vel viverra eros, vitae tincidunt mauris. Nunc pretium, nunc ac mollis pretium, massa nunc rhoncus erat, in elementum urna augue sed dolor. Nullam congue lorem sit amet magna maximus, in porta nibh dictum. Praesent quis lacinia turpis. Duis iaculis tortor et eros luctus, vel eleifend nisl fermentum. Vivamus id dolor vel metus feugiat semper in vel turpis. Donec quis velit ut libero tempor facilisis eu ut lacus. Nunc ut tincidunt ipsum. Aenean euismod risus quis est finibus convallis.
+
+Nullam sollicitudin velit ut eros lobortis sagittis. Fusce cursus fringilla congue. Pellentesque interdum non nibh sed congue. Nulla facilisi. Mauris ac ante tempus, sollicitudin quam eu, bibendum orci. Aliquam elementum, turpis semper auctor suscipit, ipsum metus porta ex, porta scelerisque felis magna non nunc. Etiam luctus sed leo ut euismod. Praesent aliquet commodo ultrices. Fusce pharetra, ligula quis facilisis aliquet, ipsum elit congue erat, quis posuere diam eros sit amet dolor. Nulla semper elit eu mi bibendum, tristique convallis purus cursus. Etiam in lacus dictum, elementum nibh id, consequat lorem. Phasellus vitae felis elementum, volutpat nisl nec, commodo orci.
+
+Quisque sed turpis risus. Nullam sem justo, euismod ut tortor a, placerat posuere purus. Cras rutrum in eros et placerat. Nunc eget tincidunt turpis. Integer eu congue nulla, id rutrum eros. Etiam sit amet tempus mauris, vitae posuere risus. Nam ornare, elit dignissim imperdiet imperdiet, leo lectus commodo urna, id suscipit felis tortor in purus. Cras id sagittis ex. Phasellus sed iaculis leo, quis fermentum nisl. Donec imperdiet porta ligula, eget lacinia nibh mollis vel.
+
+Sed semper scelerisque odio, id vehicula sapien. Donec eleifend libero lacinia lorem posuere, et aliquam purus hendrerit. Aenean sit amet lacinia sapien. Mauris pulvinar suscipit enim ut ullamcorper. Donec sit amet lacus ut lectus placerat volutpat. Curabitur et sapien non nisl tristique gravida. Maecenas rhoncus nisl leo, nec ultrices mi cursus at. Sed congue elementum enim sagittis scelerisque. Nunc dignissim tincidunt risus in dictum. Quisque ultrices dolor eu nibh faucibus varius. Sed nec eleifend lectus, sed efficitur massa. Cras sodales tellus tortor, non sagittis tellus rutrum vitae. Nunc ut elit justo. Nam placerat euismod nisl quis molestie. Maecenas vel cursus ex, non interdum velit.
+
+Integer ut nulla id metus consectetur ullamcorper eu sit amet ligula. Sed mollis cursus lacinia. Vivamus pellentesque massa et nisi vehicula lacinia. Nullam lectus turpis, vehicula sed laoreet quis, rhoncus sed justo. Maecenas fringilla gravida purus, a pretium nunc sodales ut. Nam arcu erat, placerat in dictum eget, consequat nec dolor. Fusce quis tortor eu lorem fringilla pulvinar. Pellentesque iaculis massa eu quam tincidunt pharetra. Phasellus rhoncus augue in elit ultricies, quis dignissim sem pellentesque. Nulla vel aliquam metus. Quisque eget velit ut neque porttitor mattis a at odio.
+
+Donec bibendum consectetur libero ut ornare. Donec eu erat a orci pharetra euismod non id urna. Aliquam varius lobortis vehicula. Quisque erat mi, facilisis et purus sit amet, malesuada aliquam nulla. Phasellus ut ligula metus. Nunc et placerat leo, hendrerit venenatis risus. Quisque et iaculis ipsum. Aenean convallis neque vitae sem lobortis luctus. Pellentesque tincidunt ipsum vel odio molestie, vel lobortis turpis vehicula. Vivamus scelerisque vitae augue suscipit iaculis.  (see Table 3.).  
+
+```{r}
+table3
+```
+
+The graph below illustrates the Mean Attractiveness Ratings for each experimental condition.
+
+```{r}
+rating.plot.final
+```
+
+
+An independent-measures *t*-test was performed to analyse if the composite attractiveness scores in each condition were statistically significant. The *t*-test indicated that the control condition had a slightly higher mean rating of attractiveness (*M* = `r attractiveness.t$estimate[1] %>% round(2)`) than the experimental condition (*M* = `r attractiveness.t$estimate[2] %>% round(2)`). Consequently, this difference in means was not statistically significant when compared to *p* < .001 (*M*~diff~ = `r (attractiveness.t$estimate[1] - attractiveness.t$estimate[2]) %>% round(2)`, 95% CI [`r attractiveness.t$conf.int[1] %>% round(2)`, `r attractiveness.t$conf.int[2] %>% round(2)`], *t* (`r attractiveness.t$parameter`) = `r attractiveness.t$statistic %>% round(2)`, *p* = `r attractiveness.t$p.value %>% rd(.,3)`). In conclusion, colour did not affect women's attractiveness ratings, consequently the null hypothesis is accepted and the alternative hypothesis that colour influences percieved attractiveness is rejected.
+
+Vestibulum nec placerat neque, in dapibus turpis. Phasellus at magna sed ante pretium iaculis. Cras a odio elit. Suspendisse vulputate ante at tellus sollicitudin, sed aliquam arcu consequat. In augue metus, pretium ut sodales id, porta sed turpis. Morbi blandit augue vitae porttitor cursus. Donec vulputate massa ligula, vel eleifend neque condimentum sed. Proin luctus risus id magna ullamcorper feugiat. Nulla facilisi. Aliquam sodales ultrices convallis. Proin hendrerit est ipsum, nec convallis ante fringilla ac. Praesent dapibus dolor ut risus tincidunt fermentum. Vestibulum egestas diam orci, vitae posuere tortor ultrices ut.
+
+# Discussion
+
+<!-- Complete this section in your own words. For help with writing a good discussion, see the Week 7 lecture and the How To Get A First page on Canvas -->
+ Fusce libero purus, rutrum et nisi sed, efficitur feugiat mauris. Curabitur vel risus congue, aliquam erat id, imperdiet risus. Morbi porta, nisi id semper fringilla, eros diam hendrerit arcu, sit amet pretium lacus nibh ac tellus. Proin eget quam lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum et ligula enim. Donec quis dui ullamcorper, faucibus est sed, rhoncus odio. Nunc quis tellus at mauris hendrerit euismod. Suspendisse aliquet purus neque, ut pretium eros hendrerit eget. Duis feugiat arcu eget ante mattis luctus. Nam quis quam libero. Curabitur ornare gravida urna. Fusce et congue dolor. Etiam tellus arcu, lacinia et orci sit amet, bibendum ornare felis. Nullam non tempus justo.
+
+Donec quis rutrum turpis. Praesent tincidunt maximus leo venenatis venenatis. Fusce in leo auctor dui pulvinar dapibus quis sed tellus. Pellentesque vel porta ante. Cras imperdiet ante et dolor fringilla, sed molestie metus efficitur. Nunc vitae leo ornare, semper ex nec, porta ante. Aliquam urna dui, elementum a quam id, pulvinar laoreet dolor. Fusce efficitur euismod lorem eu interdum. Quisque quis odio quis libero pharetra tincidunt ac in ipsum. Cras at nibh dignissim, pharetra enim sed, volutpat neque. Nam mattis semper malesuada. Fusce porttitor orci sit amet mi tincidunt semper. Curabitur efficitur, velit ac posuere imperdiet, urna erat vestibulum mauris, at convallis sem augue eget erat. Maecenas rutrum laoreet dolor, volutpat fermentum diam ornare quis. Integer non malesuada purus.
+
+Mauris sit amet dignissim ipsum, eu facilisis neque. Aenean pellentesque at orci eu vehicula. Morbi mollis vulputate elementum. Vestibulum suscipit hendrerit consequat. Aliquam fermentum placerat felis a tempor. Quisque tristique blandit felis, eget sollicitudin tortor efficitur feugiat. Cras varius egestas mollis. Cras eleifend ac ex eu bibendum. Etiam pellentesque risus varius, mattis enim vitae, commodo ex. Aenean vel nulla placerat, egestas velit et, dictum nulla. Aenean urna orci, facilisis a bibendum sit amet, vehicula hendrerit
+
+\ 
+
+<div>
+  <p style="color:#cc0000;font-size:2em;text-align:center">*** WORD LIMIT REACHED ***</p>
+  <p style="color:#cc0000;text-align:center">(Scroll down for feedback)</p>
+  </div>
+
+\ 
+
+ erat.
+
+Vivamus interdum libero quis velit imperdiet, in cursus ligula commodo. Curabitur efficitur tempus egestas. Sed feugiat erat sit amet lacus cursus viverra. In vehicula felis cursus sapien pharetra, ornare commodo nisl gravida. Praesent eget finibus justo. Phasellus pretium, diam in convallis tincidunt, nisi nibh vehicula arcu, id consectetur eros massa nec sem. Cras vitae arcu ac urna tristique porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris ac felis id ipsum fringilla rhoncus. Pellentesque tempus scelerisque quam, id ornare justo euismod at. Donec dui erat, convallis at pretium non, feugiat in lectus. Praesent euismod lacinia justo. In hac habitasse platea dictumst. Sed nec risus pellentesque, scelerisque felis eget, pretium nulla. Pellentesque lacinia at libero ut faucibus.
+
+Nullam varius, nulla eu auctor sollicitudin, libero dolor condimentum urna, in bibendum mauris sapien ut nunc. Sed gravida, purus quis imperdiet egestas, nunc risus mattis est, ac tempor quam diam eu ex. Suspendisse turpis nisl, laoreet ac accumsan quis, eleifend luctus ipsum. Fusce scelerisque efficitur nisi a convallis. Vestibulum vitae bibendum nulla. Vivamus tincidunt a sem eleifend sagittis. Curabitur id fringilla nulla, et dictum diam. Suspendisse suscipit, nulla at consectetur sodales, turpis elit finibus lorem, et imperdiet arcu quam id nibh. Nulla varius, metus eu laoreet mattis, lectus ligula cursus diam, nec faucibus augue nunc sit amet leo. Pellentesque feugiat, ligula aliquet vestibulum eleifend, nunc ex egestas felis, vel sodales justo arcu blandit tellus. Maecenas tristique lectus id ex porta tempus. Aenean mattis diam felis, eget tempor lorem sodales sit amet. Aliquam rutrum, velit eu facilisis consectetur, augue ligula mattis est, ac facilisis nisl velit non ex. Pellentesque in molestie tortor. Morbi finibus ut nisi et fermentum. 
+
+# References
+
+<!-- Insert a complete reference list here. See the Lab Report Information and Resources page for guidance on how to complete this section -->
+<p style="margin-left: 36px; text-indent: -36px;">Elliot, A., Niesta Kayser, D., Greitemeyer, T., Lichtenfeld, S., Gramzow, R., Maier, M., & Liu, H. (2010). Red, rank, and romance in women viewing men. *Journal of Experimental Psychology: General, 139*(3), 399-417.</p> 
+
+<p style="margin-left: 36px; text-indent: -36px;">Elliot, A.J. & Maier, M.A. (2013). The Red-Attractiveness Effect, Applying the Ioannidis and Trikalinos (2007b) Test, and the Broader Scientific Context: A Reply to Francis (2013).  *Journal of Experimental Psychology, 142*(1), 297-300.</p>
+
+<p style="margin-left: 36px; text-indent: -36px;">Francis, G. (2013). Publication Bias in “Red, Rank, and Romance in Women Viewing Men,” by Elliot et al. (2010). *Journal of Experimental Psychology, 142*(1), 292-296.</p>
+
+<p style="margin-left: 36px; text-indent: -36px;">Hesslinger, V., Goldbach, L., & Carbon, C. (2015). Men in red: A reexamination of the red-attractiveness effect. *Psychonomic Bulletin & Review, 22*(4), 1142-1148.</p>
+
+<p style="margin-left: 36px; text-indent: -36px;">Roberts, C.S & Owen, R.C. (2010). Distinguishing between perceiver and wearer effects in clothing colour associated attributions. *Evolutionary Psychology, 8*(3), 350-364.</p>
+
+<p style="margin-left: 36px; text-indent: -36px;">Thorstenson, C. A., Pazda, A. D., Elliot, A. J., and Perrett, D. I. (2017). Facial redness increases men’s perceived healthiness and attractiveness. *Perception, 46*(6), 650–664.</p>
+</div>
+
+
+
+
+\ 
+
+<a name="feedback"></a>
+<div class="feedback">
+<!-- THE GOOD -->
+
+
+
+<!-- THE BAD -->
+
+
+
+<!-- RECOMMENDATIONS -->
+
+
+

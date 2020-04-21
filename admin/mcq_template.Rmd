@@ -1,41 +1,69 @@
 ---
-title: "Title"
-subtitle: "Subtitle"
-author: "Analysing Data"
-date: "10/04/2020"
-output:
-  word_document:
-    reference_docx: mcq_format_ref.docx
-    df_print: kable
-    fig_height: 5
-    fig_width: 6
+title: "Candidate Number"
+subtitle: "\\ "
+author: "\\ "
+date: "`r module_code`"
 ---
 
+```{r, eval=F, include=F}
+# knit using
+
+module <- "Analysing Data"
+exam_diet <- "BSc FIRST YEAR EXAMINATION May/June 2019 (A2)"
+instruction <- "blah di dah"
+
+rmarkdown::render("analysing_data/admin/mcq_template.Rmd",
+                  output_format = exam_paper_document(
+                    output_format =  "word",
+                    reference_docx = "mcq_format_ref.docx",
+                    df_print = "kable",
+                    fig_height = 5,
+                    fig_width = 6))
+```
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo=F, fig.align='center')
+knitr::opts_chunk$set(echo=T, fig.align='center')
 library(tidyverse)
 ```
 
 
-# Heading 1
+### SECTION A: MULTIPLE CHOICE QUESTIONS
 
-## Heading 2
+\ 
+
+#### The answers, one to each question, should be marked on the answer sheet provided (place a cross in the relevant box to indicate your answer: a, b, c or d). Each question is worth 2 marks.
+
+\ 
 
 Body text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
+\ 
+
 inline `code`
 
+\ 
+
 1. Question stem
-    (a) Option 1
-    (a) Option 2
-    (a) Option 3 (correct)
-    (a) Option 4.
+(a) Option 1
+(a) Option 2
+(a) Option 3 *(correct)*
+(a) Option 4.
+ 
+\ 
 
 \ 
 
 2. Another stem
-    (a) Option 1
-    (a) Option 2
+
+\ 
+
+> blah
+
+\ 
+
+(a) Option 1
+(a) Option 2
+(a) Option 3.
 
 \ 
 
