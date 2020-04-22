@@ -1583,10 +1583,10 @@ div.tocify {
 <h2>Setting up Canvas API access</h2>
 <p>As you know, students are supposed to upload R Markdown files for this assignment, which means that we won’t be able to use Canvas/Turnitin for marking. While some – like me might call this a blessing – this does mean that we need a smart way of downloading, marking, and uploading hundreds of documents.</p>
 <p>Enter API, or Application Programming Interface. Simply put, an API is a way of retreiving information from and sending information to web applications <em>programmatically</em> (using code). If a web application provides an API to the average Jacinda, she can basically do anything her level of authorisation allowes her to do using the standard web interface without as much as opening her browser window. No clicking, no browsing through pages, just good old code. APIs are also very useful for web-scraping and analytics of all sorts. And Twitter and Facebook bots… :/</p>
-<p>As luck would have it, Canvas provides a fully exposed <a href="https://en.wikipedia.org/wiki/Representational_state_transfer" title="Honestly, who comes up with these names?!">RESTful</a> API whcih means that uploading all the 500+ marked submissions so that they are only visible to their author can be a matter of seconds rather than hours. In order to access the API, we first need to set up a few things.</p>
+<p>As luck would have it, Canvas provides a fully exposed <a href="https://en.wikipedia.org/wiki/Representational_state_transfer" title="Honestly, who comes up with these names?!">RESTful</a> API which means that uploading all the 500+ marked submissions so that they are only visible to their author can be a matter of seconds rather than hours. In order to access the API, we first need to set up a few things.</p>
 <div id="get-access-token" class="section level3">
 <h3>Get access token</h3>
-<p>First of all you will need a Canvas access token so that you can authenticate your requests. This will allow Canvas to know who is sending the requests and check if you have the privileges to perform the actions you are attempting.</p>
+<p>First of all, you will need a Canvas access token so that you can authenticate your requests. This will allow Canvas to know who is sending the requests and check if you have the privileges to perform the actions you are attempting.</p>
 <p>To do this, log into <a href="https://canvas.sussex.ac.uk/">Canvas</a> and follow these steps:</p>
 <ol style="list-style-type: decimal">
 <li>Go to your account</li>
@@ -1594,7 +1594,7 @@ div.tocify {
 <li>Click on “+ New access token”</li>
 <li>Put something informative in the Purpose field</li>
 <li>Choose and expiry date or leave blank for a permanent token (recommended)</li>
-<li>Click on &quot;Generate token</li>
+<li>Click on “Generate token”</li>
 <li><strong>Copy the token and paste it into a text file BEFORE you close the pop-up window</strong></li>
 <li>Save the text file (<em>e.g.,</em> canvas_token.txt) somewhere where you’ll be able to find it.</li>
 </ol>
@@ -1607,20 +1607,20 @@ div.tocify {
 <div id="rcanvas" class="section level3">
 <h3><code>rcanvas</code></h3>
 <p>Unless you’re good enough a coder to write your own API code (and I am certainly not), you’ll need to install the <code>rcanvas</code> package from GitHub.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># installing from GitHub requires eiother package remotes or devtools</span></a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># installing from GitHub requires either package remotes or devtools</span></a>
 <a class="sourceLine" id="cb1-2" title="2">remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;daranzolin/rcanvas&quot;</span>)</a></code></pre></div>
 <p>Feel free to peruse the <a href="https://github.com/daranzolin/rcanvas">package documentation</a> to find out about all the cool stuff you can do with it.</p>
 <p> </p>
 </div>
 <div id="googlesheets4" class="section level3">
 <h3><code>googlesheets4</code></h3>
-<p>This nifty package provides an interface for the Google sheets API and allows you to read Google sheets from your drive straight into <code>R</code>. Install the CRAN version using <code>install.packages()</code>.</p>
+<p>This nifty package provides an interface for the Google sheets API and allows you to read Google sheets from your Drive straight into <code>R</code>. Install the CRAN version using <code>install.packages()</code>.</p>
 <p> </p>
 </div>
 <div id="teachr" class="section level3">
 <h3><code>teachR</code></h3>
 <p>While <code>rcanvas</code> can do some pretty nifty stuff, it isn’t perfectly tailored to our needs. For instance, it doesn’t provide a function to upload assignment feedback which is basically the main thing we’re after. That’s why you will also need the <code>teachR</code> package that extends its functionality to what we need. This is also the package we use to create the teaching materials for the module, in case you’re interested in that.</p>
-<p>Again, you’ll have to install <code>teachR</code> from GitHub</p>
+<p>Again, you’ll have to install <code>teachR</code> from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;mivalek/teachR&quot;</span>)</a></code></pre></div>
 <p>If <code>R</code> prompts you about updating packages, it’s best to update all.</p>
 <p> </p>
@@ -1632,7 +1632,7 @@ div.tocify {
 <a class="sourceLine" id="cb3-2" title="2"></a>
 <a class="sourceLine" id="cb3-3" title="3">red &lt;-<span class="st"> </span>adata<span class="op">::</span><span class="kw">red_data</span>(<span class="dv">123456</span>)</a>
 <a class="sourceLine" id="cb3-4" title="4">green &lt;-<span class="st"> </span>adata<span class="op">::</span><span class="kw">green_data</span>(<span class="dv">123456</span>)</a></code></pre></div>
-<p>The package only contains two functions <code>red_data()</code> and <code>green_data()</code>. They both take a canidate number as their first argument and generate a dataset for the given student.</p>
+<p>The package only contains two functions <code>red_data()</code> and <code>green_data()</code>. They both take a candidate number as their first argument and generate a dataset for the given student.</p>
 <p> </p>
 <p>And with that, you’re all set up for the main event.</p>
 <p> </p>
@@ -1643,15 +1643,15 @@ div.tocify {
 <p>You will have received links to a marking master spread sheet hosted on Google Sheets and to a Box folder.</p>
 <div id="rubric-and-grade-descriptors" class="section level3">
 <h3>Rubric and grade descriptors</h3>
-<p>Marking is done according to the follwing rubric criteria:</p>
+<p>Marking is done according to the following rubric criteria:</p>
 <ul>
-<li><em>Analysis:</em> This component reflects the quality of your statistical analysis and your ability to present and interpret data. To score highly in this area, you must write your code and run your analysis thoroughly and correctly, report all the relevant statistics clearly and correctly, visualise your data appropriately, and demonstrate how well you understand what the results mean.</li>
-<li><em>Critical Thinking:</em> This component captures your ability to evaluate your own and other studies’ findings with a critical eye. To score highly in this area, you must discuss evidence-based criticisms of your own and other studies (not just speculations about what might have gone wrong!); and make insightful, novel, or theoretically interesting suggestions for how to continue this research in the future.</li>
-<li><em>Theoretical Understanding:</em> This component looks at your knowledge and understanding of both the research question and the analysis you have done to answer it. To score highly in this area, you must demonstrate that you understand what your analysis tells you, and discuss how your analysis results do, and do not, inform the overall research question.</li>
-<li><em>Organisation:</em> This component captures your writing, both of text and of R script, and your ability to communicate clearly and scientifically. To score highly in this area, you must write clear, error-free, efficient R code; submit an RMarkdown file that knits correctly and produces a consistently and correctly formatted document; organise your report into sections, each of which summarises the relevant information accurately and succinctly; and communicate your ideas, findings, and evidence in a logical, scientific, and understandable way.</li>
-<li><em>Research:</em> This component reflects the design and grounding of the study you are presenting. To score highly in this area, you must read and reference a variety of academic sources, beyond those given as suggested readings or on the reading list; draw on these wider readings to inform your ideas and understanding of the study; and implement a research design that is appropriate to answer the research question.</li>
+<li><strong>Analysis:</strong> This component reflects the quality of your statistical analysis and your ability to present and interpret data. To score highly in this area, you must write your code and run your analysis thoroughly and correctly, report all the relevant statistics clearly and correctly, visualise your data appropriately, and demonstrate how well you understand what the results mean.</li>
+<li><strong>Critical Thinking:</strong> This component captures your ability to evaluate your own and other studies’ findings with a critical eye. To score highly in this area, you must discuss evidence-based criticisms of your own and other studies (not just speculations about what might have gone wrong!); and make insightful, novel, or theoretically interesting suggestions for how to continue this research in the future.</li>
+<li><strong>Theoretical Understanding:</strong> This component looks at your knowledge and understanding of both the research question and the analysis you have done to answer it. To score highly in this area, you must demonstrate that you understand what your analysis tells you, and discuss how your analysis results do, and do not, inform the overall research question.</li>
+<li><strong>Organisation:</strong> This component captures your writing, both of text and of R script, and your ability to communicate clearly and scientifically. To score highly in this area, you must write clear, error-free, efficient R code; submit an RMarkdown file that knits correctly and produces a consistently and correctly formatted document; organise your report into sections, each of which summarises the relevant information accurately and succinctly; and communicate your ideas, findings, and evidence in a logical, scientific, and understandable way.</li>
+<li><strong>Research:</strong> This component reflects the design and grounding of the study you are presenting. To score highly in this area, you must read and reference a variety of academic sources, beyond those given as suggested readings or on the reading list; draw on these wider readings to inform your ideas and understanding of the study; and implement a research design that is appropriate to answer the research question.</li>
 </ul>
-<p>The grade descriptors for each criterion can be found (here)[<a href="https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37" class="uri">https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37</a>]</p>
+<p>You should also have a look at <a href="https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37">grade descriptors for each criterion</a></p>
 <p><span style="color:red; font-weight:bold">[ TO BE COMPLETED ]</span></p>
 <p> </p>
 </div>
@@ -1699,7 +1699,7 @@ div.tocify {
 <li>If word limit is exceeded a line of HTML code is inserted</li>
 <li>A block of feedback HTML and Markdown is appended to the end of the file</li>
 </ul>
-<p>The latter looks like this</p>
+<p>The latter looks like this:</p>
 <pre><code>&lt;/div&gt;
 
 \ 
@@ -1719,7 +1719,7 @@ div.tocify {
 <div class="warn">
 <strong>Please do not delete any part of this code!</strong>
 </div>
-<p>An example Rmd file corresponding to the HTML document above can be find <a href="https://mivalek.github.io/adata/marking/marking_example.Rmd">here</a> (link will download the file).</p>
+<p>An example Rmd file corresponding to the HTML document above can be found <a href="https://mivalek.github.io/adata/marking/marking_example.Rmd">here</a> (link will download the file).</p>
 <p> </p>
 </div>
 </div>
@@ -1727,11 +1727,11 @@ div.tocify {
 <h2>Commenting on .Rmd files</h2>
 <div id="in-line-comments" class="section level3">
 <h3>In-line comments</h3>
-<p>The marked .Rmd files are knitted using the <code>tachR::mark()</code> function that allows additional markdown for comments in body text. These comments are fenced off with <code>&lt;–tag [your comment]–&gt;</code>. Tere are 6 recognised tags: <code>warn</code> for general comments/warnings and <code>c1</code> to <code>c5</code> for comments on each of the marking rubric criteria.</p>
+<p>The marked .Rmd files are knitted using the <code>teachR::mark()</code> function that allows additional markdown for comments in body text. These comments are fenced off with <code>&lt;–tag [your comment]–&gt;</code>. There are 6 recognised tags: <code>warn</code> for general comments/warnings and <code>c1</code> to <code>c5</code> for comments on each of the marking rubric criteria.</p>
 <p>To illustrate, the following comments:</p>
 <pre>
 <code>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. <sep style="color:red">&lt;--warn This is how you include comments. A comment wih a warn tag (right after the opening double-arrow) will not be associated with a marking criterion. Use if for general/minor comments--&gt;</sep> Sed neque enim, tempor et venenatis eget, faucibus sit amet libero. Vestibulum finibus tincidunt nulla in vehicula. Praesent ac tristique tortor. Cras at massa eu lectus faucibus mollis. Aliquam erat volutpat. Nam enim magna, venenatis ut luctus ac, tempus in risus.<sep style="color:red">&lt;--c1 This is a Criterion 1 comment (notice the c1 tag). Once rendered, you can hover over it to see the criterion appear in the panel on the right margin--&gt;</sep> Duis finibus neque eget augue vestibulum dignissim. Nam aliquet turpis dolor. Curabitur finibus ipsum justo, aliquam accumsan ex ornare ac. Duis fermentum tempus gravida. Sed porta ipsum sit amet lectus ultrices, non finibus turpis eleifend. Maecenas sollicitudin leo eu augue ultricies, non ornare lacus commodo. Praesent finibus diam dolor, in ullamcorper ipsum dignissim faucibus. Nam aliquet est sit amet libero dictum, eu elementum enim fringilla. Nunc facilisis dapibus turpis, sagittis cursus enim consequat quis.<sep style="color:red">&lt;--c2 This is a Criterion 2 comment...--&gt;</sep>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. <sep style="color:red">&lt;--warn This is how you include comments. A comment with a warn tag (right after the opening double-arrow) will not be associated with a marking criterion. Use it for general/minor comments--&gt;</sep> Sed neque enim, tempor et venenatis eget, faucibus sit amet libero. Vestibulum finibus tincidunt nulla in vehicula. Praesent ac tristique tortor. Cras at massa eu lectus faucibus mollis. Aliquam erat volutpat. Nam enim magna, venenatis ut luctus ac, tempus in risus.<sep style="color:red">&lt;--c1 This is a Criterion 1 comment (notice the c1 tag). Once rendered, you can hover over it to see the criterion appear in the panel on the right margin--&gt;</sep> Duis finibus neque eget augue vestibulum dignissim. Nam aliquet turpis dolor. Curabitur finibus ipsum justo, aliquam accumsan ex ornare ac. Duis fermentum tempus gravida. Sed porta ipsum sit amet lectus ultrices, non finibus turpis eleifend. Maecenas sollicitudin leo eu augue ultricies, non ornare lacus commodo. Praesent finibus diam dolor, in ullamcorper ipsum dignissim faucibus. Nam aliquet est sit amet libero dictum, eu elementum enim fringilla. Nunc facilisis dapibus turpis, sagittis cursus enim consequat quis.<sep style="color:red">&lt;--c2 This is a Criterion 2 comment...--&gt;</sep>
 
 Quisque consequat ante quis lectus gravida accumsan. Donec fermentum ante consectetur nibh condimentum commodo. Vestibulum rhoncus facilisis eros nec facilisis. Nunc<sep style="color:red">&lt;--c3 ...and Criterion 3 comment...--&gt;</sep> ultricies dapibus orci, eget consequat urna vehicula sit amet. Morbi ultrices egestas dui vel tempor. Etiam ut nibh id ipsum imperdiet aliquet. Ut tempor velit vel lorem consectetur bibendum. Integer eu odio eu risus ullamcorper tincidunt a nec orci. Vivamus id tincidunt magna. Suspendisse potenti. Praesent eleifend nec arcu id faucibus.<sep style="color:red">&lt;--c4 ...and Criterion 4, you get the idea...--&gt;</sep>Cras imperdiet ligula et faucibus molestie.
 
@@ -1752,9 +1752,9 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 </div>
 <div id="feedack" class="section level3">
 <h3>Feedack</h3>
-<p>As mentioned <a href="#rmd-files-to-mark">above</a>, there’s some extra HTML/Markdown appended to the end of the studetns’ .Rmd files. This is where you give general summary feedback on their performance. Any R Markdown will work normally. In post-processing, the three placeholders (<code><i>&lt;!–- THE GOOD -–&gt;</i></code>, <code><i>&lt;!–- THE BAD –-&gt;</i></code>, and <code><i>&lt;!–- RECOMMENDATIONS –-&gt;</i></code>) will get replaced by boilerplate text (see bottom of the example document <a href="#marked-html">below</a>). That means that it’s enough for you just to include a few bulletpoints highlighting the report’s streangths, weeknesses, and giving some general recommendations for improvement.</p>
+<p>As mentioned <a href="#rmd-files-to-mark">above</a>, there’s some extra HTML/Markdown appended to the end of the students’ .Rmd files. This is where you give general summary feedback on their performance. Any R Markdown will work normally. In post-processing, the three placeholders (<code><i>&lt;!–- THE GOOD -–&gt;</i></code>, <code><i>&lt;!–- THE BAD –-&gt;</i></code>, and <code><i>&lt;!–- RECOMMENDATIONS –-&gt;</i></code>) will get replaced by boilerplate text (see bottom of the example document <a href="#marked-html">below</a>). That means that it’s enough for you just to include a few bulletpoints highlighting the report’s strengths, weaknesses, and giving some general recommendations for improvement.</p>
 <p> </p>
-<p><a name="marked-html"></a> Once a marked and commented .Rmd file has been knitted, it will look like the example below (you can see the full-size document with a wider layout <a href="https://mivalek.github.io/adata/marking/marked_example_marked.html">here</a>). As mentioned, the in-line comments are interactive and reveal the matching rubric criterion description on hover. The boxes with partial grades per criterion are also interactive an when clicked, deveal the grade descriptor.</p>
+<p><a name="marked-html"></a> Once a marked and commented .Rmd file has been knitted, it will look like the example below (you can see the full-size document with a wider layout <a href="https://mivalek.github.io/adata/marking/marked_example_marked.html">here</a>). As mentioned, the in-line comments are interactive and reveal the matching rubric criterion description on hover. The boxes with partial grades per criterion are also interactive and when clicked, reveal the grade descriptor.</p>
 <div class="iframe">
 <iframe src="https://mivalek.github.io/adata/marking/marked_example_marked.html" height="700px">
 </iframe>
@@ -1764,7 +1764,7 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 </div>
 <div id="awarding-marks" class="section level2">
 <h2>Awarding marks</h2>
-<p>Even though the mark scale spans the [0, 100] interval, the university marking policy doesn’t allow all the values within this range. Please only award marks listed in (the grade descriptor document)[<a href="https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37" class="uri">https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37</a>], namely:</p>
+<p>Even though the mark scale spans the [0, 100] interval, the university marking policy doesn’t allow all the values within this range. Please only award marks listed in <a href="https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37">the grade descriptor document</a>, namely:</p>
 <ul>
 <li>0, 10, 20, 30</li>
 <li>35, 38</li>
@@ -1775,12 +1775,12 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 <li>82, 88,</li>
 <li>95</li>
 </ul>
-<p>Mark the reports on each of the rubric criteria and award a numeric mark, entering it in the Google sheet. The spreadsheet then calculates the average of the five marks and shows it in the “suggested_grade” column. This mark is not binding for you as the marker but you should have a good reason for big departures from it in the total grade you enter in the “grade” column. Please bear in mind that the total grade should also follow the marking policy and its numeric value should only be one of the allowed ones.</p>
+<p>Mark the reports on each of the rubric criteria and award a numeric mark, entering it in the Google sheet. The spreadsheet then calculates the average of the five marks and shows it in the “suggested_grade” column. This mark is not binding for you as the marker but you should have a good reason for big departures from it in the total grade you enter in the “grade” column. Please bear in mind that the total grade should also follow the marking policy and its numeric value should only be one of the allowed ones. For example, you can use the suggest grade to help you decide whether to mark up or down on a grade boundary (e.g. either a 62 or a 58, since you cannot give a 60).</p>
 <p> </p>
 </div>
 <div id="knitting-marked-.rmd-files" class="section level2">
 <h2>Knitting marked .Rmd files</h2>
-<p>Once you have commented all .Rmd files and entered all the partial and total grades in the marking spreadsheet, you will need to knit the files to produce the augmented HTML documents. The code for this will ahve been shared with you (marking_script.R).</p>
+<p>Once you have commented all .Rmd files and entered all the partial and total grades in the marking spreadsheet, the module convenor will arrange moderation. Once the marks have been moderated and any necessary changes to marks have been made, you will need to knit the files to produce the augmented HTML documents. The code for this will have been shared with you (marking_script.R).</p>
 <p>The only thing you need to edit in the script before your run it is the bit towards the beginning:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">######################## EDIT AS APPROPRIATE ################################</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co"># You must use the name in the Google spreadsheet!</span></a>
@@ -1794,7 +1794,7 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 </div>
 <div id="uploading-marked-html-files" class="section level2">
 <h2>Uploading marked HTML files</h2>
-<p>Before the knitted files can be uploaded back onto Canvas, the marked reports need to undergo moderation. The module covenor will let you know once this has been done and ask you to go ahead and upload the files.</p>
+<p>The module covenor will let you know once it is time to upload the HTML files back onto Canvas.</p>
 <p>To do that, you should run the code in the canvas_upload.R script that will have been shared with you. Once, again, there are two things you need to edit before you can run the code:</p>
 <ol style="list-style-type: decimal">
 <li>Change the path to point it to the folder with the knitted HTML files.</li>
@@ -1806,7 +1806,7 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 <a class="sourceLine" id="cb6-4" title="4"><span class="co"># insert your Canvas token</span></a>
 <a class="sourceLine" id="cb6-5" title="5"><span class="kw">set_canvas_token</span>(<span class="st">&quot;&quot;</span>)</a>
 <a class="sourceLine" id="cb6-6" title="6"><span class="co">#############################################################################</span></a></code></pre></div>
-<p>The code will then amend any marks that have been changed in moreration <span style="color:red; font-weight:bold">[ TO DO! ]</span> and upload the HTML documents as feedback attachemts to each individual student submission. Again, this may take a minute.</p>
+<p>The code will then upload the HTML documents as feedback attachments to each individual student submission. Again, this may take a minute.</p>
 <p> </p>
 </div>
 <div id="procedure-overview" class="section level2">
@@ -1819,15 +1819,15 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 <li>Get and save a <a href="#get-access-token">Canvas access token</a></li>
 <li>Install the <code>rcanvas</code>, <code>googlesheets4</code>, <code>teachR</code>, and <code>adata</code> <a href="#install-required-r-packages">packages</a>.</li>
 </ul></li>
-<li>Folow the Box link and download the .R, .Rmd and .html files from your folder.</li>
+<li>Follow the Box link and download the .R, .Rmd and .html files from your folder.</li>
 <li>Open the marking master Google spreadsheet.</li>
 <li>Read the HTML file while commenting on the report inside the .Rmd file as detailed <a href="#commenting-on-.rmd-files">above</a>.
 <ul>
 <li><strong>Do not change the file names!</strong></li>
 </ul></li>
 <li><a href="#awarding-marks">Enter marks</a> per each rubric criterion and a total grade into the Google spreadsheet.</li>
-<li>Once you have marked all reports, run the code inside marking_script.R, <a href="#knitting-marked-.rmd-files">editing as appropriate</a>.</li>
-<li>Upload all marked .Rmd files back into your Box folder.</li>
+<li>Once the module convenor has notified you that the moderation has been completed, run the code inside marking_script.R, <a href="#knitting-marked-.rmd-files">editing as appropriate</a>.</li>
+<li>Upload all marked .Rmd and knitted HTML files back into your Box folder.</li>
 <li>Once you get the thumbs up from the module convenor, run the code inside canvas_upload.R to <a href="#uploading-marked-html-files">upload the files back onto Canvas</a>.</li>
 <li>Check a few submissions on Canvas to see if the upload went through and that matching files were attached to students’ submissions.</li>
 <li>Email the module convenor, cc’ing the lecturers, letting them know that you have finished the upload.</li>

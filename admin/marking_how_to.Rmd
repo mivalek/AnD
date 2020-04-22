@@ -100,11 +100,11 @@ You will have received links to a marking master spread sheet hosted on Google S
 
 Marking is done according to the following rubric criteria:
 
-- *Analysis:* This component reflects the quality of your statistical analysis and your ability to present and interpret data. To score highly in this area, you must write your code and run your analysis thoroughly and correctly, report all the relevant statistics clearly and correctly, visualise your data appropriately, and demonstrate how well you understand what the results mean.
-- *Critical Thinking:* This component captures your ability to evaluate your own and other studies' findings with a critical eye. To score highly in this area, you must discuss evidence-based criticisms of your own and other studies (not just speculations about what might have gone wrong!); and make insightful, novel, or theoretically interesting suggestions for how to continue this research in the future.
-- *Theoretical Understanding:* This component looks at your knowledge and understanding of both the research question and the analysis you have done to answer it. To score highly in this area, you must demonstrate that you understand what your analysis tells you, and discuss how your analysis results do, and do not, inform the overall research question. 
-- *Organisation:* This component captures your writing, both of text and of R script, and your ability to communicate clearly and scientifically. To score highly in this area, you must write clear, error-free, efficient R code; submit an RMarkdown file that knits correctly and produces a consistently and correctly formatted document; organise your report into sections, each of which summarises the relevant information accurately and succinctly; and communicate your ideas, findings, and evidence in a logical, scientific, and understandable way.
-- *Research:* This component reflects the design and grounding of the study you are presenting. To score highly in this area, you must read and reference a variety of academic sources, beyond those given as suggested readings or on the reading list; draw on these wider readings to inform your ideas and understanding of the study; and implement a research design that is appropriate to answer the research question.
+- **Analysis:** This component reflects the quality of your statistical analysis and your ability to present and interpret data. To score highly in this area, you must write your code and run your analysis thoroughly and correctly, report all the relevant statistics clearly and correctly, visualise your data appropriately, and demonstrate how well you understand what the results mean.
+- **Critical Thinking:** This component captures your ability to evaluate your own and other studies' findings with a critical eye. To score highly in this area, you must discuss evidence-based criticisms of your own and other studies (not just speculations about what might have gone wrong!); and make insightful, novel, or theoretically interesting suggestions for how to continue this research in the future.
+- **Theoretical Understanding:** This component looks at your knowledge and understanding of both the research question and the analysis you have done to answer it. To score highly in this area, you must demonstrate that you understand what your analysis tells you, and discuss how your analysis results do, and do not, inform the overall research question. 
+- **Organisation:** This component captures your writing, both of text and of R script, and your ability to communicate clearly and scientifically. To score highly in this area, you must write clear, error-free, efficient R code; submit an RMarkdown file that knits correctly and produces a consistently and correctly formatted document; organise your report into sections, each of which summarises the relevant information accurately and succinctly; and communicate your ideas, findings, and evidence in a logical, scientific, and understandable way.
+- **Research:** This component reflects the design and grounding of the study you are presenting. To score highly in this area, you must read and reference a variety of academic sources, beyond those given as suggested readings or on the reading list; draw on these wider readings to inform your ideas and understanding of the study; and implement a research design that is appropriate to answer the research question.
 
 You should also have a look at [grade descriptors for each criterion](https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37)
 
@@ -256,7 +256,7 @@ Mark the reports on each of the rubric criteria and award a numeric mark, enteri
 
 ## Knitting marked .Rmd files
 
-Once you have commented all .Rmd files and entered all the partial and total grades in the marking spreadsheet, you will need to knit the files to produce the augmented HTML documents. The code for this will have been shared with you (marking_script.R).
+Once you have commented all .Rmd files and entered all the partial and total grades in the marking spreadsheet, the module convenor will arrange moderation. Once the marks have been moderated and any necessary changes to marks have been made, you will need to knit the files to produce the augmented HTML documents. The code for this will have been shared with you (marking_script.R).
 
 The only thing you need to edit in the script before your run it is the bit towards the beginning:
 
@@ -277,7 +277,7 @@ Once you've made these two edits, you can run the code, sit back and watch it do
 
 ## Uploading marked HTML files
 
-Before the knitted files can be uploaded back onto Canvas, the marked reports need to undergo moderation. The module covenor will let you know once this has been done and ask you to go ahead and upload the files.
+The module covenor will let you know once it is time to upload the HTML files back onto Canvas.
 
 To do that, you should run the code in the canvas_upload.R script that will have been shared with you. Once, again, there are two things you need to edit before you can run the code:
 
@@ -293,7 +293,7 @@ set_canvas_token("")
 #############################################################################
 ```
 
-The code will then amend any marks that have been changed in moderation <span style="color:red; font-weight:bold">[ TO DO! ]</span> and upload the HTML documents as feedback attachments to each individual student submission. Again, this may take a minute.
+The code will then upload the HTML documents as feedback attachments to each individual student submission. Again, this may take a minute.
 
 \ 
 
@@ -310,8 +310,8 @@ Now that you are familiar with the individual components of the marking protocol
 1. Read the HTML file while commenting on the report inside the .Rmd file as detailed [above][Commenting on .Rmd files].
     - **Do not change the file names!**
 1. [Enter marks][Awarding marks] per each rubric criterion and a total grade into the Google spreadsheet.
-1. Once you have marked all reports, run the code inside marking_script.R, [editing as appropriate][Knitting marked .Rmd files].
-1. Upload all marked .Rmd files back into your Box folder.
+1. Once the module convenor has notified you that the moderation has been completed, run the code inside marking_script.R, [editing as appropriate][Knitting marked .Rmd files].
+1. Upload all marked .Rmd and knitted HTML files back into your Box folder.
 1. Once you get the thumbs up from the module convenor, run the code inside canvas_upload.R to [upload the files back onto Canvas][Uploading marked HTML files].
 1. Check a few submissions on Canvas to see if the upload went through and that matching files were attached to students' submissions.
 1. Email the module convenor, cc'ing the lecturers, letting them know that you have finished the upload.

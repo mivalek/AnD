@@ -8,52 +8,24 @@ output:
 
 ```{r setup, include=T, results='hide'}
 knitr::opts_chunk$set(echo = T, message=F, warning=F)
-```
-
-```{r cand_no}
 candidate_number <- 123456
-
 # Ordinary code comments will render like this. You can use them to point out mistakes in code.
 # Don't use HTML code/entities as it wll not render right, e.g., &and; will not produce '&'
-
-
-
-
-
-```
-
-```{r packages, include=T, results='hide'}
 library(tidyverse)
 library(kableExtra)
 library(cowplot)
 library(weights)
-```
-
-```{r data}
 data <- adata::red_data()
 names(data) <- c("id", "age", "condition", "item_1", "item_2", "item_3")
-```
-
-```{r checking, include = T, results='hide'}
 data <- data %>% 
   mutate(age = as.numeric(age))
-
 data <- data %>% 
   mutate(age = as.numeric(age),
          condition = recode(condition, "expermental" = "experimental"))
-```
-
-```{r cleaning, include = T, results='hide'}
 all_missing <- data %>% filter(rowSums(is.na(data)) > 0) %>% nrow()
 data <- data %>% filter(rowSums(is.na(data)) < 1)
-
 age_removed <- data %>% filter(age<18) %>% nrow()
 data <- data %>% filter(age > 17)
-
-```
-
-```{r descriptives}
-
 age_desc <- data %>% 
   summarise(
     mean_age = mean(age),
@@ -62,7 +34,6 @@ age_desc <- data %>%
     max_age = max(age)
   )
 age_desc <- age_desc %>% modify(round, 2)
-
 condition_desc <- data %>% 
   group_by(condition) %>% 
   summarise(
@@ -70,7 +41,6 @@ condition_desc <- data %>%
     mean_age = mean(age),
     sd_age = sd(age)
   )
-
 rate_desc <- data %>% 
   group_by(condition) %>% 
   summarise(
@@ -81,30 +51,21 @@ rate_desc <- data %>%
     mean_item3 = mean(item_3, na.rm = T),
     sd_item3 = sd(item_3, na.rm = T)
   )
-
 library(kableExtra)
 table2<- condition_desc %>% kable(col.names = c("Condition", "N", "Mean age", "SD of age"), caption = "Table 2. Descriptive statistics by Condition",
                         digits = 2) %>% kable_styling()
-
 table1 <- age_desc %>% kable(col.names = c("Mean age", "SD of age", "Minimum age", "Maximum age"), caption = "Table 1. Descriptive statistics of Participants", 
                    digits = 2) %>% kable_styling()
-
 table3<- rate_desc %>% kable(col.names = c("Condition", "Item 1 Mean", "Item 1 SD", "Item 2 Mean", "Item 2 SD", "Item 3 Mean", "Item 3 SD"), caption = "Table 3. Descriptive statistics of Item ratings per condition", 
                     digits = 2) %>% kable_styling()
-```
-
-```{r plots}
 data <- data %>% 
   group_by(id) %>% 
   mutate(attractiveness = mean(c(item_1, item_2, item_3))) %>% 
   select(id, condition, item_1, item_2, item_3, attractiveness)
-
 library(cowplot)
 rating.plot <- data %>% 
   ggplot(aes(x = condition, y = attractiveness)) + labs(x = "Experimental Condition", y = "Mean Attractiveness Rating") +
   theme_cowplot()
-
-
 rating.plot.final <- rating.plot + 
   stat_summary(fun.data="mean_cl_boot", geom="errorbar", width = .25) +
   geom_point(stat = "summary", 
@@ -113,11 +74,7 @@ rating.plot.final <- rating.plot +
              shape = 23,
              fill = c("white", "red")) +
   scale_y_continuous(name = "Mean Attracitveness Rating", limits = c(1,9), breaks = c(1,2,3,4,5,6,7,8,9))
-```
-
-```{r analysis}
 attractiveness.t <- t.test(attractiveness ~ condition, data = data, alternative = "two.sided", var.equal = T)
-
 ```
 
 # Methods
@@ -269,7 +226,6 @@ There were, however, also things that lowered the overal quality of your work:
 
 
 These are some recommendations that will help you produce a better piece of writing:
-
 
 
 
