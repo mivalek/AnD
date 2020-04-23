@@ -20,7 +20,7 @@ report.p <- function(x){
 
 This tutorial covers how to run and interpret effect size calculations in R. Before you begin this tutorial, make sure you've reviewed the [Week 10 lecture](https://canvas.sussex.ac.uk/courses/9242/pages/week-10) covering effect sizes. This tutorial will look at a couple of different effect sizes: *r* and *d*.
 
-## Setting Up
+# Setting Up
 
 As before, all you need for this tutorial is this file and RStudio. Remember that you can easily switch between windows with the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) and <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcuts.
 
@@ -77,7 +77,7 @@ gensex <- gensex %>%
 
 \ 
 
-## Preparation
+# Preparation
 
 As usual, you should remind yourself of what these variables actually mean before you start, using the codebook below. These variables should be familiar by now, but be sure to refresh your memory before you carry on.
 
@@ -95,7 +95,7 @@ read_csv("https://users.sussex.ac.uk/~jm636/gensex_codebook.csv") %>%
 
 
 
-## Comparing two means revisited
+# Comparing two means revisited
 
 Comparing two means is a common statistical requirement, and we've covered a couple of different ways we can achieve this. We learned how to compare means using lm() and using t.test() in the [Week 7](https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285) tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We're going to use `t.test()` to compare means today. 
 
@@ -256,7 +256,7 @@ This should appear in Markdown as:
 The mean rating of sexual preference for genders was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %>% round(2)`, *SD* = `r sex_pref_sums$sd[1] %>% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %>% round(2)`, *SD* = `r sex_pref_sums$sd[2] %>% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)`.  This difference in rating of sexual preference for genders was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %>% round(2)`, *p* = `r t.output$p.value %>% report.p`, 95% CIs [`r t.output$conf.int[1] %>% round(2)`, `r t.output$conf.int[2] %>% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen's *d* suggested this was a large effect^[Evaluated against the research area, which would be elaborated on in the Discussion section of your report]. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women. 
 </details>
 
-## Correlation Revisited
+# Correlation Revisited
 
 Correlation has come up a few times in this module already. That's because it's a really important idea. It often comes up as a first step in more complex analyses, because one of its (many!) uses is to quantify the strength of the relationship between two variables - an important thing to quantify before you go on to more in-depth analysis. In other words, aside from whether it is significant or not, the actual value of the correlation coefficient *r* is useful and interpretable on its own.
 
@@ -264,7 +264,7 @@ We've already learned how to get correlation values in R in the [Week 6](https:/
 
 We're going to look at what Pearson's *r* can tell us about the strength (and direction) of relationships between variables. 
 
-### Pearson's *r* in a correlation matrix
+## Pearson's *r* in a correlation matrix
 
 `r task()`Let's start by taking a look at the Big Picture: we'll create a correlation matrix for all variables in the `gensex` dataset except `Gender`, `Duration`, and `Age`. First, remove these three variables from the `gensex` dataset. Save the new dataset into an object called `gensex.c` (as we did in the Week 6 tutorial)
 
@@ -315,7 +315,7 @@ We can get *p*-values out of `Rcorr()` (although we didn't this time), but there
 </details> 
 
 
-### Pearson's *r* in a Bivariate Correlation
+## Pearson's *r* in a Bivariate Correlation
 
 Let's take a closer look at the correlation showing the largest effect size using cor.test(). It's very important to understand, however, this is not how we would go about analysing data in the 'real-world'! Looking for variables in your data that show interesting results and then reporting these findings is **very** [bad science](https://www.explainxkcd.com/wiki/index.php/882:_Significant). But just to get the hang of R, let's delve deeper into what this correlation...
 
@@ -342,7 +342,7 @@ We performed a correlation analysis to investigate the relationship between rati
 
 </details>
 
-## Recap
+# Recap
 
 You made it! That was, again, a lot of information, but remember that this tutorial is as much a reference for you in the future as it is for you to practice right now. You're welcome - and encouraged! - to keep working with this data to practice what we've learned today. In sum, you have:
 
@@ -351,6 +351,7 @@ You made it! That was, again, a lot of information, but remember that this tutor
 - Practiced interpreting the output from `t.test()`, `rcorr()` and `cor.test`
 - Practiced using inline code to write up the results
 - Calculating and interpreting Cohen's *d*
+- Deciding which *SD* to use in a Cohen's *d* calculation
 - Calculating and interpreting Pearsons's *r*
 
 That's all for this week. I hope you are safe and well.

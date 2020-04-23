@@ -1601,8 +1601,8 @@ div.tocify {
 }
 </style>
 <p>This tutorial covers how to run and interpret effect size calculations in R. Before you begin this tutorial, make sure you’ve reviewed the <a href="https://canvas.sussex.ac.uk/courses/9242/pages/week-10">Week 10 lecture</a> covering effect sizes. This tutorial will look at a couple of different effect sizes: <em>r</em> and <em>d</em>.</p>
-<div id="setting-up" class="section level2">
-<h2>Setting Up</h2>
+<div id="setting-up" class="section level1">
+<h1>Setting Up</h1>
 <p>As before, all you need for this tutorial is this file and RStudio. Remember that you can easily switch between windows with the <kbd>Alt</kbd> + <kbd>↹ Tab</kbd> (Windows) and <kbd>⌘ Command</kbd> + <kbd>⇥ Tab</kbd> (Mac OS) shortcuts.</p>
 <p> </p>
 <div id="task-1" class="section level3">
@@ -1666,8 +1666,8 @@ div.tocify {
 </div>
 </div>
 </div>
-<div id="preparation" class="section level2">
-<h2>Preparation</h2>
+<div id="preparation" class="section level1">
+<h1>Preparation</h1>
 <p>As usual, you should remind yourself of what these variables actually mean before you start, using the codebook below. These variables should be familiar by now, but be sure to refresh your memory before you carry on.</p>
 <div id="codebook" class="section level3">
 <h3>Codebook</h3>
@@ -1834,8 +1834,8 @@ Romantic/emotional preference for genders; Likert 1 - 9, 1 = women, 5 = no prefe
 <p> </p>
 </div>
 </div>
-<div id="comparing-two-means-revisited" class="section level2">
-<h2>Comparing two means revisited</h2>
+<div id="comparing-two-means-revisited" class="section level1">
+<h1>Comparing two means revisited</h1>
 <p>Comparing two means is a common statistical requirement, and we’ve covered a couple of different ways we can achieve this. We learned how to compare means using lm() and using t.test() in the <a href="https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285">Week 7</a> tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We’re going to use <code>t.test()</code> to compare means today.</p>
 <p>As we discussed in the lecture, however, it isn’t enough to only look at <em>p</em>-values and confidence intervals to assess our results. We also need to consider the magnitude of the observed effect - how large an effect (difference between groups) we’re seeing - so that we can assess whether our findings are important. Today we’ll look at how to calculate, report, and interpret Cohen’s <em>d</em>.</p>
 <p> </p>
@@ -2026,15 +2026,14 @@ The mean rating of sexual preference for genders was higher for Female participa
 </details>
 </div>
 </div>
-<div id="correlation-revisited" class="section level2">
-<h2>Correlation Revisited</h2>
+<div id="correlation-revisited" class="section level1">
+<h1>Correlation Revisited</h1>
 <p>Correlation has come up a few times in this module already. That’s because it’s a really important idea. It often comes up as a first step in more complex analyses, because one of its (many!) uses is to quantify the strength of the relationship between two variables - an important thing to quantify before you go on to more in-depth analysis. In other words, aside from whether it is significant or not, the actual value of the correlation coefficient <em>r</em> is useful and interpretable on its own.</p>
 <p>We’ve already learned how to get correlation values in R in the <a href="https://canvas.sussex.ac.uk/courses/9242/pages/week-6">Week 6</a> tutorial and practical. Specifically, we used <code>rcorr()</code> to get correlation matrices, and <code>cor.test()</code> to get more information about tests of particular pairs of variables. We could use either of these to get the correlation between any two continuous variables. If you need a reminder of how these functions work, have a look over the Week 6 material again.</p>
 <p>We’re going to look at what Pearson’s <em>r</em> can tell us about the strength (and direction) of relationships between variables.</p>
-<div id="pearsons-r-in-a-correlation-matrix" class="section level3">
-<h3>Pearson’s <em>r</em> in a correlation matrix</h3>
+<div id="pearsons-r-in-a-correlation-matrix" class="section level2">
+<h2>Pearson’s <em>r</em> in a correlation matrix</h2>
 <p> </p>
-</div>
 <div id="task-14" class="section level3">
 <h3>Task 14</h3>
 <p>Let’s start by taking a look at the Big Picture: we’ll create a correlation matrix for all variables in the <code>gensex</code> dataset except <code>Gender</code>, <code>Duration</code>, and <code>Age</code>. First, remove these three variables from the <code>gensex</code> dataset. Save the new dataset into an object called <code>gensex.c</code> (as we did in the Week 6 tutorial)</p>
@@ -2473,11 +2472,11 @@ We can get <em>p</em>-values out of <code>Rcorr()</code> (although we didn’t t
 </details>
 </div>
 </div>
-<div id="pearsons-r-in-a-bivariate-correlation" class="section level3">
-<h3>Pearson’s <em>r</em> in a Bivariate Correlation</h3>
+</div>
+<div id="pearsons-r-in-a-bivariate-correlation" class="section level2">
+<h2>Pearson’s <em>r</em> in a Bivariate Correlation</h2>
 <p>Let’s take a closer look at the correlation showing the largest effect size using cor.test(). It’s very important to understand, however, this is not how we would go about analysing data in the ‘real-world’! Looking for variables in your data that show interesting results and then reporting these findings is <strong>very</strong> <a href="https://www.explainxkcd.com/wiki/index.php/882:_Significant">bad science</a>. But just to get the hang of R, let’s delve deeper into what this correlation…</p>
 <p> </p>
-</div>
 <div id="task-15" class="section level3">
 <h3>Task 15</h3>
 <p>Run a pairwise correlation using cor.test() on the two variables with the strongest effect size.</p>
@@ -2513,8 +2512,9 @@ We performed a correlation analysis to investigate the relationship between rati
 </div>
 </div>
 </div>
-<div id="recap" class="section level2">
-<h2>Recap</h2>
+</div>
+<div id="recap" class="section level1">
+<h1>Recap</h1>
 <p>You made it! That was, again, a lot of information, but remember that this tutorial is as much a reference for you in the future as it is for you to practice right now. You’re welcome - and encouraged! - to keep working with this data to practice what we’ve learned today. In sum, you have:</p>
 <ul>
 <li>Practiced comparing means using <code>t.test()</code></li>
@@ -2522,6 +2522,7 @@ We performed a correlation analysis to investigate the relationship between rati
 <li>Practiced interpreting the output from <code>t.test()</code>, <code>rcorr()</code> and <code>cor.test</code></li>
 <li>Practiced using inline code to write up the results</li>
 <li>Calculating and interpreting Cohen’s <em>d</em></li>
+<li>Deciding which <em>SD</em> to use in a Cohen’s <em>d</em> calculation</li>
 <li>Calculating and interpreting Pearsons’s <em>r</em></li>
 </ul>
 <p>That’s all for this week. I hope you are safe and well.</p>
