@@ -1,0 +1,206 @@
+---
+title: "Tutorial 7: Comparing Two Means"
+author: "Analysing Data"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(cowplot)
+library(weights)
+library(Hmisc)
+knitr::opts_chunk$set(echo = T, fig.height=4, fig.width=5, fig.align = "center", message = F, warning = F, toggle = F)
+```
+
+```{r, include = F}
+report.p <- function(x){
+  ifelse(x >= .001, paste0("= ", rd(x,3)), "< .001")
+}
+```
+
+This tutorial covers how to run and interpret effect size calculations in R. Before you begin this tutorial, make sure you've reviewed the [Week 10 lecture](https://canvas.sussex.ac.uk/courses/9242/pages/week-10) covering effect sizes. This tutorial will look at a couple different effect sizes: *r* and *d*.
+
+## Setting Up
+
+As before, all you need for this tutorial is this file and RStudio. Remember that you can easily switch between windows with the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) and <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcuts.
+
+`r task()`Open your analysing_data `R` project in RStudio and open a new Markdown file. Since we will be practicing reporting using inline code, we will need Markdown later on. For the tasks, get into the habit of creating new code chunks as you go.
+
+\ 
+
+`r task()`Aside from loading `tidyverse`, we will also be using `Hmisc`, `here`, `cowplot`, and `kableExtra`. If you don't have any of these packages installed, do that now. **Remember that installing packages is a one-off thing** so don't put the command that does it in your Markdown. Simply type it into the console and press <kbd>&crarr;\ Enter</kbd>. The `library()` commands should always go in a separate code chunk at the beginning of your Markdown document, so that your code will run correctly.
+
+```{r, eval = F, toggle = T}
+install.packages("Hmisc")
+library(tidyverse)
+library(Hmisc)
+library(here)
+library(kableExtra)
+library(cowplot)
+```
+
+\ 
+
+As usual, we will need some data to work with. Let's have one more look at the `gensex` data, for old time's sake.
+
+`r task()`Read in the data, save it as `gensex`, and clean it [as we did in previous weeks](https://mivalek.github.io/adata/prac/prac_04_wkst.html#read-in_and_clean).
+
+```{r, toggle = solution}
+gensex <- read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
+
+# recode age and gender
+gensex <- gensex %>%
+  mutate(Age = recode(Age, "18 years" = "18", "19 years old" = "19"),
+         Age = as.numeric(Age),
+         Gender = factor(Gender))
+
+# count how many cases you're about to remove
+age_removed <- gensex %>% filter(Age > 99) %>% nrow()
+
+# count how many you're about to remove
+all_missing <- gensex %>% filter(rowSums(is.na(gensex)) > 10) %>% nrow()
+
+# remove them
+gensex <- gensex %>% filter(Age < 100 & rowSums(is.na(gensex)) < 11)
+```
+
+`r subtask()`If, like me, you don't like the default variable names, you can change them using the `rename()` function from the `dplyr` package (the same one that does all of our other variable manipulations, like `mutate()` and `select()`). Use the example code below to do this.
+
+**Note**: This is optional, but if you don't do it, you'll have to use the original variable names rather than the changed names for the rest of this practical.
+
+```{r}
+# Use the same kind of syntax as we have seen with other dplyr functions
+# new_variable_name = existing_variable_name
+gensex <- gensex %>% 
+  rename(gen_comf = Gender_comfortable_1, gen_masc = Gender_masc_1, gen_fem = Gender_fem_1,
+         gen_stab = Gender_stability_1,
+         sex_str = Sexual_strength_1, sex_freq = Sexual_fewq_1, sex_pref = Sexual_gender_1,
+         rom_str = Romantic_strength_1, rom_freq = Romantic_freq_1, rom_pref = Romantic_gender_1)
+
+# Call your dataset to check this has worked!
+```
+
+\ 
+
+## Preparation
+
+As usual, you should remind yourself of what these variables actually mean before you start, using the codebook below. These variables should be familiar by now, but be sure to refresh your memory before you carry on.
+
+### Codebook
+
+```{r, echo = F}
+read_csv("https://users.sussex.ac.uk/~jm636/gensex_codebook.csv") %>% 
+  kable() %>% 
+  kable_styling()
+```
+
+\ 
+
+## Correlation Revisited
+
+Correlation has come up a few times in this module already. That's because it's a really important idea. It often comes up as a first step in more complex analyses, because one of its (many!) uses is to quantify the strength of the relationship between two variables - an important thing to quantify before you go on to more in-depth analysis. In other words, aside from whether it is significant or not, the actual value of the correlation coefficient *r* is useful and interpretable on its own.
+
+We've already learned how to get correlation values in R in the [Week 6](https://canvas.sussex.ac.uk/courses/9242/pages/week-6) tutorial and practical. Specifically, we used `rcorr()` to get correlation matrices, and `cor.test()` to get more information about tests of particular pairs of variables. We could use either of these to get the correlation between any two continuous variables 
+
+[PICK UP FROM HERE]
+
+## Pairwise Tests with `cor.test()`
+
+Unlike `rcorr()`, `cor.test()` only tests the correlation between pairs of variables. If we want to look at lots of variables at once, we'd be better off with `rcorr()`. However, if we want more information about a particular correlation, such as easily reportable degrees of freedom, *p*-values, and confidence intervals, `cor.test()` is the better choice.
+
+This function takes the general form `cor.test(x, y, alternative, method, ...)`. Let's have a look at what each of these mean.
+
+* `x` and `y` are vectors of numeric data - i.e., the two variables we want to correlate.
+* `alternative` must be set to one of the three options `"two.sided"`, `"less"`, or  `"greater"`. This determines the type of alternative hypothesis. Because we are going to be using two-tailed tests, we will stick with `"two-sided"`.
+* `method` must be set to one of the three options `"pearson"`, `"kendall"`, or `"spearman"`. Thus far, we have only been using Pearson correlations, so we'll stick with that for now.
+* `...` are other options you can change. We'll stick with the defaults for now. 
+
+Remember, you can always get full  information about how to use this function via `?cor.test`.
+
+`r task()`Use `cor.test()` to calculate the correlation between `Sexual_strength_1` and `Romantic_strength_1`.
+
+**Hint**: If you are having trouble using pipes, try `$` instead! See the box below for more details.
+
+<details>
+<summary>Why not pipes?</summary>
+
+To run this analysis, you may have (very sensibly) tried something like this:
+
+```{r, eval = F}
+gensex %>% 
+  select(Sexual_strength_1, Romantic_strength_1) %>% 
+  cor.test(alternative = "two.sided", method = "pearson")
+```
+
+This will fail to run, with the error `argument "y" is missing, with no default"`. What does this mean?
+
+Take another look at the syntax of the `cor.test()` function. We can see that the first two required arguments are `x` and `y`, separated by a comma. This means that to use this function, we have to provide two separate variables, one in the first position `x` and the other in the second position, `y`.
+
+Remember that when we use pipes, whatever you put into the pipe is passed onto the next function on the other side. You can specify where to put the piped information with a dot `.`, but if you don't, it automatically fills in the first argument in the function. That means in the code above, we select both `Sexual_strength_1` and `Romantic_strength_1` and put them into the pipe - which puts them **both** into the `x` argument of `cor.test()`. The error is telling you that `cor.test()` doesn't think it has a second variable to perform the correlation with, because there is no data provided for `y`.
+
+Because of this, we have to provide variables separately to the `x` and `y` arguments. We can't do this with pipes, but we can do it very easily using subsetting with `$`.
+</details>
+
+\ 
+
+```{r, toggle = T}
+cor.test(gensex$Sexual_strength_1, gensex$Romantic_strength_1, alternative = "two.sided", method = "pearson")
+```
+
+When we run this function, the output is some reasonably easy to read information about the results of our test. We can see here that we have:
+
+* The type of analysis we asked for (Pearson's product-moment correlation) and the variables we used
+* The value of *r* under "sample estimates: cor"
+* The values of *t*, degrees of freedom, and *p*
+* The 95% confidence interval around *r*
+
+`r task()`Stop and look at the values that the output has given you. Based on what you have learned from the lecture, write down what you think this result means, and how you could interpret it.
+
+<details>
+<summary>Interpretation</summary>
+First, we can see that there is a significant correlation between how strongly participants experience sexual attraction, and how strongly they experience romantic attraction. This is a reasonably strong correlation, but it's not as strong as we might expect. It's also a positive correlation. This tells us that on the whole, people who experience stronger sexual attraction also tend to experience stronger romantic attraction.
+</details>
+
+`r subtask()`Create a scatterplot of these two variables to help you understand the correlation. Does this change your interpretation at all?
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+gensex %>% 
+  ggplot(aes(Sexual_strength_1, Romantic_strength_1)) +
+  geom_point(position = "jitter")
+```
+
+We can see that for both variables, most people tended to answer on the high end of the scale - which gives us the cluster of points in the upper right hand corner. This is somewhat concerning, because not many people answered at the middle to lower ends of either scale, so our value for *r* might not really represent what's going on. We'll worry more about this next year, when we study assumptions and bias in data; for now, just notice that this looks a bit odd.
+</details>
+
+<div class = "warn">
+#### Correlation is not causation
+
+Although we might conclude from this result that the strength of sexual attraction and the strength of romantic attraction tend to change in the same way, that **does not mean they are causally related**. Our results do not mean that if you experience weaker sexual attraction, that will cause you to also experience weaker romantic attraction, or vice versa. It should be clear from the previous statement that there's no way to establish which of these two might be the cause and which the effect in any case. What our results do suggest is that if you experience weaker sexual attraction, you are also likely to experience weaker romantic attraction (and vice versa), to a degree that is unlikely to occur if there is in fact no real relationship at all between the strength of sexual and romantic attraction.
+</div>
+
+`r subtask()`Save the output from `cor.test()` as a new object called `sex_rom_test`, so we can use it again later.
+
+```{r, toggle = T}
+sex_rom_test <- cor.test(gensex$Sexual_strength_1, gensex$Romantic_strength_1, alternative = "two.sided", method = "pearson")
+```
+
+Our reporting in the tasks above could use some numbers, which we can get out of the output of `cor.test()`. However, we'll look first at how to calculate the *&chi;*^2^ test, since we can use exactly the same method to report the results of that test as well. If you'd like to skip ahead to inline reporting, jump down to "Reporting `htest` Objects" further down.
+
+
+
+
+## Recap
+
+You made it! That was, again, a lot of information, but remember that this tutorial is as much a reference for you in the future as it is for you to practice right now. You're welcome - and encouraged! - to keep working with this data to practice what we've learned today. In sum, we've covered:
+
+* How to prepare and visualise data for comparing two means
+* How to compare means using `t.test()`, read the output, and store the results as an `htest` object
+* How to interpret and write up the results and output from `t.test()`
+* How to compare means using `lm()`, briefly
+
+That's all for this week. See you soon!
+
+\ 

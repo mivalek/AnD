@@ -17,13 +17,48 @@ library(tidyverse)
 
 This tutorial will walk you through all of the steps of installing R and RStudio, becoming familiar with working in RStudio, running your first commands, and writing your first script. To use it effectively, follow along with each step by doing it yourself. It might be tempting, but **don't just read along, and don't just copy and paste!** Whenever you see R code, type it into RStudio yourself. This will help you become comfortable with typing commands in R and reading the output.
 
-## A Warning
+## Managing Your Time
 
-This tutorial is very long and very wordy, because it's intended to cover many of the basic skills and ideas for using R. You don't have to sit down and do the whole thing at once! Instead, work through a section or two at a time, and if you have questions about anything, [ask us](https://canvas.sussex.ac.uk/courses/9242/discussion_topics)!
+This tutorial is REALLY long (seriously - over 40 pages in Word!) and very verbose, because it's intended to cover many of the basic skills and ideas for using R. 
+
+### Top to Bottom
+
+If you feel like you don't really know how to do anything in R, this tutorial will take you from nothing at all to writing your first script and working with datasets. In this case, it might be best to start at the beginning and work your way through the whole thing. You don't have to sit down and do the whole thing at once! Instead, set aside some time each day to work through a section or two at a time, and if you have questions about anything, [ask us](https://canvas.sussex.ac.uk/courses/9242/discussion_topics)!
+
+### Jump Around
+
+If you are looking to strengthen your skills on a certain topic, or get more explanation with a skill you're struggling with, then you might be better off picking and choosing sections. You can jump straight to the section you want using the Table of Contents to the upper left. Here's a quick summary of what each major section contains:
+
+* Getting Started
+  + Installing and setting up R and RStudio
+  + Typing your first commands
+* Types of Data
+  + Basics of working with data in R
+  + Vectors and numeric, character, and logical data types
+* Objects
+  + What objects are and why they're important
+  + Creating and changing objects
+  + Using objects in calculations
+* Functions
+  + What functions are and why they're important
+  + Using help documentation
+  + Types of arguments and how to use them
+* Packages
+  + What packages are and why they're important
+  + Installing and loading packages
+* Writing Commands in R
+  + Creating a script
+  + Writing commands in sequence
+  + The distinction between script and environment
+* Working with Data
+  + Importing and viewing datasets
+  + Making and saving changes to datasets
+* Next Steps
+  + Links to resources to carry on learning R
 
 ## How do I...?
 
-Some of the tasks in this tutorial will ask you to try to do things that you haven't explicitly learned. Don't worry! Just give it a shot and see what happens. If it doesn't work or you get an error, that's fine - it's all a part of learning. The solutions are all provided for you, but you will learn best if you think through the problem and try to apply what you are learning before you look at the solution.
+Some of the tasks in this tutorial will ask you to try to do things that you haven't explicitly learned. Just give it a shot and see what happens. If it doesn't work or you get an error, don't panic - one of the best skills you can learn to use R successfully is just to try things and see what they do. The solutions are all provided for you, but you will learn best if you think through the problem and try to apply what you are learning before you look at the solution.
 
 # Getting Started
 
@@ -158,21 +193,23 @@ You may have tried something like this:
 36
 ```
 
-As you can see from the markers, this is three separate commands, because the number marking starts over from [1] each time. I'd actually like to have all of those numbers in a single list. To do this, I'm going to use a **function** called `c()`:
+As you can see from the markers, this is three separate commands, because the number marking starts over from [1] each time. I'd actually like to have all of those numbers together. To do this, I'm going to use a **function** called `c()`:
 
 ```{r}
 c(12:58, 23:106, 36)
 ```
 
-As you can see from the markers, when I put the numbers I want inside `c()`, separated by commas, R **c**ollects (or **c**oncatenates, or **c**ombines) all of the numbers into a single **vector**. A vector is essentially just a series of pieces of data.
+As you can see from the markers, when I put the numbers I want inside `c()`, separated by commas, R **c**ollects (or **c**oncatenates, or **c**ombines) all of the numbers into a single **vector**. A vector is essentially just a series of pieces of data; each individual piece of data in the vector is an **element** of that vector.
 
-If I want the *n*th number in this vector (say, the 88th), I can even get it out by using the markers:
+Actually, this isn't a new thing; we've been looking at vectors this whole time. Any series of pieces of information in R is a vector. When we were looking at single numbers (like `3958` above) we were still getting a vector from R, but it was just a vector with only one element. The markers that we've seen (e.g. `[1]`) indicate this.
+
+If I want the *n*th element in this vector (say, the 88th), I can even get it out by using the markers:
 
 ```{r}
 c(12:58, 23:106, 36)[88]
 ```
 
-What I've essentially asked is, "Put all of these numbers into a single vector, and then give me the 88th number." As it turns out, the 88th number in that vector of numbers is `r c(12:58, 23:106, 36)[88]`.
+What I've essentially asked is, "Put all of these numbers into a single vector, and then give me the 88th element in that vector." As it turns out, the 88th element in that vector of numbers is `r c(12:58, 23:106, 36)[88]`.
 </details>
 
 `r subtask()`Create a vector of every whole number between 37 and 86, and subtract 7 from each one.
@@ -223,7 +260,7 @@ An important thing to note is that R sees everything inside a pair of quotes as 
 "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness..."
 ```
 
-Just like we saw with numbers, above, you can combine multiple character strings into a vector. You can also use the numbered markers to extract the *n*th element in that vector.
+The `[1]` markers also tell us that each of the two strings above already constitute vectors, each of length 1. Just like we saw with numbers, above, any number of character strings can be combined into a vector. You can also use the numbered markers to extract the *n*th element in that vector.
 
 `r task()`Create a vector containing the first ten animals you think of, then print the 8th one.
 
@@ -282,11 +319,11 @@ With these simple examples, it may be obvious just by looking that `25` is a num
 `r task()`Use `class()` and get R to print the value "numeric".
 
 ```{r, toggle = solution}
-# You can use any number for this!
+# You can use any number (i.e. numeric vector) for this!
 
 class(23049825)
 
-# You can also use a vector of numbers
+# You can also use a longer vector of numbers
 # as long as they are all numbers
 
 class(c(4:602, 290:506, 20, -1))
@@ -300,7 +337,7 @@ class(c(4:602, 290:506, 20, -1))
 class(c(93, 1:406, "tomato"))
 ```
 
-This is an important note about numeric vs character data. Numeric data is essentially a special subtype of character data. As we've seen here, if the two are mixed, R stores them as characters. Even though we can do mathematical operations on numbers, we can't do them on characters; it should be clear that asking for e.g. what is `"tomato" - 7` is nonsense. However, this is the case **even if all of the data are numerals!** For example:
+This is an important note about numeric vs character data. Numeric data is essentially a special subtype of character data. As we've seen here, if the two are mixed, R stores them as characters. Even though we can do mathematical operations on numbers, we can't do them on characters; it should be clear that asking e.g. what is `"tomato" - 7` is nonsense. However, this is the case **even if all of the data are numerals!** For example:
 
 ```{r}
 # No problem here; all numbers
@@ -392,9 +429,27 @@ This is all well and good, but there's no real benefit to doing this with an obj
 ages <- c(31, 26, 61, 87)
 ```
 
-Again, when I run this command in the console, a new object appears in my environment, called `ages`. This one looks a bit different than the other two, though. In Environment, I can see that this object contains numbers ("num"); that there are four of them ([1:4]); and that those numbers are 31, 26, 61, and 87. This new object is another **vector** - a sequence of values all stored in a single object.
+Again, when I run this command in the console, a new object appears in my environment, called `ages`. This one looks a bit different than the other two, though. In Environment, I can see that this object contains numbers ("num"); that there are four of them ([1:4]); and that those numbers are 31, 26, 61, and 87. This new object is another **vector** - a value or sequence of values. This particular object is a vector of length 4 - that is, it has four elements in it.
 
-So, what happens if we try to do the same maths we did before? For instance, I might want to calculate the birth **year** of each of my family members, using their ages. To do this, I have to subtract each of their ages from the current year. I could do this one at a time - or all at once using my `ages` object.
+An important thing to note here is that `ages` is (apparently...!) a word, and we learned earlier that words are character data. So, what happens if we ask R what type of data `ages` is?
+
+`r subtask()`Ask R for the class of the `ages` object.
+
+```{r, toggle = solution}
+class(ages)
+```
+
+This might not have been what you expected, but remember, `ages` (importantly, **without** quote marks!) is the name of an object. To find out what kind of data it is, R looks at what that object contains, not at the name of the object itself. We already saw that `ages` contains only numbers; so, R tells us that it's a numeric vector.
+
+One more example to emphasize this point, because it's often a source of confusion when starting out with R. If we want to ask R the class of the **word** "ages", we would need to put it in quotes, and we'd get a different answer:
+
+```{r}
+class("ages")
+```
+
+The key thing here is that objects have the class of the data they contain, and are not character data; and whenever you want to use an object, you must **not** use quotation marks. On the other hand, if you want to input character data into R, you **must** use quotation marks; otherwise, R will look for an object or function with that name, which will likely produce a "`cannot find object`" error.
+
+So, if the object `ages` is just a convenient name for a vector of numbers, what happens if we try to do the same maths we did before? For instance, I might want to calculate the birth **year** of each of my family members, using their ages. To do this, I have to subtract each of their ages from the current year. I could do this one at a time - or all at once using my `ages` object.
 
 `r subtask()`Calculate each of your family members' birth years using your `ages` object.
 
@@ -1153,7 +1208,7 @@ As we saw before, the comments in the script contain both commentary to remind m
 
 # Next Steps
 
-You've already learned a lot so far: you know how to do maths, combine elements into vectors, pull out particular elements, and ask whether statements are true or false. You've also written your first script and learned how to build sequential code. Most importantly, though, you've **done something** in R. No matter how much you understand so far, the key to mastering R is simply practice practice practice!
+You've already learned a lot so far: you know how to do maths; produce vectors of length 1 and combine elements into longer vectors; pull out particular elements from vectors; evaluate the type of data a vector contains; and ask whether statements are true or false. You've also written your first script and learned how to build sequential code. Most importantly, though, you've **done something** in R. No matter how much you understand so far, the key to mastering R is simply practice practice practice!
 
 You have a few options about how to proceed from this tutorial:
 

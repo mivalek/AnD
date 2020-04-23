@@ -2,7 +2,7 @@
 title: "Exam Revision Guide"
 subtitle: "Analysing Data 2020"
 date: "03/04/2020"
-output: html_document
+output: word_document
 ---
 
 ```{r setup, include=FALSE}
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 To be successful on the exam, you will need to be familiar with all of the vocabulary, concepts, and analyses listed below. The exam will draw on both the **lectures** and the **tutorials** from the entire module. The practicals are also listed when they provide additional explanations/practice for the same material, but there will be no questions drawn from the practicals only that are not also covered in the lectures/tutorials. As a general rule, if you were well-prepared for each of the weekly quizzes, you will be well-prepared for the exam.
 
-### Code on the Exam
+## Code on the Exam
 
 #### Included
 
@@ -154,275 +154,269 @@ Resources: [Week 10](https://canvas.sussex.ac.uk/courses/9242/pages/week-10) lec
 
 To get started on your revision, try writing down everything you know about the following terms and concepts. Then, check your memory against the lectures and tutorials. If you're correct, well done! If not, revise the materials, or ask for clarification on the Discussion board.
 
-<div class = "warn">
-To keep anything you type in this sheet, you must save this webpage to your computer. Otherwise, your notes will be lost when you leave this webpage.
+* Steps of the scientific method
 
-If you prefer to work in Word, you can download a Word version of this document on the [Exam Information page](https://canvas.sussex.ac.uk/courses/9242/pages/exam-information) as well. 
-</div>
+ 
+ 
 
-### Steps of the scientific method
+* Reliability
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Reliability
+* Validity
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Validity
+* Replication
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Replication
+* Replication crisis
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Replication crisis
+* How causality is established
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### How causality is established
+* Distribution
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Distribution
+* Normal distribution
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Normal distribution
+* Sampling distribution
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Sampling distribution
+* Mean
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Mean
+* Standard deviation
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Standard deviation
+* Standard error
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Standard error
+* Confidence interval
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Confidence interval
+* Scaling
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Scaling
+* Centring
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Centring
+* The Central Limit Theorem
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### The Central Limit Theorem
+* Point estimate
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Point estimate
+* Interval estimate
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Interval estimate
+* *t*-distribution
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### *t*-distribution
+* Degrees of freedom
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Degrees of freedom
+* Conceptual hypothesis
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Conceptual hypothesis
+* Operational hypothesis
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Operational hypothesis
+* Statistical hypothesis
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Statistical hypothesis
+* Null hypothesis
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Null hypothesis
+* Alternative hypothesis
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Alternative hypothesis
+* Significance (alpha) level
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Significance (alpha) level
+* *p*-value
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### *p*-value
+* Correlation coefficient *r*
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Correlation coefficient *r*
+* Scatterplot
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Scatterplot
+* Chi-squared test
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Chi-squared test
+* Bar plot
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Bar plot
+* *t*-test
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### *t*-test
+* Means plot
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Means plot
+* Error bars
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Error bars
+* General model equation
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### General model equation
+* Linear model equation
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Linear model equation
+* Linear model with a categorical predictor
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Linear model with a categorical predictor
+* Linear model with a continuous predictor
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Linear model with a continuous predictor
+* *b*~0~
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### *b*~0~
+* *b*~1~
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### *b*~1~
+* Unit change
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Unit change
+* Standardised beta
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Standardised beta
+* R^2^
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### R^2^
+* Adjusted R^2^
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Adjusted R^2^
+* *F*-ratio
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### *F*-ratio
+* *F*-change
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### *F*-change
+* R^2^ change
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### R^2^ change
+* Signal-to-noise ratio
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Signal-to-noise ratio
+* Effect size
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Effect size
+* Cohen's *d*
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Cohen's *d*
+* Statistical significance
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Statistical significance
+* Standarisation
 
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
-### Standarisation
+* Randomisation
 
-<div class="noteBox" contenteditable="true">
-</div>
-
-### Randomisation
-
-<div class="noteBox" contenteditable="true">
-</div>
+ 
+ 
 
 ## Good luck!

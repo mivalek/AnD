@@ -1579,13 +1579,65 @@ div.tocify {
 <div id="using-this-tutorial" class="section level1">
 <h1>Using This Tutorial</h1>
 <p>This tutorial will walk you through all of the steps of installing R and RStudio, becoming familiar with working in RStudio, running your first commands, and writing your first script. To use it effectively, follow along with each step by doing it yourself. It might be tempting, but <strong>don’t just read along, and don’t just copy and paste!</strong> Whenever you see R code, type it into RStudio yourself. This will help you become comfortable with typing commands in R and reading the output.</p>
-<div id="a-warning" class="section level2">
-<h2>A Warning</h2>
-<p>This tutorial is very long and very wordy, because it’s intended to cover many of the basic skills and ideas for using R. You don’t have to sit down and do the whole thing at once! Instead, work through a section or two at a time, and if you have questions about anything, <a href="https://canvas.sussex.ac.uk/courses/9242/discussion_topics">ask us</a>!</p>
+<div id="managing-your-time" class="section level2">
+<h2>Managing Your Time</h2>
+<p>This tutorial is REALLY long (seriously - over 40 pages in Word!) and very verbose, because it’s intended to cover many of the basic skills and ideas for using R.</p>
+<div id="top-to-bottom" class="section level3">
+<h3>Top to Bottom</h3>
+<p>If you feel like you don’t really know how to do anything in R, this tutorial will take you from nothing at all to writing your first script and working with datasets. In this case, it might be best to start at the beginning and work your way through the whole thing. You don’t have to sit down and do the whole thing at once! Instead, set aside some time each day to work through a section or two at a time, and if you have questions about anything, <a href="https://canvas.sussex.ac.uk/courses/9242/discussion_topics">ask us</a>!</p>
+</div>
+<div id="jump-around" class="section level3">
+<h3>Jump Around</h3>
+<p>If you are looking to strengthen your skills on a certain topic, or get more explanation with a skill you’re struggling with, then you might be better off picking and choosing sections. You can jump straight to the section you want using the Table of Contents to the upper left. Here’s a quick summary of what each major section contains:</p>
+<ul>
+<li>Getting Started
+<ul>
+<li>Installing and setting up R and RStudio</li>
+<li>Typing your first commands</li>
+</ul></li>
+<li>Types of Data
+<ul>
+<li>Basics of working with data in R</li>
+<li>Vectors and numeric, character, and logical data types</li>
+</ul></li>
+<li>Objects
+<ul>
+<li>What objects are and why they’re important</li>
+<li>Creating and changing objects</li>
+<li>Using objects in calculations</li>
+</ul></li>
+<li>Functions
+<ul>
+<li>What functions are and why they’re important</li>
+<li>Using help documentation</li>
+<li>Types of arguments and how to use them</li>
+</ul></li>
+<li>Packages
+<ul>
+<li>What packages are and why they’re important</li>
+<li>Installing and loading packages</li>
+</ul></li>
+<li>Writing Commands in R
+<ul>
+<li>Creating a script</li>
+<li>Writing commands in sequence</li>
+<li>The distinction between script and environment</li>
+</ul></li>
+<li>Working with Data
+<ul>
+<li>Importing and viewing datasets</li>
+<li>Making and saving changes to datasets</li>
+</ul></li>
+<li>Next Steps
+<ul>
+<li>Links to resources to carry on learning R</li>
+</ul></li>
+</ul>
+</div>
 </div>
 <div id="how-do-i" class="section level2">
 <h2>How do I…?</h2>
-<p>Some of the tasks in this tutorial will ask you to try to do things that you haven’t explicitly learned. Don’t worry! Just give it a shot and see what happens. If it doesn’t work or you get an error, that’s fine - it’s all a part of learning. The solutions are all provided for you, but you will learn best if you think through the problem and try to apply what you are learning before you look at the solution.</p>
+<p>Some of the tasks in this tutorial will ask you to try to do things that you haven’t explicitly learned. Just give it a shot and see what happens. If it doesn’t work or you get an error, don’t panic - one of the best skills you can learn to use R successfully is just to try things and see what they do. The solutions are all provided for you, but you will learn best if you think through the problem and try to apply what you are learning before you look at the solution.</p>
 </div>
 </div>
 <div id="getting-started" class="section level1">
@@ -1715,9 +1767,11 @@ div.tocify {
 <details>
 <p><summary>Solution</summary></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="dv">1</span><span class="op">:</span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb8-2" title="2"> [<span class="dv">1</span>]  <span class="dv">1</span>  <span class="dv">2</span>  <span class="dv">3</span>  <span class="dv">4</span>  <span class="dv">5</span>  <span class="dv">6</span>  <span class="dv">7</span>  <span class="dv">8</span>  <span class="dv">9</span> <span class="dv">10</span> <span class="dv">11</span> <span class="dv">12</span> <span class="dv">13</span> <span class="dv">14</span> <span class="dv">15</span> <span class="dv">16</span> <span class="dv">17</span> <span class="dv">18</span></a>
-<a class="sourceLine" id="cb8-3" title="3">[<span class="dv">19</span>] <span class="dv">19</span> <span class="dv">20</span> <span class="dv">21</span> <span class="dv">22</span> <span class="dv">23</span> <span class="dv">24</span> <span class="dv">25</span> <span class="dv">26</span> <span class="dv">27</span> <span class="dv">28</span> <span class="dv">29</span> <span class="dv">30</span> <span class="dv">31</span> <span class="dv">32</span> <span class="dv">33</span> <span class="dv">34</span> <span class="dv">35</span> <span class="dv">36</span></a>
-<a class="sourceLine" id="cb8-4" title="4">[<span class="dv">37</span>] <span class="dv">37</span> <span class="dv">38</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">41</span> <span class="dv">42</span> <span class="dv">43</span> <span class="dv">44</span> <span class="dv">45</span> <span class="dv">46</span> <span class="dv">47</span> <span class="dv">48</span> <span class="dv">49</span> <span class="dv">50</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-2" title="2"> [<span class="dv">1</span>]  <span class="dv">1</span>  <span class="dv">2</span>  <span class="dv">3</span>  <span class="dv">4</span>  <span class="dv">5</span>  <span class="dv">6</span>  <span class="dv">7</span>  <span class="dv">8</span>  <span class="dv">9</span> <span class="dv">10</span> <span class="dv">11</span> <span class="dv">12</span></a>
+<a class="sourceLine" id="cb8-3" title="3">[<span class="dv">13</span>] <span class="dv">13</span> <span class="dv">14</span> <span class="dv">15</span> <span class="dv">16</span> <span class="dv">17</span> <span class="dv">18</span> <span class="dv">19</span> <span class="dv">20</span> <span class="dv">21</span> <span class="dv">22</span> <span class="dv">23</span> <span class="dv">24</span></a>
+<a class="sourceLine" id="cb8-4" title="4">[<span class="dv">25</span>] <span class="dv">25</span> <span class="dv">26</span> <span class="dv">27</span> <span class="dv">28</span> <span class="dv">29</span> <span class="dv">30</span> <span class="dv">31</span> <span class="dv">32</span> <span class="dv">33</span> <span class="dv">34</span> <span class="dv">35</span> <span class="dv">36</span></a>
+<a class="sourceLine" id="cb8-5" title="5">[<span class="dv">37</span>] <span class="dv">37</span> <span class="dv">38</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">41</span> <span class="dv">42</span> <span class="dv">43</span> <span class="dv">44</span> <span class="dv">45</span> <span class="dv">46</span> <span class="dv">47</span> <span class="dv">48</span></a>
+<a class="sourceLine" id="cb8-6" title="6">[<span class="dv">49</span>] <span class="dv">49</span> <span class="dv">50</span></a></code></pre></div>
 </details>
 <p>Nice and easy! Once thing to notice here is that the markers I mentioned earlier have come up again. The first element after the [<em>n</em>] marker is the <em>n</em>th element. Let’s have a look at this some more.</p>
 <p> </p>
@@ -1729,36 +1783,46 @@ div.tocify {
 <p><summary>Solution</summary></p>
 <p>You may have tried something like this:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="dv">12</span><span class="op">:</span><span class="dv">58</span></a>
-<a class="sourceLine" id="cb9-2" title="2"> [<span class="dv">1</span>] <span class="dv">12</span> <span class="dv">13</span> <span class="dv">14</span> <span class="dv">15</span> <span class="dv">16</span> <span class="dv">17</span> <span class="dv">18</span> <span class="dv">19</span> <span class="dv">20</span> <span class="dv">21</span> <span class="dv">22</span> <span class="dv">23</span> <span class="dv">24</span> <span class="dv">25</span> <span class="dv">26</span> <span class="dv">27</span> <span class="dv">28</span> <span class="dv">29</span></a>
-<a class="sourceLine" id="cb9-3" title="3">[<span class="dv">19</span>] <span class="dv">30</span> <span class="dv">31</span> <span class="dv">32</span> <span class="dv">33</span> <span class="dv">34</span> <span class="dv">35</span> <span class="dv">36</span> <span class="dv">37</span> <span class="dv">38</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">41</span> <span class="dv">42</span> <span class="dv">43</span> <span class="dv">44</span> <span class="dv">45</span> <span class="dv">46</span> <span class="dv">47</span></a>
-<a class="sourceLine" id="cb9-4" title="4">[<span class="dv">37</span>] <span class="dv">48</span> <span class="dv">49</span> <span class="dv">50</span> <span class="dv">51</span> <span class="dv">52</span> <span class="dv">53</span> <span class="dv">54</span> <span class="dv">55</span> <span class="dv">56</span> <span class="dv">57</span> <span class="dv">58</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="dv">23</span><span class="op">:</span><span class="dv">106</span></a>
-<a class="sourceLine" id="cb9-6" title="6"> [<span class="dv">1</span>]  <span class="dv">23</span>  <span class="dv">24</span>  <span class="dv">25</span>  <span class="dv">26</span>  <span class="dv">27</span>  <span class="dv">28</span>  <span class="dv">29</span>  <span class="dv">30</span>  <span class="dv">31</span>  <span class="dv">32</span>  <span class="dv">33</span>  <span class="dv">34</span>  <span class="dv">35</span>  <span class="dv">36</span></a>
-<a class="sourceLine" id="cb9-7" title="7">[<span class="dv">15</span>]  <span class="dv">37</span>  <span class="dv">38</span>  <span class="dv">39</span>  <span class="dv">40</span>  <span class="dv">41</span>  <span class="dv">42</span>  <span class="dv">43</span>  <span class="dv">44</span>  <span class="dv">45</span>  <span class="dv">46</span>  <span class="dv">47</span>  <span class="dv">48</span>  <span class="dv">49</span>  <span class="dv">50</span></a>
-<a class="sourceLine" id="cb9-8" title="8">[<span class="dv">29</span>]  <span class="dv">51</span>  <span class="dv">52</span>  <span class="dv">53</span>  <span class="dv">54</span>  <span class="dv">55</span>  <span class="dv">56</span>  <span class="dv">57</span>  <span class="dv">58</span>  <span class="dv">59</span>  <span class="dv">60</span>  <span class="dv">61</span>  <span class="dv">62</span>  <span class="dv">63</span>  <span class="dv">64</span></a>
-<a class="sourceLine" id="cb9-9" title="9">[<span class="dv">43</span>]  <span class="dv">65</span>  <span class="dv">66</span>  <span class="dv">67</span>  <span class="dv">68</span>  <span class="dv">69</span>  <span class="dv">70</span>  <span class="dv">71</span>  <span class="dv">72</span>  <span class="dv">73</span>  <span class="dv">74</span>  <span class="dv">75</span>  <span class="dv">76</span>  <span class="dv">77</span>  <span class="dv">78</span></a>
-<a class="sourceLine" id="cb9-10" title="10">[<span class="dv">57</span>]  <span class="dv">79</span>  <span class="dv">80</span>  <span class="dv">81</span>  <span class="dv">82</span>  <span class="dv">83</span>  <span class="dv">84</span>  <span class="dv">85</span>  <span class="dv">86</span>  <span class="dv">87</span>  <span class="dv">88</span>  <span class="dv">89</span>  <span class="dv">90</span>  <span class="dv">91</span>  <span class="dv">92</span></a>
-<a class="sourceLine" id="cb9-11" title="11">[<span class="dv">71</span>]  <span class="dv">93</span>  <span class="dv">94</span>  <span class="dv">95</span>  <span class="dv">96</span>  <span class="dv">97</span>  <span class="dv">98</span>  <span class="dv">99</span> <span class="dv">100</span> <span class="dv">101</span> <span class="dv">102</span> <span class="dv">103</span> <span class="dv">104</span> <span class="dv">105</span> <span class="dv">106</span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="dv">36</span></a>
-<a class="sourceLine" id="cb9-13" title="13">[<span class="dv">1</span>] <span class="dv">36</span></a></code></pre></div>
-<p>As you can see from the markers, this is three separate commands, because the number marking starts over from [1] each time. I’d actually like to have all of those numbers in a single list. To do this, I’m going to use a <strong>function</strong> called <code>c()</code>:</p>
+<a class="sourceLine" id="cb9-2" title="2"> [<span class="dv">1</span>] <span class="dv">12</span> <span class="dv">13</span> <span class="dv">14</span> <span class="dv">15</span> <span class="dv">16</span> <span class="dv">17</span> <span class="dv">18</span> <span class="dv">19</span> <span class="dv">20</span> <span class="dv">21</span> <span class="dv">22</span> <span class="dv">23</span></a>
+<a class="sourceLine" id="cb9-3" title="3">[<span class="dv">13</span>] <span class="dv">24</span> <span class="dv">25</span> <span class="dv">26</span> <span class="dv">27</span> <span class="dv">28</span> <span class="dv">29</span> <span class="dv">30</span> <span class="dv">31</span> <span class="dv">32</span> <span class="dv">33</span> <span class="dv">34</span> <span class="dv">35</span></a>
+<a class="sourceLine" id="cb9-4" title="4">[<span class="dv">25</span>] <span class="dv">36</span> <span class="dv">37</span> <span class="dv">38</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">41</span> <span class="dv">42</span> <span class="dv">43</span> <span class="dv">44</span> <span class="dv">45</span> <span class="dv">46</span> <span class="dv">47</span></a>
+<a class="sourceLine" id="cb9-5" title="5">[<span class="dv">37</span>] <span class="dv">48</span> <span class="dv">49</span> <span class="dv">50</span> <span class="dv">51</span> <span class="dv">52</span> <span class="dv">53</span> <span class="dv">54</span> <span class="dv">55</span> <span class="dv">56</span> <span class="dv">57</span> <span class="dv">58</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="dv">23</span><span class="op">:</span><span class="dv">106</span></a>
+<a class="sourceLine" id="cb9-7" title="7"> [<span class="dv">1</span>]  <span class="dv">23</span>  <span class="dv">24</span>  <span class="dv">25</span>  <span class="dv">26</span>  <span class="dv">27</span>  <span class="dv">28</span>  <span class="dv">29</span>  <span class="dv">30</span>  <span class="dv">31</span></a>
+<a class="sourceLine" id="cb9-8" title="8">[<span class="dv">10</span>]  <span class="dv">32</span>  <span class="dv">33</span>  <span class="dv">34</span>  <span class="dv">35</span>  <span class="dv">36</span>  <span class="dv">37</span>  <span class="dv">38</span>  <span class="dv">39</span>  <span class="dv">40</span></a>
+<a class="sourceLine" id="cb9-9" title="9">[<span class="dv">19</span>]  <span class="dv">41</span>  <span class="dv">42</span>  <span class="dv">43</span>  <span class="dv">44</span>  <span class="dv">45</span>  <span class="dv">46</span>  <span class="dv">47</span>  <span class="dv">48</span>  <span class="dv">49</span></a>
+<a class="sourceLine" id="cb9-10" title="10">[<span class="dv">28</span>]  <span class="dv">50</span>  <span class="dv">51</span>  <span class="dv">52</span>  <span class="dv">53</span>  <span class="dv">54</span>  <span class="dv">55</span>  <span class="dv">56</span>  <span class="dv">57</span>  <span class="dv">58</span></a>
+<a class="sourceLine" id="cb9-11" title="11">[<span class="dv">37</span>]  <span class="dv">59</span>  <span class="dv">60</span>  <span class="dv">61</span>  <span class="dv">62</span>  <span class="dv">63</span>  <span class="dv">64</span>  <span class="dv">65</span>  <span class="dv">66</span>  <span class="dv">67</span></a>
+<a class="sourceLine" id="cb9-12" title="12">[<span class="dv">46</span>]  <span class="dv">68</span>  <span class="dv">69</span>  <span class="dv">70</span>  <span class="dv">71</span>  <span class="dv">72</span>  <span class="dv">73</span>  <span class="dv">74</span>  <span class="dv">75</span>  <span class="dv">76</span></a>
+<a class="sourceLine" id="cb9-13" title="13">[<span class="dv">55</span>]  <span class="dv">77</span>  <span class="dv">78</span>  <span class="dv">79</span>  <span class="dv">80</span>  <span class="dv">81</span>  <span class="dv">82</span>  <span class="dv">83</span>  <span class="dv">84</span>  <span class="dv">85</span></a>
+<a class="sourceLine" id="cb9-14" title="14">[<span class="dv">64</span>]  <span class="dv">86</span>  <span class="dv">87</span>  <span class="dv">88</span>  <span class="dv">89</span>  <span class="dv">90</span>  <span class="dv">91</span>  <span class="dv">92</span>  <span class="dv">93</span>  <span class="dv">94</span></a>
+<a class="sourceLine" id="cb9-15" title="15">[<span class="dv">73</span>]  <span class="dv">95</span>  <span class="dv">96</span>  <span class="dv">97</span>  <span class="dv">98</span>  <span class="dv">99</span> <span class="dv">100</span> <span class="dv">101</span> <span class="dv">102</span> <span class="dv">103</span></a>
+<a class="sourceLine" id="cb9-16" title="16">[<span class="dv">82</span>] <span class="dv">104</span> <span class="dv">105</span> <span class="dv">106</span></a>
+<a class="sourceLine" id="cb9-17" title="17"><span class="dv">36</span></a>
+<a class="sourceLine" id="cb9-18" title="18">[<span class="dv">1</span>] <span class="dv">36</span></a></code></pre></div>
+<p>As you can see from the markers, this is three separate commands, because the number marking starts over from [1] each time. I’d actually like to have all of those numbers together. To do this, I’m going to use a <strong>function</strong> called <code>c()</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">c</span>(<span class="dv">12</span><span class="op">:</span><span class="dv">58</span>, <span class="dv">23</span><span class="op">:</span><span class="dv">106</span>, <span class="dv">36</span>)</a>
-<a class="sourceLine" id="cb10-2" title="2">  [<span class="dv">1</span>]  <span class="dv">12</span>  <span class="dv">13</span>  <span class="dv">14</span>  <span class="dv">15</span>  <span class="dv">16</span>  <span class="dv">17</span>  <span class="dv">18</span>  <span class="dv">19</span>  <span class="dv">20</span>  <span class="dv">21</span>  <span class="dv">22</span>  <span class="dv">23</span>  <span class="dv">24</span></a>
-<a class="sourceLine" id="cb10-3" title="3"> [<span class="dv">14</span>]  <span class="dv">25</span>  <span class="dv">26</span>  <span class="dv">27</span>  <span class="dv">28</span>  <span class="dv">29</span>  <span class="dv">30</span>  <span class="dv">31</span>  <span class="dv">32</span>  <span class="dv">33</span>  <span class="dv">34</span>  <span class="dv">35</span>  <span class="dv">36</span>  <span class="dv">37</span></a>
-<a class="sourceLine" id="cb10-4" title="4"> [<span class="dv">27</span>]  <span class="dv">38</span>  <span class="dv">39</span>  <span class="dv">40</span>  <span class="dv">41</span>  <span class="dv">42</span>  <span class="dv">43</span>  <span class="dv">44</span>  <span class="dv">45</span>  <span class="dv">46</span>  <span class="dv">47</span>  <span class="dv">48</span>  <span class="dv">49</span>  <span class="dv">50</span></a>
-<a class="sourceLine" id="cb10-5" title="5"> [<span class="dv">40</span>]  <span class="dv">51</span>  <span class="dv">52</span>  <span class="dv">53</span>  <span class="dv">54</span>  <span class="dv">55</span>  <span class="dv">56</span>  <span class="dv">57</span>  <span class="dv">58</span>  <span class="dv">23</span>  <span class="dv">24</span>  <span class="dv">25</span>  <span class="dv">26</span>  <span class="dv">27</span></a>
-<a class="sourceLine" id="cb10-6" title="6"> [<span class="dv">53</span>]  <span class="dv">28</span>  <span class="dv">29</span>  <span class="dv">30</span>  <span class="dv">31</span>  <span class="dv">32</span>  <span class="dv">33</span>  <span class="dv">34</span>  <span class="dv">35</span>  <span class="dv">36</span>  <span class="dv">37</span>  <span class="dv">38</span>  <span class="dv">39</span>  <span class="dv">40</span></a>
-<a class="sourceLine" id="cb10-7" title="7"> [<span class="dv">66</span>]  <span class="dv">41</span>  <span class="dv">42</span>  <span class="dv">43</span>  <span class="dv">44</span>  <span class="dv">45</span>  <span class="dv">46</span>  <span class="dv">47</span>  <span class="dv">48</span>  <span class="dv">49</span>  <span class="dv">50</span>  <span class="dv">51</span>  <span class="dv">52</span>  <span class="dv">53</span></a>
-<a class="sourceLine" id="cb10-8" title="8"> [<span class="dv">79</span>]  <span class="dv">54</span>  <span class="dv">55</span>  <span class="dv">56</span>  <span class="dv">57</span>  <span class="dv">58</span>  <span class="dv">59</span>  <span class="dv">60</span>  <span class="dv">61</span>  <span class="dv">62</span>  <span class="dv">63</span>  <span class="dv">64</span>  <span class="dv">65</span>  <span class="dv">66</span></a>
-<a class="sourceLine" id="cb10-9" title="9"> [<span class="dv">92</span>]  <span class="dv">67</span>  <span class="dv">68</span>  <span class="dv">69</span>  <span class="dv">70</span>  <span class="dv">71</span>  <span class="dv">72</span>  <span class="dv">73</span>  <span class="dv">74</span>  <span class="dv">75</span>  <span class="dv">76</span>  <span class="dv">77</span>  <span class="dv">78</span>  <span class="dv">79</span></a>
-<a class="sourceLine" id="cb10-10" title="10">[<span class="dv">105</span>]  <span class="dv">80</span>  <span class="dv">81</span>  <span class="dv">82</span>  <span class="dv">83</span>  <span class="dv">84</span>  <span class="dv">85</span>  <span class="dv">86</span>  <span class="dv">87</span>  <span class="dv">88</span>  <span class="dv">89</span>  <span class="dv">90</span>  <span class="dv">91</span>  <span class="dv">92</span></a>
-<a class="sourceLine" id="cb10-11" title="11">[<span class="dv">118</span>]  <span class="dv">93</span>  <span class="dv">94</span>  <span class="dv">95</span>  <span class="dv">96</span>  <span class="dv">97</span>  <span class="dv">98</span>  <span class="dv">99</span> <span class="dv">100</span> <span class="dv">101</span> <span class="dv">102</span> <span class="dv">103</span> <span class="dv">104</span> <span class="dv">105</span></a>
-<a class="sourceLine" id="cb10-12" title="12">[<span class="dv">131</span>] <span class="dv">106</span>  <span class="dv">36</span></a></code></pre></div>
-<p>As you can see from the markers, when I put the numbers I want inside <code>c()</code>, separated by commas, R <strong>c</strong>ollects (or <strong>c</strong>oncatenates, or <strong>c</strong>ombines) all of the numbers into a single <strong>vector</strong>. A vector is essentially just a series of pieces of data.</p>
-<p>If I want the <em>n</em>th number in this vector (say, the 88th), I can even get it out by using the markers:</p>
+<a class="sourceLine" id="cb10-2" title="2">  [<span class="dv">1</span>]  <span class="dv">12</span>  <span class="dv">13</span>  <span class="dv">14</span>  <span class="dv">15</span>  <span class="dv">16</span>  <span class="dv">17</span>  <span class="dv">18</span>  <span class="dv">19</span>  <span class="dv">20</span></a>
+<a class="sourceLine" id="cb10-3" title="3"> [<span class="dv">10</span>]  <span class="dv">21</span>  <span class="dv">22</span>  <span class="dv">23</span>  <span class="dv">24</span>  <span class="dv">25</span>  <span class="dv">26</span>  <span class="dv">27</span>  <span class="dv">28</span>  <span class="dv">29</span></a>
+<a class="sourceLine" id="cb10-4" title="4"> [<span class="dv">19</span>]  <span class="dv">30</span>  <span class="dv">31</span>  <span class="dv">32</span>  <span class="dv">33</span>  <span class="dv">34</span>  <span class="dv">35</span>  <span class="dv">36</span>  <span class="dv">37</span>  <span class="dv">38</span></a>
+<a class="sourceLine" id="cb10-5" title="5"> [<span class="dv">28</span>]  <span class="dv">39</span>  <span class="dv">40</span>  <span class="dv">41</span>  <span class="dv">42</span>  <span class="dv">43</span>  <span class="dv">44</span>  <span class="dv">45</span>  <span class="dv">46</span>  <span class="dv">47</span></a>
+<a class="sourceLine" id="cb10-6" title="6"> [<span class="dv">37</span>]  <span class="dv">48</span>  <span class="dv">49</span>  <span class="dv">50</span>  <span class="dv">51</span>  <span class="dv">52</span>  <span class="dv">53</span>  <span class="dv">54</span>  <span class="dv">55</span>  <span class="dv">56</span></a>
+<a class="sourceLine" id="cb10-7" title="7"> [<span class="dv">46</span>]  <span class="dv">57</span>  <span class="dv">58</span>  <span class="dv">23</span>  <span class="dv">24</span>  <span class="dv">25</span>  <span class="dv">26</span>  <span class="dv">27</span>  <span class="dv">28</span>  <span class="dv">29</span></a>
+<a class="sourceLine" id="cb10-8" title="8"> [<span class="dv">55</span>]  <span class="dv">30</span>  <span class="dv">31</span>  <span class="dv">32</span>  <span class="dv">33</span>  <span class="dv">34</span>  <span class="dv">35</span>  <span class="dv">36</span>  <span class="dv">37</span>  <span class="dv">38</span></a>
+<a class="sourceLine" id="cb10-9" title="9"> [<span class="dv">64</span>]  <span class="dv">39</span>  <span class="dv">40</span>  <span class="dv">41</span>  <span class="dv">42</span>  <span class="dv">43</span>  <span class="dv">44</span>  <span class="dv">45</span>  <span class="dv">46</span>  <span class="dv">47</span></a>
+<a class="sourceLine" id="cb10-10" title="10"> [<span class="dv">73</span>]  <span class="dv">48</span>  <span class="dv">49</span>  <span class="dv">50</span>  <span class="dv">51</span>  <span class="dv">52</span>  <span class="dv">53</span>  <span class="dv">54</span>  <span class="dv">55</span>  <span class="dv">56</span></a>
+<a class="sourceLine" id="cb10-11" title="11"> [<span class="dv">82</span>]  <span class="dv">57</span>  <span class="dv">58</span>  <span class="dv">59</span>  <span class="dv">60</span>  <span class="dv">61</span>  <span class="dv">62</span>  <span class="dv">63</span>  <span class="dv">64</span>  <span class="dv">65</span></a>
+<a class="sourceLine" id="cb10-12" title="12"> [<span class="dv">91</span>]  <span class="dv">66</span>  <span class="dv">67</span>  <span class="dv">68</span>  <span class="dv">69</span>  <span class="dv">70</span>  <span class="dv">71</span>  <span class="dv">72</span>  <span class="dv">73</span>  <span class="dv">74</span></a>
+<a class="sourceLine" id="cb10-13" title="13">[<span class="dv">100</span>]  <span class="dv">75</span>  <span class="dv">76</span>  <span class="dv">77</span>  <span class="dv">78</span>  <span class="dv">79</span>  <span class="dv">80</span>  <span class="dv">81</span>  <span class="dv">82</span>  <span class="dv">83</span></a>
+<a class="sourceLine" id="cb10-14" title="14">[<span class="dv">109</span>]  <span class="dv">84</span>  <span class="dv">85</span>  <span class="dv">86</span>  <span class="dv">87</span>  <span class="dv">88</span>  <span class="dv">89</span>  <span class="dv">90</span>  <span class="dv">91</span>  <span class="dv">92</span></a>
+<a class="sourceLine" id="cb10-15" title="15">[<span class="dv">118</span>]  <span class="dv">93</span>  <span class="dv">94</span>  <span class="dv">95</span>  <span class="dv">96</span>  <span class="dv">97</span>  <span class="dv">98</span>  <span class="dv">99</span> <span class="dv">100</span> <span class="dv">101</span></a>
+<a class="sourceLine" id="cb10-16" title="16">[<span class="dv">127</span>] <span class="dv">102</span> <span class="dv">103</span> <span class="dv">104</span> <span class="dv">105</span> <span class="dv">106</span>  <span class="dv">36</span></a></code></pre></div>
+<p>As you can see from the markers, when I put the numbers I want inside <code>c()</code>, separated by commas, R <strong>c</strong>ollects (or <strong>c</strong>oncatenates, or <strong>c</strong>ombines) all of the numbers into a single <strong>vector</strong>. A vector is essentially just a series of pieces of data; each individual piece of data in the vector is an <strong>element</strong> of that vector.</p>
+<p>Actually, this isn’t a new thing; we’ve been looking at vectors this whole time. Any series of pieces of information in R is a vector. When we were looking at single numbers (like <code>3958</code> above) we were still getting a vector from R, but it was just a vector with only one element. The markers that we’ve seen (e.g. <code>[1]</code>) indicate this.</p>
+<p>If I want the <em>n</em>th element in this vector (say, the 88th), I can even get it out by using the markers:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">c</span>(<span class="dv">12</span><span class="op">:</span><span class="dv">58</span>, <span class="dv">23</span><span class="op">:</span><span class="dv">106</span>, <span class="dv">36</span>)[<span class="dv">88</span>]</a>
 <a class="sourceLine" id="cb11-2" title="2">[<span class="dv">1</span>] <span class="dv">63</span></a></code></pre></div>
-What I’ve essentially asked is, “Put all of these numbers into a single vector, and then give me the 88th number.” As it turns out, the 88th number in that vector of numbers is 63.
+What I’ve essentially asked is, “Put all of these numbers into a single vector, and then give me the 88th element in that vector.” As it turns out, the 88th element in that vector of numbers is 63.
 </details>
 <p> </p>
 </div>
@@ -1768,9 +1832,11 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <details>
 <p><summary>Solution</summary></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">c</span>(<span class="dv">37</span><span class="op">:</span><span class="dv">86</span>) <span class="op">-</span><span class="st"> </span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb12-2" title="2"> [<span class="dv">1</span>] <span class="dv">30</span> <span class="dv">31</span> <span class="dv">32</span> <span class="dv">33</span> <span class="dv">34</span> <span class="dv">35</span> <span class="dv">36</span> <span class="dv">37</span> <span class="dv">38</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">41</span> <span class="dv">42</span> <span class="dv">43</span> <span class="dv">44</span> <span class="dv">45</span> <span class="dv">46</span> <span class="dv">47</span></a>
-<a class="sourceLine" id="cb12-3" title="3">[<span class="dv">19</span>] <span class="dv">48</span> <span class="dv">49</span> <span class="dv">50</span> <span class="dv">51</span> <span class="dv">52</span> <span class="dv">53</span> <span class="dv">54</span> <span class="dv">55</span> <span class="dv">56</span> <span class="dv">57</span> <span class="dv">58</span> <span class="dv">59</span> <span class="dv">60</span> <span class="dv">61</span> <span class="dv">62</span> <span class="dv">63</span> <span class="dv">64</span> <span class="dv">65</span></a>
-<a class="sourceLine" id="cb12-4" title="4">[<span class="dv">37</span>] <span class="dv">66</span> <span class="dv">67</span> <span class="dv">68</span> <span class="dv">69</span> <span class="dv">70</span> <span class="dv">71</span> <span class="dv">72</span> <span class="dv">73</span> <span class="dv">74</span> <span class="dv">75</span> <span class="dv">76</span> <span class="dv">77</span> <span class="dv">78</span> <span class="dv">79</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-2" title="2"> [<span class="dv">1</span>] <span class="dv">30</span> <span class="dv">31</span> <span class="dv">32</span> <span class="dv">33</span> <span class="dv">34</span> <span class="dv">35</span> <span class="dv">36</span> <span class="dv">37</span> <span class="dv">38</span> <span class="dv">39</span> <span class="dv">40</span> <span class="dv">41</span></a>
+<a class="sourceLine" id="cb12-3" title="3">[<span class="dv">13</span>] <span class="dv">42</span> <span class="dv">43</span> <span class="dv">44</span> <span class="dv">45</span> <span class="dv">46</span> <span class="dv">47</span> <span class="dv">48</span> <span class="dv">49</span> <span class="dv">50</span> <span class="dv">51</span> <span class="dv">52</span> <span class="dv">53</span></a>
+<a class="sourceLine" id="cb12-4" title="4">[<span class="dv">25</span>] <span class="dv">54</span> <span class="dv">55</span> <span class="dv">56</span> <span class="dv">57</span> <span class="dv">58</span> <span class="dv">59</span> <span class="dv">60</span> <span class="dv">61</span> <span class="dv">62</span> <span class="dv">63</span> <span class="dv">64</span> <span class="dv">65</span></a>
+<a class="sourceLine" id="cb12-5" title="5">[<span class="dv">37</span>] <span class="dv">66</span> <span class="dv">67</span> <span class="dv">68</span> <span class="dv">69</span> <span class="dv">70</span> <span class="dv">71</span> <span class="dv">72</span> <span class="dv">73</span> <span class="dv">74</span> <span class="dv">75</span> <span class="dv">76</span> <span class="dv">77</span></a>
+<a class="sourceLine" id="cb12-6" title="6">[<span class="dv">49</span>] <span class="dv">78</span> <span class="dv">79</span></a></code></pre></div>
 <p>This could again, be a very tedious process, but R has our back here. We first create the vector, then we tell R we want to subtract 7. R very conveniently applies the “- 7” command to each item in the vector individually.</p>
 </details>
 <p>We can do a lot more than this with numbers and data in R, but this is an excellent start. Just one note before we move on about the order in which R performs its calculations.</p>
@@ -1801,7 +1867,7 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <a class="sourceLine" id="cb17-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;Hi!&quot;</span></a>
 <a class="sourceLine" id="cb17-3" title="3"><span class="st">&quot;It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness...&quot;</span></a>
 <a class="sourceLine" id="cb17-4" title="4">[<span class="dv">1</span>] <span class="st">&quot;It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness...&quot;</span></a></code></pre></div>
-<p>Just like we saw with numbers, above, you can combine multiple character strings into a vector. You can also use the numbered markers to extract the <em>n</em>th element in that vector.</p>
+<p>The <code>[1]</code> markers also tell us that each of the two strings above already constitute vectors, each of length 1. Just like we saw with numbers, above, any number of character strings can be combined into a vector. You can also use the numbered markers to extract the <em>n</em>th element in that vector.</p>
 <p> </p>
 <div id="task-3" class="section level3">
 <h3>Task 3</h3>
@@ -1846,7 +1912,8 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <details>
 <p><summary>Solution</summary></p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) <span class="op">&lt;=</span><span class="st"> </span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb21-2" title="2">[<span class="dv">1</span>]  <span class="ot">TRUE</span>  <span class="ot">TRUE</span>  <span class="ot">TRUE</span>  <span class="ot">TRUE</span>  <span class="ot">TRUE</span> <span class="ot">FALSE</span> <span class="ot">FALSE</span> <span class="ot">FALSE</span> <span class="ot">FALSE</span></a></code></pre></div>
+<a class="sourceLine" id="cb21-2" title="2">[<span class="dv">1</span>]  <span class="ot">TRUE</span>  <span class="ot">TRUE</span>  <span class="ot">TRUE</span>  <span class="ot">TRUE</span>  <span class="ot">TRUE</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb21-3" title="3">[<span class="dv">7</span>] <span class="ot">FALSE</span> <span class="ot">FALSE</span> <span class="ot">FALSE</span></a></code></pre></div>
 </details>
 <p>Here R prints out a value of <code>TRUE</code> or <code>FALSE</code> for each comparison it’s asked to make. So, the first element in the output (<code>TRUE</code>) corresponds to the statement <code>2 &lt;= 6</code>, the second to <code>3 &lt;= 6</code>, and so on.</p>
 <p>It might not seem like it at the moment, but this can be staggeringly useful for selecting and filtering data that meet particular requirements, or checking our data to find problems. For now, one thing to notice is that I used a double equals <code>==</code> to express “is (exactly) equal to”. You must be careful with this one, because if you do a single equals sign R will give you a strange error:</p>
@@ -1865,12 +1932,12 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Use <code>class()</code> and get R to print the value “numeric”.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># You can use any number for this!</span></a>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># You can use any number (i.e. numeric vector) for this!</span></a>
 <a class="sourceLine" id="cb23-2" title="2"></a>
 <a class="sourceLine" id="cb23-3" title="3"><span class="kw">class</span>(<span class="dv">23049825</span>)</a>
 <a class="sourceLine" id="cb23-4" title="4">[<span class="dv">1</span>] <span class="st">&quot;numeric&quot;</span></a>
 <a class="sourceLine" id="cb23-5" title="5"></a>
-<a class="sourceLine" id="cb23-6" title="6"><span class="co"># You can also use a vector of numbers</span></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="co"># You can also use a longer vector of numbers</span></a>
 <a class="sourceLine" id="cb23-7" title="7"><span class="co"># as long as they are all numbers</span></a>
 <a class="sourceLine" id="cb23-8" title="8"></a>
 <a class="sourceLine" id="cb23-9" title="9"><span class="kw">class</span>(<span class="kw">c</span>(<span class="dv">4</span><span class="op">:</span><span class="dv">602</span>, <span class="dv">290</span><span class="op">:</span><span class="dv">506</span>, <span class="dv">20</span>, <span class="dv">-1</span>))</a>
@@ -1887,15 +1954,16 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <a class="sourceLine" id="cb24-3" title="3"><span class="kw">class</span>(<span class="kw">c</span>(<span class="dv">93</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">406</span>, <span class="st">&quot;tomato&quot;</span>))</a>
 <a class="sourceLine" id="cb24-4" title="4">[<span class="dv">1</span>] <span class="st">&quot;character&quot;</span></a></code></pre></div>
 </details>
-<p>This is an important note about numeric vs character data. Numeric data is essentially a special subtype of character data. As we’ve seen here, if the two are mixed, R stores them as characters. Even though we can do mathematical operations on numbers, we can’t do them on characters; it should be clear that asking for e.g. what is <code>&quot;tomato&quot; - 7</code> is nonsense. However, this is the case <strong>even if all of the data are numerals!</strong> For example:</p>
+<p>This is an important note about numeric vs character data. Numeric data is essentially a special subtype of character data. As we’ve seen here, if the two are mixed, R stores them as characters. Even though we can do mathematical operations on numbers, we can’t do them on characters; it should be clear that asking e.g. what is <code>&quot;tomato&quot; - 7</code> is nonsense. However, this is the case <strong>even if all of the data are numerals!</strong> For example:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="co"># No problem here; all numbers</span></a>
 <a class="sourceLine" id="cb25-2" title="2"><span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">31</span>, <span class="dv">45</span>) <span class="op">-</span><span class="st"> </span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb25-3" title="3"> [<span class="dv">1</span>] <span class="dv">-5</span> <span class="dv">-4</span> <span class="dv">-3</span> <span class="dv">-2</span> <span class="dv">-1</span>  <span class="dv">0</span>  <span class="dv">1</span>  <span class="dv">2</span>  <span class="dv">3</span>  <span class="dv">4</span>  <span class="dv">5</span>  <span class="dv">6</span>  <span class="dv">7</span>  <span class="dv">8</span>  <span class="dv">9</span> <span class="dv">10</span> <span class="dv">11</span> <span class="dv">12</span></a>
-<a class="sourceLine" id="cb25-4" title="4">[<span class="dv">19</span>] <span class="dv">13</span> <span class="dv">14</span> <span class="dv">15</span> <span class="dv">16</span> <span class="dv">17</span> <span class="dv">18</span> <span class="dv">19</span> <span class="dv">20</span> <span class="dv">21</span> <span class="dv">22</span> <span class="dv">23</span> <span class="dv">24</span> <span class="dv">38</span></a>
-<a class="sourceLine" id="cb25-5" title="5"></a>
-<a class="sourceLine" id="cb25-6" title="6"><span class="co"># Doesn&#39;t work</span></a>
-<a class="sourceLine" id="cb25-7" title="7"><span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">31</span>, <span class="st">&quot;45&quot;</span>) <span class="op">-</span><span class="st"> </span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb25-8" title="8">Error <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">31</span>, <span class="st">&quot;45&quot;</span>) <span class="op">-</span><span class="st"> </span><span class="dv">7</span><span class="op">:</span><span class="st"> </span>non<span class="op">-</span>numeric argument to binary operator</a></code></pre></div>
+<a class="sourceLine" id="cb25-3" title="3"> [<span class="dv">1</span>] <span class="dv">-5</span> <span class="dv">-4</span> <span class="dv">-3</span> <span class="dv">-2</span> <span class="dv">-1</span>  <span class="dv">0</span>  <span class="dv">1</span>  <span class="dv">2</span>  <span class="dv">3</span>  <span class="dv">4</span>  <span class="dv">5</span>  <span class="dv">6</span></a>
+<a class="sourceLine" id="cb25-4" title="4">[<span class="dv">13</span>]  <span class="dv">7</span>  <span class="dv">8</span>  <span class="dv">9</span> <span class="dv">10</span> <span class="dv">11</span> <span class="dv">12</span> <span class="dv">13</span> <span class="dv">14</span> <span class="dv">15</span> <span class="dv">16</span> <span class="dv">17</span> <span class="dv">18</span></a>
+<a class="sourceLine" id="cb25-5" title="5">[<span class="dv">25</span>] <span class="dv">19</span> <span class="dv">20</span> <span class="dv">21</span> <span class="dv">22</span> <span class="dv">23</span> <span class="dv">24</span> <span class="dv">38</span></a>
+<a class="sourceLine" id="cb25-6" title="6"></a>
+<a class="sourceLine" id="cb25-7" title="7"><span class="co"># Doesn&#39;t work</span></a>
+<a class="sourceLine" id="cb25-8" title="8"><span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">31</span>, <span class="st">&quot;45&quot;</span>) <span class="op">-</span><span class="st"> </span><span class="dv">7</span></a>
+<a class="sourceLine" id="cb25-9" title="9">Error <span class="cf">in</span> <span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">31</span>, <span class="st">&quot;45&quot;</span>) <span class="op">-</span><span class="st"> </span><span class="dv">7</span><span class="op">:</span><span class="st"> </span>non<span class="op">-</span>numeric argument to binary operator</a></code></pre></div>
 <p>Even though “45” looks like a number, because it’s in quotes, R thinks that it’s a character, and will refuse to do the calculation, in the same way that it would refuse to do it with “tomato”.</p>
 </div>
 </div>
@@ -1988,27 +2056,43 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <h4>Task 8.3</h4>
 <p>Type the code below in your console, replacing the numbers with the ages of yourself and all your family members, in whatever order you like.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">ages &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">31</span>, <span class="dv">26</span>, <span class="dv">61</span>, <span class="dv">87</span>)</a></code></pre></div>
-<p>Again, when I run this command in the console, a new object appears in my environment, called <code>ages</code>. This one looks a bit different than the other two, though. In Environment, I can see that this object contains numbers (“num”); that there are four of them ([1:4]); and that those numbers are 31, 26, 61, and 87. This new object is another <strong>vector</strong> - a sequence of values all stored in a single object.</p>
-<p>So, what happens if we try to do the same maths we did before? For instance, I might want to calculate the birth <strong>year</strong> of each of my family members, using their ages. To do this, I have to subtract each of their ages from the current year. I could do this one at a time - or all at once using my <code>ages</code> object.</p>
+<p>Again, when I run this command in the console, a new object appears in my environment, called <code>ages</code>. This one looks a bit different than the other two, though. In Environment, I can see that this object contains numbers (“num”); that there are four of them ([1:4]); and that those numbers are 31, 26, 61, and 87. This new object is another <strong>vector</strong> - a value or sequence of values. This particular object is a vector of length 4 - that is, it has four elements in it.</p>
+<p>An important thing to note here is that <code>ages</code> is (apparently…!) a word, and we learned earlier that words are character data. So, what happens if we ask R what type of data <code>ages</code> is?</p>
 <p> </p>
 </div>
 <div id="task-8.4" class="section level4">
 <h4>Task 8.4</h4>
-<p>Calculate each of your family members’ birth years using your <code>ages</code> object.</p>
+<p>Ask R for the class of the <code>ages</code> object.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>ages</a>
-<a class="sourceLine" id="cb32-2" title="2">[<span class="dv">1</span>] <span class="dv">1989</span> <span class="dv">1994</span> <span class="dv">1959</span> <span class="dv">1933</span></a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">class</span>(ages)</a>
+<a class="sourceLine" id="cb32-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;numeric&quot;</span></a></code></pre></div>
 </details>
-<p>Very cleverly, R does the same calculation for each of the values stored in this vector, and prints out the result for us. We didn’t have to tell R to do this; it just does it by default.</p>
+<p>This might not have been what you expected, but remember, <code>ages</code> (importantly, <strong>without</strong> quote marks!) is the name of an object. To find out what kind of data it is, R looks at what that object contains, not at the name of the object itself. We already saw that <code>ages</code> contains only numbers; so, R tells us that it’s a numeric vector.</p>
+<p>One more example to emphasize this point, because it’s often a source of confusion when starting out with R. If we want to ask R the class of the <strong>word</strong> “ages”, we would need to put it in quotes, and we’d get a different answer:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">class</span>(<span class="st">&quot;ages&quot;</span>)</a>
+<a class="sourceLine" id="cb33-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;character&quot;</span></a></code></pre></div>
+<p>The key thing here is that objects have the class of the data they contain, and are not character data; and whenever you want to use an object, you must <strong>not</strong> use quotation marks. On the other hand, if you want to input character data into R, you <strong>must</strong> use quotation marks; otherwise, R will look for an object or function with that name, which will likely produce a “<code>cannot find object</code>” error.</p>
+<p>So, if the object <code>ages</code> is just a convenient name for a vector of numbers, what happens if we try to do the same maths we did before? For instance, I might want to calculate the birth <strong>year</strong> of each of my family members, using their ages. To do this, I have to subtract each of their ages from the current year. I could do this one at a time - or all at once using my <code>ages</code> object.</p>
 <p> </p>
 </div>
 <div id="task-8.5" class="section level4">
 <h4>Task 8.5</h4>
+<p>Calculate each of your family members’ birth years using your <code>ages</code> object.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>ages</a>
+<a class="sourceLine" id="cb34-2" title="2">[<span class="dv">1</span>] <span class="dv">1989</span> <span class="dv">1994</span> <span class="dv">1959</span> <span class="dv">1933</span></a></code></pre></div>
+</details>
+<p>Very cleverly, R does the same calculation for each of the values stored in this vector, and prints out the result for us. We didn’t have to tell R to do this; it just does it by default.</p>
+<p> </p>
+</div>
+<div id="task-8.6" class="section level4">
+<h4>Task 8.6</h4>
 <p>Save the birth years you’ve just calculated in an object called <code>birth_year</code>.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">birth_year &lt;-<span class="st"> </span><span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>ages</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">birth_year &lt;-<span class="st"> </span><span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>ages</a></code></pre></div>
 </details>
 <p>Again, because we’ve used the assignment operator, R doesn’t print out the years this time, like it did before. Instead, the output of our calculation is saved as the object <code>birth_year</code>. This is a very important idea that we will come across many times - namely you can write whatever instructions or information you want after the <code>&lt;-</code> operator, from very simple (like single numbers) to multiple lines of code; and whatever the output of those commands is, that output will be stored in the object before the <code>&lt;-</code>.</p>
 </div>
@@ -2016,8 +2100,8 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <h4>Overwriting Objects</h4>
 <p>A side note here before we continue. You might notice that we already had an object called <code>birth_year</code> that we created above. R, again, does only and exactly what you ask it to do. Unlike, say, a word processer, that will give you a warning if you try to save two documents in the same folder with the same name, R won’t ask you if you’re sure you want to overwrite an existing object with new information - it will just do it!</p>
 <p>This can be a good thing, because you can easily update the information stored in an object with changes, edits, or new information. However, it also means that you can overwrite or replace data when you don’t want to, if you use the same object name. If we call the <code>birth_year</code> object, we can see that it now contains the birth years that we calculated, and not the value I put into it before:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">birth_year</a>
-<a class="sourceLine" id="cb34-2" title="2">[<span class="dv">1</span>] <span class="dv">1989</span> <span class="dv">1994</span> <span class="dv">1959</span> <span class="dv">1933</span></a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">birth_year</a>
+<a class="sourceLine" id="cb36-2" title="2">[<span class="dv">1</span>] <span class="dv">1989</span> <span class="dv">1994</span> <span class="dv">1959</span> <span class="dv">1933</span></a></code></pre></div>
 <p>This is why it is so important to keep track of all of the commands and changes you make to your data. If you accidentally replace your dataset with, say, a single word or number with an error in your code, you can easily retrace your steps and avoid redoing work. We’ll learn how to do this in the “Writing Code” section below.</p>
 <p>If you are interested in understanding this process of assigning and replacing the contents of objects better, the aside below explains it in more depth.</p>
 <div class="why">
@@ -2025,26 +2109,26 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Think of objects as boxes. The names of the objects are only <em>labels</em>, and you can store anything you like inside them. However, unlike in the physical world, objects in R cannot truly change. You can put stuff in, take stuff out and that’s pretty much it. Unlike boxes, though, when you take stuff out of objects, you only take out a <strong>copy</strong> of its contents. The original contents of the box remain intact. Of course, you can do whatever you want (within limits) to the stuff once you’ve taken it out of the box, but you are only modifying the copy. The key thing to remember is that unless you put that modified stuff into a box, R will forget about it as soon as it’s done with it. In other words, if you want to “save” any changes you make, you must assign them to an object in order to keep them.</p>
 <p>Now, as you probably know, you can call your boxes (objects) whatever you want (again, within certain limits). This means that that you can call the new box the same as the old one, as we saw with <code>birth_year</code> above. When that happens, <code>R</code> basically takes the label off the old box, pastes it on the new one, and burns the old box. So even though some operations in R may look like they change objects, what’s actually happening is that R copies their content, modifies it, stores the result in a different object, puts the same label on it, and discards the original object. Understanding this mechanism will make things much easier!</p>
 <p>Putting the above into practice, this is how you “change” an <code>R</code> object:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="co"># put 1 into an object (box) called a</span></a>
-<a class="sourceLine" id="cb35-2" title="2">a &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb35-3" title="3"></a>
-<a class="sourceLine" id="cb35-4" title="4"><span class="co"># copy the content of a, add 1 to it and store it in an object b</span></a>
-<a class="sourceLine" id="cb35-5" title="5">b &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb35-6" title="6"></a>
-<a class="sourceLine" id="cb35-7" title="7"><span class="co"># copy what&#39;s inside b and put it in a new object called a</span></a>
-<a class="sourceLine" id="cb35-8" title="8"><span class="co"># discarding (&quot;overwriting&quot;) the old object a</span></a>
-<a class="sourceLine" id="cb35-9" title="9">a &lt;-<span class="st"> </span>b</a>
-<a class="sourceLine" id="cb35-10" title="10"></a>
-<a class="sourceLine" id="cb35-11" title="11"><span class="co"># now see what&#39;s inside of a</span></a>
-<a class="sourceLine" id="cb35-12" title="12"><span class="co"># (by copying its content and pasting it in the console)</span></a>
-<a class="sourceLine" id="cb35-13" title="13">a</a>
-<a class="sourceLine" id="cb35-14" title="14">[<span class="dv">1</span>] <span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="co"># put 1 into an object (box) called a</span></a>
+<a class="sourceLine" id="cb37-2" title="2">a &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb37-3" title="3"></a>
+<a class="sourceLine" id="cb37-4" title="4"><span class="co"># copy the content of a, add 1 to it and store it in an object b</span></a>
+<a class="sourceLine" id="cb37-5" title="5">b &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb37-6" title="6"></a>
+<a class="sourceLine" id="cb37-7" title="7"><span class="co"># copy what&#39;s inside b and put it in a new object called a</span></a>
+<a class="sourceLine" id="cb37-8" title="8"><span class="co"># discarding (&quot;overwriting&quot;) the old object a</span></a>
+<a class="sourceLine" id="cb37-9" title="9">a &lt;-<span class="st"> </span>b</a>
+<a class="sourceLine" id="cb37-10" title="10"></a>
+<a class="sourceLine" id="cb37-11" title="11"><span class="co"># now see what&#39;s inside of a</span></a>
+<a class="sourceLine" id="cb37-12" title="12"><span class="co"># (by copying its content and pasting it in the console)</span></a>
+<a class="sourceLine" id="cb37-13" title="13">a</a>
+<a class="sourceLine" id="cb37-14" title="14">[<span class="dv">1</span>] <span class="dv">2</span></a></code></pre></div>
 <p> </p>
 <p>Of course, you can just cut out the middleman (creating an object <code>b</code>). So to increment <code>a</code> by another <code>1</code>, we can do:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">a &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb36-2" title="2"></a>
-<a class="sourceLine" id="cb36-3" title="3">a</a>
-<a class="sourceLine" id="cb36-4" title="4">[<span class="dv">1</span>] <span class="dv">3</span></a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">a &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb38-2" title="2"></a>
+<a class="sourceLine" id="cb38-3" title="3">a</a>
+<a class="sourceLine" id="cb38-4" title="4">[<span class="dv">1</span>] <span class="dv">3</span></a></code></pre></div>
 </div>
 <p> </p>
 <p>We will talk further about using scripts and writing multiple commands below; but first, we’ll need to have a look at a very important type of object in R: the function.</p>
@@ -2066,8 +2150,8 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Try running the <code>round()</code> function.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">round</span>()</a>
-<a class="sourceLine" id="cb37-2" title="2">Error <span class="cf">in</span> <span class="kw">eval</span>(expr, envir, enclos)<span class="op">:</span><span class="st"> </span><span class="dv">0</span> arguments passed to <span class="st">&#39;round&#39;</span>which requires <span class="dv">1</span> or <span class="dv">2</span> arguments</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">round</span>()</a>
+<a class="sourceLine" id="cb39-2" title="2">Error <span class="cf">in</span> <span class="kw">eval</span>(expr, envir, enclos)<span class="op">:</span><span class="st"> </span><span class="dv">0</span> arguments passed to <span class="st">&#39;round&#39;</span>which requires <span class="dv">1</span> or <span class="dv">2</span> arguments</a></code></pre></div>
 </details>
 <p>Unsurprisingly, R has given us an error. This is an <strong>informative</strong> error, though - it tells us that <code>round()</code> can’t just work without additional information (i.e. “required arguments”). Imagine, for instance, if you wanted a friend of yours to help you with your coursework by rounding 7.3928 to two decimal places, and in order to ask them to do that, you just shouted “ROUND!” at them. Just like your friend would, R has objected to this, telling you that it needs more information in order to do what you’ve asked it to.</p>
 <p>Our original command, “Round the number 7.3928 to two decimal places”, has two more important pieces of information that we need to tell R: what number we want to round (7.3928) and how many decimal places we want to round it to (2). So, how do we say this in R? To find out, let’s look at the help documentation.</p>
@@ -2082,7 +2166,7 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Pull up the help documentation for <code>round()</code> in RStudio.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">?round</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1">?round</a></code></pre></div>
 </details>
 <p>The first section, “Description”, varies quite a bit in intelligibility, depending on how complex the function is. Here, if we ignore the information about the other function including in this document, we can see that we have a useful description of <code>round()</code> that tells us that it rounds numbers (yay!) to a certain number of decimal places. That’s exactly what we want, so how do we use it?</p>
 <p>Let’s scroll down to “Usage”, which gives examples of what the default version of the function looks like. You can see that the basic structure of this function is <code>round(x, digits = 0)</code>. It seems like we need to add some more information in the brackets of our function - but how do we interpret <code>x</code> and <code>digits = 0</code>?</p>
@@ -2112,40 +2196,40 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Run the command to round 7.3928 to two decimal places.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">round</span>(<span class="dt">x =</span> <span class="fl">7.3928</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb39-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">round</span>(<span class="dt">x =</span> <span class="fl">7.3928</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb41-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a></code></pre></div>
 </details>
 <p>Success! We have now given R everything it needs to actually execute the command and give us the information we wanted.</p>
 </div>
 <div id="order-of-arguments" class="section level3">
 <h3>Order of Arguments</h3>
 <p>If you want to, you can achieve the same result by changing the order of the arguments. Because we have written the names of both arguments, R can still do what we want it to do:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">x =</span> <span class="fl">7.3928</span>)</a>
-<a class="sourceLine" id="cb40-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a></code></pre></div>
-<p>We can also, to some degree, drop the names of the arguments, as long as R can still understand what we’re trying to do:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="fl">7.3928</span>)</a>
-<a class="sourceLine" id="cb41-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a></code></pre></div>
-<p>Here I left out the <code>x =</code>. R can still understand this because <code>round()</code> only takes two arguments, and we explicitly told it what value belongs to <code>digits</code>, so it assumes the second number must be <code>x</code>.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">round</span>(<span class="fl">7.3928</span>, <span class="dv">2</span>)</a>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">x =</span> <span class="fl">7.3928</span>)</a>
 <a class="sourceLine" id="cb42-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a></code></pre></div>
+<p>We can also, to some degree, drop the names of the arguments, as long as R can still understand what we’re trying to do:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="fl">7.3928</span>)</a>
+<a class="sourceLine" id="cb43-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a></code></pre></div>
+<p>Here I left out the <code>x =</code>. R can still understand this because <code>round()</code> only takes two arguments, and we explicitly told it what value belongs to <code>digits</code>, so it assumes the second number must be <code>x</code>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">round</span>(<span class="fl">7.3928</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb44-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a></code></pre></div>
 <p>This time I dropped both argument names. R can still understand this because when you don’t specify which input goes with which argument, R will assume they should go in the default order given in the help documentation. So, R has automatically assigned 7.3928 to <code>x</code> and 2 to <code>digits</code>, which is what we wanted.</p>
 <p>When you get more proficient at using functions and writing code quickly, you can write code like this without including argument names. However, for now, I wouldn’t recommend dropping them, because it’s easy to forget what each of the numbers is doing. For example, if you forget the order of arguments and don’t specify what they are, you might write this:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">round</span>(<span class="dv">2</span>, <span class="fl">7.3928</span>)</a>
-<a class="sourceLine" id="cb43-2" title="2">[<span class="dv">1</span>] <span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">round</span>(<span class="dv">2</span>, <span class="fl">7.3928</span>)</a>
+<a class="sourceLine" id="cb45-2" title="2">[<span class="dv">1</span>] <span class="dv">2</span></a></code></pre></div>
 <p>Here, since we didn’t specify, R assumed that 2 was the number we wanted to round. This isn’t what we wanted - but R has no way of knowing this. It always assumes that what we typed was precisely what we intended to ask R to do.</p>
 </div>
 <div id="arguments-as-boxes" class="section level3">
 <h3>Arguments as Boxes</h3>
 <p>A last important aspect of using functions is to remember that each argument in a function can only take a single object. For example, we saw above that we put the single value 7.3928 into the <code>x</code> argument of <code>round()</code>. But what if we wanted to round more than one number? We don’t want to have to write a new <code>round()</code> command for every number, even though we could do this if we particularly enjoyed doing a lot of tedius and repetitive typing:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">round</span>(<span class="fl">7.3928</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb44-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a>
-<a class="sourceLine" id="cb44-3" title="3"><span class="kw">round</span>(<span class="fl">59.54</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb44-4" title="4">[<span class="dv">1</span>] <span class="fl">59.54</span></a>
-<a class="sourceLine" id="cb44-5" title="5"><span class="kw">round</span>(<span class="fl">0.198</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb44-6" title="6">[<span class="dv">1</span>] <span class="fl">0.2</span></a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">round</span>(<span class="fl">7.3928</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb46-2" title="2">[<span class="dv">1</span>] <span class="fl">7.39</span></a>
+<a class="sourceLine" id="cb46-3" title="3"><span class="kw">round</span>(<span class="fl">59.54</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb46-4" title="4">[<span class="dv">1</span>] <span class="fl">59.54</span></a>
+<a class="sourceLine" id="cb46-5" title="5"><span class="kw">round</span>(<span class="fl">0.198</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb46-6" title="6">[<span class="dv">1</span>] <span class="fl">0.2</span></a></code></pre></div>
 <p>So what happens if we try to put all of those numbers into <code>round()</code>? We might first try this:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">round</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb45-2" title="2">Error <span class="cf">in</span> <span class="kw">eval</span>(expr, envir, enclos)<span class="op">:</span><span class="st"> </span><span class="dv">4</span> arguments passed to <span class="st">&#39;round&#39;</span>which requires <span class="dv">1</span> or <span class="dv">2</span> arguments</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">round</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb47-2" title="2">Error <span class="cf">in</span> <span class="kw">eval</span>(expr, envir, enclos)<span class="op">:</span><span class="st"> </span><span class="dv">4</span> arguments passed to <span class="st">&#39;round&#39;</span>which requires <span class="dv">1</span> or <span class="dv">2</span> arguments</a></code></pre></div>
 <p>Once again, R tells us that this doesn’t work by throwing an error. R has tried to do what we wanted, but the <code>round()</code> function only allows a max of two arguments, and we’ve given it four. Behind the scenes, R has tried to run <code>round(x = 7.3928, digits = 59.54...</code> and can’t proceed from there because it doesn’t know what to do with the last two numbers. So, what we need to do is find a way to put all three numbers that we want to round into the first <code>x</code> argument together. If only there was a way to put them in some sort of container, <em>like a box</em>…</p>
 <p>You may have guessed where this is going: one method we could use would be to put the three numbers we want to round into a single object, and then pass that object to <code>round()</code> as the <code>x</code> argument. In the section on Objects above, we already saw that we can <strong>c</strong>ombine any number of things together using the <code>c()</code> function.</p>
 <p> </p>
@@ -2154,9 +2238,9 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Use <code>c()</code> to create a new object containing the three numbers 7.3928, 59.54, and 0.198, then use <code>round()</code> to round them to two decimal places.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>)</a>
-<a class="sourceLine" id="cb46-2" title="2"><span class="kw">round</span>(<span class="dt">x =</span> numbers, <span class="dt">digits =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb46-3" title="3">[<span class="dv">1</span>]  <span class="fl">7.39</span> <span class="fl">59.54</span>  <span class="fl">0.20</span></a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>)</a>
+<a class="sourceLine" id="cb48-2" title="2"><span class="kw">round</span>(<span class="dt">x =</span> numbers, <span class="dt">digits =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb48-3" title="3">[<span class="dv">1</span>]  <span class="fl">7.39</span> <span class="fl">59.54</span>  <span class="fl">0.20</span></a></code></pre></div>
 </details>
 <p>Perfect! This time, all three numbers together went into the <code>x</code> argument.</p>
 <p>We could also simplify this even further by removing the intermediate step of creating the <code>numbers</code> object.</p>
@@ -2167,8 +2251,8 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Use <code>c()</code> and <code>round()</code> together in a single command to get the same output as above.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">round</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb47-2" title="2">[<span class="dv">1</span>]  <span class="fl">7.39</span> <span class="fl">59.54</span>  <span class="fl">0.20</span></a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">round</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb49-2" title="2">[<span class="dv">1</span>]  <span class="fl">7.39</span> <span class="fl">59.54</span>  <span class="fl">0.20</span></a></code></pre></div>
 </details>
 <p>Here we can see a good example of a function inside another function. You can “stack” functions inside each other like this as much as you like, although it can become difficult to read the code or keep track of what it’s doing. In the “Next Steps” section at the end of this tutorial, you can find links to tutorial on the pipe operator <code>%&gt;%</code>, which allows you to string functions together much more easily.</p>
 <p> </p>
@@ -2198,8 +2282,8 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Use <a href="https://www.rdocumentation.org/packages/weights/versions/1.0.1/topics/rd">the help documentation for <code>rd()</code></a> to round the same three numbers as above.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb48-2" title="2">Error <span class="cf">in</span> <span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)<span class="op">:</span><span class="st"> </span>could not find <span class="cf">function</span> <span class="st">&quot;rd&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb50-2" title="2">Error <span class="cf">in</span> <span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)<span class="op">:</span><span class="st"> </span>could not find <span class="cf">function</span> <span class="st">&quot;rd&quot;</span></a></code></pre></div>
 </details>
 <p>Uh oh. What happened? We know we spelled the function correctly (it’s only two letters!) and we can see from the help documentation that the arguments are the same as for <code>round()</code>. Why doesn’t this work?</p>
 <p>There’s a hint in the upper right corner of the help documentation that says: “From <a href="https://www.rdocumentation.org/packages/weights/versions/1.0.1">weights v1.0.1</a>”. This is the name of the <strong>package</strong> that contains the function <code>rd()</code>. From the error message that R gave us above, we can tell that R doesn’t come with this package pre-loaded. So, even though the function does exist, we don’t currently have access to it.</p>
@@ -2213,7 +2297,7 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <h3>Task 13</h3>
 <p>Run the code below to install the <code>weights</code> package.</p>
 <p><strong>Hint</strong>: Notice the quote marks. This function won’t work properly if you don’t put in the quotes!</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;weights&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;weights&quot;</span>)</a></code></pre></div>
 <p>You should see a lot of code come up very quickly. Don’t worry, nothing’s going to explode! There will be lots of <code>trying URL</code> and then <code>installing *binary* package</code> and finally <code>The downloaded source packages are in</code> followed by a file name. If this is what happened when you ran this function, congratulations! You are now the proud owner of a copy of the <code>weights</code> package, successfully installed on your computer.</p>
 <p>(Note: If R throws an error and tells you that the package failed to install, see <a href="https://support.rstudio.com/hc/en-us/articles/200554786-Problem-Installing-Packages">this troubleshooter for solving package installation errors</a>.)</p>
 <p>Now that we have the package that contains the <code>rd()</code> function, let’s try using it again.</p>
@@ -2224,8 +2308,8 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p><strong>Hint</strong>: You can easily retrieve commands that you’ve already executed in the console by pushing the up and down arrow keys to scroll through your command history.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb50-2" title="2">Error <span class="cf">in</span> <span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)<span class="op">:</span><span class="st"> </span>could not find <span class="cf">function</span> <span class="st">&quot;rd&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb52-2" title="2">Error <span class="cf">in</span> <span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)<span class="op">:</span><span class="st"> </span>could not find <span class="cf">function</span> <span class="st">&quot;rd&quot;</span></a></code></pre></div>
 </details>
 <p>The same <code>cannot find function</code> error comes up again, even though we’re sure now that we have the correct package installed. What happened?</p>
 </div>
@@ -2239,7 +2323,7 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <h3>Task 14</h3>
 <p>Run the following code to load the <code>weights</code> package.</p>
 <p><strong>Hint</strong>: No quote marks this time!</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">library</span>(weights)</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="kw">library</span>(weights)</a></code></pre></div>
 <p>If you installed the package successfully, you should find that nothing (apparently) happens when you execute this command. That’s a good thing - it means the command has run without errors. However, if we want to check, let’s have a look at the packages that are currently loaded.</p>
 <p>To do this, look at the “Packages” tab (next to the “Files” and “Plots” tabs). Here you can see a list of all of the packages that are currently <strong>installed</strong> in R. The ones with a tick mark next to them are currently <strong>loaded</strong>. If you scroll down, you should see <code>weights</code> in this list with a tick. Pick another random package and click on the tick box; you should see that RStudio automatically runs another <code>library()</code> command in the console for you.</p>
 <p> </p>
@@ -2248,8 +2332,8 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p>Now that the <code>weights</code> package is loaded, run the same <code>rd()</code> command again.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb52-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;7.39&quot;</span>  <span class="st">&quot;59.54&quot;</span> <span class="st">&quot;.20&quot;</span>  </a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">rd</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb54-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;7.39&quot;</span>  <span class="st">&quot;59.54&quot;</span> <span class="st">&quot;.20&quot;</span>  </a></code></pre></div>
 </details>
 <p>Success!</p>
 </div>
@@ -2294,29 +2378,28 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 <p><strong>If you have not done so before</strong>, install the <code>Hmisc</code> and <code>tidyverse</code> packages as described above in the “Packages” section. Then, load them as well.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="co"># Remember to run the install.packages command in the console once only!</span></a>
-<a class="sourceLine" id="cb53-2" title="2"><span class="kw">install.packages</span>(<span class="st">&quot;Hmisc&quot;</span>)</a>
-<a class="sourceLine" id="cb53-3" title="3"><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
-<a class="sourceLine" id="cb53-4" title="4"></a>
-<a class="sourceLine" id="cb53-5" title="5"><span class="kw">library</span>(Hmisc)</a>
-<a class="sourceLine" id="cb53-6" title="6"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="co"># Remember to run the install.packages command in the console once only!</span></a>
+<a class="sourceLine" id="cb55-2" title="2"><span class="kw">install.packages</span>(<span class="st">&quot;Hmisc&quot;</span>)</a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</a>
+<a class="sourceLine" id="cb55-4" title="4"></a>
+<a class="sourceLine" id="cb55-5" title="5"><span class="kw">library</span>(Hmisc)</a>
+<a class="sourceLine" id="cb55-6" title="6"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
 </details>
 <p>When it loads successfully, <code>tidyverse</code> gives a summary of the packages that it loads. In the second half of this output we see a section labeled “Conflicts”, which notes that “<code>dplyr::summarize()</code> masks <code>Hmisc::summarize()</code>” (among others):</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">tidyverse_conflicts</span>()</a>
-<a class="sourceLine" id="cb54-2" title="2"><span class="op">--</span><span class="st"> </span>Conflicts <span class="op">------------------------------------------</span><span class="st"> </span><span class="kw">tidyverse_conflicts</span>() <span class="op">--</span></a>
-<a class="sourceLine" id="cb54-3" title="3">x gdata<span class="op">::</span><span class="kw">combine</span>()   masks dplyr<span class="op">::</span><span class="kw">combine</span>()</a>
-<a class="sourceLine" id="cb54-4" title="4">x mice<span class="op">::</span><span class="kw">complete</span>()   masks tidyr<span class="op">::</span><span class="kw">complete</span>()</a>
-<a class="sourceLine" id="cb54-5" title="5">x dplyr<span class="op">::</span><span class="kw">filter</span>()    masks stats<span class="op">::</span><span class="kw">filter</span>()</a>
-<a class="sourceLine" id="cb54-6" title="6">x gdata<span class="op">::</span><span class="kw">first</span>()     masks dplyr<span class="op">::</span><span class="kw">first</span>()</a>
-<a class="sourceLine" id="cb54-7" title="7">x gdata<span class="op">::</span><span class="kw">keep</span>()      masks purrr<span class="op">::</span><span class="kw">keep</span>()</a>
-<a class="sourceLine" id="cb54-8" title="8">x dplyr<span class="op">::</span><span class="kw">lag</span>()       masks stats<span class="op">::</span><span class="kw">lag</span>()</a>
-<a class="sourceLine" id="cb54-9" title="9">x gdata<span class="op">::</span><span class="kw">last</span>()      masks dplyr<span class="op">::</span><span class="kw">last</span>()</a>
-<a class="sourceLine" id="cb54-10" title="10">x dplyr<span class="op">::</span><span class="kw">src</span>()       masks Hmisc<span class="op">::</span><span class="kw">src</span>()</a>
-<a class="sourceLine" id="cb54-11" title="11">x dplyr<span class="op">::</span><span class="kw">summarize</span>() masks Hmisc<span class="op">::</span><span class="kw">summarize</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">tidyverse_conflicts</span>()</a>
+<a class="sourceLine" id="cb56-2" title="2"><span class="op">--</span><span class="st"> </span>Conflicts <span class="op">------------------------------------------</span><span class="st"> </span><span class="kw">tidyverse_conflicts</span>() <span class="op">--</span></a>
+<a class="sourceLine" id="cb56-3" title="3">x gdata<span class="op">::</span><span class="kw">combine</span>()   masks dplyr<span class="op">::</span><span class="kw">combine</span>()</a>
+<a class="sourceLine" id="cb56-4" title="4">x dplyr<span class="op">::</span><span class="kw">filter</span>()    masks stats<span class="op">::</span><span class="kw">filter</span>()</a>
+<a class="sourceLine" id="cb56-5" title="5">x gdata<span class="op">::</span><span class="kw">first</span>()     masks dplyr<span class="op">::</span><span class="kw">first</span>()</a>
+<a class="sourceLine" id="cb56-6" title="6">x gdata<span class="op">::</span><span class="kw">keep</span>()      masks purrr<span class="op">::</span><span class="kw">keep</span>()</a>
+<a class="sourceLine" id="cb56-7" title="7">x dplyr<span class="op">::</span><span class="kw">lag</span>()       masks stats<span class="op">::</span><span class="kw">lag</span>()</a>
+<a class="sourceLine" id="cb56-8" title="8">x gdata<span class="op">::</span><span class="kw">last</span>()      masks dplyr<span class="op">::</span><span class="kw">last</span>()</a>
+<a class="sourceLine" id="cb56-9" title="9">x dplyr<span class="op">::</span><span class="kw">src</span>()       masks Hmisc<span class="op">::</span><span class="kw">src</span>()</a>
+<a class="sourceLine" id="cb56-10" title="10">x dplyr<span class="op">::</span><span class="kw">summarize</span>() masks Hmisc<span class="op">::</span><span class="kw">summarize</span>()</a></code></pre></div>
 <p>What the <code>tidyverse</code> package is telling us is that if we are trying to use both packages at the same time, R will use the <code>summarize()</code> function from <code>tidyverse</code> rather than the function with the same name from <code>Hmisc</code>. The function from <code>Hmisc</code> is covered up, or “masked”, by the function from <code>tidyverse</code>.</p>
 <p>However, if we have <code>Hmisc</code> loaded as well, we can specifically tell R that we want to use <code>summarize()</code> from <code>Hmisc</code> by using the same notation we saw above: <code>Hmisc::summarize</code>. The package name before the <code>::</code> tells R which package to use, and the function name comes after the <code>::</code>. You could use this same notation for every command you write, for instance:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">base<span class="op">::</span><span class="kw">round</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb55-2" title="2">[<span class="dv">1</span>]  <span class="fl">7.39</span> <span class="fl">59.54</span>  <span class="fl">0.20</span></a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1">base<span class="op">::</span><span class="kw">round</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">7.3928</span>, <span class="fl">59.54</span>, <span class="fl">0.198</span>), <span class="dt">digits =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb57-2" title="2">[<span class="dv">1</span>]  <span class="fl">7.39</span> <span class="fl">59.54</span>  <span class="fl">0.20</span></a></code></pre></div>
 <p>If you wrote every function like this, you would never have any problem with accidentally using the wrong function, so some people recommend it as best practice (especially if you are writing packages for other people to use). However, it also makes your code harder to read at a glance and more onerous to type, and usually isn’t necessary. You can do it either way - it’s up to you!</p>
 </div>
 </div>
@@ -2359,13 +2442,13 @@ What I’ve essentially asked is, “Put all of these numbers into a single vect
 </ul>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"></a>
-<a class="sourceLine" id="cb56-2" title="2">pineapple &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb56-3" title="3">slice &lt;-<span class="st"> </span>pineapple<span class="op">*</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb56-4" title="4">pineapple &lt;-<span class="st"> </span>pineapple <span class="op">+</span><span class="st"> </span>slice</a>
-<a class="sourceLine" id="cb56-5" title="5"></a>
-<a class="sourceLine" id="cb56-6" title="6"><span class="co"># You can save your script by clicking the blue save icon</span></a>
-<a class="sourceLine" id="cb56-7" title="7"><span class="co"># and then navigating to the right folder and entering the name</span></a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"></a>
+<a class="sourceLine" id="cb58-2" title="2">pineapple &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb58-3" title="3">slice &lt;-<span class="st"> </span>pineapple<span class="op">*</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb58-4" title="4">pineapple &lt;-<span class="st"> </span>pineapple <span class="op">+</span><span class="st"> </span>slice</a>
+<a class="sourceLine" id="cb58-5" title="5"></a>
+<a class="sourceLine" id="cb58-6" title="6"><span class="co"># You can save your script by clicking the blue save icon</span></a>
+<a class="sourceLine" id="cb58-7" title="7"><span class="co"># and then navigating to the right folder and entering the name</span></a></code></pre></div>
 </details>
 <p> </p>
 </div>
@@ -2418,8 +2501,8 @@ Have a look at what’s in the <code>pineapple</code> object, either by looking 
 <div id="comments" class="section level2">
 <h2>Comments</h2>
 <p>You may have noticed in the pieces of code earlier in this tutorial, I’ve included some things that are not code, but regular text. This is an example of a comment that you can include in your code by writing a hash <code>#</code> in front of it. When it is running commands, R will simply ignore any comments:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># This is a comment!</span></a>
-<a class="sourceLine" id="cb57-2" title="2"><span class="co"># I can use them to write anything I want in my code</span></a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="co"># This is a comment!</span></a>
+<a class="sourceLine" id="cb59-2" title="2"><span class="co"># I can use them to write anything I want in my code</span></a></code></pre></div>
 <p>Why is this useful? For a couple reasons that are very good practice.</p>
 <div id="annotate-your-code" class="section level3">
 <h3>Annotate Your Code</h3>
@@ -2430,16 +2513,16 @@ Have a look at what’s in the <code>pineapple</code> object, either by looking 
 <p>Use comments to annotate the script you wrote earlier.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="co"># You can write whatever you like in your comments, for instance:</span></a>
-<a class="sourceLine" id="cb58-2" title="2"></a>
-<a class="sourceLine" id="cb58-3" title="3"><span class="co"># Create a new object containing four numbers</span></a>
-<a class="sourceLine" id="cb58-4" title="4">pineapple &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb58-5" title="5"></a>
-<a class="sourceLine" id="cb58-6" title="6"><span class="co"># Create another object containing those numbers times two</span></a>
-<a class="sourceLine" id="cb58-7" title="7">slice &lt;-<span class="st"> </span>pineapple<span class="op">*</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb58-8" title="8"></a>
-<a class="sourceLine" id="cb58-9" title="9"><span class="co"># Add to pineapple and save as pineapple</span></a>
-<a class="sourceLine" id="cb58-10" title="10">pineapple &lt;-<span class="st"> </span>pineapple <span class="op">+</span><span class="st"> </span>slice</a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="co"># You can write whatever you like in your comments, for instance:</span></a>
+<a class="sourceLine" id="cb60-2" title="2"></a>
+<a class="sourceLine" id="cb60-3" title="3"><span class="co"># Create a new object containing four numbers</span></a>
+<a class="sourceLine" id="cb60-4" title="4">pineapple &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb60-5" title="5"></a>
+<a class="sourceLine" id="cb60-6" title="6"><span class="co"># Create another object containing those numbers times two</span></a>
+<a class="sourceLine" id="cb60-7" title="7">slice &lt;-<span class="st"> </span>pineapple<span class="op">*</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb60-8" title="8"></a>
+<a class="sourceLine" id="cb60-9" title="9"><span class="co"># Add to pineapple and save as pineapple</span></a>
+<a class="sourceLine" id="cb60-10" title="10">pineapple &lt;-<span class="st"> </span>pineapple <span class="op">+</span><span class="st"> </span>slice</a></code></pre></div>
 </details>
 <p>Although you might feel that you don’t really need comments on this code if you already understand what it does, it’s a very good habit to get into. It will make your scripts much easier to read and much more useful for the future.</p>
 </div>
@@ -2478,7 +2561,7 @@ Have a look at what’s in the <code>pineapple</code> object, either by looking 
 <p><strong>IMPORTANT</strong>: If you have already installed <code>tidyverse</code>, you <strong>do not</strong> need to do it again!</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
 </details>
 <p>Now we’re ready to go!</p>
 </div>
@@ -2492,7 +2575,7 @@ Have a look at what’s in the <code>pineapple</code> object, either by looking 
 <div id="task-17" class="section level3">
 <h3>Task 17</h3>
 <p>Copy the following command into your script and run it.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">athletics &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">athletics &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv&quot;</span>)</a></code></pre></div>
 <p>Before we move on, let’s look at what this command is doing, using what we’ve learned so far. Let’s take it one bit at a time:</p>
 <ul>
 <li>We are creating a new object called <code>athletics</code>. Remember, we can call our objects anything we like (within reason), but it’s a good idea to call them something sensible.</li>
@@ -2524,22 +2607,24 @@ Have a look at what’s in the <code>pineapple</code> object, either by looking 
 <p>Call the <code>athletics</code> object in the Console.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">athletics</a>
-<a class="sourceLine" id="cb61-2" title="2"><span class="co"># A tibble: 310 x 9</span></a>
-<a class="sourceLine" id="cb61-3" title="3">   Games  Year Gender Event Participant Country Distance</a>
-<a class="sourceLine" id="cb61-4" title="4">   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">       </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb61-5" title="5"><span class="st"> </span><span class="dv">1</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 100m  Elaine THO<span class="op">~</span><span class="st"> </span>JAM          <span class="dv">100</span></a>
-<a class="sourceLine" id="cb61-6" title="6"> <span class="dv">2</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 200m  Elaine THO<span class="op">~</span><span class="st"> </span>JAM          <span class="dv">200</span></a>
-<a class="sourceLine" id="cb61-7" title="7"> <span class="dv">3</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 400m  Shaunae MI<span class="op">~</span><span class="st"> </span>BAH          <span class="dv">400</span></a>
-<a class="sourceLine" id="cb61-8" title="8"> <span class="dv">4</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 800m  Caster SEM<span class="op">~</span><span class="st"> </span>RSA          <span class="dv">800</span></a>
-<a class="sourceLine" id="cb61-9" title="9"> <span class="dv">5</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 1500m Chepngetic<span class="op">~</span><span class="st"> </span>KEN         <span class="dv">1500</span></a>
-<a class="sourceLine" id="cb61-10" title="10"> <span class="dv">6</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 5000m Jepkemoi C<span class="op">~</span><span class="st"> </span>KEN         <span class="dv">5000</span></a>
-<a class="sourceLine" id="cb61-11" title="11"> <span class="dv">7</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens <span class="dv">10-0</span><span class="op">~</span><span class="st"> </span>Almaz AYANA ETH        <span class="dv">10000</span></a>
-<a class="sourceLine" id="cb61-12" title="12"> <span class="dv">8</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens mara<span class="op">~</span><span class="st"> </span>Jelagat SU<span class="op">~</span><span class="st"> </span>KEN        <span class="dv">42195</span></a>
-<a class="sourceLine" id="cb61-13" title="13"> <span class="dv">9</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens long<span class="op">~</span><span class="st"> </span>Tianna BAR<span class="op">~</span><span class="st"> </span>USA           <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb61-14" title="14"><span class="dv">10</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens high<span class="op">~</span><span class="st"> </span>Ruth BEITIA ESP           <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb61-15" title="15"><span class="co"># ... with 300 more rows, and 2 more variables:</span></a>
-<a class="sourceLine" id="cb61-16" title="16"><span class="co">#   Time_S &lt;dbl&gt;, Mark &lt;dbl&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">athletics</a>
+<a class="sourceLine" id="cb63-2" title="2"><span class="co"># A tibble: 310 x 9</span></a>
+<a class="sourceLine" id="cb63-3" title="3">   Games  Year Gender Event Participant</a>
+<a class="sourceLine" id="cb63-4" title="4">   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span></a>
+<a class="sourceLine" id="cb63-5" title="5"><span class="st"> </span><span class="dv">1</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 100m  Elaine THO<span class="op">~</span></a>
+<a class="sourceLine" id="cb63-6" title="6"><span class="st"> </span><span class="dv">2</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 200m  Elaine THO<span class="op">~</span></a>
+<a class="sourceLine" id="cb63-7" title="7"><span class="st"> </span><span class="dv">3</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 400m  Shaunae MI<span class="op">~</span></a>
+<a class="sourceLine" id="cb63-8" title="8"><span class="st"> </span><span class="dv">4</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 800m  Caster SEM<span class="op">~</span></a>
+<a class="sourceLine" id="cb63-9" title="9"><span class="st"> </span><span class="dv">5</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 1500m Chepngetic<span class="op">~</span></a>
+<a class="sourceLine" id="cb63-10" title="10"><span class="st"> </span><span class="dv">6</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 5000m Jepkemoi C<span class="op">~</span></a>
+<a class="sourceLine" id="cb63-11" title="11"><span class="st"> </span><span class="dv">7</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens <span class="dv">10-0</span><span class="op">~</span><span class="st"> </span>Almaz AYANA</a>
+<a class="sourceLine" id="cb63-12" title="12"> <span class="dv">8</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens mara<span class="op">~</span><span class="st"> </span>Jelagat SU<span class="op">~</span></a>
+<a class="sourceLine" id="cb63-13" title="13"><span class="st"> </span><span class="dv">9</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens long<span class="op">~</span><span class="st"> </span>Tianna BAR<span class="op">~</span></a>
+<a class="sourceLine" id="cb63-14" title="14"><span class="dv">10</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens high<span class="op">~</span><span class="st"> </span>Ruth BEITIA</a>
+<a class="sourceLine" id="cb63-15" title="15"><span class="co"># ... with 300 more rows, and 4 more</span></a>
+<a class="sourceLine" id="cb63-16" title="16"><span class="co">#   variables: Country &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb63-17" title="17"><span class="co">#   Distance &lt;dbl&gt;, Time_S &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb63-18" title="18"><span class="co">#   Mark &lt;dbl&gt;</span></a></code></pre></div>
 </details>
 <p>Remember that when we call an object in the Console, we’re essentially asking R to get that object for us and show us what it is. Before, we just did this with single numbers or words. This time, we’re calling a whole dataset.</p>
 <p>R makes this a bit easier on us by only printing out a preview of the dataset, instead of all of it. Let’s look at what we can learn from the printout of the data here.</p>
@@ -2550,31 +2635,47 @@ Have a look at what’s in the <code>pineapple</code> object, either by looking 
 <div id="task-18.3" class="section level4">
 <h4>Task 18.3</h4>
 <p>Use the following code to produce a summary of the <code>athletics</code> object in the Console.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw">summary</span>(athletics)</a>
-<a class="sourceLine" id="cb62-2" title="2">    Games                Year         Gender         </a>
-<a class="sourceLine" id="cb62-3" title="3"> Length<span class="op">:</span><span class="dv">310</span>         Min.   <span class="op">:</span><span class="dv">1928</span>   Length<span class="op">:</span><span class="dv">310</span>        </a>
-<a class="sourceLine" id="cb62-4" title="4"> Class <span class="op">:</span>character   1st Qu.<span class="op">:</span><span class="dv">1956</span>   Class <span class="op">:</span>character  </a>
-<a class="sourceLine" id="cb62-5" title="5"> Mode  <span class="op">:</span>character   Median <span class="op">:</span><span class="dv">1976</span>   Mode  <span class="op">:</span>character  </a>
-<a class="sourceLine" id="cb62-6" title="6">                    Mean   <span class="op">:</span><span class="dv">1975</span>                     </a>
-<a class="sourceLine" id="cb62-7" title="7">                    3rd Qu.<span class="op">:</span><span class="dv">1996</span>                     </a>
-<a class="sourceLine" id="cb62-8" title="8">                    Max.   <span class="op">:</span><span class="dv">2016</span>                     </a>
-<a class="sourceLine" id="cb62-9" title="9">                                                     </a>
-<a class="sourceLine" id="cb62-10" title="10">    Event           Participant          Country         </a>
-<a class="sourceLine" id="cb62-11" title="11"> Length<span class="op">:</span><span class="dv">310</span>         Length<span class="op">:</span><span class="dv">310</span>         Length<span class="op">:</span><span class="dv">310</span>        </a>
-<a class="sourceLine" id="cb62-12" title="12"> Class <span class="op">:</span>character   Class <span class="op">:</span>character   Class <span class="op">:</span>character  </a>
-<a class="sourceLine" id="cb62-13" title="13"> Mode  <span class="op">:</span>character   Mode  <span class="op">:</span>character   Mode  <span class="op">:</span>character  </a>
-<a class="sourceLine" id="cb62-14" title="14">                                                         </a>
-<a class="sourceLine" id="cb62-15" title="15">                                                         </a>
-<a class="sourceLine" id="cb62-16" title="16">                                                         </a>
-<a class="sourceLine" id="cb62-17" title="17">                                                         </a>
-<a class="sourceLine" id="cb62-18" title="18">    Distance         Time_S             Mark       </a>
-<a class="sourceLine" id="cb62-19" title="19"> Min.   <span class="op">:</span><span class="st">  </span><span class="dv">100</span>   Min.   <span class="op">:</span><span class="st">  </span><span class="fl">10.54</span>   Min.   <span class="op">:</span><span class="st"> </span><span class="fl">1.970</span>  </a>
-<a class="sourceLine" id="cb62-20" title="20"> 1st Qu.<span class="op">:</span><span class="st">  </span><span class="dv">400</span>   1st Qu.<span class="op">:</span><span class="st">  </span><span class="fl">23.48</span>   1st Qu.<span class="op">:</span><span class="st"> </span><span class="fl">3.965</span>  </a>
-<a class="sourceLine" id="cb62-21" title="21"> Median <span class="op">:</span><span class="st"> </span><span class="dv">1500</span>   Median <span class="op">:</span><span class="st">  </span><span class="fl">50.35</span>   Median <span class="op">:</span><span class="st"> </span><span class="fl">6.020</span>  </a>
-<a class="sourceLine" id="cb62-22" title="22"> Mean   <span class="op">:</span><span class="st"> </span><span class="dv">7040</span>   Mean   <span class="op">:</span><span class="st"> </span><span class="fl">947.14</span>   Mean   <span class="op">:</span><span class="st"> </span><span class="fl">7.287</span>  </a>
-<a class="sourceLine" id="cb62-23" title="23"> 3rd Qu.<span class="op">:</span><span class="dv">10000</span>   3rd Qu.<span class="op">:</span><span class="st"> </span><span class="fl">239.65</span>   3rd Qu.<span class="op">:</span><span class="st"> </span><span class="fl">9.123</span>  </a>
-<a class="sourceLine" id="cb62-24" title="24"> Max.   <span class="op">:</span><span class="dv">42195</span>   Max.   <span class="op">:</span><span class="fl">9161.00</span>   Max.   <span class="op">:</span><span class="fl">15.390</span>  </a>
-<a class="sourceLine" id="cb62-25" title="25"> NA<span class="st">&#39;s   :85      NA&#39;</span>s   <span class="op">:</span><span class="dv">168</span>       NA<span class="st">&#39;s   :290     </span></a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw">summary</span>(athletics)</a>
+<a class="sourceLine" id="cb64-2" title="2">    Games                Year     </a>
+<a class="sourceLine" id="cb64-3" title="3"> Length<span class="op">:</span><span class="dv">310</span>         Min.   <span class="op">:</span><span class="dv">1928</span>  </a>
+<a class="sourceLine" id="cb64-4" title="4"> Class <span class="op">:</span>character   1st Qu.<span class="op">:</span><span class="dv">1956</span>  </a>
+<a class="sourceLine" id="cb64-5" title="5"> Mode  <span class="op">:</span>character   Median <span class="op">:</span><span class="dv">1976</span>  </a>
+<a class="sourceLine" id="cb64-6" title="6">                    Mean   <span class="op">:</span><span class="dv">1975</span>  </a>
+<a class="sourceLine" id="cb64-7" title="7">                    3rd Qu.<span class="op">:</span><span class="dv">1996</span>  </a>
+<a class="sourceLine" id="cb64-8" title="8">                    Max.   <span class="op">:</span><span class="dv">2016</span>  </a>
+<a class="sourceLine" id="cb64-9" title="9">                                  </a>
+<a class="sourceLine" id="cb64-10" title="10">    Gender             Event          </a>
+<a class="sourceLine" id="cb64-11" title="11"> Length<span class="op">:</span><span class="dv">310</span>         Length<span class="op">:</span><span class="dv">310</span>        </a>
+<a class="sourceLine" id="cb64-12" title="12"> Class <span class="op">:</span>character   Class <span class="op">:</span>character  </a>
+<a class="sourceLine" id="cb64-13" title="13"> Mode  <span class="op">:</span>character   Mode  <span class="op">:</span>character  </a>
+<a class="sourceLine" id="cb64-14" title="14">                                      </a>
+<a class="sourceLine" id="cb64-15" title="15">                                      </a>
+<a class="sourceLine" id="cb64-16" title="16">                                      </a>
+<a class="sourceLine" id="cb64-17" title="17">                                      </a>
+<a class="sourceLine" id="cb64-18" title="18"> Participant          Country         </a>
+<a class="sourceLine" id="cb64-19" title="19"> Length<span class="op">:</span><span class="dv">310</span>         Length<span class="op">:</span><span class="dv">310</span>        </a>
+<a class="sourceLine" id="cb64-20" title="20"> Class <span class="op">:</span>character   Class <span class="op">:</span>character  </a>
+<a class="sourceLine" id="cb64-21" title="21"> Mode  <span class="op">:</span>character   Mode  <span class="op">:</span>character  </a>
+<a class="sourceLine" id="cb64-22" title="22">                                      </a>
+<a class="sourceLine" id="cb64-23" title="23">                                      </a>
+<a class="sourceLine" id="cb64-24" title="24">                                      </a>
+<a class="sourceLine" id="cb64-25" title="25">                                      </a>
+<a class="sourceLine" id="cb64-26" title="26">    Distance         Time_S       </a>
+<a class="sourceLine" id="cb64-27" title="27"> Min.   <span class="op">:</span><span class="st">  </span><span class="dv">100</span>   Min.   <span class="op">:</span><span class="st">  </span><span class="fl">10.54</span>  </a>
+<a class="sourceLine" id="cb64-28" title="28"> 1st Qu.<span class="op">:</span><span class="st">  </span><span class="dv">400</span>   1st Qu.<span class="op">:</span><span class="st">  </span><span class="fl">23.48</span>  </a>
+<a class="sourceLine" id="cb64-29" title="29"> Median <span class="op">:</span><span class="st"> </span><span class="dv">1500</span>   Median <span class="op">:</span><span class="st">  </span><span class="fl">50.35</span>  </a>
+<a class="sourceLine" id="cb64-30" title="30"> Mean   <span class="op">:</span><span class="st"> </span><span class="dv">7040</span>   Mean   <span class="op">:</span><span class="st"> </span><span class="fl">947.14</span>  </a>
+<a class="sourceLine" id="cb64-31" title="31"> 3rd Qu.<span class="op">:</span><span class="dv">10000</span>   3rd Qu.<span class="op">:</span><span class="st"> </span><span class="fl">239.65</span>  </a>
+<a class="sourceLine" id="cb64-32" title="32"> Max.   <span class="op">:</span><span class="dv">42195</span>   Max.   <span class="op">:</span><span class="fl">9161.00</span>  </a>
+<a class="sourceLine" id="cb64-33" title="33"> NA<span class="st">&#39;s   :85      NA&#39;</span>s   <span class="op">:</span><span class="dv">168</span>      </a>
+<a class="sourceLine" id="cb64-34" title="34">      Mark       </a>
+<a class="sourceLine" id="cb64-35" title="35"> Min.   <span class="op">:</span><span class="st"> </span><span class="fl">1.970</span>  </a>
+<a class="sourceLine" id="cb64-36" title="36"> 1st Qu.<span class="op">:</span><span class="st"> </span><span class="fl">3.965</span>  </a>
+<a class="sourceLine" id="cb64-37" title="37"> Median <span class="op">:</span><span class="st"> </span><span class="fl">6.020</span>  </a>
+<a class="sourceLine" id="cb64-38" title="38"> Mean   <span class="op">:</span><span class="st"> </span><span class="fl">7.287</span>  </a>
+<a class="sourceLine" id="cb64-39" title="39"> 3rd Qu.<span class="op">:</span><span class="st"> </span><span class="fl">9.123</span>  </a>
+<a class="sourceLine" id="cb64-40" title="40"> Max.   <span class="op">:</span><span class="fl">15.390</span>  </a>
+<a class="sourceLine" id="cb64-41" title="41"> NA<span class="st">&#39;s   :290     </span></a></code></pre></div>
 <p>The output from this function gives us an overview of some basic summaries for each variable. For some of them, like <code>Games</code> and <code>Gender</code>, we learn only that there are 310 entries and that they are character variables, because we can’t do these calculations on characters (how would find the mean of words?). For the numeric variables, we get the minimum and maximum value, the mean, and some other information. This output also tells us how many, if any, missing values there are. For example, in the <code>Time_S</code> variable, there are 168 <code>NA</code>s. This is very useful information if you wanted to clean and analyse this dataset.</p>
 </div>
 </div>
@@ -2584,7 +2685,7 @@ Have a look at what’s in the <code>pineapple</code> object, either by looking 
 <p>As you are working with data, you can take advantage of the way that R works when you write commands. Let’s have a look at some examples.</p>
 <p>In order to make changes to your dataset, we’re going to make use of a new function. <code>mutate()</code> belongs to the <code>dplyr</code> package, which is part of <code>tidyverse</code>, so you need to have <code>tidyverse</code> loaded to use it; and it only works with tibbles. You can use <code>mutate()</code> to make changes to a dataset by adding or changing the variables in it.</p>
 <p>This function takes the following general format:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="kw">mutate</span>(dataset_name, <span class="dt">new_variable =</span> instructions)</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1"><span class="kw">mutate</span>(dataset_name, <span class="dt">new_variable =</span> instructions)</a></code></pre></div>
 <p>Let’s have a go using this and see how it works.</p>
 <p> </p>
 <div id="task-19" class="section level3">
@@ -2593,22 +2694,24 @@ Have a look at what’s in the <code>pineapple</code> object, either by looking 
 <p><strong>Hint</strong>: Use the existing variable <code>Time_S</code>, which is time in seconds.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw">mutate</span>(athletics, <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a>
-<a class="sourceLine" id="cb64-2" title="2"><span class="co"># A tibble: 310 x 10</span></a>
-<a class="sourceLine" id="cb64-3" title="3">   Games  Year Gender Event Participant Country Distance</a>
-<a class="sourceLine" id="cb64-4" title="4">   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">       </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb64-5" title="5"><span class="st"> </span><span class="dv">1</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 100m  Elaine THO<span class="op">~</span><span class="st"> </span>JAM          <span class="dv">100</span></a>
-<a class="sourceLine" id="cb64-6" title="6"> <span class="dv">2</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 200m  Elaine THO<span class="op">~</span><span class="st"> </span>JAM          <span class="dv">200</span></a>
-<a class="sourceLine" id="cb64-7" title="7"> <span class="dv">3</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 400m  Shaunae MI<span class="op">~</span><span class="st"> </span>BAH          <span class="dv">400</span></a>
-<a class="sourceLine" id="cb64-8" title="8"> <span class="dv">4</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 800m  Caster SEM<span class="op">~</span><span class="st"> </span>RSA          <span class="dv">800</span></a>
-<a class="sourceLine" id="cb64-9" title="9"> <span class="dv">5</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 1500m Chepngetic<span class="op">~</span><span class="st"> </span>KEN         <span class="dv">1500</span></a>
-<a class="sourceLine" id="cb64-10" title="10"> <span class="dv">6</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 5000m Jepkemoi C<span class="op">~</span><span class="st"> </span>KEN         <span class="dv">5000</span></a>
-<a class="sourceLine" id="cb64-11" title="11"> <span class="dv">7</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens <span class="dv">10-0</span><span class="op">~</span><span class="st"> </span>Almaz AYANA ETH        <span class="dv">10000</span></a>
-<a class="sourceLine" id="cb64-12" title="12"> <span class="dv">8</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens mara<span class="op">~</span><span class="st"> </span>Jelagat SU<span class="op">~</span><span class="st"> </span>KEN        <span class="dv">42195</span></a>
-<a class="sourceLine" id="cb64-13" title="13"> <span class="dv">9</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens long<span class="op">~</span><span class="st"> </span>Tianna BAR<span class="op">~</span><span class="st"> </span>USA           <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb64-14" title="14"><span class="dv">10</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens high<span class="op">~</span><span class="st"> </span>Ruth BEITIA ESP           <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb64-15" title="15"><span class="co"># ... with 300 more rows, and 3 more variables:</span></a>
-<a class="sourceLine" id="cb64-16" title="16"><span class="co">#   Time_S &lt;dbl&gt;, Mark &lt;dbl&gt;, Time_Min &lt;dbl&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw">mutate</span>(athletics, <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a>
+<a class="sourceLine" id="cb66-2" title="2"><span class="co"># A tibble: 310 x 10</span></a>
+<a class="sourceLine" id="cb66-3" title="3">   Games  Year Gender Event Participant</a>
+<a class="sourceLine" id="cb66-4" title="4">   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span></a>
+<a class="sourceLine" id="cb66-5" title="5"><span class="st"> </span><span class="dv">1</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 100m  Elaine THO<span class="op">~</span></a>
+<a class="sourceLine" id="cb66-6" title="6"><span class="st"> </span><span class="dv">2</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 200m  Elaine THO<span class="op">~</span></a>
+<a class="sourceLine" id="cb66-7" title="7"><span class="st"> </span><span class="dv">3</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 400m  Shaunae MI<span class="op">~</span></a>
+<a class="sourceLine" id="cb66-8" title="8"><span class="st"> </span><span class="dv">4</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 800m  Caster SEM<span class="op">~</span></a>
+<a class="sourceLine" id="cb66-9" title="9"><span class="st"> </span><span class="dv">5</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 1500m Chepngetic<span class="op">~</span></a>
+<a class="sourceLine" id="cb66-10" title="10"><span class="st"> </span><span class="dv">6</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 5000m Jepkemoi C<span class="op">~</span></a>
+<a class="sourceLine" id="cb66-11" title="11"><span class="st"> </span><span class="dv">7</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens <span class="dv">10-0</span><span class="op">~</span><span class="st"> </span>Almaz AYANA</a>
+<a class="sourceLine" id="cb66-12" title="12"> <span class="dv">8</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens mara<span class="op">~</span><span class="st"> </span>Jelagat SU<span class="op">~</span></a>
+<a class="sourceLine" id="cb66-13" title="13"><span class="st"> </span><span class="dv">9</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens long<span class="op">~</span><span class="st"> </span>Tianna BAR<span class="op">~</span></a>
+<a class="sourceLine" id="cb66-14" title="14"><span class="dv">10</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens high<span class="op">~</span><span class="st"> </span>Ruth BEITIA</a>
+<a class="sourceLine" id="cb66-15" title="15"><span class="co"># ... with 300 more rows, and 5 more</span></a>
+<a class="sourceLine" id="cb66-16" title="16"><span class="co">#   variables: Country &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb66-17" title="17"><span class="co">#   Distance &lt;dbl&gt;, Time_S &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb66-18" title="18"><span class="co">#   Mark &lt;dbl&gt;, Time_Min &lt;dbl&gt;</span></a></code></pre></div>
 <p>Let’s break this command apart and understand what it does.</p>
 <p>First, we have to write <code>mutate(</code> to start the command. Then, we need to put in the name of the dataset that we want to add to or change, which is <code>athletics</code>, followed by a comma. Next, we add the name we want our new variable to have, which is <code>Time_Min</code>, followed by <code>=</code>. Finally, we write the instructions for how R should create this new variable - namely, by taking the values in <code>Time_S</code> and dividing them by 60.</p>
 When you run this command, you should see that R prints out your dataset in the Console, like it did when we called the <code>athletics</code> object. You can see the <code>Time_Min</code> variable in this preview.
@@ -2620,22 +2723,24 @@ When you run this command, you should see that R prints out your dataset in the 
 <p>Replace values in the variable <code>Year</code> with how many years ago the event took place.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1"><span class="kw">mutate</span>(athletics, <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a>
-<a class="sourceLine" id="cb65-2" title="2"><span class="co"># A tibble: 310 x 9</span></a>
-<a class="sourceLine" id="cb65-3" title="3">   Games  Year Gender Event Participant Country Distance</a>
-<a class="sourceLine" id="cb65-4" title="4">   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">       </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb65-5" title="5"><span class="st"> </span><span class="dv">1</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 100m  Elaine THO<span class="op">~</span><span class="st"> </span>JAM          <span class="dv">100</span></a>
-<a class="sourceLine" id="cb65-6" title="6"> <span class="dv">2</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 200m  Elaine THO<span class="op">~</span><span class="st"> </span>JAM          <span class="dv">200</span></a>
-<a class="sourceLine" id="cb65-7" title="7"> <span class="dv">3</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 400m  Shaunae MI<span class="op">~</span><span class="st"> </span>BAH          <span class="dv">400</span></a>
-<a class="sourceLine" id="cb65-8" title="8"> <span class="dv">4</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 800m  Caster SEM<span class="op">~</span><span class="st"> </span>RSA          <span class="dv">800</span></a>
-<a class="sourceLine" id="cb65-9" title="9"> <span class="dv">5</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 1500m Chepngetic<span class="op">~</span><span class="st"> </span>KEN         <span class="dv">1500</span></a>
-<a class="sourceLine" id="cb65-10" title="10"> <span class="dv">6</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 5000m Jepkemoi C<span class="op">~</span><span class="st"> </span>KEN         <span class="dv">5000</span></a>
-<a class="sourceLine" id="cb65-11" title="11"> <span class="dv">7</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens <span class="dv">10-0</span><span class="op">~</span><span class="st"> </span>Almaz AYANA ETH        <span class="dv">10000</span></a>
-<a class="sourceLine" id="cb65-12" title="12"> <span class="dv">8</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens mara<span class="op">~</span><span class="st"> </span>Jelagat SU<span class="op">~</span><span class="st"> </span>KEN        <span class="dv">42195</span></a>
-<a class="sourceLine" id="cb65-13" title="13"> <span class="dv">9</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens long<span class="op">~</span><span class="st"> </span>Tianna BAR<span class="op">~</span><span class="st"> </span>USA           <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb65-14" title="14"><span class="dv">10</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens high<span class="op">~</span><span class="st"> </span>Ruth BEITIA ESP           <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb65-15" title="15"><span class="co"># ... with 300 more rows, and 2 more variables:</span></a>
-<a class="sourceLine" id="cb65-16" title="16"><span class="co">#   Time_S &lt;dbl&gt;, Mark &lt;dbl&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw">mutate</span>(athletics, <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a>
+<a class="sourceLine" id="cb67-2" title="2"><span class="co"># A tibble: 310 x 9</span></a>
+<a class="sourceLine" id="cb67-3" title="3">   Games  Year Gender Event Participant</a>
+<a class="sourceLine" id="cb67-4" title="4">   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span></a>
+<a class="sourceLine" id="cb67-5" title="5"><span class="st"> </span><span class="dv">1</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 100m  Elaine THO<span class="op">~</span></a>
+<a class="sourceLine" id="cb67-6" title="6"><span class="st"> </span><span class="dv">2</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 200m  Elaine THO<span class="op">~</span></a>
+<a class="sourceLine" id="cb67-7" title="7"><span class="st"> </span><span class="dv">3</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 400m  Shaunae MI<span class="op">~</span></a>
+<a class="sourceLine" id="cb67-8" title="8"><span class="st"> </span><span class="dv">4</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 800m  Caster SEM<span class="op">~</span></a>
+<a class="sourceLine" id="cb67-9" title="9"><span class="st"> </span><span class="dv">5</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 1500m Chepngetic<span class="op">~</span></a>
+<a class="sourceLine" id="cb67-10" title="10"><span class="st"> </span><span class="dv">6</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens 5000m Jepkemoi C<span class="op">~</span></a>
+<a class="sourceLine" id="cb67-11" title="11"><span class="st"> </span><span class="dv">7</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens <span class="dv">10-0</span><span class="op">~</span><span class="st"> </span>Almaz AYANA</a>
+<a class="sourceLine" id="cb67-12" title="12"> <span class="dv">8</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens mara<span class="op">~</span><span class="st"> </span>Jelagat SU<span class="op">~</span></a>
+<a class="sourceLine" id="cb67-13" title="13"><span class="st"> </span><span class="dv">9</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens long<span class="op">~</span><span class="st"> </span>Tianna BAR<span class="op">~</span></a>
+<a class="sourceLine" id="cb67-14" title="14"><span class="dv">10</span> Rio <span class="op">~</span><span class="st">     </span><span class="dv">4</span> womens high<span class="op">~</span><span class="st"> </span>Ruth BEITIA</a>
+<a class="sourceLine" id="cb67-15" title="15"><span class="co"># ... with 300 more rows, and 4 more</span></a>
+<a class="sourceLine" id="cb67-16" title="16"><span class="co">#   variables: Country &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb67-17" title="17"><span class="co">#   Distance &lt;dbl&gt;, Time_S &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb67-18" title="18"><span class="co">#   Mark &lt;dbl&gt;</span></a></code></pre></div>
 </details>
 <p> </p>
 In this case, we’ve just made a small tweak to our command. Instead of creating a new variable with a new name, as we did with <code>Time_Min</code>, we gave our new variable the same name as one that already existed in the dataset. So, R does the calculation <code>2020 - Year</code> and assigns the result back to the same variable name, overwriting the original values in <code>Year</code>. This is only a good idea if we’re sure that our code does what we want it to, and we don’t any use for the original values.
@@ -2649,25 +2754,27 @@ In this case, we’ve just made a small tweak to our command. Instead of creatin
 <p><strong>Hint</strong>: Use the <code>Time_Min</code> variable we’ve just created.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw">mutate</span>(athletics, <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>)</a>
-<a class="sourceLine" id="cb66-2" title="2">Error<span class="op">:</span><span class="st"> </span>object <span class="st">&#39;Time_Min&#39;</span> not found</a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw">mutate</span>(athletics, <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>)</a>
+<a class="sourceLine" id="cb68-2" title="2">Error<span class="op">:</span><span class="st"> </span>object <span class="st">&#39;Time_Min&#39;</span> not found</a></code></pre></div>
 <p>Huh, that’s weird. We just created this variable, and we saw it in the Console preview. Let’s check our <code>athletics</code> dataset to see it.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">athletics</a>
-<a class="sourceLine" id="cb67-2" title="2"><span class="co"># A tibble: 310 x 9</span></a>
-<a class="sourceLine" id="cb67-3" title="3">   Games  Year Gender Event Participant Country Distance</a>
-<a class="sourceLine" id="cb67-4" title="4">   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">       </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb67-5" title="5"><span class="st"> </span><span class="dv">1</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 100m  Elaine THO<span class="op">~</span><span class="st"> </span>JAM          <span class="dv">100</span></a>
-<a class="sourceLine" id="cb67-6" title="6"> <span class="dv">2</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 200m  Elaine THO<span class="op">~</span><span class="st"> </span>JAM          <span class="dv">200</span></a>
-<a class="sourceLine" id="cb67-7" title="7"> <span class="dv">3</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 400m  Shaunae MI<span class="op">~</span><span class="st"> </span>BAH          <span class="dv">400</span></a>
-<a class="sourceLine" id="cb67-8" title="8"> <span class="dv">4</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 800m  Caster SEM<span class="op">~</span><span class="st"> </span>RSA          <span class="dv">800</span></a>
-<a class="sourceLine" id="cb67-9" title="9"> <span class="dv">5</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 1500m Chepngetic<span class="op">~</span><span class="st"> </span>KEN         <span class="dv">1500</span></a>
-<a class="sourceLine" id="cb67-10" title="10"> <span class="dv">6</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 5000m Jepkemoi C<span class="op">~</span><span class="st"> </span>KEN         <span class="dv">5000</span></a>
-<a class="sourceLine" id="cb67-11" title="11"> <span class="dv">7</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens <span class="dv">10-0</span><span class="op">~</span><span class="st"> </span>Almaz AYANA ETH        <span class="dv">10000</span></a>
-<a class="sourceLine" id="cb67-12" title="12"> <span class="dv">8</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens mara<span class="op">~</span><span class="st"> </span>Jelagat SU<span class="op">~</span><span class="st"> </span>KEN        <span class="dv">42195</span></a>
-<a class="sourceLine" id="cb67-13" title="13"> <span class="dv">9</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens long<span class="op">~</span><span class="st"> </span>Tianna BAR<span class="op">~</span><span class="st"> </span>USA           <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb67-14" title="14"><span class="dv">10</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens high<span class="op">~</span><span class="st"> </span>Ruth BEITIA ESP           <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb67-15" title="15"><span class="co"># ... with 300 more rows, and 2 more variables:</span></a>
-<a class="sourceLine" id="cb67-16" title="16"><span class="co">#   Time_S &lt;dbl&gt;, Mark &lt;dbl&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">athletics</a>
+<a class="sourceLine" id="cb69-2" title="2"><span class="co"># A tibble: 310 x 9</span></a>
+<a class="sourceLine" id="cb69-3" title="3">   Games  Year Gender Event Participant</a>
+<a class="sourceLine" id="cb69-4" title="4">   <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>chr<span class="op">&gt;</span><span class="st">      </span></a>
+<a class="sourceLine" id="cb69-5" title="5"><span class="st"> </span><span class="dv">1</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 100m  Elaine THO<span class="op">~</span></a>
+<a class="sourceLine" id="cb69-6" title="6"><span class="st"> </span><span class="dv">2</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 200m  Elaine THO<span class="op">~</span></a>
+<a class="sourceLine" id="cb69-7" title="7"><span class="st"> </span><span class="dv">3</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 400m  Shaunae MI<span class="op">~</span></a>
+<a class="sourceLine" id="cb69-8" title="8"><span class="st"> </span><span class="dv">4</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 800m  Caster SEM<span class="op">~</span></a>
+<a class="sourceLine" id="cb69-9" title="9"><span class="st"> </span><span class="dv">5</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 1500m Chepngetic<span class="op">~</span></a>
+<a class="sourceLine" id="cb69-10" title="10"><span class="st"> </span><span class="dv">6</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens 5000m Jepkemoi C<span class="op">~</span></a>
+<a class="sourceLine" id="cb69-11" title="11"><span class="st"> </span><span class="dv">7</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens <span class="dv">10-0</span><span class="op">~</span><span class="st"> </span>Almaz AYANA</a>
+<a class="sourceLine" id="cb69-12" title="12"> <span class="dv">8</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens mara<span class="op">~</span><span class="st"> </span>Jelagat SU<span class="op">~</span></a>
+<a class="sourceLine" id="cb69-13" title="13"><span class="st"> </span><span class="dv">9</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens long<span class="op">~</span><span class="st"> </span>Tianna BAR<span class="op">~</span></a>
+<a class="sourceLine" id="cb69-14" title="14"><span class="dv">10</span> Rio <span class="op">~</span><span class="st">  </span><span class="dv">2016</span> womens high<span class="op">~</span><span class="st"> </span>Ruth BEITIA</a>
+<a class="sourceLine" id="cb69-15" title="15"><span class="co"># ... with 300 more rows, and 4 more</span></a>
+<a class="sourceLine" id="cb69-16" title="16"><span class="co">#   variables: Country &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb69-17" title="17"><span class="co">#   Distance &lt;dbl&gt;, Time_S &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb69-18" title="18"><span class="co">#   Mark &lt;dbl&gt;</span></a></code></pre></div>
 <p>Only 9 variables, and <code>Time_Min</code> isn’t one of them. You may also notice that <code>Year</code> is back to its original value as well. What happened? Did we hallucinate creating those variables just now?</p>
 Don’t worry, you’re not seeing things. We’ll come back to creating <code>Time_Hr</code> in a minute.
 </details>
@@ -2689,9 +2796,9 @@ Don’t worry, you’re not seeing things. We’ll come back to creating <code>T
 <p>In your script, write a command to create a new object that stores the output from <code>mutate()</code>that creates <code>Time_Min</code>.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="co"># You can call the new object anything you want!</span></a>
-<a class="sourceLine" id="cb68-2" title="2"></a>
-<a class="sourceLine" id="cb68-3" title="3">athletics_min &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="co"># You can call the new object anything you want!</span></a>
+<a class="sourceLine" id="cb70-2" title="2"></a>
+<a class="sourceLine" id="cb70-3" title="3">athletics_min &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a></code></pre></div>
 </details>
 <p>In your Environment, you should now see a new dataset called <code>athletics_min</code> (or whatever you called the new dataset! Remember, you can call it anything you like, more or less). If you check it with any of the methods we learned above (calling it in the Console, clicking on it to open it with <code>View()</code>, looking at a summary), you should see that it now contains all the same information as <code>athletics</code>, except that it contains the additional variable <code>Time_Min</code>.</p>
 <p>However, if you check the original <code>athletics</code> variable, you’ll see that it hasn’t changed. That’s because the <code>athletics_min &lt;- mutate(...)</code> command essentially created a copy of the data, made a change to it, and then saved the changed dataset under a new name, leaving the original <code>athletics</code> object unchanged. This is more or less equivalent to the “Save As…” command in other programmes you may be familiar with.</p>
@@ -2705,7 +2812,7 @@ Don’t worry, you’re not seeing things. We’ll come back to creating <code>T
 <p>In your script, write a command that saves the output of <code>mutate()</code> to the <code>athletics</code> object.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a></code></pre></div>
 </details>
 <p>This time, we’ve replaced the contents of the <code>athletics</code> object with the output from mutate. The plus side of this is that you don’t have to create lots of nearly identical datasets with only small differences between them; it’s really easy to lose track of which is which! On the downside, there’s no way to “undo” overwriting the object, so if you make a mistake in your code, you can easily replace your data with something completely different! This is more or less equivalent to the “Save” command in other programmes you may be familiar with.</p>
 <p> </p>
@@ -2715,17 +2822,17 @@ Don’t worry, you’re not seeing things. We’ll come back to creating <code>T
 <p>Using what you now know, modify the command in your script to create the <code>Time_Hr</code> variable and change the <code>Year</code> variable in the <code>athletics</code> dataset.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="co"># Option 1: two separate commands</span></a>
-<a class="sourceLine" id="cb70-2" title="2">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>)</a>
-<a class="sourceLine" id="cb70-3" title="3">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a>
-<a class="sourceLine" id="cb70-4" title="4"></a>
-<a class="sourceLine" id="cb70-5" title="5"><span class="co"># Option 2: one `mutate` command</span></a>
-<a class="sourceLine" id="cb70-6" title="6"><span class="co"># with each change separated by commas</span></a>
-<a class="sourceLine" id="cb70-7" title="7">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, </a>
-<a class="sourceLine" id="cb70-8" title="8">                    <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>, </a>
-<a class="sourceLine" id="cb70-9" title="9">                    <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a>
-<a class="sourceLine" id="cb70-10" title="10"></a>
-<a class="sourceLine" id="cb70-11" title="11"><span class="co"># You only need ONE of these options in your script!</span></a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="co"># Option 1: two separate commands</span></a>
+<a class="sourceLine" id="cb72-2" title="2">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>)</a>
+<a class="sourceLine" id="cb72-3" title="3">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a>
+<a class="sourceLine" id="cb72-4" title="4"></a>
+<a class="sourceLine" id="cb72-5" title="5"><span class="co"># Option 2: one `mutate` command</span></a>
+<a class="sourceLine" id="cb72-6" title="6"><span class="co"># with each change separated by commas</span></a>
+<a class="sourceLine" id="cb72-7" title="7">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, </a>
+<a class="sourceLine" id="cb72-8" title="8">                    <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>, </a>
+<a class="sourceLine" id="cb72-9" title="9">                    <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a>
+<a class="sourceLine" id="cb72-10" title="10"></a>
+<a class="sourceLine" id="cb72-11" title="11"><span class="co"># You only need ONE of these options in your script!</span></a></code></pre></div>
 </details>
 </div>
 </div>
@@ -2735,16 +2842,16 @@ Don’t worry, you’re not seeing things. We’ll come back to creating <code>T
 <p>This may seem like a weird quirk of R, but it’s actually very useful. It means you can test your commands before you make them “permanent” by assigning them to an object. That is, you can write the command, run it, and look at the results to make sure they are what you want, before you actually “save” those changes to an object. However, it can be easy to forget to assign your changes, or to accidently assign changes that aren’t correct, overwriting your dataset.</p>
 <p>Luckily, this is what a script is for. If you find a problem with one of your commands - even if you’ve completely overwritten all of your data! - all you have to do is read in the data again from the beginning. Then, you can recreate each change you’ve made to the data step by step.</p>
 <p>You should now have a script that looks something like this:</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb71-2" title="2"></a>
-<a class="sourceLine" id="cb71-3" title="3">athletics &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb71-4" title="4"></a>
-<a class="sourceLine" id="cb71-5" title="5">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics,</a>
-<a class="sourceLine" id="cb71-6" title="6">                    <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a>
-<a class="sourceLine" id="cb71-7" title="7"></a>
-<a class="sourceLine" id="cb71-8" title="8">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, </a>
-<a class="sourceLine" id="cb71-9" title="9">                    <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>, </a>
-<a class="sourceLine" id="cb71-10" title="10">                    <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb73-2" title="2"></a>
+<a class="sourceLine" id="cb73-3" title="3">athletics &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb73-4" title="4"></a>
+<a class="sourceLine" id="cb73-5" title="5">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics,</a>
+<a class="sourceLine" id="cb73-6" title="6">                    <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a>
+<a class="sourceLine" id="cb73-7" title="7"></a>
+<a class="sourceLine" id="cb73-8" title="8">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, </a>
+<a class="sourceLine" id="cb73-9" title="9">                    <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>, </a>
+<a class="sourceLine" id="cb73-10" title="10">                    <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a></code></pre></div>
 <p>Notice that there was a lot that we did that we didn’t put in the script - for example <code>View(athletics)</code>, or <code>summary(athletics)</code>, or all of our practice code like <code>mutate(athletics, Time_Hr = Time_Min/60)</code>. Why not?</p>
 <p>These commands are things you do to understand and explore your data and construct the right commands to work with your data. However, your final script should <strong>only</strong> include the commands that actually make changes to your data, or produce useful output (like plots or analyses). This is because your script should contain all and only the commands that reproduce your data analysis, and not everything you did along the way.</p>
 <p>However, I said before that you could use comments to 1) annotate your script and 2) keep a record of commands that you don’t want the script to run. This is a useful way to still write down those extra commands in your script, without R actually executing those commands when you run the script.</p>
@@ -2754,29 +2861,29 @@ Don’t worry, you’re not seeing things. We’ll come back to creating <code>T
 <p>Annotate your script and add in the extra commands to view and summarise the data, commented out.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="co"># The following comments are examples</span></a>
-<a class="sourceLine" id="cb72-2" title="2"><span class="co"># You can write anything you find helpful!</span></a>
-<a class="sourceLine" id="cb72-3" title="3"></a>
-<a class="sourceLine" id="cb72-4" title="4"><span class="co"># Load packages</span></a>
-<a class="sourceLine" id="cb72-5" title="5"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb72-6" title="6"></a>
-<a class="sourceLine" id="cb72-7" title="7"><span class="co"># Read in data and store under `athletics`</span></a>
-<a class="sourceLine" id="cb72-8" title="8">athletics &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb72-9" title="9"></a>
-<a class="sourceLine" id="cb72-10" title="10"><span class="co"># Looking at the data</span></a>
-<a class="sourceLine" id="cb72-11" title="11"><span class="co"># View(athletics)</span></a>
-<a class="sourceLine" id="cb72-12" title="12"><span class="co"># athletics</span></a>
-<a class="sourceLine" id="cb72-13" title="13"><span class="co"># summary(athletics)</span></a>
-<a class="sourceLine" id="cb72-14" title="14"></a>
-<a class="sourceLine" id="cb72-15" title="15"><span class="co"># Make changes to the data:</span></a>
-<a class="sourceLine" id="cb72-16" title="16"><span class="co"># Create new timing variables</span></a>
-<a class="sourceLine" id="cb72-17" title="17"><span class="co"># Change year of competition to years SINCE competition</span></a>
-<a class="sourceLine" id="cb72-18" title="18">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics,</a>
-<a class="sourceLine" id="cb72-19" title="19">                    <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a>
-<a class="sourceLine" id="cb72-20" title="20"></a>
-<a class="sourceLine" id="cb72-21" title="21">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, </a>
-<a class="sourceLine" id="cb72-22" title="22">                    <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>, </a>
-<a class="sourceLine" id="cb72-23" title="23">                    <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="co"># The following comments are examples</span></a>
+<a class="sourceLine" id="cb74-2" title="2"><span class="co"># You can write anything you find helpful!</span></a>
+<a class="sourceLine" id="cb74-3" title="3"></a>
+<a class="sourceLine" id="cb74-4" title="4"><span class="co"># Load packages</span></a>
+<a class="sourceLine" id="cb74-5" title="5"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb74-6" title="6"></a>
+<a class="sourceLine" id="cb74-7" title="7"><span class="co"># Read in data and store under `athletics`</span></a>
+<a class="sourceLine" id="cb74-8" title="8">athletics &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/BuzzFeedNews/2016-08-sports-gender-gaps/master/data/olympic_athletics_women.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb74-9" title="9"></a>
+<a class="sourceLine" id="cb74-10" title="10"><span class="co"># Looking at the data</span></a>
+<a class="sourceLine" id="cb74-11" title="11"><span class="co"># View(athletics)</span></a>
+<a class="sourceLine" id="cb74-12" title="12"><span class="co"># athletics</span></a>
+<a class="sourceLine" id="cb74-13" title="13"><span class="co"># summary(athletics)</span></a>
+<a class="sourceLine" id="cb74-14" title="14"></a>
+<a class="sourceLine" id="cb74-15" title="15"><span class="co"># Make changes to the data:</span></a>
+<a class="sourceLine" id="cb74-16" title="16"><span class="co"># Create new timing variables</span></a>
+<a class="sourceLine" id="cb74-17" title="17"><span class="co"># Change year of competition to years SINCE competition</span></a>
+<a class="sourceLine" id="cb74-18" title="18">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics,</a>
+<a class="sourceLine" id="cb74-19" title="19">                    <span class="dt">Time_Min =</span> Time_S<span class="op">/</span><span class="dv">60</span>)</a>
+<a class="sourceLine" id="cb74-20" title="20"></a>
+<a class="sourceLine" id="cb74-21" title="21">athletics &lt;-<span class="st"> </span><span class="kw">mutate</span>(athletics, </a>
+<a class="sourceLine" id="cb74-22" title="22">                    <span class="dt">Time_Hr =</span> Time_Min<span class="op">/</span><span class="dv">60</span>, </a>
+<a class="sourceLine" id="cb74-23" title="23">                    <span class="dt">Year =</span> <span class="dv">2020</span> <span class="op">-</span><span class="st"> </span>Year)</a></code></pre></div>
 </details>
 <p>As we saw before, the comments in the script contain both commentary to remind me what each bit does (e.g. <code># Make changes to the data</code>) and actual code that’s been “commented out” (e.g. <code># View(athletics)</code>). As a reminder, the commented-out commands will be ignored when R runs the script. You can run them whenever you want by removing the <code>#</code>, or by selecting only the command itself (minus the <code>#</code>) and pressing Ctrl/Cmd + Enter.</p>
 </div>
@@ -2784,7 +2891,7 @@ Don’t worry, you’re not seeing things. We’ll come back to creating <code>T
 </div>
 <div id="next-steps" class="section level1">
 <h1>Next Steps</h1>
-<p>You’ve already learned a lot so far: you know how to do maths, combine elements into vectors, pull out particular elements, and ask whether statements are true or false. You’ve also written your first script and learned how to build sequential code. Most importantly, though, you’ve <strong>done something</strong> in R. No matter how much you understand so far, the key to mastering R is simply practice practice practice!</p>
+<p>You’ve already learned a lot so far: you know how to do maths; produce vectors of length 1 and combine elements into longer vectors; pull out particular elements from vectors; evaluate the type of data a vector contains; and ask whether statements are true or false. You’ve also written your first script and learned how to build sequential code. Most importantly, though, you’ve <strong>done something</strong> in R. No matter how much you understand so far, the key to mastering R is simply practice practice practice!</p>
 <p>You have a few options about how to proceed from this tutorial:</p>
 <div id="more-basics" class="section level2">
 <h2>More basics</h2>
