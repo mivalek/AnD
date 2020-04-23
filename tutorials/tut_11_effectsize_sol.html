@@ -1836,7 +1836,7 @@ Romantic/emotional preference for genders; Likert 1 - 9, 1 = women, 5 = no prefe
 </div>
 <div id="comparing-two-means-revisited" class="section level2">
 <h2>Comparing two means revisited</h2>
-<p>Comparing two means is a common statistical requirement, and we’ve covered a couple of different ways we can achive this. We learned how to compare means using lm() and using t.test() in the <a href="https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285">Week 7</a> tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We’re going to use <code>t.test()</code> to compare means today.</p>
+<p>Comparing two means is a common statistical requirement, and we’ve covered a couple of different ways we can achieve this. We learned how to compare means using lm() and using t.test() in the <a href="https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285">Week 7</a> tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We’re going to use <code>t.test()</code> to compare means today.</p>
 <p>As we discussed in the lecture, however, it isn’t enough to only look at <em>p</em>-values and confidence intervals to assess our results. We also need to consider the magnitude of the observed effect - how large an effect (difference between groups) we’re seeing - so that we can assess whether our findings are important. Today we’ll look at how to calculate, report, and interpret Cohen’s <em>d</em>.</p>
 <p> </p>
 <div id="task-4" class="section level3">
@@ -1911,9 +1911,7 @@ Romantic/emotional preference for genders; Likert 1 - 9, 1 = women, 5 = no prefe
 <span id="cb6-4"><a href="#cb6-4"></a>t.output<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>t.output<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)</span>
 <span id="cb6-5"><a href="#cb6-5"></a>mean <span class="cf">in</span> group Female </span>
 <span id="cb6-6"><a href="#cb6-6"></a>            <span class="fl">3.456721</span> </span></code></pre></div>
-</details>
-<details>
-<summary>Interpretation</summary> We have a <em>M</em><sub>diff</sub> of 3.46. That’s…a number..! We can’t really tell much more than that, as <code>sex_pref</code> was measured on a Likert scale. This isn’t a meaningful measurement that can be interpreted as an <strong>unstandardized</strong> effect score. We can’t know what a 3.46 difference in <code>sex_pref</code> between female and male identifiying participants actually <em>means</em>. So we need to standardize this value.
+We have a <em>M</em><sub>diff</sub> of 3.46. That’s…a number..! We can’t really tell much more than that, as <code>sex_pref</code> was measured on a Likert scale. This isn’t a meaningful measurement that can be interpreted as an <strong>unstandardized</strong> effect score. We can’t know what a 3.46 difference in <code>sex_pref</code> between female and male identifiying participants actually <em>means</em>. So we need to standardize this value.
 </details>
 <p>As mean difference on a Likert scale <strong>is not</strong> a meaningful effect size we can interpret, it makes sense to calculate a Cohen’s <em>d</em> for this comparison. The formula for Cohen’s <em>d</em> is: <span class="math display">\[ Cohen&#39;s\ d\ =\frac{M1\ -\ M2}{SD}\ \]</span> Simply, we:</p>
 <ul>
@@ -2021,10 +2019,10 @@ Finally! So it turns out that <code>Female</code> has the smallest <em>SD</em>, 
 <details>
 <p><summary>Interpretation</summary></p>
 <pre><code>
-The mean rating of sexual preference for genders was higher for Female participants (*M* = 7.23, *SD* = 2.07) than Male participants (*M* = 3.77, *SD* = 2.98), with *M*~diff~ = 3.45.  This difference in rating of sexual preference for genders was significant: *t*(293) = 9.78, *p* = &lt; .001, 95% CIs [2.76, 4.15], *d* = 1.67. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen&#39;s *d* suggested this was a large effect. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indiciated a significantly higher sexual preference for women.
+The mean rating of sexual preference for genders was higher for Female participants (*M* = 7.23, *SD* = 2.07) than Male participants (*M* = 3.77, *SD* = 2.98), with *M*~diff~ = 3.45.  This difference in rating of sexual preference for genders was significant: *t*(293) = 9.78, *p* = &lt; .001, 95% CIs [2.76, 4.15], *d* = 1.67. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen&#39;s *d* suggested this was a large effect. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women.
 </code></pre>
 <p>This should appear in Markdown as:</p>
-The mean rating of sexual preference for genders was higher for Female participants (<em>M</em> = 7.23, <em>SD</em> = 2.07) than Male participants (<em>M</em> = 3.77, <em>SD</em> = 2.98), with <em>M</em><sub>diff</sub> = 3.45. This difference in rating of sexual preference for genders was significant: <em>t</em>(293) = 9.78, <em>p</em> = &lt; .001, 95% CIs [2.76, 4.15], <em>d</em> = 1.67. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen’s <em>d</em> suggested this was a large effect<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indiciated a significantly higher sexual preference for women.
+The mean rating of sexual preference for genders was higher for Female participants (<em>M</em> = 7.23, <em>SD</em> = 2.07) than Male participants (<em>M</em> = 3.77, <em>SD</em> = 2.98), with <em>M</em><sub>diff</sub> = 3.45. This difference in rating of sexual preference for genders was significant: <em>t</em>(293) = 9.78, <em>p</em> = &lt; .001, 95% CIs [2.76, 4.15], <em>d</em> = 1.67. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen’s <em>d</em> suggested this was a large effect<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women.
 </details>
 </div>
 </div>
@@ -2467,11 +2465,11 @@ rom_pref
 <div id="task-14.2" class="section level4">
 <h4>Task 14.2</h4>
 <p>Have a look at the correlation matrix. Take note of which variable pairs show (what appears to be) large effect sizes, and whether they are positive or negative relationships. Which is the largest?</p>
-<p><strong>Hint</strong>: Remember that you only need to look at one side of the diaganal!</p>
+<p><strong>Hint</strong>: Remember that you only need to look at one side of the diagonal!</p>
 <details>
 <p><summary>Interpretation</summary></p>
 <p>There are 8 correlations with large effect sizes, using the (problematic!) cut-off values mentioned above. The largest is a positive association between <code>rom_pref</code> and <code>sex_pref</code>.</p>
-We can get <em>p</em>-values out of <code>Rcorr()</code> (although we didn’t this time), but there are other statistics we would be interested in looking at that are mising.
+We can get <em>p</em>-values out of <code>Rcorr()</code> (although we didn’t this time), but there are other statistics we would be interested in looking at that are missing.
 </details>
 </div>
 </div>
@@ -2524,7 +2522,7 @@ We performed a correlation analysis to investigate the relationship between rati
 <li>Practiced interpreting the output from <code>t.test()</code>, <code>rcorr()</code> and <code>cor.test</code></li>
 <li>Practiced using inline code to write up the results</li>
 <li>Calculating and interpreting Cohen’s <em>d</em></li>
-<li>Calulating and interpreting Pearons’s <em>r</em></li>
+<li>Calculating and interpreting Pearsons’s <em>r</em></li>
 </ul>
 <p>That’s all for this week. I hope you are safe and well.</p>
 </div>

@@ -97,7 +97,7 @@ read_csv("https://users.sussex.ac.uk/~jm636/gensex_codebook.csv") %>%
 
 ## Comparing two means revisited
 
-Comparing two means is a common statistical requirement, and we've covered a couple of different ways we can achive this. We learned how to compare means using lm() and using t.test() in the [Week 7](https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285) tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We're going to use `t.test()` to compare means today. 
+Comparing two means is a common statistical requirement, and we've covered a couple of different ways we can achieve this. We learned how to compare means using lm() and using t.test() in the [Week 7](https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285) tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We're going to use `t.test()` to compare means today. 
 
 As we discussed in the lecture, however, it isn't enough to only look at *p*-values and confidence intervals to assess our results. We also need to consider the magnitude of the observed effect - how large an effect (difference between groups) we're seeing - so that we can assess whether our findings are important. Today we'll look at how to calculate, report, and interpret Cohen's *d*. 
 
@@ -140,7 +140,9 @@ We'll evaluate and report these findings in a minute, but first let's think abou
 
 `r task()`Calculate the mean difference in `sex_pref` between the `Female` and `Male` groups, by saving the *t*-test output into an object and using the `$` to subset the mean scores.
 
-```{r, toggle = solution}
+<details>
+<summary>Solution</summary> 
+```{r}
 
 t.output <- t.test(sex_pref ~  Gender, gensex.mf, alternative = "two.sided", var.equal = T)
 
@@ -148,8 +150,6 @@ t.output$estimate[1] - t.output$estimate[2] %>% round(2)
 
 ```
 
-<details>
-<summary>Interpretation</summary> 
 We have a *M*~diff~ of `r (t.output$estimate[1] - t.output$estimate[2]) %>% round(2)`. That's...a number..! We can't really tell much more than that, as `sex_pref` was measured on a Likert scale. This isn't a meaningful measurement that can be interpreted as an **unstandardized** effect score. We can't know what a `r (t.output$estimate[1] - t.output$estimate[2]) %>% round(2)` difference in `sex_pref` between female and male identifiying participants actually *means*. So we need to standardize this value.
 </details>
 
@@ -248,12 +248,12 @@ In the lecture we discussed standard cut-off values for effect sizes. For Cohen'
 <summary>Interpretation</summary>
 
 <pre><code>
-The mean rating of sexual preference for genders was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %>% round(2)`, *SD* = `r sex_pref_sums$sd[1] %>% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %>% round(2)`, *SD* = `r sex_pref_sums$sd[2] %>% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)`.  This difference in rating of sexual preference for genders was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %>% round(2)`, *p* = `r t.output$p.value %>% report.p`, 95% CIs [`r t.output$conf.int[1] %>% round(2)`, `r t.output$conf.int[2] %>% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen's *d* suggested this was a large effect. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indiciated a significantly higher sexual preference for women.
+The mean rating of sexual preference for genders was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %>% round(2)`, *SD* = `r sex_pref_sums$sd[1] %>% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %>% round(2)`, *SD* = `r sex_pref_sums$sd[2] %>% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)`.  This difference in rating of sexual preference for genders was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %>% round(2)`, *p* = `r t.output$p.value %>% report.p`, 95% CIs [`r t.output$conf.int[1] %>% round(2)`, `r t.output$conf.int[2] %>% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen's *d* suggested this was a large effect. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women.
 </code></pre>
 
 This should appear in Markdown as:
 
-The mean rating of sexual preference for genders was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %>% round(2)`, *SD* = `r sex_pref_sums$sd[1] %>% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %>% round(2)`, *SD* = `r sex_pref_sums$sd[2] %>% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)`.  This difference in rating of sexual preference for genders was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %>% round(2)`, *p* = `r t.output$p.value %>% report.p`, 95% CIs [`r t.output$conf.int[1] %>% round(2)`, `r t.output$conf.int[2] %>% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen's *d* suggested this was a large effect^[Evaluated against the research area, which would be elaborated on in the Discussion section of your report]. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indiciated a significantly higher sexual preference for women. 
+The mean rating of sexual preference for genders was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %>% round(2)`, *SD* = `r sex_pref_sums$sd[1] %>% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %>% round(2)`, *SD* = `r sex_pref_sums$sd[2] %>% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)`.  This difference in rating of sexual preference for genders was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %>% round(2)`, *p* = `r t.output$p.value %>% report.p`, 95% CIs [`r t.output$conf.int[1] %>% round(2)`, `r t.output$conf.int[2] %>% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen's *d* suggested this was a large effect^[Evaluated against the research area, which would be elaborated on in the Discussion section of your report]. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women. 
 </details>
 
 ## Correlation Revisited
@@ -304,14 +304,14 @@ We've seen this table before and we've interpreted these Pearson's correlation c
 
 `r subtask()`Have a look at the correlation matrix. Take note of which variable pairs show (what appears to be) large effect sizes, and whether they are positive or negative relationships. Which is the largest?
 
-**Hint**: Remember that you only need to look at one side of the diaganal!
+**Hint**: Remember that you only need to look at one side of the diagonal!
 
 <details>
 <summary>Interpretation</summary>
 
 There are 8 correlations with large effect sizes, using the (problematic!) cut-off values mentioned above. The largest is a positive association between `rom_pref` and `sex_pref`.
 
-We can get *p*-values out of `Rcorr()` (although we didn't this time), but there are other statistics we would be interested in looking at that are mising.  
+We can get *p*-values out of `Rcorr()` (although we didn't this time), but there are other statistics we would be interested in looking at that are missing.  
 </details> 
 
 
@@ -351,7 +351,7 @@ You made it! That was, again, a lot of information, but remember that this tutor
 - Practiced interpreting the output from `t.test()`, `rcorr()` and `cor.test`
 - Practiced using inline code to write up the results
 - Calculating and interpreting Cohen's *d*
-- Calulating and interpreting Pearons's *r*
+- Calculating and interpreting Pearsons's *r*
 
 That's all for this week. I hope you are safe and well.
 
