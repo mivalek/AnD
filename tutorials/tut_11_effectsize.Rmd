@@ -10,6 +10,7 @@ library(Hmisc)
 knitr::opts_chunk$set(echo = T, fig.height=4, fig.width=5, fig.align = "center", message = F, warning = F, toggle = F)
 
 # make.sheet("C:/Users/scruffybumblebee/Desktop/analysing_data/tutorials/tut_11_effectsize.rmd", course = "and")
+#spelling::spell_check_files("C:/Users/scruffybumblebee/Desktop/analysing_data/practicals/tut_11_effectsize.rmd", ignore = character(), lang = "en_GB")
 ```
 
 ```{r, include = F}
@@ -95,12 +96,103 @@ read_csv("https://users.sussex.ac.uk/~jm636/gensex_codebook.csv") %>%
 
 
 
+
+# Correlation Revisited
+
+Correlation has come up a few times in this module already. That's because it's a really important idea. It often comes up as a first step in more complex analyses, because one of its (many!) uses is to quantify the strength of the relationship between two variables - an important thing to quantify before you go on to more in-depth analysis. In other words, aside from whether it is significant or not, the actual value of the correlation coefficient *r* is useful and interpretable on its own.
+
+We've already learned how to get correlation values in R in the [Week 6](https://canvas.sussex.ac.uk/courses/9242/pages/week-6) tutorial and practical. Specifically, we used `rcorr()` to get correlation matrices, and `cor.test()` to get more information about tests of particular pairs of variables. We could use either of these to get the correlation between any two continuous variables. If you need a reminder of how these functions work, have a look over the Week 6 material again.
+
+We're going to look at what Pearson's *r* can tell us about the strength (and direction) of relationships between variables. 
+
+## Pearson's *r* in a correlation matrix
+
+`r task()`Let's start by taking a look at the Big Picture: we'll create a correlation matrix for all variables in the `gensex` dataset except `Gender`, `Duration`, and `Age`. First, remove these three variables from the `gensex` dataset. Save the new dataset into an object called `gensex.c` (as we did in the Week 6 tutorial)
+
+```{r, toggle = solution}
+
+# Keeping only the continuous variables we want to correlate in the dataset
+gensex.c <- gensex %>% 
+  select(-Gender, -Duration, -Age)
+
+```
+
+`r subtask()`Now use the rcorr() function from the `Hmisc` package to create a correlation matrix. Use $ to get the matrix of correlation coefficients out of gs.corr and save it as gs.corr.r. Then, turn it into a nicely formatted table rounded to two decimal places using kable().
+
+**Hint**: We did all of these steps in the Week 6 tutorial too!
+
+```{r, toggle = solution}
+
+# Create a correlation matrix
+gs.corr <- gensex.c %>% 
+  as.matrix() %>% 
+  rcorr()
+
+# Get the Pearson's r correlation coefficient out of gs.corr
+gs.corr.r <- gs.corr$r 
+
+# Print a nicely formatted correlation matrix table
+gs.corr.r %>% 
+  kable(col.names = c(1:10), 
+  # Here I've changed the names of the variables to numbers so the table isn' so wide!
+        digits = 2) %>% 
+  kable_styling()
+```
+
+\ 
+
+We've seen this table before and we've interpreted these Pearson's correlation coefficient *r* values in the past. In the lecture we discussed standard cut-off values for effect sizes. For Pearson's *r* these are: *r* = 0.10 (small), 0.30 (medium), 0.50 (large). Using standard cut-off values for effect sizes can be problematic. We can, however, use them to get a first impression of what our data looks like - as long as we **always** interpret our final results in the context of the wider research area. 
+
+`r subtask()`Have a look at the correlation matrix. Take note of which variable pairs show (what appears to be) large effect sizes, and whether they are positive or negative relationships. Which is the largest?
+
+**Hint**: Remember that you only need to look at one side of the diagonal!
+
+<details>
+<summary>Interpretation</summary>
+
+There are 8 correlations with large effect sizes, using the (problematic!) cut-off values mentioned above. The largest is a positive association between `rom_pref` and `sex_pref`.
+
+We can get *p*-values out of `Rcorr()` (although we didn't this time), but there are other statistics we would be interested in looking at that are missing.  
+</details> 
+
+
+## Pearson's *r* in a Bivariate Correlation
+
+Let's take a closer look at the correlation showing the largest effect size using cor.test(). It's very important to understand, however, this is not how we would go about analysing data in the 'real-world'! Looking for variables in your data that show interesting results and then reporting these findings is **very** [bad science](https://www.explainxkcd.com/wiki/index.php/882:_Significant). But just to get the hang of R, let's delve deeper into what this correlation...
+
+`r task()`Run a pairwise correlation using cor.test() on the two variables with the strongest effect size.
+
+```{r, toggle = solution}
+
+pref.cor <- cor.test(gensex$rom_pref, gensex$sex_pref, alternative = "two.sided", method = "pearson") 
+pref.cor
+```
+
+`r subtask()`Finally, report and interpret your findings using inline code. 
+
+<details>
+<summary>Interpretation</summary>
+
+<pre><code>
+We performed a correlation analysis to investigate the relationship between ratings of romantic gender preference and sexual gender preference. The results suggest that there was a very strong positive relationship between these two variables (*r* = &#96;r pref.cor$estimate %>% round(2)&#96;, 95% CIs [&#96;r pref.cor$conf.int[1] %>% round(2)&#96;, &#96;r pref.cor$conf.int[2] %>% round(2)&#96;], *p* < .001). As rating of romantic gender preference increased, rating of sexual gender increased. 
+</code></pre>
+
+This should appear in Markdown as:
+
+We performed a correlation analysis to investigate the relationship between ratings of romantic gender preference and sexual gender preference. The results suggest that there was a very strong positive relationship between these two variables (*r* = `r pref.cor$estimate %>% round(2)`, 95% CIs [`r pref.cor$conf.int[1] %>% round(2)`, `r pref.cor$conf.int[2] %>% round(2)`], *p* < .001). As rating of romantic gender preference increased, rating of sexual gender increased. 
+
+</details>
+
+
+
+
 # Comparing two means revisited
 
 Comparing two means is a common statistical requirement, and we've covered a couple of different ways we can achieve this. We learned how to compare means using lm() and using t.test() in the [Week 7](https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285) tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We're going to use `t.test()` to compare means today. 
 
-As we discussed in the lecture, however, it isn't enough to only look at *p*-values and confidence intervals to assess our results. We also need to consider the magnitude of the observed effect - how large an effect (difference between groups) we're seeing - so that we can assess whether our findings are important. Today we'll look at how to calculate, report, and interpret Cohen's *d*. 
+As we discussed in the lecture, however, it isn't enough to only look at *p*-values and confidence intervals to assess our results. We also need to consider the magnitude of the observed effect - how large an effect (difference between groups) we're seeing - so that we can assess whether our findings are important. Today we'll look at how to calculate, report, and interpret Cohen's *d* *and* Pearson's *r* to compare means between groups. 
 
+## Cohen's *d* to compare means
 `r task()`There is only one categorical variable in the `gensex` database, Gender identity (`Gender`), containing three levels: `Female`, `Male`, and `Other`. We want to compare *two* groups using a t-test, so first write some code to save the `gensex` dataset into a new object called `gensex.mf`, only keeping the two largest `Gender` groups: `Female` and `Male`.
 
 ```{r, toggle = solution}
@@ -111,7 +203,7 @@ gensex.mf <- gensex %>%
 ```
 \ 
 
-Let's test the hypothesis that participants who identify as Female will give different mean ratings of sexual preference for genders compared to participants who identify as Male.
+Let's test the hypothesis that participants who identify as Female will give different mean ratings of sexual gender preference  compared to participants who identify as Male.
 
 `r task()`Use `t.test()` to look at whether the mean ratings of `sex_pref` differ by `Gender`.
 
@@ -150,7 +242,7 @@ t.output$estimate[1] - t.output$estimate[2] %>% round(2)
 
 ```
 
-We have a *M*~diff~ of `r (t.output$estimate[1] - t.output$estimate[2]) %>% round(2)`. That's...a number..! We can't really tell much more than that, as `sex_pref` was measured on a Likert scale. This isn't a meaningful measurement that can be interpreted as an **unstandardized** effect score. We can't know what a `r (t.output$estimate[1] - t.output$estimate[2]) %>% round(2)` difference in `sex_pref` between female and male identifiying participants actually *means*. So we need to standardize this value.
+We have a *M*~diff~ of `r (t.output$estimate[1] - t.output$estimate[2]) %>% round(2)`. That's...a number..! We can't really tell much more than that, as `sex_pref` was measured on a Likert scale. This isn't a meaningful measurement that can be interpreted as an **unstandardized** effect score. We can't know what a `r (t.output$estimate[1] - t.output$estimate[2]) %>% round(2)` difference in `sex_pref` between female and male identifying participants actually *means*. So we need to standardize this value.
 </details>
 
 As mean difference on a Likert scale **is not** a meaningful effect size we can interpret, it makes sense to calculate a Cohen's *d* for this comparison. The formula for Cohen's *d* is:
@@ -171,7 +263,7 @@ But *what* standard deviation in the equation?! This is where we have to make so
 
 <details>
 <summary>Solution</summary> 
-We do not have a control group in this analysis. Our hypothesis is that "participants who identify as Female will give different mean ratings of sexual preference for genders compared to participants who identify as Male". Neither Male or Female would be considered a control group - if we had, for example, Male as a control group, that would be claiming that Male is the normative group, and all other groups (e.g. Female, Other) should be compared to the "norm" of Male behaviour. As we do not have a control group, we will use the smallest *SD*.
+We do not have a control group in this analysis. Our hypothesis is that "participants who identify as Female will give different mean ratings of sexual gender preference  compared to participants who identify as Male". Neither Male or Female would be considered a control group - if we had, for example, Male as a control group, that would be claiming that Male is the normative group, and all other groups (e.g. Female, Other) should be compared to the 'norm' of Male behaviour. Crazy idea, right?! Who would do that? Turns out, quite a lot of people (have a look at [this article](https://www.theguardian.com/lifeandstyle/2019/feb/23/truth-world-built-for-men-car-crashes) or [this book](https://www.goodreads.com/book/show/41104077-invisible-women), both by Caroline Criado Perez, if you want to get angry about how prevelant this bias towards men as the 'norm' actually is). But we won't make this error! So, as we do not have a control group, we will use the smallest *SD*.
 </details>
 
 `r task()`Use `summarise()` to find out whether the `Male` or the `Female` group has the smallest *SD*.
@@ -248,111 +340,89 @@ In the lecture we discussed standard cut-off values for effect sizes. For Cohen'
 <summary>Interpretation</summary>
 
 <pre><code>
-The mean rating of sexual preference for genders was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %>% round(2)`, *SD* = `r sex_pref_sums$sd[1] %>% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %>% round(2)`, *SD* = `r sex_pref_sums$sd[2] %>% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)`.  This difference in rating of sexual preference for genders was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %>% round(2)`, *p* = `r t.output$p.value %>% report.p`, 95% CIs [`r t.output$conf.int[1] %>% round(2)`, `r t.output$conf.int[2] %>% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen's *d* suggested this was a large effect. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women.
+The mean rating of sexual gender preference  was higher for Female participants (*M* = &#96;r sex_pref_sums$mean[1] %>% round(2)&#96;, *SD* = &#96;r sex_pref_sums$sd[1] %>% round(2)&#96;) than Male participants (*M* = &#96;r sex_pref_sums$mean[2] %>% round(2)&#96;, *SD* = &#96;r sex_pref_sums$sd[2] %>% round(2)&#96;), with *M*~diff~ = &#96;r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)&#96;.  This difference in rating of sexual gender preference  was significant: *t*(&#96;r t.output$parameter&#96;) = &#96;r t.output$statistic %>% round(2)&#96;, *p* = &#96;r t.output$p.value %>% report.p&#96;, 95% CIs [&#96;r t.output$conf.int[1] %>% round(2)&#96;, &#96;r t.output$conf.int[2] %>% round(2)&#96;], *d* = &#96;r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)&#96;. So, whether the participant was Female or Male significantly influenced their sexual gender preference . The Cohen's *d* suggested this was a large effect. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women. 
 </code></pre>
+
+
 
 This should appear in Markdown as:
 
-The mean rating of sexual preference for genders was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %>% round(2)`, *SD* = `r sex_pref_sums$sd[1] %>% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %>% round(2)`, *SD* = `r sex_pref_sums$sd[2] %>% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)`.  This difference in rating of sexual preference for genders was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %>% round(2)`, *p* = `r t.output$p.value %>% report.p`, 95% CIs [`r t.output$conf.int[1] %>% round(2)`, `r t.output$conf.int[2] %>% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen's *d* suggested this was a large effect^[Evaluated against the research area, which would be elaborated on in the Discussion section of your report]. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women. 
+The mean rating of sexual gender preference  was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %>% round(2)`, *SD* = `r sex_pref_sums$sd[1] %>% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %>% round(2)`, *SD* = `r sex_pref_sums$sd[2] %>% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %>% round(2)`.  This difference in rating of sexual gender preference  was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %>% round(2)`, *p* = `r t.output$p.value %>% report.p`, 95% CIs [`r t.output$conf.int[1] %>% round(2)`, `r t.output$conf.int[2] %>% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %>%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual gender preference . The Cohen's *d* suggested this was a large effect^[Evaluated against the research area, which would be elaborated on in the Discussion section of your report]. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women. 
 </details>
 
-# Correlation Revisited
 
-Correlation has come up a few times in this module already. That's because it's a really important idea. It often comes up as a first step in more complex analyses, because one of its (many!) uses is to quantify the strength of the relationship between two variables - an important thing to quantify before you go on to more in-depth analysis. In other words, aside from whether it is significant or not, the actual value of the correlation coefficient *r* is useful and interpretable on its own.
+## Pearson's *r* to compare means
 
-We've already learned how to get correlation values in R in the [Week 6](https://canvas.sussex.ac.uk/courses/9242/pages/week-6) tutorial and practical. Specifically, we used `rcorr()` to get correlation matrices, and `cor.test()` to get more information about tests of particular pairs of variables. We could use either of these to get the correlation between any two continuous variables. If you need a reminder of how these functions work, have a look over the Week 6 material again.
+Pearson's *r* isn't only useful for measuring the strength of a relationship between two continuous variables - we can also use it as an effect size to quantify the difference in means between two groups, when we have a one continuous variable and a categorical variable (factor) with two levels (groups). 
 
-We're going to look at what Pearson's *r* can tell us about the strength (and direction) of relationships between variables. 
+Let's now invevstigate the hypothesis that participants who identify as Female will give different mean ratings of **romantic** gender preference compared to participants who identify as Male.
 
-## Pearson's *r* in a correlation matrix
-
-`r task()`Let's start by taking a look at the Big Picture: we'll create a correlation matrix for all variables in the `gensex` dataset except `Gender`, `Duration`, and `Age`. First, remove these three variables from the `gensex` dataset. Save the new dataset into an object called `gensex.c` (as we did in the Week 6 tutorial)
-
-```{r, toggle = solution}
-
-# Keeping only the continuous variables we want to correlate in the dataset
-gensex.c <- gensex %>% 
-  select(-Gender, -Duration, -Age)
-
-```
-
-`r subtask()`Now use the rcorr() function from the `Hmisc` package to create a correlation matrix. Use $ to get the matrix of correlation coefficients out of gs.corr and save it as gs.corr.r. Then, turn it into a nicely formatted table rounded to two decimal places using kable().
-
-**Hint**: We did all of these steps in the Week 6 tutorial too!
-
-```{r, toggle = solution}
-
-# Create a correlation matrix
-gs.corr <- gensex.c %>% 
-  as.matrix() %>% 
-  rcorr()
-
-# Get the Pearson's r correlation coefficient out of gs.corr
-gs.corr.r <- gs.corr$r 
-
-# Print a nicely formatted correlation matrix table
-gs.corr.r %>% 
-  kable(col.names = c(1:10), 
-  # Here I've changed the names of the variables to numbers so the table isn' so wide!
-        digits = 2) %>% 
-  kable_styling()
-```
-
-\ 
-
-We've seen this table before and we've interpreted these Pearson's correlation coefficient *r* values in the past. In the lecture we discussed standard cut-off values for effect sizes. For Pearson's *r* these are: *r* = 0.10 (small), 0.30 (medium), 0.50 (large). Using standard cut-off values for effect sizes can be problematic. We can, however, use them to get a first impression of what our data looks like - as long as we **always** interpret our final results in the context of the wider research area. 
-
-`r subtask()`Have a look at the correlation matrix. Take note of which variable pairs show (what appears to be) large effect sizes, and whether they are positive or negative relationships. Which is the largest?
-
-**Hint**: Remember that you only need to look at one side of the diagonal!
+`r task()`Select the two variables of interest (`Gender` and `rom_pref`). Use `%in%` to select only `Male` and `Female` identifying participants, and change `Gender` to a numeric variable.
 
 <details>
-<summary>Interpretation</summary>
+  <summary>Solution</summary> 
+```{r}
 
-There are 8 correlations with large effect sizes, using the (problematic!) cut-off values mentioned above. The largest is a positive association between `rom_pref` and `sex_pref`.
+gender.means <- gensex %>% 
+  select(Gender, rom_pref) %>% 
+  filter(Gender %in% c("Male", "Female")) %>%
+  mutate(Gender = as.numeric(Gender))
 
-We can get *p*-values out of `Rcorr()` (although we didn't this time), but there are other statistics we would be interested in looking at that are missing.  
-</details> 
-
-
-## Pearson's *r* in a Bivariate Correlation
-
-Let's take a closer look at the correlation showing the largest effect size using cor.test(). It's very important to understand, however, this is not how we would go about analysing data in the 'real-world'! Looking for variables in your data that show interesting results and then reporting these findings is **very** [bad science](https://www.explainxkcd.com/wiki/index.php/882:_Significant). But just to get the hang of R, let's delve deeper into what this correlation...
-
-`r task()`Run a pairwise correlation using cor.test() on the two variables with the strongest effect size.
-
-```{r, toggle = solution}
-
-gender.cor <- cor.test(gensex$rom_pref, gensex$sex_pref, alternative = "two.sided", method = "pearson") 
-gender.cor
 ```
 
-`r subtask()`Finally, report and interpret your findings using inline code. 
-
-<details>
-<summary>Interpretation</summary>
-
-<pre><code>
-We performed a correlation analysis to investigate the relationship between ratings of romantic gender preference and sexual gender preference. The results suggest that there was a very strong positive relationship between these two variables (*r* = `r gender.cor$estimate %>% round(2)`, 95% CIs [`r gender.cor$conf.int[1] %>% round(2)`, `r gender.cor$conf.int[2] %>% round(2)`], *p* < .001). As rating of romantic gender preference increased, rating of sexual gender increased. 
-</code></pre>
-
-This should appear in Markdown as:
-
-We performed a correlation analysis to investigate the relationship between ratings of romantic gender preference and sexual gender preference. The results suggest that there was a very strong positive relationship between these two variables (*r* = `r gender.cor$estimate %>% round(2)`, 95% CIs [`r gender.cor$conf.int[1] %>% round(2)`, `r gender.cor$conf.int[2] %>% round(2)`], *p* < .001). As rating of romantic gender preference increased, rating of sexual gender increased. 
-
+We need Gender to be a numeric variable because of the way `cor.test()` works. If you look at the help documentation (use `?cor.test` in the console) you can see that the argument `x, y` that `cor.test()` requires asks for "numeric vectors of data values". 
 </details>
 
+`r task()`Use `cor.test()` to look at whether the mean ratings of `rom_pref` differ by `Gender`.
+
+
+```{r, toggle = solution}
+gender.means.cor <- cor.test(gender.means$Gender, gender.means$rom_pref, alternative = "two.sided", method = "pearson")
+gender.means.cor
+
+```
+
+`r task()`Now use `t.test()` to look at whether the mean ratings of `rom_pref` differ by `Gender`.
+
+```{r, toggle = solution}
+gender.means.t <- t.test(rom_pref ~  Gender, gender.means.f, alternative = "two.sided", var.equal = T)
+gender.means.t
+```
+
+`r task()`Compare the output for your output from `cor.test()` and `t.test()`.
+
+<details>
+  <summary>Solution</summary> 
+```{r}
+
+gender.means.cor
+
+
+gender.means.t
+
+```
+
+The *t*-statistic, dfs, and *p*-value are the same! This is because the correlation between the two `gender` groups also expresses the relationship between the two `Gender` groups and the outcome variable. The 'relationship' here is the difference in group means - this is a point-biserial correlation. This means we can use Pearson's *r* as an effect size to express the size of difference in group means.
+</details>
+
+`r task()`Have a look at your *r* value for this comparison. What does it indicate?
+
+<details>
+  <summary>Solution</summary> 
+The *r* value is `r gender.means.cor$estimate  %>% round(2)`. Using the standard cut-off values, and knowing that *r* ranges from -1 to +1, we could evaluate this as a medium effect size. But of course, we wouldn't do that! We'd use this as a first impression, think carefully about how we operationalised these variables, and go see how it compares to effect sizes in the research area. Only then can we really evaluate what size of effect we're seeing, and how important an effect it might be.
+</details>
+  
 # Recap
 
 You made it! That was, again, a lot of information, but remember that this tutorial is as much a reference for you in the future as it is for you to practice right now. You're welcome - and encouraged! - to keep working with this data to practice what we've learned today. In sum, you have:
 
-- Practiced comparing means using `t.test()`
+- Practiced comparing means using `t.test()` and `cor.test`
 - Practiced evaluating relationships using `rcorr()` and `cor.test`
 - Practiced interpreting the output from `t.test()`, `rcorr()` and `cor.test`
 - Practiced using inline code to write up the results
+- Calculating and interpreting Pearson's *r*
 - Calculating and interpreting Cohen's *d*
 - Deciding which *SD* to use in a Cohen's *d* calculation
-- Calculating and interpreting Pearsons's *r*
 
 That's all for this week. I hope you are safe and well.
 

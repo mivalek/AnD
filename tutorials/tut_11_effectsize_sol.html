@@ -1834,198 +1834,6 @@ Romantic/emotional preference for genders; Likert 1 - 9, 1 = women, 5 = no prefe
 <p> </p>
 </div>
 </div>
-<div id="comparing-two-means-revisited" class="section level1">
-<h1>Comparing two means revisited</h1>
-<p>Comparing two means is a common statistical requirement, and we’ve covered a couple of different ways we can achieve this. We learned how to compare means using lm() and using t.test() in the <a href="https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285">Week 7</a> tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We’re going to use <code>t.test()</code> to compare means today.</p>
-<p>As we discussed in the lecture, however, it isn’t enough to only look at <em>p</em>-values and confidence intervals to assess our results. We also need to consider the magnitude of the observed effect - how large an effect (difference between groups) we’re seeing - so that we can assess whether our findings are important. Today we’ll look at how to calculate, report, and interpret Cohen’s <em>d</em>.</p>
-<p> </p>
-<div id="task-4" class="section level3">
-<h3>Task 4</h3>
-<p>There is only one categorical variable in the <code>gensex</code> database, Gender identity (<code>Gender</code>), containing three levels: <code>Female</code>, <code>Male</code>, and <code>Other</code>. We want to compare <em>two</em> groups using a t-test, so first write some code to save the <code>gensex</code> dataset into a new object called <code>gensex.mf</code>, only keeping the two largest <code>Gender</code> groups: <code>Female</code> and <code>Male</code>.</p>
-<details>
-<p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2"></a>gensex.mf &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="st">  </span><span class="kw">filter</span>(Gender <span class="op">!=</span><span class="st"> &quot;Other&quot;</span>) </span>
-<span id="cb4-4"><a href="#cb4-4"></a>         </span></code></pre></div>
-</details>
-<p> </p>
-<p>Let’s test the hypothesis that participants who identify as Female will give different mean ratings of sexual preference for genders compared to participants who identify as Male.</p>
-<p> </p>
-</div>
-<div id="task-5" class="section level3">
-<h3>Task 5</h3>
-<p>Use <code>t.test()</code> to look at whether the mean ratings of <code>sex_pref</code> differ by <code>Gender</code>.</p>
-<details>
-<p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Using a single line of code:</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="kw">t.test</span>(sex_pref <span class="op">~</span><span class="st">  </span>Gender, gensex.mf, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">var.equal =</span> T)</span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a>    Two Sample t<span class="op">-</span>test</span>
-<span id="cb5-6"><a href="#cb5-6"></a></span>
-<span id="cb5-7"><a href="#cb5-7"></a>data<span class="op">:</span><span class="st">  </span>sex_pref by Gender</span>
-<span id="cb5-8"><a href="#cb5-8"></a>t =<span class="st"> </span><span class="fl">9.7819</span>, df =<span class="st"> </span><span class="dv">293</span>, p<span class="op">-</span>value <span class="op">&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a>alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="dv">95</span> percent confidence interval<span class="op">:</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="st"> </span><span class="fl">2.760574</span> <span class="fl">4.151200</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a>sample estimates<span class="op">:</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>mean <span class="cf">in</span> group Female   mean <span class="cf">in</span> group Male </span>
-<span id="cb5-14"><a href="#cb5-14"></a>            <span class="fl">7.226721</span>             <span class="fl">3.770833</span> </span>
-<span id="cb5-15"><a href="#cb5-15"></a></span>
-<span id="cb5-16"><a href="#cb5-16"></a></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">### OR ####</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co"># Using the pipe (with . to tell R where to pipe the dataset)</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a>gensex.mf <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="st">  </span><span class="kw">t.test</span>(sex_pref <span class="op">~</span><span class="st">  </span>Gender, ., <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">var.equal =</span> T)</span>
-<span id="cb5-22"><a href="#cb5-22"></a></span>
-<span id="cb5-23"><a href="#cb5-23"></a>    Two Sample t<span class="op">-</span>test</span>
-<span id="cb5-24"><a href="#cb5-24"></a></span>
-<span id="cb5-25"><a href="#cb5-25"></a>data<span class="op">:</span><span class="st">  </span>sex_pref by Gender</span>
-<span id="cb5-26"><a href="#cb5-26"></a>t =<span class="st"> </span><span class="fl">9.7819</span>, df =<span class="st"> </span><span class="dv">293</span>, p<span class="op">-</span>value <span class="op">&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a>alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></span>
-<span id="cb5-28"><a href="#cb5-28"></a><span class="dv">95</span> percent confidence interval<span class="op">:</span></span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="st"> </span><span class="fl">2.760574</span> <span class="fl">4.151200</span></span>
-<span id="cb5-30"><a href="#cb5-30"></a>sample estimates<span class="op">:</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a>mean <span class="cf">in</span> group Female   mean <span class="cf">in</span> group Male </span>
-<span id="cb5-32"><a href="#cb5-32"></a>            <span class="fl">7.226721</span>             <span class="fl">3.770833</span> </span></code></pre></div>
-</details>
-<p>Great, so the our <em>t</em>-test output gives us lots of useful information to evaluate our hypothesis. We want to evaluate first, whether we believe we’re seeing an <strong>actual effect</strong> and second, whether we think we’re seeing an <strong>important effect</strong>.</p>
-<p>Our <em>t</em>-test output provides us with information to evaluation whether we believe we’re seeing an actual effect:</p>
-<ul>
-<li>The <em>t</em>-statistic and associated <em>p</em>-value.</li>
-<li>The 95% confidence interval around the mean difference between groups.</li>
-</ul>
-<p>We’ll evaluate and report these findings in a minute, but first let’s think about how we can assess whether we think we’re seeing an <strong>important effect</strong>. The <em>t</em>-test output also provides us with the mean ratings of <code>sex_pref</code> by <code>Gender</code> group. We can use this to calculate the mean difference between groups. Mean difference scores are an <strong>unstandardized</strong> effect size.</p>
-<p> </p>
-</div>
-<div id="task-6" class="section level3">
-<h3>Task 6</h3>
-<p>Calculate the mean difference in <code>sex_pref</code> between the <code>Female</code> and <code>Male</code> groups, by saving the <em>t</em>-test output into an object and using the <code>$</code> to subset the mean scores.</p>
-<details>
-<p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a></span>
-<span id="cb6-2"><a href="#cb6-2"></a>t.output &lt;-<span class="st"> </span><span class="kw">t.test</span>(sex_pref <span class="op">~</span><span class="st">  </span>Gender, gensex.mf, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">var.equal =</span> T)</span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a>t.output<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>t.output<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)</span>
-<span id="cb6-5"><a href="#cb6-5"></a>mean <span class="cf">in</span> group Female </span>
-<span id="cb6-6"><a href="#cb6-6"></a>            <span class="fl">3.456721</span> </span></code></pre></div>
-We have a <em>M</em><sub>diff</sub> of 3.46. That’s…a number..! We can’t really tell much more than that, as <code>sex_pref</code> was measured on a Likert scale. This isn’t a meaningful measurement that can be interpreted as an <strong>unstandardized</strong> effect score. We can’t know what a 3.46 difference in <code>sex_pref</code> between female and male identifiying participants actually <em>means</em>. So we need to standardize this value.
-</details>
-<p>As mean difference on a Likert scale <strong>is not</strong> a meaningful effect size we can interpret, it makes sense to calculate a Cohen’s <em>d</em> for this comparison. The formula for Cohen’s <em>d</em> is: <span class="math display">\[ Cohen&#39;s\ d\ =\frac{M1\ -\ M2}{SD}\ \]</span> Simply, we:</p>
-<ul>
-<li>Subtract the mean of one group from the mean of the other group (the <strong>mean difference score</strong>!)</li>
-<li>Divide this by the standard deviation.</li>
-</ul>
-<p>But <em>what</em> standard deviation in the equation?! This is where we have to make some decisions, based on our data.</p>
-<ol style="list-style-type: decimal">
-<li>If we <strong>have</strong> a control group, we should use the <em>SD</em> of the control group</li>
-<li>If we <strong>do not</strong> have a control group, look at your <em>SD</em>s and use the smaller one</li>
-</ol>
-<p><strong>Next year you will learn more sophisticated rules about the best</strong> <strong><em>SD</em></strong> <strong>to use in the calculation, but follow these rules for now!</strong></p>
-<p> </p>
-</div>
-<div id="task-7" class="section level3">
-<h3>Task 7</h3>
-<p>Decide which <em>SD</em> we should use for our comparison of whether mean ratings of <code>sex_pref</code> differ by <code>Gender</code>. The <em>SD</em> of a control group, or the smallest <em>SD</em> of the two groups?</p>
-<details>
-<summary>Solution</summary> We do not have a control group in this analysis. Our hypothesis is that “participants who identify as Female will give different mean ratings of sexual preference for genders compared to participants who identify as Male”. Neither Male or Female would be considered a control group - if we had, for example, Male as a control group, that would be claiming that Male is the normative group, and all other groups (e.g. Female, Other) should be compared to the “norm” of Male behaviour. As we do not have a control group, we will use the smallest <em>SD</em>.
-</details>
-<p> </p>
-</div>
-<div id="task-8" class="section level3">
-<h3>Task 8</h3>
-<p>Use <code>summarise()</code> to find out whether the <code>Male</code> or the <code>Female</code> group has the smallest <em>SD</em>.</p>
-<details>
-<p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2"></a>gensex.mf <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="st">  </span><span class="kw">group_by</span>(Gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">sd =</span> <span class="kw">sd</span>(sex_pref))</span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># A tibble: 2 x 2</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>  Gender     sd</span>
-<span id="cb7-7"><a href="#cb7-7"></a>  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="dv">1</span> Female <span class="ot">NaN</span>   </span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="dv">2</span> Male     <span class="fl">2.98</span></span></code></pre></div>
-</details>
-<p>Oh no! We’re getting an odd value for the <code>Female</code> <em>SD</em>. <code>NaN</code> suggests that we weren’t able to calculate a value for our <code>Female</code> group - which, and this will be familiar by now, likely means we have some <code>NA</code>s. But didn’t we remove all <code>NA</code>s at the start of the session?! We only removed rows with fewer than 11 <code>NA</code>s - so we may still have some NAs in <code>sex_pref</code> or <code>Gender</code>.</p>
-<p> </p>
-</div>
-<div id="task-9" class="section level3">
-<h3>Task 9</h3>
-<p>Find out if we have any <code>NA</code>s in our <code>Gender</code> or <code>sex_pref</code> variables.</p>
-<p><strong>Hint</strong>: You can do this however you want, but you could use <code>select()</code>.</p>
-<details>
-<p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a></span>
-<span id="cb8-2"><a href="#cb8-2"></a>missing &lt;-<span class="st"> </span>gensex.mf <span class="op">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="st">  </span><span class="kw">select</span>(Gender, sex_pref) <span class="op">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">rowSums</span>(<span class="kw">is.na</span>(gensex.mf)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</span>
-<span id="cb8-5"><a href="#cb8-5"></a>  </span></code></pre></div>
-It looks like we have 6 NAs. Well damn, we’ll have to do something about that before we can calculate our Cohen’s <em>d</em>.
-</details>
-<p> </p>
-</div>
-<div id="task-10" class="section level3">
-<h3>Task 10</h3>
-<p>Remove <strong>any</strong> rows with missing values in our <code>Gender</code> or <code>sex_pref</code> variables.</p>
-<details>
-<p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a></span>
-<span id="cb9-2"><a href="#cb9-2"></a>gensex.mf.clean &lt;-<span class="st"> </span>gensex.mf <span class="op">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw">select</span>(Gender, sex_pref) <span class="op">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">rowSums</span>(<span class="kw">is.na</span>(gensex.mf)) <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span>) </span>
-<span id="cb9-5"><a href="#cb9-5"></a>  </span></code></pre></div>
-</details>
-<p> </p>
-</div>
-<div id="task-11" class="section level3">
-<h3>Task 11</h3>
-<p>Now use <code>summarise()</code> (again!) to find out whether the <code>Male</code> or the <code>Female</code> group has the smallest <em>SD</em>.</p>
-<details>
-<p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a></span>
-<span id="cb10-2"><a href="#cb10-2"></a>sex_pref_sums &lt;-<span class="st"> </span>gensex.mf.clean <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw">group_by</span>(Gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(sex_pref), </span>
-<span id="cb10-5"><a href="#cb10-5"></a>            <span class="dt">sd =</span> <span class="kw">sd</span>(sex_pref))</span>
-<span id="cb10-6"><a href="#cb10-6"></a>sex_pref_sums</span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co"># A tibble: 2 x 3</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a>  Gender  mean    sd</span>
-<span id="cb10-9"><a href="#cb10-9"></a>  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="dv">1</span> Female  <span class="fl">7.23</span>  <span class="fl">2.07</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="dv">2</span> Male    <span class="fl">3.77</span>  <span class="fl">2.98</span></span></code></pre></div>
-Finally! So it turns out that <code>Female</code> has the smallest <em>SD</em>, so we will use it in our Cohen’s <em>d</em> calculation.
-</details>
-<p> </p>
-</div>
-<div id="task-12" class="section level3">
-<h3>Task 12</h3>
-<p>Calculate the Cohen’s <em>d</em> for the difference in <code>sex_pref</code> by <code>Gender</code>.</p>
-<details>
-<p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a></span>
-<span id="cb11-2"><a href="#cb11-2"></a>((sex_pref_sums<span class="op">$</span>mean[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>sex_pref_sums<span class="op">$</span>mean[<span class="dv">2</span>]) <span class="op">/</span><span class="st"> </span>sex_pref_sums<span class="op">$</span>sd[<span class="dv">1</span>]) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">round</span>(<span class="dv">2</span>)</span>
-<span id="cb11-3"><a href="#cb11-3"></a>[<span class="dv">1</span>] <span class="fl">1.67</span></span></code></pre></div>
-</details>
-<p> </p>
-<p>In the lecture we discussed standard cut-off values for effect sizes. For Cohen’s <em>d</em> these are: <em>d</em> = 0.20 (small), 0.50 (medium), 0.80 (large). Using standard cut-off values for effect sizes can be problematic. We can, however, use them to get a first impression of what our data looks like - as long as we <strong>always</strong> interpret our final results in the context of the wider research area.</p>
-<p> </p>
-</div>
-<div id="task-13" class="section level3">
-<h3>Task 13</h3>
-<p>Finally, report and interpret your findings (<em>t</em>-test results <em>and</em> Cohen’s <em>d</em>) using inline code. Remember, <strong><a href="http://users.sussex.ac.uk/~ra328/L10_9_slides.html#/reporting-depict-your-findings-1">DEPICT</a></strong> what you found!</p>
-<details>
-<p><summary>Interpretation</summary></p>
-<pre><code>
-The mean rating of sexual preference for genders was higher for Female participants (*M* = 7.23, *SD* = 2.07) than Male participants (*M* = 3.77, *SD* = 2.98), with *M*~diff~ = 3.45.  This difference in rating of sexual preference for genders was significant: *t*(293) = 9.78, *p* = &lt; .001, 95% CIs [2.76, 4.15], *d* = 1.67. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen&#39;s *d* suggested this was a large effect. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women.
-</code></pre>
-<p>This should appear in Markdown as:</p>
-The mean rating of sexual preference for genders was higher for Female participants (<em>M</em> = 7.23, <em>SD</em> = 2.07) than Male participants (<em>M</em> = 3.77, <em>SD</em> = 2.98), with <em>M</em><sub>diff</sub> = 3.45. This difference in rating of sexual preference for genders was significant: <em>t</em>(293) = 9.78, <em>p</em> = &lt; .001, 95% CIs [2.76, 4.15], <em>d</em> = 1.67. So, whether the participant was Female or Male significantly influenced their sexual preference for genders. The Cohen’s <em>d</em> suggested this was a large effect<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women.
-</details>
-</div>
-</div>
 <div id="correlation-revisited" class="section level1">
 <h1>Correlation Revisited</h1>
 <p>Correlation has come up a few times in this module already. That’s because it’s a really important idea. It often comes up as a first step in more complex analyses, because one of its (many!) uses is to quantify the strength of the relationship between two variables - an important thing to quantify before you go on to more in-depth analysis. In other words, aside from whether it is significant or not, the actual value of the correlation coefficient <em>r</em> is useful and interpretable on its own.</p>
@@ -2034,38 +1842,38 @@ The mean rating of sexual preference for genders was higher for Female participa
 <div id="pearsons-r-in-a-correlation-matrix" class="section level2">
 <h2>Pearson’s <em>r</em> in a correlation matrix</h2>
 <p> </p>
-<div id="task-14" class="section level3">
-<h3>Task 14</h3>
+<div id="task-4" class="section level3">
+<h3>Task 4</h3>
 <p>Let’s start by taking a look at the Big Picture: we’ll create a correlation matrix for all variables in the <code>gensex</code> dataset except <code>Gender</code>, <code>Duration</code>, and <code>Age</code>. First, remove these three variables from the <code>gensex</code> dataset. Save the new dataset into an object called <code>gensex.c</code> (as we did in the Week 6 tutorial)</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="co"># Keeping only the continuous variables we want to correlate in the dataset</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>gensex.c &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Gender, <span class="op">-</span>Duration, <span class="op">-</span>Age)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Keeping only the continuous variables we want to correlate in the dataset</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>gensex.c &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Gender, <span class="op">-</span>Duration, <span class="op">-</span>Age)</span></code></pre></div>
 </details>
 <p> </p>
-<div id="task-14.1" class="section level4">
-<h4>Task 14.1</h4>
+<div id="task-4.1" class="section level4">
+<h4>Task 4.1</h4>
 <p>Now use the rcorr() function from the <code>Hmisc</code> package to create a correlation matrix. Use $ to get the matrix of correlation coefficients out of gs.corr and save it as gs.corr.r. Then, turn it into a nicely formatted table rounded to two decimal places using kable().</p>
 <p><strong>Hint</strong>: We did all of these steps in the Week 6 tutorial too!</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co"># Create a correlation matrix</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>gs.corr &lt;-<span class="st"> </span>gensex.c <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="st">  </span><span class="kw">as.matrix</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="st">  </span><span class="kw">rcorr</span>()</span>
-<span id="cb13-6"><a href="#cb13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="co"># Get the Pearson&#39;s r correlation coefficient out of gs.corr</span></span>
-<span id="cb13-8"><a href="#cb13-8"></a>gs.corr.r &lt;-<span class="st"> </span>gs.corr<span class="op">$</span>r </span>
-<span id="cb13-9"><a href="#cb13-9"></a></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># Print a nicely formatted correlation matrix table</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a>gs.corr.r <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">col.names =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), </span>
-<span id="cb13-13"><a href="#cb13-13"></a><span class="co"># Here I&#39;ve changed the names of the variables to numbers so the table isn&#39; so wide!</span></span>
-<span id="cb13-14"><a href="#cb13-14"></a>        <span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb13-15"><a href="#cb13-15"></a><span class="st">  </span><span class="kw">kable_styling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Create a correlation matrix</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>gs.corr &lt;-<span class="st"> </span>gensex.c <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">  </span><span class="kw">as.matrix</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="st">  </span><span class="kw">rcorr</span>()</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># Get the Pearson&#39;s r correlation coefficient out of gs.corr</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>gs.corr.r &lt;-<span class="st"> </span>gs.corr<span class="op">$</span>r </span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co"># Print a nicely formatted correlation matrix table</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>gs.corr.r <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">col.names =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), </span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co"># Here I&#39;ve changed the names of the variables to numbers so the table isn&#39; so wide!</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a>        <span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="st">  </span><span class="kw">kable_styling</span>()</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2461,8 +2269,8 @@ rom_pref
 <p>We’ve seen this table before and we’ve interpreted these Pearson’s correlation coefficient <em>r</em> values in the past. In the lecture we discussed standard cut-off values for effect sizes. For Pearson’s <em>r</em> these are: <em>r</em> = 0.10 (small), 0.30 (medium), 0.50 (large). Using standard cut-off values for effect sizes can be problematic. We can, however, use them to get a first impression of what our data looks like - as long as we <strong>always</strong> interpret our final results in the context of the wider research area.</p>
 <p> </p>
 </div>
-<div id="task-14.2" class="section level4">
-<h4>Task 14.2</h4>
+<div id="task-4.2" class="section level4">
+<h4>Task 4.2</h4>
 <p>Have a look at the correlation matrix. Take note of which variable pairs show (what appears to be) large effect sizes, and whether they are positive or negative relationships. Which is the largest?</p>
 <p><strong>Hint</strong>: Remember that you only need to look at one side of the diagonal!</p>
 <details>
@@ -2477,34 +2285,34 @@ We can get <em>p</em>-values out of <code>Rcorr()</code> (although we didn’t t
 <h2>Pearson’s <em>r</em> in a Bivariate Correlation</h2>
 <p>Let’s take a closer look at the correlation showing the largest effect size using cor.test(). It’s very important to understand, however, this is not how we would go about analysing data in the ‘real-world’! Looking for variables in your data that show interesting results and then reporting these findings is <strong>very</strong> <a href="https://www.explainxkcd.com/wiki/index.php/882:_Significant">bad science</a>. But just to get the hang of R, let’s delve deeper into what this correlation…</p>
 <p> </p>
-<div id="task-15" class="section level3">
-<h3>Task 15</h3>
+<div id="task-5" class="section level3">
+<h3>Task 5</h3>
 <p>Run a pairwise correlation using cor.test() on the two variables with the strongest effect size.</p>
 <details>
 <p><summary>Solution</summary></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a></span>
-<span id="cb14-2"><a href="#cb14-2"></a>gender.cor &lt;-<span class="st"> </span><span class="kw">cor.test</span>(gensex<span class="op">$</span>rom_pref, gensex<span class="op">$</span>sex_pref, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>) </span>
-<span id="cb14-3"><a href="#cb14-3"></a>gender.cor</span>
-<span id="cb14-4"><a href="#cb14-4"></a></span>
-<span id="cb14-5"><a href="#cb14-5"></a>    Pearson<span class="st">&#39;s product-moment correlation</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="st">data:  gensex$rom_pref and gensex$sex_pref</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="st">t = 30.691, df = 301, p-value &lt; 2.2e-16</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="st">alternative hypothesis: true correlation is not equal to 0</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="st">95 percent confidence interval:</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a><span class="st"> 0.8402817 0.8953856</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a><span class="st">sample estimates:</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a><span class="st">      cor </span></span>
-<span id="cb14-14"><a href="#cb14-14"></a><span class="st">0.8705362 </span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2"></a>pref.cor &lt;-<span class="st"> </span><span class="kw">cor.test</span>(gensex<span class="op">$</span>rom_pref, gensex<span class="op">$</span>sex_pref, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>) </span>
+<span id="cb6-3"><a href="#cb6-3"></a>pref.cor</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>    Pearson<span class="st">&#39;s product-moment correlation</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="st">data:  gensex$rom_pref and gensex$sex_pref</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="st">t = 30.691, df = 301, p-value &lt; 2.2e-16</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="st">alternative hypothesis: true correlation is not equal to 0</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="st">95 percent confidence interval:</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="st"> 0.8402817 0.8953856</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="st">sample estimates:</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="st">      cor </span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="st">0.8705362 </span></span></code></pre></div>
 </details>
 <p> </p>
-<div id="task-15.1" class="section level4">
-<h4>Task 15.1</h4>
+<div id="task-5.1" class="section level4">
+<h4>Task 5.1</h4>
 <p>Finally, report and interpret your findings using inline code.</p>
 <details>
 <p><summary>Interpretation</summary></p>
 <pre><code>
-We performed a correlation analysis to investigate the relationship between ratings of romantic gender preference and sexual gender preference. The results suggest that there was a very strong positive relationship between these two variables (*r* = 0.87, 95% CIs [0.84, 0.9], *p* &lt; .001). As rating of romantic gender preference increased, rating of sexual gender increased. 
+We performed a correlation analysis to investigate the relationship between ratings of romantic gender preference and sexual gender preference. The results suggest that there was a very strong positive relationship between these two variables (*r* = `r pref.cor$estimate %&gt;% round(2)`, 95% CIs [`r pref.cor$conf.int[1] %&gt;% round(2)`, `r pref.cor$conf.int[2] %&gt;% round(2)`], *p* &lt; .001). As rating of romantic gender preference increased, rating of sexual gender increased. 
 </code></pre>
 <p>This should appear in Markdown as:</p>
 <p>We performed a correlation analysis to investigate the relationship between ratings of romantic gender preference and sexual gender preference. The results suggest that there was a very strong positive relationship between these two variables (<em>r</em> = 0.87, 95% CIs [0.84, 0.9], <em>p</em> &lt; .001). As rating of romantic gender preference increased, rating of sexual gender increased.</p>
@@ -2513,17 +2321,317 @@ We performed a correlation analysis to investigate the relationship between rati
 </div>
 </div>
 </div>
+<div id="comparing-two-means-revisited" class="section level1">
+<h1>Comparing two means revisited</h1>
+<p>Comparing two means is a common statistical requirement, and we’ve covered a couple of different ways we can achieve this. We learned how to compare means using lm() and using t.test() in the <a href="https://canvas.sussex.ac.uk/courses/9242/pages/week-7?module_item_id=612285">Week 7</a> tutorial and practical. If you need a reminder of how these functions work, have a look over the Week 7 material again. We’re going to use <code>t.test()</code> to compare means today.</p>
+<p>As we discussed in the lecture, however, it isn’t enough to only look at <em>p</em>-values and confidence intervals to assess our results. We also need to consider the magnitude of the observed effect - how large an effect (difference between groups) we’re seeing - so that we can assess whether our findings are important. Today we’ll look at how to calculate, report, and interpret Cohen’s <em>d</em> <em>and</em> Pearson’s <em>r</em> to compare means between groups.</p>
+<div id="cohens-d-to-compare-means" class="section level2">
+<h2>Cohen’s <em>d</em> to compare means</h2>
+<p> </p>
+<div id="task-6" class="section level3">
+<h3>Task 6</h3>
+<p>There is only one categorical variable in the <code>gensex</code> database, Gender identity (<code>Gender</code>), containing three levels: <code>Female</code>, <code>Male</code>, and <code>Other</code>. We want to compare <em>two</em> groups using a t-test, so first write some code to save the <code>gensex</code> dataset into a new object called <code>gensex.mf</code>, only keeping the two largest <code>Gender</code> groups: <code>Female</code> and <code>Male</code>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2"></a>gensex.mf &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="st">  </span><span class="kw">filter</span>(Gender <span class="op">!=</span><span class="st"> &quot;Other&quot;</span>) </span>
+<span id="cb7-4"><a href="#cb7-4"></a>         </span></code></pre></div>
+</details>
+<p> </p>
+<p>Let’s test the hypothesis that participants who identify as Female will give different mean ratings of sexual gender preference compared to participants who identify as Male.</p>
+<p> </p>
+</div>
+<div id="task-7" class="section level3">
+<h3>Task 7</h3>
+<p>Use <code>t.test()</code> to look at whether the mean ratings of <code>sex_pref</code> differ by <code>Gender</code>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># Using a single line of code:</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">t.test</span>(sex_pref <span class="op">~</span><span class="st">  </span>Gender, gensex.mf, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">var.equal =</span> T)</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>    Two Sample t<span class="op">-</span>test</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a>data<span class="op">:</span><span class="st">  </span>sex_pref by Gender</span>
+<span id="cb8-8"><a href="#cb8-8"></a>t =<span class="st"> </span><span class="fl">9.7819</span>, df =<span class="st"> </span><span class="dv">293</span>, p<span class="op">-</span>value <span class="op">&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="dv">95</span> percent confidence interval<span class="op">:</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="st"> </span><span class="fl">2.760574</span> <span class="fl">4.151200</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>sample estimates<span class="op">:</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>mean <span class="cf">in</span> group Female   mean <span class="cf">in</span> group Male </span>
+<span id="cb8-14"><a href="#cb8-14"></a>            <span class="fl">7.226721</span>             <span class="fl">3.770833</span> </span>
+<span id="cb8-15"><a href="#cb8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co">### OR ####</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="co"># Using the pipe (with . to tell R where to pipe the dataset)</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a>gensex.mf <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="st">  </span><span class="kw">t.test</span>(sex_pref <span class="op">~</span><span class="st">  </span>Gender, ., <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">var.equal =</span> T)</span>
+<span id="cb8-22"><a href="#cb8-22"></a></span>
+<span id="cb8-23"><a href="#cb8-23"></a>    Two Sample t<span class="op">-</span>test</span>
+<span id="cb8-24"><a href="#cb8-24"></a></span>
+<span id="cb8-25"><a href="#cb8-25"></a>data<span class="op">:</span><span class="st">  </span>sex_pref by Gender</span>
+<span id="cb8-26"><a href="#cb8-26"></a>t =<span class="st"> </span><span class="fl">9.7819</span>, df =<span class="st"> </span><span class="dv">293</span>, p<span class="op">-</span>value <span class="op">&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a>alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></span>
+<span id="cb8-28"><a href="#cb8-28"></a><span class="dv">95</span> percent confidence interval<span class="op">:</span></span>
+<span id="cb8-29"><a href="#cb8-29"></a><span class="st"> </span><span class="fl">2.760574</span> <span class="fl">4.151200</span></span>
+<span id="cb8-30"><a href="#cb8-30"></a>sample estimates<span class="op">:</span></span>
+<span id="cb8-31"><a href="#cb8-31"></a>mean <span class="cf">in</span> group Female   mean <span class="cf">in</span> group Male </span>
+<span id="cb8-32"><a href="#cb8-32"></a>            <span class="fl">7.226721</span>             <span class="fl">3.770833</span> </span></code></pre></div>
+</details>
+<p>Great, so the our <em>t</em>-test output gives us lots of useful information to evaluate our hypothesis. We want to evaluate first, whether we believe we’re seeing an <strong>actual effect</strong> and second, whether we think we’re seeing an <strong>important effect</strong>.</p>
+<p>Our <em>t</em>-test output provides us with information to evaluation whether we believe we’re seeing an actual effect:</p>
+<ul>
+<li>The <em>t</em>-statistic and associated <em>p</em>-value.</li>
+<li>The 95% confidence interval around the mean difference between groups.</li>
+</ul>
+<p>We’ll evaluate and report these findings in a minute, but first let’s think about how we can assess whether we think we’re seeing an <strong>important effect</strong>. The <em>t</em>-test output also provides us with the mean ratings of <code>sex_pref</code> by <code>Gender</code> group. We can use this to calculate the mean difference between groups. Mean difference scores are an <strong>unstandardized</strong> effect size.</p>
+<p> </p>
+</div>
+<div id="task-8" class="section level3">
+<h3>Task 8</h3>
+<p>Calculate the mean difference in <code>sex_pref</code> between the <code>Female</code> and <code>Male</code> groups, by saving the <em>t</em>-test output into an object and using the <code>$</code> to subset the mean scores.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2"></a>t.output &lt;-<span class="st"> </span><span class="kw">t.test</span>(sex_pref <span class="op">~</span><span class="st">  </span>Gender, gensex.mf, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">var.equal =</span> T)</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a>t.output<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>t.output<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>mean <span class="cf">in</span> group Female </span>
+<span id="cb9-6"><a href="#cb9-6"></a>            <span class="fl">3.456721</span> </span></code></pre></div>
+We have a <em>M</em><sub>diff</sub> of 3.46. That’s…a number..! We can’t really tell much more than that, as <code>sex_pref</code> was measured on a Likert scale. This isn’t a meaningful measurement that can be interpreted as an <strong>unstandardized</strong> effect score. We can’t know what a 3.46 difference in <code>sex_pref</code> between female and male identifying participants actually <em>means</em>. So we need to standardize this value.
+</details>
+<p>As mean difference on a Likert scale <strong>is not</strong> a meaningful effect size we can interpret, it makes sense to calculate a Cohen’s <em>d</em> for this comparison. The formula for Cohen’s <em>d</em> is: <span class="math display">\[ Cohen&#39;s\ d\ =\frac{M1\ -\ M2}{SD}\ \]</span> Simply, we:</p>
+<ul>
+<li>Subtract the mean of one group from the mean of the other group (the <strong>mean difference score</strong>!)</li>
+<li>Divide this by the standard deviation.</li>
+</ul>
+<p>But <em>what</em> standard deviation in the equation?! This is where we have to make some decisions, based on our data.</p>
+<ol style="list-style-type: decimal">
+<li>If we <strong>have</strong> a control group, we should use the <em>SD</em> of the control group</li>
+<li>If we <strong>do not</strong> have a control group, look at your <em>SD</em>s and use the smaller one</li>
+</ol>
+<p><strong>Next year you will learn more sophisticated rules about the best</strong> <strong><em>SD</em></strong> <strong>to use in the calculation, but follow these rules for now!</strong></p>
+<p> </p>
+</div>
+<div id="task-9" class="section level3">
+<h3>Task 9</h3>
+<p>Decide which <em>SD</em> we should use for our comparison of whether mean ratings of <code>sex_pref</code> differ by <code>Gender</code>. The <em>SD</em> of a control group, or the smallest <em>SD</em> of the two groups?</p>
+<details>
+<summary>Solution</summary> We do not have a control group in this analysis. Our hypothesis is that “participants who identify as Female will give different mean ratings of sexual gender preference compared to participants who identify as Male”. Neither Male or Female would be considered a control group - if we had, for example, Male as a control group, that would be claiming that Male is the normative group, and all other groups (e.g. Female, Other) should be compared to the ‘norm’ of Male behaviour. Crazy idea, right?! Who would do that? Turns out, quite a lot of people (have a look at <a href="https://www.theguardian.com/lifeandstyle/2019/feb/23/truth-world-built-for-men-car-crashes">this article</a> or <a href="https://www.goodreads.com/book/show/41104077-invisible-women">this book</a>, both by Caroline Criado Perez, if you want to get angry about how prevelant this bias towards men as the ‘norm’ actually is). But we won’t make this error! So, as we do not have a control group, we will use the smallest <em>SD</em>.
+</details>
+<p> </p>
+</div>
+<div id="task-10" class="section level3">
+<h3>Task 10</h3>
+<p>Use <code>summarise()</code> to find out whether the <code>Male</code> or the <code>Female</code> group has the smallest <em>SD</em>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2"></a>gensex.mf <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw">group_by</span>(Gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">sd =</span> <span class="kw">sd</span>(sex_pref))</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co"># A tibble: 2 x 2</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  Gender     sd</span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="dv">1</span> Female <span class="ot">NaN</span>   </span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="dv">2</span> Male     <span class="fl">2.98</span></span></code></pre></div>
+</details>
+<p>Oh no! We’re getting an odd value for the <code>Female</code> <em>SD</em>. <code>NaN</code> suggests that we weren’t able to calculate a value for our <code>Female</code> group - which, and this will be familiar by now, likely means we have some <code>NA</code>s. But didn’t we remove all <code>NA</code>s at the start of the session?! We only removed rows with fewer than 11 <code>NA</code>s - so we may still have some NAs in <code>sex_pref</code> or <code>Gender</code>.</p>
+<p> </p>
+</div>
+<div id="task-11" class="section level3">
+<h3>Task 11</h3>
+<p>Find out if we have any <code>NA</code>s in our <code>Gender</code> or <code>sex_pref</code> variables.</p>
+<p><strong>Hint</strong>: You can do this however you want, but you could use <code>select()</code>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2"></a>missing &lt;-<span class="st"> </span>gensex.mf <span class="op">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw">select</span>(Gender, sex_pref) <span class="op">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">rowSums</span>(<span class="kw">is.na</span>(gensex.mf)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</span>
+<span id="cb11-5"><a href="#cb11-5"></a>  </span></code></pre></div>
+It looks like we have 6 NAs. Well damn, we’ll have to do something about that before we can calculate our Cohen’s <em>d</em>.
+</details>
+<p> </p>
+</div>
+<div id="task-12" class="section level3">
+<h3>Task 12</h3>
+<p>Remove <strong>any</strong> rows with missing values in our <code>Gender</code> or <code>sex_pref</code> variables.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2"></a>gensex.mf.clean &lt;-<span class="st"> </span>gensex.mf <span class="op">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="st">  </span><span class="kw">select</span>(Gender, sex_pref) <span class="op">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">rowSums</span>(<span class="kw">is.na</span>(gensex.mf)) <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span>) </span>
+<span id="cb12-5"><a href="#cb12-5"></a>  </span></code></pre></div>
+</details>
+<p> </p>
+</div>
+<div id="task-13" class="section level3">
+<h3>Task 13</h3>
+<p>Now use <code>summarise()</code> (again!) to find out whether the <code>Male</code> or the <code>Female</code> group has the smallest <em>SD</em>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a></span>
+<span id="cb13-2"><a href="#cb13-2"></a>sex_pref_sums &lt;-<span class="st"> </span>gensex.mf.clean <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="st">  </span><span class="kw">group_by</span>(Gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(sex_pref), </span>
+<span id="cb13-5"><a href="#cb13-5"></a>            <span class="dt">sd =</span> <span class="kw">sd</span>(sex_pref))</span>
+<span id="cb13-6"><a href="#cb13-6"></a>sex_pref_sums</span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co"># A tibble: 2 x 3</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a>  Gender  mean    sd</span>
+<span id="cb13-9"><a href="#cb13-9"></a>  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="dv">1</span> Female  <span class="fl">7.23</span>  <span class="fl">2.07</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="dv">2</span> Male    <span class="fl">3.77</span>  <span class="fl">2.98</span></span></code></pre></div>
+Finally! So it turns out that <code>Female</code> has the smallest <em>SD</em>, so we will use it in our Cohen’s <em>d</em> calculation.
+</details>
+<p> </p>
+</div>
+<div id="task-14" class="section level3">
+<h3>Task 14</h3>
+<p>Calculate the Cohen’s <em>d</em> for the difference in <code>sex_pref</code> by <code>Gender</code>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2"></a>((sex_pref_sums<span class="op">$</span>mean[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>sex_pref_sums<span class="op">$</span>mean[<span class="dv">2</span>]) <span class="op">/</span><span class="st"> </span>sex_pref_sums<span class="op">$</span>sd[<span class="dv">1</span>]) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">round</span>(<span class="dv">2</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a>[<span class="dv">1</span>] <span class="fl">1.67</span></span></code></pre></div>
+</details>
+<p> </p>
+<p>In the lecture we discussed standard cut-off values for effect sizes. For Cohen’s <em>d</em> these are: <em>d</em> = 0.20 (small), 0.50 (medium), 0.80 (large). Using standard cut-off values for effect sizes can be problematic. We can, however, use them to get a first impression of what our data looks like - as long as we <strong>always</strong> interpret our final results in the context of the wider research area.</p>
+<p> </p>
+</div>
+<div id="task-15" class="section level3">
+<h3>Task 15</h3>
+<p>Finally, report and interpret your findings (<em>t</em>-test results <em>and</em> Cohen’s <em>d</em>) using inline code. Remember, <strong><a href="http://users.sussex.ac.uk/~ra328/L10_9_slides.html#/reporting-depict-your-findings-1">DEPICT</a></strong> what you found!</p>
+<details>
+<p><summary>Interpretation</summary></p>
+<pre><code>
+The mean rating of sexual gender preference  was higher for Female participants (*M* = `r sex_pref_sums$mean[1] %&gt;% round(2)`, *SD* = `r sex_pref_sums$sd[1] %&gt;% round(2)`) than Male participants (*M* = `r sex_pref_sums$mean[2] %&gt;% round(2)`, *SD* = `r sex_pref_sums$sd[2] %&gt;% round(2)`), with *M*~diff~ = `r (sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) %&gt;% round(2)`.  This difference in rating of sexual gender preference  was significant: *t*(`r t.output$parameter`) = `r t.output$statistic %&gt;% round(2)`, *p* = `r t.output$p.value %&gt;% report.p`, 95% CIs [`r t.output$conf.int[1] %&gt;% round(2)`, `r t.output$conf.int[2] %&gt;% round(2)`], *d* = `r ((sex_pref_sums$mean[1] - sex_pref_sums$mean[2]) / sex_pref_sums$sd[1]) %&gt;%  round(2)`. So, whether the participant was Female or Male significantly influenced their sexual gender preference . The Cohen&#39;s *d* suggested this was a large effect. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women. 
+</code></pre>
+<p>This should appear in Markdown as:</p>
+The mean rating of sexual gender preference was higher for Female participants (<em>M</em> = 7.23, <em>SD</em> = 2.07) than Male participants (<em>M</em> = 3.77, <em>SD</em> = 2.98), with <em>M</em><sub>diff</sub> = 3.45. This difference in rating of sexual gender preference was significant: <em>t</em>(293) = 9.78, <em>p</em> = &lt; .001, 95% CIs [2.76, 4.15], <em>d</em> = 1.67. So, whether the participant was Female or Male significantly influenced their sexual gender preference . The Cohen’s <em>d</em> suggested this was a large effect<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. A higher score indicated a sexual preference for men and a lower score indicated a sexual preference for women, so the results suggest that, on average, Females indicated a significantly higher sexual preference for men and Males indicated a significantly higher sexual preference for women.
+</details>
+</div>
+</div>
+<div id="pearsons-r-to-compare-means" class="section level2">
+<h2>Pearson’s <em>r</em> to compare means</h2>
+<p>Pearson’s <em>r</em> isn’t only useful for measuring the strength of a relationship between two continuous variables - we can also use it as an effect size to quantify the difference in means between two groups, when we have a one continuous variable and a categorical variable (factor) with two levels (groups).</p>
+<p>Let’s now invevstigate the hypothesis that participants who identify as Female will give different mean ratings of <strong>romantic</strong> gender preference compared to participants who identify as Male.</p>
+<p> </p>
+<div id="task-16" class="section level3">
+<h3>Task 16</h3>
+<p>Select the two variables of interest (<code>Gender</code> and <code>rom_pref</code>). Use <code>%in%</code> to select only <code>Male</code> and <code>Female</code> identifying participants, and change <code>Gender</code> to a numeric variable.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2"></a>gender.means &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="st">  </span><span class="kw">select</span>(Gender, rom_pref) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="st">  </span><span class="kw">filter</span>(Gender <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Gender =</span> <span class="kw">as.numeric</span>(Gender))</span></code></pre></div>
+We need Gender to be a numeric variable because of the way <code>cor.test()</code> works. If you look at the help documentation (use <code>?cor.test</code> in the console) you can see that the argument <code>x, y</code> that <code>cor.test()</code> requires asks for “numeric vectors of data values”.
+</details>
+<p> </p>
+</div>
+<div id="task-17" class="section level3">
+<h3>Task 17</h3>
+<p>Use <code>cor.test()</code> to look at whether the mean ratings of <code>rom_pref</code> differ by <code>Gender</code>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>gender.means.cor &lt;-<span class="st"> </span><span class="kw">cor.test</span>(gender.means<span class="op">$</span>Gender, gender.means<span class="op">$</span>rom_pref, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>gender.means.cor</span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a>    Pearson<span class="st">&#39;s product-moment correlation</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="st">data:  gender.means$Gender and gender.means$rom_pref</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="st">t = -11.314, df = 296, p-value &lt; 2.2e-16</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="st">alternative hypothesis: true correlation is not equal to 0</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="st">95 percent confidence interval:</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="st"> -0.6241022 -0.4648414</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="st">sample estimates:</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="st">      cor </span></span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="st">-0.549443 </span></span></code></pre></div>
+</details>
+<p> </p>
+</div>
+<div id="task-18" class="section level3">
+<h3>Task 18</h3>
+<p>Now use <code>t.test()</code> to look at whether the mean ratings of <code>rom_pref</code> differ by <code>Gender</code>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>gender.means.t &lt;-<span class="st"> </span><span class="kw">t.test</span>(rom_pref <span class="op">~</span><span class="st">  </span>Gender, gender.means.f, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>, <span class="dt">var.equal =</span> T)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>gender.means.t</span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a>    Two Sample t<span class="op">-</span>test</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a>data<span class="op">:</span><span class="st">  </span>rom_pref by Gender</span>
+<span id="cb17-7"><a href="#cb17-7"></a>t =<span class="st"> </span><span class="fl">11.314</span>, df =<span class="st"> </span><span class="dv">296</span>, p<span class="op">-</span>value <span class="op">&lt;</span><span class="st"> </span><span class="fl">2.2e-16</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>alternative hypothesis<span class="op">:</span><span class="st"> </span>true difference <span class="cf">in</span> means is not equal to <span class="dv">0</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="dv">95</span> percent confidence interval<span class="op">:</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="st"> </span><span class="fl">3.318385</span> <span class="fl">4.715948</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>sample estimates<span class="op">:</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a>mean <span class="cf">in</span> group Female   mean <span class="cf">in</span> group Male </span>
+<span id="cb17-13"><a href="#cb17-13"></a>            <span class="fl">7.288000</span>             <span class="fl">3.270833</span> </span></code></pre></div>
+</details>
+<p> </p>
+</div>
+<div id="task-19" class="section level3">
+<h3>Task 19</h3>
+<p>Compare the output for your output from <code>cor.test()</code> and <code>t.test()</code>.</p>
+<details>
+<p><summary>Solution</summary></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2"></a>gender.means.cor</span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a>    Pearson<span class="st">&#39;s product-moment correlation</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="st">data:  gender.means$Gender and gender.means$rom_pref</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="st">t = -11.314, df = 296, p-value &lt; 2.2e-16</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="st">alternative hypothesis: true correlation is not equal to 0</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="st">95 percent confidence interval:</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="st"> -0.6241022 -0.4648414</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a><span class="st">sample estimates:</span></span>
+<span id="cb18-12"><a href="#cb18-12"></a><span class="st">      cor </span></span>
+<span id="cb18-13"><a href="#cb18-13"></a><span class="st">-0.549443 </span></span>
+<span id="cb18-14"><a href="#cb18-14"></a></span>
+<span id="cb18-15"><a href="#cb18-15"></a></span>
+<span id="cb18-16"><a href="#cb18-16"></a><span class="st">gender.means.t</span></span>
+<span id="cb18-17"><a href="#cb18-17"></a></span>
+<span id="cb18-18"><a href="#cb18-18"></a><span class="st">    Two Sample t-test</span></span>
+<span id="cb18-19"><a href="#cb18-19"></a></span>
+<span id="cb18-20"><a href="#cb18-20"></a><span class="st">data:  rom_pref by Gender</span></span>
+<span id="cb18-21"><a href="#cb18-21"></a><span class="st">t = 11.314, df = 296, p-value &lt; 2.2e-16</span></span>
+<span id="cb18-22"><a href="#cb18-22"></a><span class="st">alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span id="cb18-23"><a href="#cb18-23"></a><span class="st">95 percent confidence interval:</span></span>
+<span id="cb18-24"><a href="#cb18-24"></a><span class="st"> 3.318385 4.715948</span></span>
+<span id="cb18-25"><a href="#cb18-25"></a><span class="st">sample estimates:</span></span>
+<span id="cb18-26"><a href="#cb18-26"></a><span class="st">mean in group Female   mean in group Male </span></span>
+<span id="cb18-27"><a href="#cb18-27"></a><span class="st">            7.288000             3.270833 </span></span></code></pre></div>
+The <em>t</em>-statistic, dfs, and <em>p</em>-value are the same! This is because the correlation between the two <code>gender</code> groups also expresses the relationship between the two <code>Gender</code> groups and the outcome variable. The ‘relationship’ here is the difference in group means - this is a point-biserial correlation. This means we can use Pearson’s <em>r</em> as an effect size to express the size of difference in group means.
+</details>
+<p> </p>
+</div>
+<div id="task-20" class="section level3">
+<h3>Task 20</h3>
+<p>Have a look at your <em>r</em> value for this comparison. What does it indicate?</p>
+<details>
+<summary>Solution</summary> The <em>r</em> value is -0.55. Using the standard cut-off values, and knowing that <em>r</em> ranges from -1 to +1, we could evaluate this as a medium effect size. But of course, we wouldn’t do that! We’d use this as a first impression, think carefully about how we operationalised these variables, and go see how it compares to effect sizes in the research area. Only then can we really evaluate what size of effect we’re seeing, and how important an effect it might be.
+</details>
+</div>
+</div>
+</div>
 <div id="recap" class="section level1">
 <h1>Recap</h1>
 <p>You made it! That was, again, a lot of information, but remember that this tutorial is as much a reference for you in the future as it is for you to practice right now. You’re welcome - and encouraged! - to keep working with this data to practice what we’ve learned today. In sum, you have:</p>
 <ul>
-<li>Practiced comparing means using <code>t.test()</code></li>
+<li>Practiced comparing means using <code>t.test()</code> and <code>cor.test</code></li>
 <li>Practiced evaluating relationships using <code>rcorr()</code> and <code>cor.test</code></li>
 <li>Practiced interpreting the output from <code>t.test()</code>, <code>rcorr()</code> and <code>cor.test</code></li>
 <li>Practiced using inline code to write up the results</li>
+<li>Calculating and interpreting Pearson’s <em>r</em></li>
 <li>Calculating and interpreting Cohen’s <em>d</em></li>
 <li>Deciding which <em>SD</em> to use in a Cohen’s <em>d</em> calculation</li>
-<li>Calculating and interpreting Pearsons’s <em>r</em></li>
 </ul>
 <p>That’s all for this week. I hope you are safe and well.</p>
 </div>
