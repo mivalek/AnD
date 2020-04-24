@@ -72,7 +72,7 @@ gaming$GAD1
 \ 
 
 
-The `summary()` function is also useful (e.g. `summary(gaming)`). This lets you see sumamry statistics (including min, max, median, and mean) for numeric data, and tells you which variables are character variables. So, not quite as useful for a first glance at the data, but very useful when you want to look at numeric variables. 
+The `summary()` function is also useful (e.g. `summary(gaming)`). This lets you see summary statistics (including min, max, median, and mean) for numeric data, and tells you which variables are character variables. So, not quite as useful for a first glance at the data, but very useful when you want to look at numeric variables. 
 </details>
 
 \ 
@@ -131,14 +131,14 @@ First the familiar functions:
 
 - We used `select()` to select the columns we were interested in, as we didn't want to look at all the variables.
 - We used `mutate()` and `factor()` to change the categorical variable class from character to factor, so that R would treat them as categorical variables.
-- We used `mutate()` and `recode()` to change the names of the levels of the work factor, as some of the level names had spaces in them - which R does not play well with! We also made the level names all lower case, which is good pracice - remember, R is case sensitive, so the easiest way to avoid mistyping an object or variable name etc. is to always use lower case!
+- We used `mutate()` and `recode()` to change the names of the levels of the work factor, as some of the level names had spaces in them - which R does not play well with! We also made the level names all lower case, which is good practice - remember, R is case sensitive, so the easiest way to avoid mistyping an object or variable name etc. is to always use lower case!
 - We used `rename()` to change the variable names into something more meaningful. It's good to have clear and concise names for objects, variables etc. It's easier to remember what `life_sat` is (and much easier to type!) than `SWL_T`!
 
 On to the new functions!
 
-- If you typed "R function tolower" into a search engine *or* typed `?tolower` into the console, you will have seen that `tolower()` is a **`base R`** function. This means that it doesn't belong to a package, per se, but comes 'pre-installed' with R - so we don't have to load this package to use it. This particicular function is used to "translate characters in character vectors, in particular from upper to lower case or vice versa" - basically, we used `names()` to get all the variable names, and `tolower()` to change all the variable names to lower case (for the reason mentioned earlier). 
+- If you typed "R function tolower" into a search engine *or* typed `?tolower` into the console, you will have seen that `tolower()` is a **`base R`** function. This means that it doesn't belong to a package, per se, but comes 'pre-installed' with R - so we don't have to load this package to use it. This particular function is used to "translate characters in character vectors, in particular from upper to lower case or vice versa" - basically, we used `names()` to get all the variable names, and `tolower()` to change all the variable names to lower case (for the reason mentioned earlier). 
 - As we first did in the Week 3 practical, we counted the number of missing values in our dataset using `is.na()` - but this time, we counted **any** missing values, not just rows with a certain number of missing values. 
-- Finally, we used another new fuction, `drop_na()`. You should have found that `drop_na` belongs to the `tidyr` package (which is loaded with `tidyverse`) and "drops rows containing missing values". This means we got rid of **any** rows with missing values (`NA`s) not just with a certain number of missing values. This can be useful if you want only complete data in your dataset, but be careful - if you have 55 variables in your dataset and you only plan to use three, but get rid of **all** missing values, you might end up removing participants from your dataset with missing values on variables you don't even plan to look at.
+- Finally, we used another new function, `drop_na()`. You should have found that `drop_na` belongs to the `tidyr` package (which is loaded with `tidyverse`) and "drops rows containing missing values". This means we got rid of **any** rows with missing values (`NA`s) not just with a certain number of missing values. This can be useful if you want only complete data in your dataset, but be careful - if you have 55 variables in your dataset and you only plan to use three, but get rid of **all** missing values, you might end up removing participants from your dataset with missing values on variables you don't even plan to look at.
 
 Hopefully you worked some of that out by yourselves. If you're ever in doubt about what a function does, use the help page or a search engine! This will let you see what package a function belongs to, which can be **very** handy if you get an error message saying `could not find function "XXX"`- this error is telling you that you haven't loaded  the package that the function belongs to (using `library()`). But you'll need to know what package the that is to load it! 
 
@@ -268,7 +268,7 @@ Our overall research question is whether there is a relationship between life sa
 <details>
   <summary>Solution</summary> 
 
-There are, again, a few different ways to approcach this. We could use one line of code by using the `data =` argument of the `lm()` function:
+There are, again, a few different ways to approach this. We could use one line of code by using the `data =` argument of the `lm()` function:
 
 ```{r}
 
@@ -540,12 +540,12 @@ fit2$r.squared - fit1$r.squared
 "-06"" means we need to add six 0s *before* the value to the left of the decimal point, so it's actually an R^2^-change of `r fit2$r.squared - fit1$r.squared`. This makes sense, as our second model wasn't significantly better than the first model - so we wouldn't expect the second model to explain a greater proportion of variance in the outcome than our first model. 
 
 <pre><code>
-Model 2 explains &#96;r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)&#96;% more variance than Model 1. We therefore accounted for &#96;r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)&#96;% more variance in life satisfaction by adding narcisissm to the model.
+Model 2 explains &#96;r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)&#96;% more variance than Model 1. We therefore accounted for &#96;r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)&#96;% more variance in life satisfaction by adding narcissism to the model.
 </code></pre>
 
 This would appear in the knitted document as:
 
-Model 2 explains `r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)`% more variance than Model 1. We therefore accounted for `r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)`% more variance in life satisfaction by adding narcisissm to the model.
+Model 2 explains `r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)`% more variance than Model 1. We therefore accounted for `r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)`% more variance in life satisfaction by adding narcissism to the model.
 </details>
 
 
@@ -591,7 +591,7 @@ Do we have evidence for a **relationship** between our predictor variables and o
 <details>
   <summary>Interpretation</summary> 
 
-Let's start by summaring our findings based on the info we've extracted today:
+Let's start by summarising our findings based on the info we've extracted today:
 
 <pre><code>
 We have evidence for a relationship between our predictor variables (hours of gaming and social anxiety) and our outcome (life satisfaction). A model with hours of gaming and social anxiety as predictors was significantly improved the fit of the model compared to the mean model, *F*(`r fit1$df`,`r fit1$df.residual`)  = `r fit1$statistic %>%  round(2)`, *p* = `r fit1$p.value %>% report.p`. Both hours of gaming and social anxiety were significantly related to change in life satisfaction (although we didn't get you to look at that today!). Standardized betas suggest that social anxiety rating was related a `r std.beta_lm1$coefficients[3] %>% round(2)` *SD* decrease in life satisfaction while hours of gaming (per week) was related to a `r std.beta_lm1$coefficients[2] %>% round(2)` *SD* decrease in life satisfaction. 

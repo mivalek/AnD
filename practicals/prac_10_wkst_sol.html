@@ -1794,7 +1794,7 @@ div.tocify {
 <span id="cb4-35"><a href="#cb4-35"></a> [ reached <span class="kw">getOption</span>(<span class="st">&quot;max.print&quot;</span>) <span class="op">--</span><span class="st"> </span>omitted <span class="dv">12464</span> entries ]</span></code></pre></div>
 </details>
 <p> </p>
-The <code>summary()</code> function is also useful (e.g. <code>summary(gaming)</code>). This lets you see sumamry statistics (including min, max, median, and mean) for numeric data, and tells you which variables are character variables. So, not quite as useful for a first glance at the data, but very useful when you want to look at numeric variables.
+The <code>summary()</code> function is also useful (e.g. <code>summary(gaming)</code>). This lets you see summary statistics (including min, max, median, and mean) for numeric data, and tells you which variables are character variables. So, not quite as useful for a first glance at the data, but very useful when you want to look at numeric variables.
 </details>
 <p> </p>
 </div>
@@ -1854,14 +1854,14 @@ The <code>summary()</code> function is also useful (e.g. <code>summary(gaming)<
 <ul>
 <li>We used <code>select()</code> to select the columns we were interested in, as we didn’t want to look at all the variables.</li>
 <li>We used <code>mutate()</code> and <code>factor()</code> to change the categorical variable class from character to factor, so that R would treat them as categorical variables.</li>
-<li>We used <code>mutate()</code> and <code>recode()</code> to change the names of the levels of the work factor, as some of the level names had spaces in them - which R does not play well with! We also made the level names all lower case, which is good pracice - remember, R is case sensitive, so the easiest way to avoid mistyping an object or variable name etc. is to always use lower case!</li>
+<li>We used <code>mutate()</code> and <code>recode()</code> to change the names of the levels of the work factor, as some of the level names had spaces in them - which R does not play well with! We also made the level names all lower case, which is good practice - remember, R is case sensitive, so the easiest way to avoid mistyping an object or variable name etc. is to always use lower case!</li>
 <li>We used <code>rename()</code> to change the variable names into something more meaningful. It’s good to have clear and concise names for objects, variables etc. It’s easier to remember what <code>life_sat</code> is (and much easier to type!) than <code>SWL_T</code>!</li>
 </ul>
 <p>On to the new functions!</p>
 <ul>
-<li>If you typed “R function tolower” into a search engine <em>or</em> typed <code>?tolower</code> into the console, you will have seen that <code>tolower()</code> is a <strong><code>base R</code></strong> function. This means that it doesn’t belong to a package, per se, but comes ‘pre-installed’ with R - so we don’t have to load this package to use it. This particicular function is used to “translate characters in character vectors, in particular from upper to lower case or vice versa” - basically, we used <code>names()</code> to get all the variable names, and <code>tolower()</code> to change all the variable names to lower case (for the reason mentioned earlier).</li>
+<li>If you typed “R function tolower” into a search engine <em>or</em> typed <code>?tolower</code> into the console, you will have seen that <code>tolower()</code> is a <strong><code>base R</code></strong> function. This means that it doesn’t belong to a package, per se, but comes ‘pre-installed’ with R - so we don’t have to load this package to use it. This particular function is used to “translate characters in character vectors, in particular from upper to lower case or vice versa” - basically, we used <code>names()</code> to get all the variable names, and <code>tolower()</code> to change all the variable names to lower case (for the reason mentioned earlier).</li>
 <li>As we first did in the Week 3 practical, we counted the number of missing values in our dataset using <code>is.na()</code> - but this time, we counted <strong>any</strong> missing values, not just rows with a certain number of missing values.</li>
-<li>Finally, we used another new fuction, <code>drop_na()</code>. You should have found that <code>drop_na</code> belongs to the <code>tidyr</code> package (which is loaded with <code>tidyverse</code>) and “drops rows containing missing values”. This means we got rid of <strong>any</strong> rows with missing values (<code>NA</code>s) not just with a certain number of missing values. This can be useful if you want only complete data in your dataset, but be careful - if you have 55 variables in your dataset and you only plan to use three, but get rid of <strong>all</strong> missing values, you might end up removing participants from your dataset with missing values on variables you don’t even plan to look at.</li>
+<li>Finally, we used another new function, <code>drop_na()</code>. You should have found that <code>drop_na</code> belongs to the <code>tidyr</code> package (which is loaded with <code>tidyverse</code>) and “drops rows containing missing values”. This means we got rid of <strong>any</strong> rows with missing values (<code>NA</code>s) not just with a certain number of missing values. This can be useful if you want only complete data in your dataset, but be careful - if you have 55 variables in your dataset and you only plan to use three, but get rid of <strong>all</strong> missing values, you might end up removing participants from your dataset with missing values on variables you don’t even plan to look at.</li>
 </ul>
 <p>Hopefully you worked some of that out by yourselves. If you’re ever in doubt about what a function does, use the help page or a search engine! This will let you see what package a function belongs to, which can be <strong>very</strong> handy if you get an error message saying <code>could not find function &quot;XXX&quot;</code>- this error is telling you that you haven’t loaded the package that the function belongs to (using <code>library()</code>). But you’ll need to know what package the that is to load it!</p>
 Using the help page or a search engine can also let you see the arguments the functions take, and most R documentation has an example of how to use the function at the bottom of the page. There is also a tonne of help out there if you don’t understand how to use the function (e.g. stackoverflow) - and half of ‘knowing’ how to use R is <strong>knowing what to google</strong> and <strong>being able to interpret the info</strong> you find! Knowing what to search for and being able to make sense of the results are <strong>key skills</strong> we want to help you develop throughout your degree. For example, if you type “get certain columns in r” into google, the second hit leads you to a <a href="https://stackoverflow.com/questions/10085806/extracting-specific-columns-from-a-data-frame">stackoverflow page</a> describing how to use <code>dplyr::select()</code>.
@@ -2186,7 +2186,7 @@ And
 <p>Create a linear model to capture the relationship between <code>life_sat</code> (the outcome), <code>hrs_gaming</code> (predictor 1) and <code>social_anx</code> (predictor 2). Save the linear model in an object called <code>satisf_lm1</code>.</p>
 <details>
 <p><summary>Solution</summary></p>
-<p>There are, again, a few different ways to approcach this. We could use one line of code by using the <code>data =</code> argument of the <code>lm()</code> function:</p>
+<p>There are, again, a few different ways to approach this. We could use one line of code by using the <code>data =</code> argument of the <code>lm()</code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a></span>
 <span id="cb10-2"><a href="#cb10-2"></a>satisf_lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(life_sat <span class="op">~</span><span class="st"> </span>hrs_gaming <span class="op">+</span><span class="st"> </span>social_anx, <span class="dt">data =</span> gaming)</span></code></pre></div>
 <p>We could use one line of code by using <code>$</code> to select the variables of interest from the <code>gaming</code> dataset. As we tell R that we want a certain variable from a certain dataset by using <code>$</code>, we don’t need to specify a <code>data =</code> argument for the <code>lm()</code> function:</p>
@@ -2396,10 +2396,10 @@ It is not always the case that adding more predictors makes for a ‘better’ m
 <span id="cb22-2"><a href="#cb22-2"></a>[<span class="dv">1</span>] <span class="fl">6.729326e-06</span></span></code></pre></div>
 <p>“-06”&quot; means we need to add six 0s <em>before</em> the value to the left of the decimal point, so it’s actually an R<sup>2</sup>-change of 0.000006729326. This makes sense, as our second model wasn’t significantly better than the first model - so we wouldn’t expect the second model to explain a greater proportion of variance in the outcome than our first model.</p>
 <pre><code>
-Model 2 explains `r ((fit2$r.squared - fit1$r.squared)*100) %&gt;% round(2)`% more variance than Model 1. We therefore accounted for `r ((fit2$r.squared - fit1$r.squared)*100) %&gt;% round(2)`% more variance in life satisfaction by adding narcisissm to the model.
+Model 2 explains `r ((fit2$r.squared - fit1$r.squared)*100) %&gt;% round(2)`% more variance than Model 1. We therefore accounted for `r ((fit2$r.squared - fit1$r.squared)*100) %&gt;% round(2)`% more variance in life satisfaction by adding narcissism to the model.
 </code></pre>
 <p>This would appear in the knitted document as:</p>
-Model 2 explains 0% more variance than Model 1. We therefore accounted for 0% more variance in life satisfaction by adding narcisissm to the model.
+Model 2 explains 0% more variance than Model 1. We therefore accounted for 0% more variance in life satisfaction by adding narcissism to the model.
 </details>
 <p> </p>
 </div>
@@ -2443,7 +2443,7 @@ This suggests social anxiety rating had a greater relative contribution than hou
 <p>Do we have evidence for a <strong>relationship</strong> between our predictor variables and our outcome variable? Do we have evidence that our predictors <strong>caused</strong> a change in our outcome variable?</p>
 <details>
 <p><summary>Interpretation</summary></p>
-<p>Let’s start by summaring our findings based on the info we’ve extracted today:</p>
+<p>Let’s start by summarising our findings based on the info we’ve extracted today:</p>
 <pre><code>
 We have evidence for a relationship between our predictor variables (hours of gaming and social anxiety) and our outcome (life satisfaction). A model with hours of gaming and social anxiety as predictors was significantly improved the fit of the model compared to the mean model, *F*(3,9,164)  = 516.81, *p* = &lt; .001. Both hours of gaming and social anxiety were significantly related to change in life satisfaction (although we didn&#39;t get you to look at that today!). Standardized betas suggest that social anxiety rating was related a -0.17 *SD* decrease in life satisfaction while hours of gaming (per week) was related to a -0.05 *SD* decrease in life satisfaction. 
 </code></pre>
