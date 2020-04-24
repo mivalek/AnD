@@ -1,0 +1,632 @@
+---
+title: 'Practical 10: Extending the Linear Model'
+author: "Analysing Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(include = FALSE)
+library(tidyverse)
+library(kableExtra)
+#make.sheet("C:/Users/scruffybumblebee/Desktop/analysing_data/practicals/AnD_P10_2.rmd", course = "and")
+#spelling::spell_check_files("C:/Users/scruffybumblebee/Desktop/analysing_data/practicals/AnD_P10_sols_wip4.rmd", ignore = character(), lang = "en_GB")
+```
+
+```{r report.p, include = F}
+report.p <- function(x){
+  ifelse(x > .001, paste0(" = ", rd(x, 3)), "< .001")
+}
+```
+
+This practical will help you practice preparing for, conducting, reporting and interpreting linear model analyses with multiple predictors in R. Before you start this practical, you should make sure you review the relevant lecture, as this practical assumes you already know what these analyses are and how to interpret the output. You should also use this practical in combination with the tutorial on the same topic.
+
+# Setting Up
+For this practical, you will need this worksheet, RStudio, and a new Markdown document. Remember that you can easily switch between windows with the <kbd>Alt</kbd> + <kbd>&#8633; Tab</kbd> (Windows) and <kbd>&#8984;\ Command</kbd> + <kbd>&rarrb; Tab</kbd> (Mac OS) shortcuts.
+
+`r task()`Open your analysing_data `R` project in RStudio and open a new Markdown file. Since we will be practicing reporting using inline code, we will need the Markdown later on. For the tasks, get into the habit of creating new code chunks as you go.
+
+`r task()`Aside from loading `tidyverse`, we will also be using `broom` and `lm.beta`. If you don't have any of these packages installed, do that now. **Remember that installing packages is a one-off thing** so don't put the command that does it in your Markdown. Simply type it into the console and press <kbd>&crarr;\ Enter</kbd>. The `library()` commands should always go in a separate code chunk at the beginning of your Markdown document, so that your code will run correctly.
+
+
+```{r, eval=F, echo=solution, toggle = solution, message=F}
+library(tidyverse)
+library(broom)
+library(lm.beta)
+```
+
+\ 
+
+# The dataset
+As usual, we will need some data to work with. This week we will use the dataset "Gaming Habits and Psychological Well-being: An international dataset about the Anxiety, Life Satisfaction and Social Phobia of over 13000 gamers". 
+
+The data from this study is from an online survey with participants from over 100 countries. The survey comprised questionnaires assessing general anxiety disorders, social phobia, as well as overall life satisfaction, to allow for the investigation of whether there is a relationship between excessive video game usage, well-being,and psychological disorders. 
+
+Here is [a preprint describing the database](https://psyarxiv.com/mfajz/) (for the curious, have a look at [what a preprint is and how it differs from a journal article](https://help.osf.io/hc/en-us/articles/360019930493-Preprint-FAQs)). As described in the preprint, the authors already conducted a lot of data cleaning for us (how nice!). However, we should still check the data looks the way we expect. You can find the data from the study at https://raw.githubusercontent.com/mivalek/AnD/master/data/gaming.csv. 
+
+`r task()`Add the commands to read in the data and save it in an object called `gaming`. Have a look at what the dataset contains.
+
+```{r, include = F}
+gaming <- read_csv("https://raw.githubusercontent.com/mivalek/AnD/master/data/gaming.csv")
+```
+
+<details>
+<summary>Solution</summary>
+```{r, eval = FALSE}
+gaming <- read_csv(
+  "https://raw.githubusercontent.com/mivalek/AnD/master/data/gaming.csv")
+
+gaming %>% str()
+```
+
+```{r, echo=F, toggle = solution, message=F}
+gaming %>% str()
+
+```
+
+At this point, we've shown you a number of ways to have a look at what your dataset contains. The `str()` function is a great way to get an overview of the you data. This includes the type of object we're looking at (in this case, a tibble), how many rows and columns we have (in this case, 13, 464 rows and 55 columns: with the way this data is arranged, this means 13,464 participants and 55 variables). We can also see the variable names and types (e.g. numeric, character), and a snapshot of the values or the levels of factors. The output also has a handy reminder that you can use `$` to extract elements from your object (subsetting). If we typed `gaming$GAD1` R would return the values in the `GAD1` column of the `gaming` object. 
+
+```{r, echo=T, toggle = solution, message=F}
+gaming$GAD1
+```
+
+\ 
+
+
+The `summary()` function is also useful (e.g. `summary(gaming)`). This lets you see sumamry statistics (including min, max, median, and mean) for numeric data, and tells you which variables are character variables. So, not quite as useful for a first glance at the data, but very useful when you want to look at numeric variables. 
+</details>
+
+\ 
+
+# Data cleaning
+As you can see, there are a **lot** of variables in this study! But don't panic - I will do some of the data preparation steps for you, so that you have a more manageable dataset.
+
+Whenever you use someone else's code (and it is both common and useful to 'borrow' and edit code to achieve your own aims!) it is important to make sure you understand **what** each step of any 'borrowed' code does and **why**. 
+
+`r task()`Run the code below: 
+
+```{r, echo=T}
+
+gaming <- gaming %>%
+  dplyr::select(Hours, Game, SPIN_T, GAD_T, SWL_T, Narcissism,
+                Residence, Age, Work, Degree, Gender) %>%
+  # You've used this one before! Think about variable classes...
+  dplyr::mutate(Game = factor(Game),
+                Residence = factor(Residence),
+                Work = factor(Work),
+                Degree = factor(Degree),
+                Gender = factor(Gender)) %>%
+  # I'm changing the names of the levels of the work factor here, but why?
+  dplyr::mutate(Work = recode(Work, "Employed" = "employed",
+                              "Student at college / university" = "university",
+                              "Student at school" = "school",
+                              "Unemployed / between jobs" = "unemployed")) %>% 
+  dplyr::rename(hrs_gaming = Hours,
+                life_sat = SWL_T, 
+                social_anx = SPIN_T,
+                gen_anx = GAD_T)
+
+# This tolower() function is new!
+# Use one of the methods below to work out what it does
+names(gaming) <- tolower(names(gaming)) 
+
+# This isn't changing our data, just counting something! but what? 
+all_missing <- sum(is.na(gaming))
+gaming <- gaming %>% drop_na()
+# You've used different code to achieve a similar aim.
+#Use one of the methods below to work out what the drop_na() function does
+
+## As always, call your objects to check they
+## contain what you think they should contain!
+```
+
+`r subtask()`There is at least one function you haven't used before. Work out what any unfamiliar functions do and write down what packages they belong to. 
+
+**Hint**: Either **use the help code** in your console (e.g. ?rename) or **use a search engine** to find out what they do (e.g. google: R function rename). 
+
+`r subtask()`Make sure you understand **what** each step does and **why** I did it. E.g. why might I have recoded the factors in the `work` variable?
+
+<details>
+  <summary>Solution</summary>
+First the familiar functions:
+
+- We used `select()` to select the columns we were interested in, as we didn't want to look at all the variables.
+- We used `mutate()` and `factor()` to change the categorical variable class from character to factor, so that R would treat them as categorical variables.
+- We used `mutate()` and `recode()` to change the names of the levels of the work factor, as some of the level names had spaces in them - which R does not play well with! We also made the level names all lower case, which is good pracice - remember, R is case sensitive, so the easiest way to avoid mistyping an object or variable name etc. is to always use lower case!
+- We used `rename()` to change the variable names into something more meaningful. It's good to have clear and concise names for objects, variables etc. It's easier to remember what `life_sat` is (and much easier to type!) than `SWL_T`!
+
+On to the new functions!
+
+- If you typed "R function tolower" into a search engine *or* typed `?tolower` into the console, you will have seen that `tolower()` is a **`base R`** function. This means that it doesn't belong to a package, per se, but comes 'pre-installed' with R - so we don't have to load this package to use it. This particicular function is used to "translate characters in character vectors, in particular from upper to lower case or vice versa" - basically, we used `names()` to get all the variable names, and `tolower()` to change all the variable names to lower case (for the reason mentioned earlier). 
+- As we first did in the Week 3 practical, we counted the number of missing values in our dataset using `is.na()` - but this time, we counted **any** missing values, not just rows with a certain number of missing values. 
+- Finally, we used another new fuction, `drop_na()`. You should have found that `drop_na` belongs to the `tidyr` package (which is loaded with `tidyverse`) and "drops rows containing missing values". This means we got rid of **any** rows with missing values (`NA`s) not just with a certain number of missing values. This can be useful if you want only complete data in your dataset, but be careful - if you have 55 variables in your dataset and you only plan to use three, but get rid of **all** missing values, you might end up removing participants from your dataset with missing values on variables you don't even plan to look at.
+
+Hopefully you worked some of that out by yourselves. If you're ever in doubt about what a function does, use the help page or a search engine! This will let you see what package a function belongs to, which can be **very** handy if you get an error message saying `could not find function "XXX"`- this error is telling you that you haven't loaded  the package that the function belongs to (using `library()`). But you'll need to know what package the that is to load it! 
+
+Using the help page or a search engine can also let you see the arguments the functions take, and most R documentation has an example of how to use the function at the bottom of the page. There is also a tonne of help out there if you don't understand how to use the function (e.g. stackoverflow) - and half of 'knowing' how to use R is **knowing what to google** and **being able to interpret the info** you find! Knowing what to search for and being able to make sense of the results are **key skills** we want to help you develop throughout your degree. For example, if you type "get certain columns in r" into google, the second hit leads you to a [stackoverflow page](https://stackoverflow.com/questions/10085806/extracting-specific-columns-from-a-data-frame) describing how to use `dplyr::select()`.
+</details>
+
+\ 
+
+# Preparation
+
+We're going to be investigating whether there is a relationship between life satisfaction and 'recreational gaming' in working adults. Before we go any further, however, you should use the codebook below to check what variables we'll be working with.
+
+\ 
+
+## Codebook
+
+```{r, echo = F, results='asis'}
+read_csv(
+  "https://raw.githubusercontent.com/mivalek/AnD/master/data/gaming_codebook.csv") %>%
+  kable() %>%
+  kable_styling()
+```
+
+
+`r task()`Now that the dataset is more manageable, take a look at the data again. Can you spot any issues with the variables? Write any issues down, but don't do anything to correct them yet.
+
+**Hint**: Check the class of your variables is correct, and look for any typos or improbable values.
+
+```{r, eval=F, echo=solution, toggle = solution, message=F}
+
+# get an overview:
+gaming %>% str()
+# or
+summary(gaming)
+
+# take a closer look at problematic variables:
+gaming %>%
+  pull(hrs_gaming) %>%
+  table()
+
+```
+
+\ 
+
+## Inclusion criteria
+
+You should have noticed that `hrs_gaming` had some very large and impossible values (there are only 168 hours in a week!), unless someone has invented time-travel for the sole purpose of XP farming. Normally, we would deal with these impossible values. However, we first need to remove some participants, based on the inclusion criteria for our study - the key participant characteristics researchers select (*prior* to running a study or analysing [secondary data](https://methods.sagepub.com/reference/the-sage-encyclopedia-of-communication-research-methods/i13206.xml)) to answer the research question. As it turns out, removing participants that don't meet our inclusion/exclusion criteria will remove these values anyway!
+
+Our inclusion criteria are **working adults** who game **recreationally**. This means we only want to keep participants who:
+
+- are in employment or at university in our dataset
+- are over 18 
+- do not play more than 8 hours of games per day (a pre-selected cut-off value as this should be the most leisure time someone with a 'standard' 8hr work day and 8hr sleep pattern would have!)
+
+You should already have noticed our dataset already only contains people over 18, so we don't need to worry about excluding participants aged under 18. Let's go ahead and deal with the other two inclusion criteria. 
+
+`r task()`Exclude participants from the dataset that are 1) not employed or at university (i.e. remove unemployed participants and school students); 2) play **8 or more** hrs of games per day. Remember that `hrs_gaming` is per week, so you will need to calculate a weekly value to exclude participants. Instead of calculating this separately and using the number in your code, **include the calculation** in the code you use to exclude participants. 
+
+**Hint**: Use the logical operator "less than or equal to" to complete this task [see PAAS week 7 practical](https://paas.mindsci.net/week7/#40). You will also need to use either the operator %in% (covered in the [Tutorial 5](http://users.sussex.ac.uk/~jm636/tut_05_cor_chisq.html)) or you could use the logical operator "or".
+
+<details>
+  <summary>Solution</summary> 
+
+First we want to check that the code we're going to use does what we expect it to. So we'll run it, and use `pull()` and `table()` to make sure the output looks the way we expect. So we're checking the code, but not changing out `gaming` dataset object just yet:  
+  
+```{r, eval=F, echo=T}
+
+gaming %>% 
+  filter(hrs_gaming <= 8*7) %>% 
+  pull(hrs_gaming) %>%
+  table()
+
+gaming %>% 
+  filter(work == "employed" | work == "university") %>% 
+  pull(work) %>%
+  table()
+# OR
+gaming %>% 
+  filter(work %in% c("employed", "university")) %>% 
+  pull(work) %>%
+  table()
+
+```
+```{r output, echo=F, toggle = solution, message=F}
+gaming %>% 
+  filter(hrs_gaming <= 8*7) %>% 
+  pull(hrs_gaming) %>%
+  table()
+
+gaming %>% 
+  filter(work == "employed" | work == "university") %>% 
+  pull(work) %>%
+  table()
+```
+Great, the code has done what we wanted it to! There are no longer any participants who played more than 56 hours of games a week, and we only have employed and university students in the dataset. So let's make sure to **reassign** these changes back to our dataset object, `gaming`, obviously **without** pulling a specific variable and making a table of the values of that variable - otherwise that's all our `gaming` object will hold!
+
+```{r}
+
+gaming <- gaming %>% 
+  filter(work == "employed" | work == "university") %>% 
+  filter(hrs_gaming <= 8*7)
+
+```
+</details>
+
+<!--solution
+Here's a reminder of logical operators if you're confused:  
+
+```{r, echo = F, results='asis'}
+read_csv(
+  "http://users.sussex.ac.uk/~ra328/logical_operators.csv") %>%
+  kable() %>%
+  kable_styling()
+```
+-->
+
+\ 
+
+# Analysis: Linear Model 1
+
+Great, now we have a clean and shiny dataset! We selected variables of interest, removed participants with missing data, renamed problematic/unclear variables, checked the classes of our variables, and excluded participants who didn't fit our inclusion criteria. 
+
+Our overall research question is whether there is a relationship between life satisfaction and 'recreational gaming' in working adults. We're also interested in whether additional factors are better at explaining variance in life satisfaction than hours spent gaming. Our outcome variable will be `life_sat` and our predictors will be `hrs_gaming` and `social_anx`. 
+
+`r task()`Create a linear model to capture the relationship between `life_sat` (the outcome), `hrs_gaming` (predictor 1) and `social_anx` (predictor 2). Save the linear model in an object called `satisf_lm1`. 
+
+<details>
+  <summary>Solution</summary> 
+
+There are, again, a few different ways to approcach this. We could use one line of code by using the `data =` argument of the `lm()` function:
+
+```{r}
+
+satisf_lm1 <- lm(life_sat ~ hrs_gaming + social_anx, data = gaming)
+
+```
+
+We could use one line of code by using `$` to select the variables of interest from the `gaming` dataset. As we tell R that we want a certain variable from a certain dataset by using `$`, we don't need to specify a `data =` argument for the `lm()` function:
+
+```{r}
+
+satisf_lm1 <- lm(gaming$life_sat ~ gaming$hrs_gaming + gaming$social_anx)
+
+```
+
+We could instead use the pipe (`%>%`) to call the object holding our data (`gaming`) "and then" take that object and pipe it into the `lm()` function. Remember, you need to use `.` to tell R to pipe the data into the `lm()` function:
+```{r}
+
+satisf_lm1 <- gaming %>% 
+  lm(life_sat ~ hrs_gaming + social_anx, .)
+
+```
+</details>
+    
+```{r names_setup, include=F}
+
+satisfac_param <- broom::tidy(satisf_lm1, conf.int = TRUE)
+outcome <- "life satisfaction"
+OUTCOME <- "Life satisfaction"
+pred1 <- "hours gaming"
+pred2 <- "social anxiety"
+
+```
+
+`r subtask()`Run some code to see the overall fit statistics for your linear model (`satisf_lm1`), using a function from the `broom` package. How would you interpret the *F*-statistic for this model?
+
+**Hint**:  Check the [GLM tutorial](http://milton-the-cat.rocks/learnr/r/discovr_08/#section-one-predictor) if you don't remember which function to use.
+
+
+```{r, eval=F, echo=solution, toggle = solution, message=F}
+
+broom::glance(satisf_lm1)
+
+```
+
+`r subtask()`Now run the code to see the model parameters, making sure to tell R to produce confidence intervals. Let's focus on just one predictor. How would you interpret the relationship between `r pred1` and `r outcome`? 
+
+**Hint**: Think about confidence intervals, the *t*-statistic and associated *p*-value, and the size and direction of *b*~1~.
+
+- The relationship between `r pred1` and `r outcome` is...
+- The statistical interpretation of *b*~1~ is ...
+- The 'real world' or 'plain language' interpretation of *b*~1~ is ...
+
+<details>
+  <summary>Solution</summary> 
+```{r}
+
+broom::tidy(satisf_lm1, conf.int = TRUE)
+
+
+```
+
+- The relationship between `r pred1` and `r outcome` is `r ifelse(satisfac_param$estimate[2] > 0, "positive", "negative")`, as *b*~1~ (`r satisfac_param$estimate[2] %>%  round(2)`) is a `r ifelse(satisfac_param$estimate[2] > 0, "positive", "negative")` value. As `r pred1` increased, `r outcome` `r ifelse(satisfac_param$estimate[2] > 0, "increased", "decreased")`.
+
+- The statistical interpretation of *b*~1~ is that `r pred1` `r ifelse(satisfac_param$p.value[2] < .05, "significantly predicted", "did not significantly predict")` `r outcome`. As `r pred1` increased by one unit, `r outcome` `r ifelse(satisfac_param$estimate[2] > 0, "increased", "decreased")` by `r satisfac_param$estimate[2] %>% round(2)` units **(when `r pred2` score is at 0)**.
+
+- The 'real world' or 'plain language' interpretation of *b*~1~ is that for every extra hour of gaming, `r outcome` `r ifelse(satisfac_param$estimate[2] > 0, "increases", "decreases")` by `r satisfac_param$estimate[2] %>%  round(2)` point on the `r outcome` rating scale **(when `r pred2` score is 0)**.
+
+A key thing to notice here is that we interpret what *b*~1~ (the slope of the line) tells us about the relationship between  `r pred1` and `r outcome` **when all other predictors in the model are at 0**.
+</details>
+
+
+`r task()` Using the output you've generated, write down the equation for this linear model. 
+
+**Hint**: Include the values for *b*~0~, *b*~1~, and *b*~2~, and the variable names. 
+
+
+
+<details>
+  <summary>Solution</summary> 
+The general linear model equation (with two predictors) is:
+$$\begin{aligned}Y &= b_0 + b_1(Predictor_1) + b_2(Predictor_2) + \varepsilon\end{aligned}$$
+
+Based on the values from the lm output, we can replace the elements of the equation. For this linear model, the equation would therefore look like this:
+
+$$\begin{aligned}{Life\ satisfaction} &= `r satisfac_param$estimate[1] %>% round(2)` + `r satisfac_param$estimate[2] %>% round(2)`({hours\ gaming\ per\ week}) + `r satisfac_param$estimate[3] %>% round(2)`(social\ anxiety) + \varepsilon\end{aligned}$$
+</details>
+
+
+
+```{r unique_ss, include=F}
+# make sure not too few duplicate values
+n3 <- gaming %>% 
+  group_by(hrs_gaming) %>%
+  filter(n() == 3) %>% 
+  summarise()
+
+count3 <- gaming %>% 
+  group_by(hrs_gaming) %>%
+  filter(n() == 3) %>% 
+  filter(hrs_gaming == n3$hrs_gaming[1])
+
+ss3 <- gaming %>% 
+  filter(hrs_gaming == count3$hrs_gaming[3] 
+         & social_anx == count3$social_anx[3])
+
+ss3.y <- satisfac_param$estimate[1] + 
+  (satisfac_param$estimate[2]*ss3$hrs_gaming) + 
+  (satisfac_param$estimate[3]*ss3$social_anx)
+
+ss3.resid <- count3$life_sat[3] - ss3.y
+
+
+gaming %>%
+  filter(hrs_gaming == 37 & social_anx == 8)
+
+```
+
+`r subtask()`One participant spends `r ss3$hrs_gaming` `r pred1` per week and has a `r pred2` score of `r ss3$social_anx`. Solve the linear model equation to predict `r outcome` for this participant. 
+
+<details>
+  <summary>Solution</summary> 
+The linear model equation you calculated earlier looked like this:
+
+$$\begin{aligned}{Life\ satisfaction} &= `r satisfac_param$estimate[1] %>% round(2)` + `r satisfac_param$estimate[2] %>% round(2)`({hours\ gaming\ per\ week}) + `r satisfac_param$estimate[3] %>% round(2)`(social\ anxiety) + \varepsilon\end{aligned}$$
+
+We can replace our predictors with this participant's values:
+
+$$\begin{aligned}{Life\ satisfaction} &= `r satisfac_param$estimate[1] %>% round(2)` + (`r satisfac_param$estimate[2] %>% round(2)` * `r ss3$hrs_gaming`) + (`r satisfac_param$estimate[3] %>% round(2)`* `r ss3$social_anx`) + \varepsilon\end{aligned}$$
+$$\begin{aligned}`r ss3.y %>%  round(2)` &= `r satisfac_param$estimate[1] %>% round(2)` + (`r satisfac_param$estimate[2] %>% round(2)` * `r ss3$hrs_gaming`) + (`r satisfac_param$estimate[3] %>% round(2)`* `r ss3$social_anx`) + \varepsilon\end{aligned}$$
+
+Now we know the predicted value for this participant is **`r ss3.y %>%  round(2)`**. 
+</details>
+
+
+`r subtask()`Find this participant in the database. What is their actual value for `life_sat`? Compare the value of `r outcome` predicted by the linear model, and their actual value. What does this comparison tell you?
+
+**Hint**: The filter function and logical operators are your friends here. You don't need to save the outcome into an object.
+
+<details>
+  <summary>Solution</summary> 
+```{r}
+
+gaming %>%
+  filter(hrs_gaming == 37 & social_anx == 8)
+
+```
+
+The score predicted (by the linear model) for the participant and their actual, observed `r outcome` score were not identical. In fact, the actual score was `r ss3.resid %>%  round(2)` `r ifelse(ss3.resid > 0, "higher", "lower")` than the predicted value (i.e. the model predicted a rating `r ss3.resid %>%  round(2)` points `r ifelse(ss3.resid > 0, "lower", "higher")` on the `r outcome` scale than the participants actual score).
+
+Remember, the difference between a predicted score and the observed score is called a **residual**. This is an error-term that captures some of the error in our linear model. We want the error in the model to be as little as possible, as that means our model is better at predicting the outcome. Therefore we want the residuals to be as small as possible. The residual for the participant above was `r ss3.resid %>%  round(2)`.
+</details>
+
+\ 
+
+# Analysis: Linear Model 2
+
+There will nearly always be a difference between a predicted and observed value (the residual) as there will always be error in a linear model. However, we want that difference to be as small as possible. Maybe there are additional variables in our dataset that will help us better explain the variance in `r outcome`, and reduce the error in our model. 
+
+`r task()`Use the codebook to select an additional predictor you think will have a relationship with life satisfaction. Consider how easily you will be able to interpret the relationship between predictor and outcome (e.g. `residence` has 109 levels/groups!). Think carefully about what you expect the relationship will be between predictors and outcome. 
+
+- What direction do you think these relationships will be?
+- Do you think they will be significant relationships?
+- Which predictor do you think will explain most variance in the outcome?
+
+I will use `narcissism` as my third predictor. You can choose whatever you think is reasonable, but be aware I will be referencing `narcissism` as the third predictor from here onwards.
+
+<details>
+  <summary>Solution</summary> 
+I might predict that as `narcissism` increases, `life satisfaction` increases - so there will be a significant positive relationship. I could predict that `social anxiety` would have the strongest relationship with `life satisfaction` our of all three predictors. 
+</details>
+
+`r task()`Create a linear model to capture the relationship between `life_sat` (the outcome), `hrs_gaming` (predictor 1), `social_anx` (predictor 2) and `narcissism` (predictor 3). Save the linear model in an object called `satisf_lm2`. 
+
+```{r, eval=F, echo=solution, toggle = solution, message=F}
+
+satisf_lm2 <- lm(life_sat ~ hrs_gaming + social_anx + narcissism, data = gaming)
+
+# OR
+
+satisf_lm2 <- gaming %>% 
+  lm(life_sat ~ hrs_gaming + social_anx + narcissism, .)
+
+```
+
+`r subtask()`Run the code to **compare** Model 1 and Model 2. Which model is better able to explain the outcome variable, `r outcome`? 
+
+**Hint**: You need to produce the F-change statistic and associated *p*-value. Check the [GLM tutorial](http://milton-the-cat.rocks/learnr/r/discovr_08/#section-several-predictors) if you're unsure how to do this.
+
+<details>
+  <summary>Solution</summary> 
+
+We've taught you two ways to produce the *F*-change statistic and associated *p*-value. The first is using `anova()`:
+
+```{r, include = F}
+
+mod1v2 <- anova(satisf_lm1, satisf_lm2) %>% 
+  broom::tidy()
+
+```
+
+
+```{r}
+
+anova(satisf_lm1, satisf_lm2)
+
+```
+
+The second is using `anova()` and `tidy()`. The `tidy()` function converts the output from `anova()` into a neat tibble:  
+```{r}
+
+anova(satisf_lm1, satisf_lm2) %>% 
+  broom::tidy()
+
+```
+
+```{r, collapse = TRUE}
+
+anova(satisf_lm1, satisf_lm2) %>% 
+  broom::tidy()
+
+```
+
+Both include the same key information:  
+
+- the *F*-change statistic (under `statistic` when using `tidy()` and `F` when not) 
+- the associated *p*-value (under `p.value` when using `tidy()` and `Pr(>F)` when not) 
+
+From the output, we can see that we do **not** have a significant *F*-change statistic: our *F*-change statistic is `r mod1v2$statistic[2] %>% round(2)` and the associated *p*-value is `r mod1v2$p.value[2] %>% round(2)`. We pre-selected an alpha of .05 for this study. As our *p*-value is `r ifelse(mod1v2$p.value[2] < .05, "less than", "greater than")` .05, we have a `r ifelse(mod1v2$p.value[2] < .05, "significant", "non significant")` *F*-change statistic. 
+
+The *F*-change statistic tells us the change in *F*-statistic between the first model (with two predictors) to the second model (with three predictors) and whether that change significant. Is our second model able to explain significantly more variance in our outcome variable than our first model? In this case, our second model is `r ifelse(mod1v2$p.value[2] < .05, "significantly better", "no better")` than our first model. This means there is `r ifelse(mod1v2$p.value[2] < .05, "predictive value", "no value")` to including the additional predictor in the model. Therefore we should interpret the remaining parameters based on the `r ifelse(mod1v2$p.value[2] < .05, "second", "first")` model, as this was the best model.
+
+It is not always the case that adding more predictors makes for a 'better' model. The best model is the one that explains the relationship between predictors and outcome with the best signal-to-noise ratio (i.e. explains as much as possible about the relationship between predictors and outcome with as little error as possible).
+</details>
+
+`r subtask()`Now that you know which is the best model (Model 1 or Model 2), have a look at the R^2^ value for each model. How much **more** variance in `r outcome` does the **best** model explain than the model with poorer fit?
+
+**Hint**: You need to work out the R^2^-change. 
+
+**Bonus hint**: You already used the function you need once today! 
+
+<details>
+  <summary>Solution</summary> 
+    
+```{r}
+fit1 <- broom::glance(satisf_lm1)
+fit2 <- broom::glance(satisf_lm2)
+fit1 
+fit2
+```
+
+The `glance()` function provides us with lots of information about our models. For now, we're interested in the R^2^ values.  We calculate R^2^-change by simply subtracting the R^2^ from one model from the R^2^ from the other model. We can do this in four ways:
+
+- By hand and then write the value into your work (**BAD!** This is where [errors](https://www.mentalfloss.com/article/49935/10-very-costly-typos) come from!)
+- In the console (fine but you have no record of what you did)
+- In a code chunk (great, you have a record and you can see the value immediately)
+- Using inline code (great, you have a record and you'll need to report it eventually anyway)
+
+I'll use a code chunk and inline code. I want to see what the value is immediately, as well as reporting the R^2^-change value when I knit my markdown document. 
+
+```{r}
+(fit2$r.squared - fit1$r.squared) %>%  round(2)
+```
+Oh... we have an R^2^-change value of 0! Well, it's unlikely to be exactly 0. Let's do that again, but without rounding the value:
+```{r}
+fit2$r.squared - fit1$r.squared
+```
+
+"-06"" means we need to add six 0s *before* the value to the left of the decimal point, so it's actually an R^2^-change of `r fit2$r.squared - fit1$r.squared`. This makes sense, as our second model wasn't significantly better than the first model - so we wouldn't expect the second model to explain a greater proportion of variance in the outcome than our first model. 
+
+<pre><code>
+Model 2 explains &#96;r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)&#96;% more variance than Model 1. We therefore accounted for &#96;r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)&#96;% more variance in life satisfaction by adding narcisissm to the model.
+</code></pre>
+
+This would appear in the knitted document as:
+
+Model 2 explains `r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)`% more variance than Model 1. We therefore accounted for `r ((fit2$r.squared - fit1$r.squared)*100) %>% round(2)`% more variance in life satisfaction by adding narcisissm to the model.
+</details>
+
+
+`r subtask()`Which predictors in the **best** model made the greatest relative contribution to explaining the variance in the `r outcome`? Run the necessary code to find out, saving the output into an object.
+
+**Hint**: Remember there are two types of betas - unstandardized and standardized. Make sure you understand how the interpretation changes depending on the beta you're looking at, and which beta is good for which task!
+
+```{r, eval=F, echo=solution, toggle = solution, message=F}
+
+std.beta_lm1 <- lm.beta::lm.beta(satisf_lm1)
+std.beta_lm1
+```
+
+`r subtask()`Report what you know about the standardized betas in the **best** model, using what you know about subsetting using `$` and inline code.
+
+**Hint**: For an example, see how they are summarised in the [GLM tutorial](http://milton-the-cat.rocks/learnr/r/discovr_08/#section-several-predictors).
+
+<details>
+  <summary>Interpretation</summary>
+  
+Let's report what we found:
+<pre><code>  
+The standardized beta for hours of gaming (per week) = `r std.beta_lm1$coefficients[2] %>% round(2)`. This indicates that as hours of gaming (per week) increased by one standard deviation, life satisfaction decreased by `r std.beta_lm1$coefficients[2] %>% round(2)` standard deviations (when social anxiety rating is 0).
+
+The standardized beta for social anxiety = `r std.beta_lm1$coefficients[3] %>% round(2)`. This indicates that as social anxiety increased by one standard deviation, life satisfaction decreased by `r std.beta_lm1$coefficients[3] %>% round(2)` standard deviations (when hours of gaming (per week) is 0).
+
+This suggests social anxiety rating was related to a greater *SD* change in life satisfaction than hours of gaming (per week).
+</code></pre>
+
+This would appear as so in the knitted document:
+
+The standardized beta for hours of gaming (per week) = `r std.beta_lm1$coefficients[2] %>% round(2)`. This indicates that as hours of gaming (per week) increased by one standard deviation, `r outcome` `r ifelse(satisfac_param$estimate[2] > 0, "increased", "decreased")` by `r std.beta_lm1$coefficients[2] %>% round(2)` (when social anxiety rating is 0).
+
+The standardized beta for social anxiety = `r std.beta_lm1$coefficients[3] %>% round(2)`. This indicates that as social anxiety increased by one standard deviation, `r outcome` `r ifelse(satisfac_param$estimate[3] > 0, "increased", "decreased")` by `r std.beta_lm1$coefficients[3] %>% round(2)` standard deviations (when hours of gaming (per week) is 0).
+
+This suggests social anxiety rating had a greater relative contribution than hours of gaming (per week) to change in life satisfaction - of the two predictors, social anxiety rating was related to the greater *SD* change in life satisfaction.
+</details>
+
+`r task()`Finally, what conclusions can we draw based on our analysis? 
+
+Do we have evidence for a **relationship** between our predictor variables and our outcome variable? Do we have evidence that our predictors **caused** a change in our outcome variable? 
+
+<details>
+  <summary>Interpretation</summary> 
+
+Let's start by summaring our findings based on the info we've extracted today:
+
+<pre><code>
+We have evidence for a relationship between our predictor variables (hours of gaming and social anxiety) and our outcome (life satisfaction). A model with hours of gaming and social anxiety as predictors was significantly improved the fit of the model compared to the mean model, *F*(`r fit1$df`,`r fit1$df.residual`)  = `r fit1$statistic %>%  round(2)`, *p* = `r fit1$p.value %>% report.p`. Both hours of gaming and social anxiety were significantly related to change in life satisfaction (although we didn't get you to look at that today!). Standardized betas suggest that social anxiety rating was related a `r std.beta_lm1$coefficients[3] %>% round(2)` *SD* decrease in life satisfaction while hours of gaming (per week) was related to a `r std.beta_lm1$coefficients[2] %>% round(2)` *SD* decrease in life satisfaction. 
+</code></pre>
+  
+What we **can't** say is that social anxiety or hours of gaming **caused** a change in life satisfaction! The outcome of our linear model does not mean the predictors and the outcome variable, in *this* particular design, are causally related. We can't say that higher social anxiety causes poorer life satisfaction - the relationship may be the other way around, with poorer life satisfaction causing higher social anxiety. The data we used for this study was questionnaire based data, without any experimental manipulations. If there is no experimental manipulation, we can't say there one variable **causes** change in another. 
+
+If we designed a study where we randomly allocated people to gaming conditions (5 hour or 30 hour per week) and measured their life satisfaction, we might be able to make a claim about causality. But even then, as with all findings, we should be very cautious in our interpretations! Maybe the 30 hour gaming group would have shown a change in life satisfaction from 30 hours of *any* new activity a week? 
+
+Just one more reason to **always** be tentative in your language when describing results. For example, findings *suggest* an interpretation, they **never** prove anything!
+</details>
+
+\ 
+
+# Summary
+
+You made it, well done! There are more variables in the `gaming` dataset, so play around constructing, comparing, and interpreting linear models with additional predictors if you want. This is a great way to improve your statistical skills and your R skills. 
+
+Today you practiced:
+
+- Interpreting 'borrowed' code 
+- How to find help with functions 
+- Using logical operators and %in%
+- Using calculations within data cleaning code
+- Excluding participants from the dataset
+- Using tidyverse functions to find certain values in the dataset
+- Evaluating the difference between causal and correlational designs
+- How to construct, report, and interpret a linear model with multiple predictors:
+    - Using the broom package and lm.beta()
+    - Creating the model equation
+    - Using the equation to make predictions
+    - Evaluating model fit using the *F*-statistic
+    - Finding and interpreting the values of *b*~0~, *b*~1~, *b*~2~, *t*, *p*, and CIs
+    - Comparing models using *F*-change statistic and *R*^2^
+    - Interpreting and reporting the relative contribution of predictors in a linear model using 
+    
+
+That's all for today. I hope you are safe and well.
