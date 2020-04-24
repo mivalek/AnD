@@ -409,7 +409,7 @@ The *t*-statistic, dfs, and *p*-value are the same! This is because the correlat
 
 <details>
   <summary>Solution</summary> 
-The *r* value is `r gender.means.cor$estimate  %>% round(2)`. Using the standard cut-off values, and knowing that *r* ranges from -1 to +1, we could evaluate this as a medium effect size. But of course, we wouldn't do that! We'd use this as a first impression, think carefully about how we operationalised these variables, and go see how it compares to effect sizes in the research area. Only then can we really evaluate what size of effect we're seeing, and how important an effect it might be.
+The *r* value is `r gender.means.cor$estimate  %>% round(2)`. Using the standard cut-off values we could evaluate this as a large effect size. But of course, we wouldn't do that! We'd use this as a first impression, think carefully about how we operationalised these variables, and go see how it compares to effect sizes in the research area. Only then can we really evaluate what size of effect we're seeing, and how important an effect it might be.
 </details>
   
 # Recap
