@@ -5,12 +5,13 @@ author: "Analysing Data"
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(here)
 library(kableExtra)
 library(cowplot)
 library(weights)
 library(Hmisc)
 knitr::opts_chunk$set(echo = T, fig.height=4, fig.width=5, fig.align = "center", message = F, warning = F, toggle = F)
+
+#
 ```
 
 ```{r, include = F}
@@ -376,13 +377,16 @@ We now have a scatterplot that gives us an idea of how our data are distributed 
 
 ```{r, eval = F}
 geom_point(stat = "summary",
-           fun.y = "mean")
+           fun = "mean")
 ```
 
 ```{r, toggle = T}
 like.plot + 
   geom_point(stat = "summary",
-           fun.y = "mean")
+           fun = "mean")
+
+# IMPORTANT: A previous version of ggplot used `fun.y =` instead of `fun =`
+# It will still work with `fun.y =` but you'll get a warning
 ```
 
 Huh. That's what we wanted, but it looks like the difference in means is enormous. Based on the scatterplot we saw above, it didn't look like there would be a big difference. If we take a look at the *y*-axis, we can see why: R has changed the scale to make the difference between the points look huge. R is just trying to be helpful, but this misrepresents the actual size of the difference and makes the plot very difficult to interpret. Let's override that automatic adjustment and choose our own scale. Since the ratings of `liking` ranged from 0 to 5, let's set our *y*-axis to the same values.
@@ -395,7 +399,7 @@ ylim(...)
 ```{r, toggle = T}
 like.plot + 
   geom_point(stat = "summary",
-           fun.y = "mean") +
+           fun = "mean") +
   ylim(0, 5)
 ```
 
@@ -416,7 +420,7 @@ shape = ...
 ```{r, toggle = T}
 like.plot + 
   geom_point(stat = "summary",
-           fun.y = "mean",
+           fun = "mean",
            size = 5, # chosen at random - larger numbers make bigger points
            shape = 23,
            fill = "red") +
@@ -434,7 +438,7 @@ stat_summary(fun.data="mean_cl_boot",geom="errorbar")
 ```{r, toggle = T}
 like.plot +
   geom_point(stat = "summary",
-           fun.y = "mean",
+           fun = "mean",
            size = 5, # chosen at random - larger numbers make bigger points
            shape = 23,
            fill = "red") +
@@ -450,7 +454,7 @@ We're almost there! One, I think those error bars are a little Extra (tm), so le
 like.plot.final <- like.plot + 
   stat_summary(fun.data="mean_cl_boot",geom="errorbar", width = .25) +
   geom_point(stat = "summary",
-           fun.y = "mean",
+           fun = "mean",
            size = 5, # chosen at random - larger numbers make bigger points
            shape = 23,
            fill = "red") +
@@ -473,7 +477,7 @@ nars.plot.final <- sync %>%
   labs(x = "Participant Gender", y = "Mean NARS Subscale 1 Score") +
   stat_summary(fun.data="mean_cl_boot",geom="errorbar",width = .25) +
   geom_point(stat = "summary",
-           fun.y = "mean",
+           fun = "mean",
            size = 5, # chosen at random - larger numbers make bigger points
            shape = 21,
            fill = "#008080") + # or whatever colour you chose!
@@ -663,10 +667,10 @@ bracket <- sync %>%
   
 sync %>%
   ggplot(aes(Gender, nars1)) +
-  geom_line(stat="summary", fun.y = mean, aes(group = NA)) +
+  geom_line(stat="summary", fun = mean, aes(group = NA)) +
   geom_errorbar(stat = "summary", fun.data = mean_cl_boot, width = .25) +
-  geom_point(stat = "summary", fun.y = mean, shape = 21, size = 5, fill = "#008080") +
-  geom_text(aes(label=round(..y..,2)), stat = "summary", fun.y = mean, size = 4,
+  geom_point(stat = "summary", fun = mean, shape = 21, size = 5, fill = "#008080") +
+  geom_text(aes(label=round(..y..,2)), stat = "summary", fun = mean, size = 4,
              nudge_x = c(-.3, .3)) +
   labs(x = "Participant Gender", y = "Mean NARS Subscale 1 Score") +
   geom_line(data = bracket, mapping = aes(x, y)) +

@@ -1,0 +1,216 @@
+---
+title: "Analysing Data Report Calibration"
+author: "Dr Jennifer Mankin"
+date: "28/04/2020"
+output: html_document
+---
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+# setting up default code chunk behaviour
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(kableExtra)
+library(tidyverse)
+
+#make.sheet("admin/calibration_2020.Rmd", course = "and", colour = "#008080")
+#slidify("admin/calibration_2020.Rmd", course = "and", colour = "#008080", incremental =T)
+```
+
+## Overview
+
+* Lab report analysing and reporting on randomly generated data
+* MAX 2000 words (expecting less!)
+* Marking focus on **positivity** and **constructive feedback**
+* Marks return deadline: **Tuesday 26th of May at 4pm**
+
+### The Assignment
+
+* Choose data based on Red or Green study
++ Check, clean, and summarise data
++ Write up results of "replication" study
++ Discuss findings in context of the research field
+
+#### Methods
+
+* Participants
+  + Exclusions using inline code, descriptives table
+* Design
+  + Hypothesis and brief summary of the experiment and operationalisation
+
+#### Results
+
+* APA-style results using inline code
+  - Red: *t*-test
+  - Green: $X^2$ test
+* Graph(s) of the data
+
+#### Discussion
+
+* Summary of findings
+* Implications
+* Limitations
+* Future research
+* Conclusion
+
+### The Assignment, summary
+
+* Expected steps and complete description in [Lab Report Information](https://canvas.sussex.ac.uk/courses/9242/pages/lab-report-information-and-resources)
+
+## Marking
+
+* Important to Remember
+* Guidelines for Marks
+* Paper Discussion
+
+### Important to Remember
+
+* Priority is constructive feedback for future improvement
+  + This is their **FIRST EVER** results and discussion!
+* We are in a pandemic!
+  + Many students caretaking, ill, shielding, working in essential roles, struggling with mental health issues...
+* If you point out something that is minor/personal preference, **say so**
+
+### Important to Remember
+
+* Praise attempts to do more than we've asked - even if not entirely successful
+  + Checking correlations between rating variables
+  + Creative or unusual graphs
+  + Additional (reasonable) tests
+
+### Guidelines for Marks
+
+* [Marking criteria](https://sussex.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37) for UG reports
+* [Marking criteria](https://canvas.sussex.ac.uk/courses/9242/pages/marking-and-feedback-information) for this report
+
+### Guidelines for Marks: Fails
+
++ A fail indicates that they have not demonstrated skills to meet the [learning outcomes](https://canvas.sussex.ac.uk/courses/9242/pages/assessment-information)
++ Missing many important points or entire sections
++ Have they demonstrated that they have **learned something** on this module?
+  - Yes: even with incomplete understanding/execution -> not a fail
+  - No: someone could have written this without having actually taken this module -> fail
+
+### Guidelines for Marks: Grade Boundaries
+
+* You can only give the marks in the [Marking criteria](https://sussex.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37) - typically 2 - 5 - 8
+* Consider marking **up** for:
+  + Additional analyses **if justified**
+  + Creative graphs or data presentation
+  + Creative/insightful ideas in discussion
+  + Thorough/unusual citations (breadth/depth of reading)
+
+### Guidelines for Marks
+
+```{r}
+read_csv("marking_approx.csv") %>% 
+  kable() %>% 
+  kable_styling()
+```
+
+### Paper Discussion
+
+* Positive points
+* Suggestions for improvement
+* What mark would you give?
+  + Use only 2 - 5 - 8 marks!
+
+## Feedback
+
+### Guidelines for In-Text Comments
+
+* Should support/explain the mark you give
+  + Both positive and constructive!
+* Use standard comments and associate to the rubric
+* Clear statements with suggestions
+  + “This isn’t clearly related to your research question/Explain in more detail” rather than questions (“Is this relevant?”) or quips (“not relevant”)
+  
+### Guidelines for In-Text Comments
+
+* Highlight major/recurring details or problems - ONCE
+  + Do NOT copyedit or point out every minor problem/spelling mistake/awkward turn of phrase
+  + Waste of your time, discouraging for the student
+* Focus on: 
+  + What understanding and skills has the student demonstrated?
+  + What understanding and skills do they still need to develop?
+  + What will help this student write a better report **next time**?
+
+### Guidelines for Code Comments
+
+* Highlight major/recurring details or problems - ONCE
+* Accept code different from what we have taught them that works
+* Do not add in correct code!
+
+### Guidelines for Summary Feedback
+
+* One paragraph (5-8 sentences) summary of in-text comments
+  + Areas for improvement AND best/strongest points
+  + Give positive feedback!
+* Feel free to save/reuse and edit the details
+
+### Guidelines for Summary Feedback
+
+* Explicitly tell them how they can improve their mark in the future
+* Suggest improvements rather than describe problems
+  + NO: “You didn’t do X”, “X was sloppy/missing/badly done”
+  + YES: “In the future, make sure you do X”
+* “To move up a grade band…”/"To improve your mark in the future"
+  + “In the results, describe the statistical analysis step by step and guide the reader through each logical decision, so by the end of your results it’s clear what your conclusions are and how you got there”
+  + NOT: “Report your results more clearly, because I couldn’t understand this”
+
+### Summary of Feedback
+
+* Write all comments/feedback as if you were speaking to a student standing in front of you
+* Remember that this has been difficult, stressful, and entirely new, in utterly extraordinary circumstances
+* Be unwaveringly compassionate and supportive!
+
+## Procedures
+
+### Marking with `teachR()`
+
+Over to Milan!
+
+### Marking and Time
+
+* You are paid 30 minutes per script - keep to time!
+* Expect to spend a bit more time at the beginning
+* If you are still spending too much time after the first few scripts, cut back on your commenting
+
+### Academic Misconduct
+
+* We will not have TurnItIn scores for this assessment!
+* If you happen to notice suspicious matches between scripts...
+  + Email me candidate numbers and brief idea of the problem
+  + Mark the work as normal; assign mark **disregarding plagiarised elements**
+* If the case does go forward…
+  + You will be asked to fill out a form and compile evidence
+  + You are paid for the extra time to do this!
+
+### SLD Stickers
+
+* Students registered with the SSU for specific learning differences (e.g. dyslexia, dyspraxia) will automatically have a warning added to their knitted report
+* Please review the [linked marking guidance](https://www.sussex.ac.uk/studentsupport/staff/spld) for adjustments to marking
+
+### Moderation
+
+* Complete marking by **Tuesday 26th of May at 4pm**
+  + Notify me when you are done
+  + Notify me **by Friday the 23rd of May** if you are struggling
+* Statistical analysis and spot check of reports by convenor
+  + Please keep check your email and make any changes ASAP!
+
+### Marks Release
+
+* Once moderation is complete, I will ask you to knit and upload the scripts
+* Deadline: **Thursday 28th of May at 4pm**
+
+### Further Feedback
+
+* Students may contact you to discuss their marks
+* Arrange to talk with them - video, email, etc.
+* NOT a chance to dispute marks!
+  + Marks are a matter of academic judgement and cannot be challenged
+  + You must be prepared to justify/explain all your feedback and marks to any student
+  
+## Final Thoughts
+
+* Please complete marking on time!!!
+* If you are having trouble with anything, **get in touch!**

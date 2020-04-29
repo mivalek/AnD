@@ -6,6 +6,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+#make.sheet("report/report_faq.rmd", course="fun_ind")
 ```
 
 # How to use this document

@@ -1625,7 +1625,7 @@ div.tocify {
 <summary>I have no knit button and command shift K doesn’t work (on Mac)</summary> <ans> Usually this happens because when you downloaded the Markdown file as a text file instead of .rmd. To change this, close the Markdown file in R and navigate to the folder where the file is located on your computer (probably the r_docs folder in your project folder). You should see that the file is called something like prac_2_rmd.rmd.txt. Edit the file name to remove the .txt ending (so it is called something like prac_2_rmd.rmd) and when your computer asks you if you want to change the file type, say yes (do not keep as .txt). When you open the file again in R, you should see the knit button etc. </ans>
 </details>
 <details class="faq">
-<p><summary>How do I create a new code chunk?</summary> <ans> If you’re having trouble creating a code chunk to insert your table, you can try any of the following:</p>
+<p><summary>How do I create a new code chunk?</summary> <ans> If you’re having trouble creating a code chunk to insert your table, you can try any of the file:</p>
 <ol style="list-style-type: decimal">
 <li><p>Put your cursor where you’d like the chunk to appear, then click Code &gt; Insert Chunk on the RStudio toolbar (along the top). Then, call your tibble in that chunk.</p></li>
 <li><p>Copy a code chunk elsewhere in your document, paste it where you want the table, and put the code inside it.</p></li>
@@ -1639,7 +1639,7 @@ Every now and then, I find that my RStudio has a bit of trouble with recognising
 <div id="setup-and-data" class="section level2">
 <h2>Setup and Data</h2>
 <details class="faq">
-<summary>In the report Markdown document, where says “load the packages you need for the report here”, what is it that goes here?</summary> <ans> If you are using functions from packages, you need to include commands that load those packages in that code chunk. There are examples of this in every practical from this module. If you aren’t clear on how and why to load packages, you can review the PAAS practicals where the concept of packages was covered. </ans>
+<summary>In the report Markdown document, where says “load the packages you need for the report here”, what is it that goes here?</summary> <ans> If you are using functions from packages, you need to include commands that load those packages in that code chunk. There are examples of this in every practical form this module. If you aren’t clear on how and why to load packages, you can review the PAAS practicals where the concept of packages was covered. </ans>
 </details>
 <div id="packages-and-functions" class="section level3">
 <h3>Packages and functions</h3>
@@ -1840,7 +1840,7 @@ Guidance on how to include in-line code has been given to you throughout the ter
 <div id="what-to-include" class="section level2">
 <h2>What to Include</h2>
 <details class="faq">
-<summary>The <a href="https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources">flowchart for the report</a> does not include an introduction. Do we need one?</summary> <ans> You don’t need to write an introduction - only a short methods, results, and discussion. </ans>
+<summary>The <a href="https://canvas.sussex.ac.uk/courses/9242/pages/Lab%20Report%20Information%20and%20Resources?titleize=0#outline">outline for the report</a> does not include an introduction. Do we need one?</summary> <ans> You don’t need to write an introduction - only a short methods, results, and discussion. </ans>
 </details>
 <details class="faq">
 <summary>What does the final word count include?</summary> <ans> The word count includes all headings and text in the knitted document, although not including text in figures/tables or their captions, or references. </ans>
@@ -1848,10 +1848,10 @@ Guidance on how to include in-line code has been given to you throughout the ter
 <details class="faq">
 <p><summary>What should go into the table of participant descriptives by experimental condition?</summary> <ans> This is slightly different for the two studies, because they have different information.</p>
 <ul>
-<li>Red study: descriptives divided up by experimental condition</li>
-<li>Green study: descriptives divided up by experimental condition and gender</li>
+<li>Red study: descriptives divided up by experimental condition and gender</li>
+<li>Green study: descriptives divided up by experimental condition</li>
 </ul>
-This is because the dataset for the red study does not include gender. As the original study mentions, only heterosexual women were included in this study design, since the research question was about men's attractiveness to women. So, you can assume that all of the participants in the red study were female.</ans>
+This is because the dataset for the green study does not include gender. </ans>
 </details>
 <details class="faq">
 <summary>Do we have to write a Codebook in the design section?</summary> <ans> You don’t need to create a codebook. In your design section, you should explain how you created or measured the variables (ie, how they were operationalised) and how to interpret them. </ans>
@@ -2019,6 +2019,10 @@ a {
 	color: #4674ff;
 }
 
+a:focus {
+	outline: none;
+}
+
 .date a {
     color: #fdfdfd;
 }
@@ -2130,6 +2134,7 @@ summary {
 	cursor: pointer;
 	outline: 0;
 	color: #fdfdfd;
+	position: initial;
 }
 
 
@@ -2151,6 +2156,9 @@ details > summary::before {
     display: block;
 }
 
+.faq > ans > a {
+    position: relative;
+}
 details[open] > summary {
     padding-bottom: 1em;
 	color: rgb(var(--font-col));
@@ -2224,7 +2232,7 @@ details > .pagedtable-wrapper,
 	margin-bottom: 5px;
 }
 
-.solText a:hover, .why a:hover, .writeUp a:hover {
+.solText a:hover, .why a:hover, .writeUp a:hover, .faq > ans > a:hover {
     background-color: transparent;
 }
 
@@ -2312,7 +2320,8 @@ warn {
 iframe {
     width: 100%;
     border: solid 2px rgb(var(--theme-col));
-    height: 300px;
+    /* height: 300px; /* best to specify inline */
+	max-height: calc(70vh);
     margin-top: -1.9em;
     margin-bottom: 2em;
 }

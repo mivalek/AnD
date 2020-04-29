@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Dr Jennifer Mankin" />
+  <title>Analysing Data Report Calibration</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="https:\\mivalek.github.io\slides_files\css\slides.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+    <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+    <script src="https://mivalek.github.io/slides_files/kePrint-0.0.1/kePrint.js"></script>
+</head>
+<body>
+<div class="banner"><div class = "header msc"><a href="/">Analysing<strong>data</strong></a></div></div>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Analysing Data Report Calibration</h1>
+    <h2 class="author">Dr Jennifer Mankin</h2>
+    <h3 class="date"><a href="./calibration_2020.html">Click for handout</a></h3>
+</section>
+
+<section class="slide level2">
+
+<style>
+:root {
+--theme-col: #008080;
+--hover-col: #800000;
+}
+</style>
+<p>knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE) library(kableExtra) library(tidyverse)</p>
+</section>
+<section id="make.sheetadmincalibration_2020.rmd-course-and-colour-008080" class="slide level2">
+<h2>make.sheet(“admin/calibration_2020.Rmd”, course = “and”, colour = “#008080”)</h2>
+</section>
+<section id="slidifyadmincalibration_2020.rmd-course-and-colour-008080-incremental-t" class="slide level2">
+<h2>slidify(“admin/calibration_2020.Rmd”, course = “and”, colour = “#008080”, incremental =T)</h2>
+<pre><code>
+##  Overview
+
+* Lab report analysing and reporting on randomly generated data
+* MAX 2000 words (expecting less!)
+* Marking focus on **positivity** and **constructive feedback**
+* Marks return deadline: **Tuesday 26th of May at 4pm**
+
+##  The Assignment
+
+* Choose data based on Red or Green study
++ Check, clean, and summarise data
++ Write up results of &quot;replication&quot; study
++ Discuss findings in context of the research field
+
+##  Methods
+
+* Participants
+  + Exclusions using inline code, descriptives table
+* Design
+  + Hypothesis and brief summary of the experiment and operationalisation
+
+##  Results
+
+* APA-style results using inline code
+  - Red: *t*-test
+  - Green: $X^2$ test
+* Graph(s) of the data
+
+##  Discussion
+
+* Summary of findings
+* Implications
+* Limitations
+* Future research
+* Conclusion
+
+##  The Assignment, summary
+
+* Expected steps and complete description in [Lab Report Information](https://canvas.sussex.ac.uk/courses/9242/pages/lab-report-information-and-resources)
+
+##  Marking
+
+* Important to Remember
+* Guidelines for Marks
+* Paper Discussion
+
+##  Important to Remember
+
+* Priority is constructive feedback for future improvement
+  + This is their **FIRST EVER** results and discussion!
+* We are in a pandemic!
+  + Many students caretaking, ill, shielding, working in essential roles, struggling with mental health issues...
+* If you point out something that is minor/personal preference, **say so**
+
+##  Important to Remember
+
+* Praise attempts to do more than we&#39;ve asked - even if not entirely successful
+  + Checking correlations between rating variables
+  + Creative or unusual graphs
+  + Additional (reasonable) tests
+
+##  Guidelines for Marks
+
+* [Marking criteria](https://sussex.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37) for UG reports
+* [Marking criteria](https://canvas.sussex.ac.uk/courses/9242/pages/marking-and-feedback-information) for this report
+
+##  Guidelines for Marks: Fails
+
++ A fail indicates that they have not demonstrated skills to meet the [learning outcomes](https://canvas.sussex.ac.uk/courses/9242/pages/assessment-information)
++ Missing many important points or entire sections
++ Have they demonstrated that they have **learned something** on this module?
+  - Yes: even with incomplete understanding/execution -&gt; not a fail
+  - No: someone could have written this without having actually taken this module -&gt; fail
+
+##  Guidelines for Marks: Grade Boundaries
+
+* You can only give the marks in the [Marking criteria](https://sussex.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37) - typically 2 - 5 - 8
+* Consider marking **up** for:
+  + Additional analyses **if justified**
+  + Creative graphs or data presentation
+  + Creative/insightful ideas in discussion
+  + Thorough/unusual citations (breadth/depth of reading)
+
+##  Guidelines for Marks
+
+
+```r
+read_csv(&quot;marking_approx.csv&quot;) %&gt;% 
+  kable() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+20 and below
+</th>
+<th style="text-align:left;">
+30
+</th>
+<th style="text-align:left;">
+40
+</th>
+<th style="text-align:left;">
+50
+</th>
+<th style="text-align:left;">
+60
+</th>
+<th style="text-align:left;">
+70
+</th>
+<th style="text-align:left;">
+80 and above
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Incomplete, inappropriate for the set task
+</td>
+<td style="text-align:left;">
+Minimum requirements not met; glaring errors (wrong analysis, sections missing, etc.)
+</td>
+<td style="text-align:left;">
+Minimum requirements barely met, some missed out; major errors in understanding or execution
+</td>
+<td style="text-align:left;">
+Minimum requirements all met or attempted; some errors in understanding or execution
+</td>
+<td style="text-align:left;">
+Minimum requirements all met, some done quite well; few errors in understanding or execution
+</td>
+<td style="text-align:left;">
+Minimum requirements addressed thoroughly and competently; clarity and depth of understanding and insight
+</td>
+<td style="text-align:left;">
+Impeccable analysis and presentation; creative or unusual new ideas with wide-ranging evidence; above and beyond the minimum requirements
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paper-discussion" class="slide level2">
+<h2>Paper Discussion</h2>
+<ul>
+<li class="fragment">Positive points</li>
+<li class="fragment">Suggestions for improvement</li>
+<li class="fragment">What mark would you give?
+<ul>
+<li class="fragment">Use only 2 - 5 - 8 marks!</li>
+</ul></li>
+</ul>
+</section>
+<section id="feedback" class="slide level2">
+<h2>Feedback</h2>
+</section>
+<section id="guidelines-for-in-text-comments" class="slide level2">
+<h2>Guidelines for In-Text Comments</h2>
+<ul>
+<li class="fragment">Should support/explain the mark you give
+<ul>
+<li class="fragment">Both positive and constructive!</li>
+</ul></li>
+<li class="fragment">Use standard comments and associate to the rubric</li>
+<li class="fragment">Clear statements with suggestions
+<ul>
+<li class="fragment">“This isn’t clearly related to your research question/Explain in more detail” rather than questions (“Is this relevant?”) or quips (“not relevant”)</li>
+</ul></li>
+</ul>
+</section>
+<section id="guidelines-for-in-text-comments-1" class="slide level2">
+<h2>Guidelines for In-Text Comments</h2>
+<ul>
+<li class="fragment">Highlight major/recurring details or problems - ONCE
+<ul>
+<li class="fragment">Do NOT copyedit or point out every minor problem/spelling mistake/awkward turn of phrase</li>
+<li class="fragment">Waste of your time, discouraging for the student</li>
+</ul></li>
+<li class="fragment">Focus on:
+<ul>
+<li class="fragment">What understanding and skills has the student demonstrated?</li>
+<li class="fragment">What understanding and skills do they still need to develop?</li>
+<li class="fragment">What will help this student write a better report <strong>next time</strong>?</li>
+</ul></li>
+</ul>
+</section>
+<section id="guidelines-for-code-comments" class="slide level2">
+<h2>Guidelines for Code Comments</h2>
+<ul>
+<li class="fragment">Highlight major/recurring details or problems - ONCE</li>
+<li class="fragment">Accept code different from what we have taught them that works</li>
+<li class="fragment">Do not add in correct code!</li>
+</ul>
+</section>
+<section id="guidelines-for-summary-feedback" class="slide level2">
+<h2>Guidelines for Summary Feedback</h2>
+<ul>
+<li class="fragment">One paragraph (5-8 sentences) summary of in-text comments
+<ul>
+<li class="fragment">Areas for improvement AND best/strongest points</li>
+<li class="fragment">Give positive feedback!</li>
+</ul></li>
+<li class="fragment">Feel free to save/reuse and edit the details</li>
+</ul>
+</section>
+<section id="guidelines-for-summary-feedback-1" class="slide level2">
+<h2>Guidelines for Summary Feedback</h2>
+<ul>
+<li class="fragment">Explicitly tell them how they can improve their mark in the future</li>
+<li class="fragment">Suggest improvements rather than describe problems
+<ul>
+<li class="fragment">NO: “You didn’t do X”, “X was sloppy/missing/badly done”</li>
+<li class="fragment">YES: “In the future, make sure you do X”</li>
+</ul></li>
+<li class="fragment">“To move up a grade band…”/“To improve your mark in the future”
+<ul>
+<li class="fragment">“In the results, describe the statistical analysis step by step and guide the reader through each logical decision, so by the end of your results it’s clear what your conclusions are and how you got there”</li>
+<li class="fragment">NOT: “Report your results more clearly, because I couldn’t understand this”</li>
+</ul></li>
+</ul>
+</section>
+<section id="summary-of-feedback" class="slide level2">
+<h2>Summary of Feedback</h2>
+<ul>
+<li class="fragment">Write all comments/feedback as if you were speaking to a student standing in front of you</li>
+<li class="fragment">Remember that this has been difficult, stressful, and entirely new, in utterly extraordinary circumstances</li>
+<li class="fragment">Be unwaveringly compassionate and supportive!</li>
+</ul>
+</section>
+<section id="procedures" class="slide level2">
+<h2>Procedures</h2>
+</section>
+<section id="marking-with-teachr" class="slide level2">
+<h2>Marking with <code>teachR()</code></h2>
+<p>Over to Milan!</p>
+</section>
+<section id="marking-and-time" class="slide level2">
+<h2>Marking and Time</h2>
+<ul>
+<li class="fragment">You are paid 30 minutes per script - keep to time!</li>
+<li class="fragment">Expect to spend a bit more time at the beginning</li>
+<li class="fragment">If you are still spending too much time after the first few scripts, cut back on your commenting</li>
+</ul>
+</section>
+<section id="academic-misconduct" class="slide level2">
+<h2>Academic Misconduct</h2>
+<ul>
+<li class="fragment">We will not have TurnItIn scores for this assessment!</li>
+<li class="fragment">If you happen to notice suspicious matches between scripts…
+<ul>
+<li class="fragment">Email me candidate numbers and brief idea of the problem</li>
+<li class="fragment">Mark the work as normal; assign mark <strong>disregarding plagiarised elements</strong></li>
+</ul></li>
+<li class="fragment">If the case does go forward…
+<ul>
+<li class="fragment">You will be asked to fill out a form and compile evidence</li>
+<li class="fragment">You are paid for the extra time to do this!</li>
+</ul></li>
+</ul>
+</section>
+<section id="sld-stickers" class="slide level2">
+<h2>SLD Stickers</h2>
+<ul>
+<li class="fragment">Students registered with the SSU for specific learning differences (e.g. dyslexia, dyspraxia) will automatically have a warning added to their knitted report</li>
+<li class="fragment">Please review the <a href="https://www.sussex.ac.uk/studentsupport/staff/spld">linked marking guidance</a> for adjustments to marking</li>
+</ul>
+</section>
+<section id="moderation" class="slide level2">
+<h2>Moderation</h2>
+<ul>
+<li class="fragment">Complete marking by <strong>Tuesday 26th of May at 4pm</strong>
+<ul>
+<li class="fragment">Notify me when you are done</li>
+<li class="fragment">Notify me <strong>by Friday the 23rd of May</strong> if you are struggling</li>
+</ul></li>
+<li class="fragment">Statistical analysis and spot check of reports by convenor
+<ul>
+<li class="fragment">Please keep check your email and make any changes ASAP!</li>
+</ul></li>
+</ul>
+</section>
+<section id="marks-release" class="slide level2">
+<h2>Marks Release</h2>
+<ul>
+<li class="fragment">Once moderation is complete, I will ask you to knit and upload the scripts</li>
+<li class="fragment">Deadline: <strong>Thursday 28th of May at 4pm</strong></li>
+</ul>
+</section>
+<section id="further-feedback" class="slide level2">
+<h2>Further Feedback</h2>
+<ul>
+<li class="fragment">Students may contact you to discuss their marks</li>
+<li class="fragment">Arrange to talk with them - video, email, etc.</li>
+<li class="fragment">NOT a chance to dispute marks!
+<ul>
+<li class="fragment">Marks are a matter of academic judgement and cannot be challenged</li>
+<li class="fragment">You must be prepared to justify/explain all your feedback and marks to any student</li>
+</ul></li>
+</ul>
+</section>
+<section id="final-thoughts" class="slide level2">
+<h2>Final Thoughts</h2>
+<ul>
+<li class="fragment">Please complete marking on time!!!</li>
+<li class="fragment">If you are having trouble with anything, <strong>get in touch!</strong></li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: false,
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1000,
+        height: 750,
+        // Factor of the display size that should remain empty around the content
+        margin: 0,
+
+
+
+        chalkboard: {
+        },
+
+        keyboard: {
+          67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+          66: function() { RevealChalkboard.toggleChalkboard() }, // toggle chalkboard when 'b' is pressed
+          46: function() { RevealChalkboard.clear() },    // clear chalkboard when 'DEL' is pressed
+           8: function() { RevealChalkboard.reset() },    // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+          68: function() { RevealChalkboard.download() }, // downlad recorded chalkboard drawing when 'd' is pressed
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/search/search.js', async: true },
+          { src: 'https://mivalek.github.io/slides_files/reveal.js-3.3.0.1/plugin/chalkboard/chalkboard.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('h2:not(.author)').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+	$('h1.title').each(function () {
+        $(this).wrapAll('<div class="slide-title" />');
+    });	
+});
+
+var f = (function() {
+	// get scale
+	var element = document.querySelector('.slides');
+	var scaleX = element.getBoundingClientRect().width / element.offsetWidth;
+	var bottom = $(".present > .slide-title").offset().top + ($(".present > .slide-title").outerHeight() * scaleX);
+	
+	$(":root")[0].style.setProperty('--header-height', Math.floor(bottom) + 'px');
+});
+
+window.addEventListener( 'load', f);
+$(window).resize(f);
+Reveal.addEventListener( 'slidechanged', f);
+Reveal.addEventListener( 'overviewshown', function() {
+	$('.banner').addClass( "overview" );
+} );
+Reveal.addEventListener( 'overviewhidden', function() {	
+	$('.banner').removeClass( "overview" );
+});
+Reveal.addEventListener( 'overviewhidden', f);
+
+
+</script>
+
+  </body>
+</html>
