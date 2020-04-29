@@ -53,12 +53,6 @@ Feel free to peruse the [package documentation](https://github.com/daranzolin/rc
 
 \ 
 
-### `googlesheets4`
-
-This nifty package provides an interface for the Google sheets API and allows you to read Google sheets from your Drive straight into `R`. Install the CRAN version using `install.packages()`.
-
-\ 
-
 ### `teachR`
 
 While `rcanvas` can do some pretty nifty stuff, it isn't perfectly tailored to our needs. For instance, it doesn't provide a function to upload assignment feedback which is basically the main thing we're after. That's why you will also need the `teachR` package that extends its functionality to what we need. This is also the package we use to create the teaching materials for the module, in case you're interested in that.
@@ -94,7 +88,7 @@ And with that, you're all set up for the main event.
 
 ## Marking protocol
 
-You will have received links to a marking master spread sheet hosted on Google Sheets and to a Box folder.
+You will have received links to a marking master spread sheet hosted on Google Sheets, links to two R scripts, one for knitting marked Rmd files and one for uploading marked HTML files on Canvas, and an email invitation to a OneDrive folder.
 
 ### Rubric and grade descriptors
 
@@ -115,34 +109,23 @@ You should also have a look at [grade descriptors for each criterion](https://su
 
 ### Marking spreadsheet
 
-Here is where we store the information about students reports, such as file names, candidate numbers, code/knit checks and so on. It is also where you will enter the marks and final grades you are awarding the individual submissions.
+Here is where we store the information about students reports, such as file names, candidate numbers, code/knit checks and so on. It is also where you will enter the marks and final grades you are awarding the individual submissions. The candidate numbers in the first column contain hyperlinks to the individual HTML files.
 
 <div class="warn">**Please do not delete or hide any rows or columns of this spreadsheet as doing so might break the whole thing!**</div>
 
 \ 
 
-### Box folder
+### OneDrive folder
 
-<div class="warn">
-**To edit based on whether or not .Rmd and .thml can be hosted publically**
+You will have received an email invitation to share the marking OneDrive folder. Please follow the link and sync the folder with your local Uni OneDrive directory. In the folder, you will find the submitted .Rmd files checked for word limit.
 
-- if so, also say the files are linked to from the spreadsheet!
-</div>
-
-In the folder you will find subfolders with your name. Each subforlder contains:
-
-- the zipped submitted .Rmd files checked for word limit
-- the zipped knitted and augmented .html files
-- a marking_script.R with code used to knit the marked .Rmd files into HTML documents
-- canvas_upload.R file with code that uploads the individual HTML files as feedback attachemts to each of your students' submission.
-  
-You will also use your subfolder to upload marked .Rmd files.
+**You should use this folder to store marked .Rmd files. Do not move them around.**
 
 \ 
 
 ### Pre-knitted HTML documents
 
-Before the files get to you, they will be checked for word count and results. The HTML files in your Box folder will include the correct results and, if the report exceeds the word limit, a note saying so inserted in the appropriate place in the report.
+Before the files get to you, they will be checked for word count and results. The HTML files will be hosted online and linked to from the marking spreadsheet. They will include the correct results and, if the report exceeds the word limit, a note saying so inserted in the appropriate place in the report. In case of a student having reported specific learning difficulties, their report will include a note of this with a link to marking guidelines for SLD.
 
 An example of such a file is below (you can see the full-size document with a wider layout [here](https://mivalek.github.io/adata/marking/marking_example.html)).
 
@@ -150,7 +133,7 @@ An example of such a file is below (you can see the full-size document with a wi
 
 ### .Rmd files to mark
 
-The R Markdown files in your Box folder are slightly edited versions of the original students' submissions. The edits are as follows:
+The R Markdown files in your OneDrive folder are slightly edited versions of the original students' submissions. The edits are as follows:
 
 - Comments in code are removed
 - All `install.packages()` commands are removed
@@ -264,12 +247,12 @@ The only thing you need to edit in the script before your run it is the bit towa
 ######################## EDIT AS APPROPRIATE ################################
 # You must use the name in the Google spreadsheet!
 marker <- "Milan"
-# EDIT PATH to where you saved students' .Rmd files
-marking_path <- "marking/AnD/2019-20"
+# EDIT PATH to the OneDrive folder we shared with you
+marking_path <- "C:/work/OneDrive - University of Sussex/marking/AnD/2019-20/Milan"
 #############################################################################
 ```
 
-The path should point to the folder where you saved the commented .Rmd files. The files should not be in separate subfolders.
+The path should point to the synced OneDrive folder containing the commented .Rmd files. The files should not be in separate subfolders.
 
 Once you've made these two edits, you can run the code, sit back and watch it do its thing. Or better still, go get a cuppa; with 50+ reports per marker, this can take a while.
 
@@ -286,7 +269,7 @@ To do that, you should run the code in the canvas_upload.R script that will have
 
 ```{r, eval=F, echo=T}
 ######################## EDIT AS APPROPRIATE ################################
-# EDIT PATH to where you saved students' .Rmd files
+# EDIT PATH to the OneDrive folder we shared with you
 fpath <- "marking/AnD/2019-20"
 # insert your Canvas token
 set_canvas_token("")
@@ -304,14 +287,15 @@ Now that you are familiar with the individual components of the marking protocol
 <div class="solText">
 1. Complete the setup detailed above.
     - Get and save a [Canvas access token][Get access token]
-    - Install the `rcanvas`, `googlesheets4`, `teachR`, and `adata` [packages][Install required `R` packages].
-1. Follow the Box link and download the .R, .Rmd and .html files from your folder.
+    - Install the `rcanvas`, `teachR`, and `adata` [packages][Install required `R` packages].
+1. Follow the OneDrive link to get to the .Rmd files (stored in a folder with your name).
+1. Download the marking_script.R and canvas_upload.R files you've been linked to.
 1. Open the marking master Google spreadsheet.
 1. Read the HTML file while commenting on the report inside the .Rmd file as detailed [above][Commenting on .Rmd files].
     - **Do not change the file names!**
 1. [Enter marks][Awarding marks] per each rubric criterion and a total grade into the Google spreadsheet.
-1. Once the module convenor has notified you that the moderation has been completed, run the code inside marking_script.R, [editing as appropriate][Knitting marked .Rmd files].
-1. Upload all marked .Rmd and knitted HTML files back into your Box folder.
+1. Once the module convenor has notified you that moderation has been completed, run the code inside marking_script.R, [editing as appropriate][Knitting marked .Rmd files].
+1. Make sure all your marked .Rmd and knitted HTML files are in your OneDrive folder.
 1. Once you get the thumbs up from the module convenor, run the code inside canvas_upload.R to [upload the files back onto Canvas][Uploading marked HTML files].
 1. Check a few submissions on Canvas to see if the upload went through and that matching files were attached to students' submissions.
 1. Email the module convenor, cc'ing the lecturers, letting them know that you have finished the upload.

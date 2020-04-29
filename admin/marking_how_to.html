@@ -1265,96 +1265,6 @@ window.buildTabsets = function(tocID) {
 </script>
 
 
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  { background-color: #f8f8f8; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
 <style type="text/css">
@@ -1607,31 +1517,19 @@ div.tocify {
 <div id="rcanvas" class="section level3">
 <h3><code>rcanvas</code></h3>
 <p>Unless you’re good enough a coder to write your own API code (and I am certainly not), you’ll need to install the <code>rcanvas</code> package from GitHub.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># installing from GitHub requires either package remotes or devtools</span></a>
-<a class="sourceLine" id="cb1-2" title="2">remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;daranzolin/rcanvas&quot;</span>)</a></code></pre></div>
 <p>Feel free to peruse the <a href="https://github.com/daranzolin/rcanvas">package documentation</a> to find out about all the cool stuff you can do with it.</p>
-<p> </p>
-</div>
-<div id="googlesheets4" class="section level3">
-<h3><code>googlesheets4</code></h3>
-<p>This nifty package provides an interface for the Google sheets API and allows you to read Google sheets from your Drive straight into <code>R</code>. Install the CRAN version using <code>install.packages()</code>.</p>
 <p> </p>
 </div>
 <div id="teachr" class="section level3">
 <h3><code>teachR</code></h3>
 <p>While <code>rcanvas</code> can do some pretty nifty stuff, it isn’t perfectly tailored to our needs. For instance, it doesn’t provide a function to upload assignment feedback which is basically the main thing we’re after. That’s why you will also need the <code>teachR</code> package that extends its functionality to what we need. This is also the package we use to create the teaching materials for the module, in case you’re interested in that.</p>
 <p>Again, you’ll have to install <code>teachR</code> from GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;mivalek/teachR&quot;</span>)</a></code></pre></div>
 <p>If <code>R</code> prompts you about updating packages, it’s best to update all.</p>
 <p> </p>
 </div>
 <div id="adata" class="section level3">
 <h3><code>adata</code></h3>
 <p>Finally, even though we will check students’ results automatically, you might want the ability to have a look at their data yourself. For that, you will need the <code>adata</code> package, from where? From GitHub.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;mivalek/adata&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">red &lt;-<span class="st"> </span>adata<span class="op">::</span><span class="kw">red_data</span>(<span class="dv">123456</span>)</a>
-<a class="sourceLine" id="cb3-4" title="4">green &lt;-<span class="st"> </span>adata<span class="op">::</span><span class="kw">green_data</span>(<span class="dv">123456</span>)</a></code></pre></div>
 <p>The package only contains two functions <code>red_data()</code> and <code>green_data()</code>. They both take a candidate number as their first argument and generate a dataset for the given student.</p>
 <p> </p>
 <p>And with that, you’re all set up for the main event.</p>
@@ -1640,7 +1538,7 @@ div.tocify {
 </div>
 <div id="marking-protocol" class="section level2">
 <h2>Marking protocol</h2>
-<p>You will have received links to a marking master spread sheet hosted on Google Sheets and to a Box folder.</p>
+<p>You will have received links to a marking master spread sheet hosted on Google Sheets, links to two R scripts, one for knitting marked Rmd files and one for uploading marked HTML files on Canvas, and an email invitation to a OneDrive folder.</p>
 <div id="rubric-and-grade-descriptors" class="section level3">
 <h3>Rubric and grade descriptors</h3>
 <p>Marking is done according to the following rubric criteria:</p>
@@ -1657,33 +1555,21 @@ div.tocify {
 </div>
 <div id="marking-spreadsheet" class="section level3">
 <h3>Marking spreadsheet</h3>
-<p>Here is where we store the information about students reports, such as file names, candidate numbers, code/knit checks and so on. It is also where you will enter the marks and final grades you are awarding the individual submissions.</p>
+<p>Here is where we store the information about students reports, such as file names, candidate numbers, code/knit checks and so on. It is also where you will enter the marks and final grades you are awarding the individual submissions. The candidate numbers in the first column contain hyperlinks to the individual HTML files.</p>
 <div class="warn">
 <strong>Please do not delete or hide any rows or columns of this spreadsheet as doing so might break the whole thing!</strong>
 </div>
 <p> </p>
 </div>
-<div id="box-folder" class="section level3">
-<h3>Box folder</h3>
-<div class="warn">
-<p><strong>To edit based on whether or not .Rmd and .thml can be hosted publically</strong></p>
-<ul>
-<li>if so, also say the files are linked to from the spreadsheet!</li>
-</ul>
-</div>
-<p>In the folder you will find subfolders with your name. Each subforlder contains:</p>
-<ul>
-<li>the zipped submitted .Rmd files checked for word limit</li>
-<li>the zipped knitted and augmented .html files</li>
-<li>a marking_script.R with code used to knit the marked .Rmd files into HTML documents</li>
-<li>canvas_upload.R file with code that uploads the individual HTML files as feedback attachemts to each of your students’ submission.</li>
-</ul>
-<p>You will also use your subfolder to upload marked .Rmd files.</p>
+<div id="onedrive-folder" class="section level3">
+<h3>OneDrive folder</h3>
+<p>You will have received an email invitation to share the marking OneDrive folder. Please follow the link and sync the folder with your local Uni OneDrive directory. In the folder, you will find the submitted .Rmd files checked for word limit.</p>
+<p><strong>You should use this folder to store marked .Rmd files. Do not move them around.</strong></p>
 <p> </p>
 </div>
 <div id="pre-knitted-html-documents" class="section level3">
 <h3>Pre-knitted HTML documents</h3>
-<p>Before the files get to you, they will be checked for word count and results. The HTML files in your Box folder will include the correct results and, if the report exceeds the word limit, a note saying so inserted in the appropriate place in the report.</p>
+<p>Before the files get to you, they will be checked for word count and results. The HTML files will be hosted online and linked to from the marking spreadsheet. They will include the correct results and, if the report exceeds the word limit, a note saying so inserted in the appropriate place in the report. In case of a student having reported specific learning difficulties, their report will include a note of this with a link to marking guidelines for SLD.</p>
 <p>An example of such a file is below (you can see the full-size document with a wider layout <a href="https://mivalek.github.io/adata/marking/marking_example.html">here</a>).</p>
 <div class="iframe">
 <iframe src="https://mivalek.github.io/adata/marking/marking_example.html" height="700px">
@@ -1692,7 +1578,7 @@ div.tocify {
 </div>
 <div id="rmd-files-to-mark" class="section level3">
 <h3>.Rmd files to mark</h3>
-<p>The R Markdown files in your Box folder are slightly edited versions of the original students’ submissions. The edits are as follows:</p>
+<p>The R Markdown files in your OneDrive folder are slightly edited versions of the original students’ submissions. The edits are as follows:</p>
 <ul>
 <li>Comments in code are removed</li>
 <li>All <code>install.packages()</code> commands are removed</li>
@@ -1782,13 +1668,7 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 <h2>Knitting marked .Rmd files</h2>
 <p>Once you have commented all .Rmd files and entered all the partial and total grades in the marking spreadsheet, the module convenor will arrange moderation. Once the marks have been moderated and any necessary changes to marks have been made, you will need to knit the files to produce the augmented HTML documents. The code for this will have been shared with you (marking_script.R).</p>
 <p>The only thing you need to edit in the script before your run it is the bit towards the beginning:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">######################## EDIT AS APPROPRIATE ################################</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="co"># You must use the name in the Google spreadsheet!</span></a>
-<a class="sourceLine" id="cb5-3" title="3">marker &lt;-<span class="st"> &quot;Milan&quot;</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co"># EDIT PATH to where you saved students&#39; .Rmd files</span></a>
-<a class="sourceLine" id="cb5-5" title="5">marking_path &lt;-<span class="st"> &quot;marking/AnD/2019-20&quot;</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co">#############################################################################</span></a></code></pre></div>
-<p>The path should point to the folder where you saved the commented .Rmd files. The files should not be in separate subfolders.</p>
+<p>The path should point to the synced OneDrive folder containing the commented .Rmd files. The files should not be in separate subfolders.</p>
 <p>Once you’ve made these two edits, you can run the code, sit back and watch it do its thing. Or better still, go get a cuppa; with 50+ reports per marker, this can take a while.</p>
 <p> </p>
 </div>
@@ -1800,12 +1680,6 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 <li>Change the path to point it to the folder with the knitted HTML files.</li>
 <li>Insert your <a href="#get-access-token">Canvas access token</a> inside the &quot;s.</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co">######################## EDIT AS APPROPRIATE ################################</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="co"># EDIT PATH to where you saved students&#39; .Rmd files</span></a>
-<a class="sourceLine" id="cb6-3" title="3">fpath &lt;-<span class="st"> &quot;marking/AnD/2019-20&quot;</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co"># insert your Canvas token</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="kw">set_canvas_token</span>(<span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">#############################################################################</span></a></code></pre></div>
 <p>The code will then upload the HTML documents as feedback attachments to each individual student submission. Again, this may take a minute.</p>
 <p> </p>
 </div>
@@ -1817,17 +1691,18 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 <li>Complete the setup detailed above.
 <ul>
 <li>Get and save a <a href="#get-access-token">Canvas access token</a></li>
-<li>Install the <code>rcanvas</code>, <code>googlesheets4</code>, <code>teachR</code>, and <code>adata</code> <a href="#install-required-r-packages">packages</a>.</li>
+<li>Install the <code>rcanvas</code>, <code>teachR</code>, and <code>adata</code> <a href="#install-required-r-packages">packages</a>.</li>
 </ul></li>
-<li>Follow the Box link and download the .R, .Rmd and .html files from your folder.</li>
+<li>Follow the OneDrive link to get to the .Rmd files (stored in a folder with your name).</li>
+<li>Download the marking_script.R and canvas_upload.R files you’ve been linked to.</li>
 <li>Open the marking master Google spreadsheet.</li>
 <li>Read the HTML file while commenting on the report inside the .Rmd file as detailed <a href="#commenting-on-.rmd-files">above</a>.
 <ul>
 <li><strong>Do not change the file names!</strong></li>
 </ul></li>
 <li><a href="#awarding-marks">Enter marks</a> per each rubric criterion and a total grade into the Google spreadsheet.</li>
-<li>Once the module convenor has notified you that the moderation has been completed, run the code inside marking_script.R, <a href="#knitting-marked-.rmd-files">editing as appropriate</a>.</li>
-<li>Upload all marked .Rmd and knitted HTML files back into your Box folder.</li>
+<li>Once the module convenor has notified you that moderation has been completed, run the code inside marking_script.R, <a href="#knitting-marked-.rmd-files">editing as appropriate</a>.</li>
+<li>Make sure all your marked .Rmd and knitted HTML files are in your OneDrive folder.</li>
 <li>Once you get the thumbs up from the module convenor, run the code inside canvas_upload.R to <a href="#uploading-marked-html-files">upload the files back onto Canvas</a>.</li>
 <li>Check a few submissions on Canvas to see if the upload went through and that matching files were attached to students’ submissions.</li>
 <li>Email the module convenor, cc’ing the lecturers, letting them know that you have finished the upload.</li>
@@ -1936,6 +1811,10 @@ a:hover, .tocify-item a:hover, .tocify .list-group-item:hover {
 
 a {
 	color: #4674ff;
+}
+
+a:focus {
+	outline: none;
 }
 
 .date a {
@@ -2049,6 +1928,7 @@ summary {
 	cursor: pointer;
 	outline: 0;
 	color: #fdfdfd;
+	position: initial;
 }
 
 
@@ -2070,6 +1950,9 @@ details > summary::before {
     display: block;
 }
 
+.faq > ans > a {
+    position: relative;
+}
 details[open] > summary {
     padding-bottom: 1em;
 	color: rgb(var(--font-col));
@@ -2143,7 +2026,7 @@ details > .pagedtable-wrapper,
 	margin-bottom: 5px;
 }
 
-.solText a:hover, .why a:hover, .writeUp a:hover {
+.solText a:hover, .why a:hover, .writeUp a:hover, .faq > ans > a:hover {
     background-color: transparent;
 }
 
