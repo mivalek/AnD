@@ -1,0 +1,314 @@
+---
+title: "Report Marking Criteria"
+output: html_document
+---
+
+# Overall Guidelines
+
+<details class = "faq">
+<summary>Outstanding or Exceptional Firsts</summary>
+<ans>
+
+* Close to the standard of articles published in academic journals
+* Impeccable analysis and presentation
+* Creative or unusual new ideas with wide-ranging evidence
+* Intiative and originality above and beyond the minimum requirements
+
+</ans></details>
+<details class = "faq"> <summary>Clear First
+</summary>
+<ans>
+
+* Some degree of originality and invention
+* Minimum requirements addressed thoroughly and competently
+* Clarity and depth of understanding and insight
+
+</ans></details> <details class = "faq"> <summary>2.1
+</summary>
+<ans>
+
+* Minimum requirements all met, some done quite well
+* Few errors in understanding or execution
+
+</ans></details> <details class = "faq"> <summary>2.2
+</summary>
+<ans>
+
+* Minimum requirements all met or attempted
+* Some errors in understanding or execution
+
+</ans></details> <details class = "faq"> <summary>3rd
+</summary>
+<ans>
+
+* Minimum requirements barely met, some missed out
+* Major errors in understanding or execution
+
+</ans></details> <details class = "faq"> <summary>Marginal Fail
+</summary>
+<ans>
+
+* Minimum requirements not met
+* Glaring and avoidable errors (wrong analysis, sections missing, etc.)
+
+</ans></details> <details class = "faq"> <summary>Absolute Fail
+</summary>
+<ans>
+
+* Incomplete, inappropriate for the set task
+</ans></details> 
+
+\ 
+
+# Rubric and Criteria
+
+## Analysis
+
+* Quality of the statistical analysis
+* Presentation and interpretion of data
+* Code, analysis, figures, and statistical reporting thorough and correct
+* Interpretation and implications of statistical considerations
+
+</ans></details> <details class = "faq"> <summary>Outstanding (82, 88) or Exceptional (95) First</summary>
+<ans>
+
+* Excellent data analysis and presentation
+* Correctly executed analysis appropriate to address the research question
+* Exceptionally clear and coherent presentation that implies a full understanding of visualising, analysing, describing, and interpreting data
+* Use of or innovation in analytic tools beyond what has been taught
+
+</ans></details> <details class = "faq"> <summary>Clear First (72, 75, 78)</summary>
+<ans>
+
+* Excellent data analysis and presentation
+* Correctly executed analysis appropriate to address the research question
+* Coherent presentation that implies a full understanding of visualising, analysing, describing, and interpreting data
+
+</ans></details> <details class = "faq"> <summary>2.1 (62, 65, 68)</summary>
+<ans>
+
+* Competent data analysis and presentation
+* Correctly executed analysis appropriate to address the research question
+* Generally coherent presentation that implies a good understanding of visualising, analysing, describing, and interpreting data
+
+</ans></details> <details class = "faq"> <summary>2.2 (52, 55, 58)</summary>
+<ans>
+
+* Minor deficiencies in data analysis and presentation
+* Analysis partially appropriate to address the research question and/or minor errors in execution
+* Presentation with occasional lapses in coherence, or that implies confusion about visualising, analysing, describing, and interpreting data
+
+</ans></details> <details class = "faq"> <summary>3rd (42, 45, 48)</summary>
+<ans>
+
+* Moderate deficiencies in data analysis and presentation
+* Analysis inappropriate to address the research question and/or errors in execution
+* Presentation lacks coherence, or demonstrates little understanding of visualising, analysing, describing, and interpreting data
+
+</ans></details> <details class = "faq"> <summary>Marginal Fail (35, 38)</summary>
+<ans>
+
+* Serious deficiencies in data analysis and presentation
+* Analysis inappropriate to address the research question and/or incorrected executed
+* Presentation cursory, incoherent, and/or demonstrates lack of understanding of visualising, analysing, describing, and interpreting data
+
+</ans></details> <details class = "faq"> <summary>Absolute Fail (0, 10, 20, 30)</summary>
+<ans>
+
+* No analysis attempted, or one so ill-concieved as to demonstrate virtually no understanding of visualising, analysing, describing, and interpreting data
+
+\ 
+
+## Critical Thinking
+
+* Critical evaluation of the student's own and other studies' findings
+* Discussion of evidence-based criticisms
+* Insightful, novel, or theoretically interesting suggestions for future research
+
+</ans></details> <details class = "faq"> <summary>Outstanding (82, 88) or Exceptional (95) First</summary>
+<ans>
+
+* Excellent or high level of ability to criticise constructively both past research and the research that has been performed (both on methodological and theoretical grounds)
+* Insightful and worthwhile suggestions for future research
+
+</ans></details> <details class = "faq"> <summary>Clear First (72, 75, 78)</summary>
+<ans>
+
+* Some ability to criticise constructively both past research and the research that has been performed (both on methodological and theoretical grounds)
+* Insightful and worthwhile suggestions for future research
+
+</ans></details> <details class = "faq"> <summary>2.1 (62, 65, 68)</summary>
+<ans>
+
+* Some attempt to criticise constructively their own and past research (both on methodological and theoretical grounds), but these may contain some trivial observations. 
+* Sensible suggestions for future research are made
+
+</ans></details> <details class = "faq"> <summary>2.2 (52, 55, 58)</summary>
+<ans>
+
+* The student has demonstrated a lack of ability to constructively criticise their own or past research (either on methodological or theoretical grounds) or to suggest worthwhile future research.
+
+</ans></details> <details class = "faq"> <summary>3rd (42, 45, 48)</summary>
+<ans>
+
+* Little evidence of any ability to evaluate the theoretical or methodological limitations of the study performed are presented.
+
+</ans></details> <details class = "faq"> <summary>Marginal Fail (35, 38)</summary>
+<ans>
+
+* There is no evidence of any ability to evaluate the theoretical or methodological limitations of the study performed.
+
+</ans></details> <details class = "faq"> <summary>Absolute Fail (0, 10, 20, 30)</summary>
+<ans>
+
+No attempt to evaluate the theoretical or methodological limitations of the study has been performed.
+
+\ 
+
+## Theoretical Understanding
+
+* Knowledge and understanding of both the research question and the outstanding or key issues in the field
+* Understanding of what the results means and their theoretical implications
+
+</ans></details> <details class = "faq"> <summary>Outstanding (82, 88) or Exceptional (95) First</summary>
+<ans>
+
+* The discussion show an excellent understanding of the theoretical issues underlying the research. 
+* The discussion demonstrates an insightful grasp of the theoretical implications of the work.
+
+</ans></details> <details class = "faq"> <summary>Clear First (72, 75, 78)</summary>
+<ans>
+
+* Reasonable understanding of theoretical and methodological issues. 
+* The discussion shows a good understanding of the theoretical issues underlying the research.
+
+</ans></details> <details class = "faq"> <summary>2.1 (62, 65, 68)</summary>
+<ans>
+
+* The discussion includes a competent attempt to relate the findings to previous theoretical and empirical research. 
+* However, the exposition of theoretical implications is less than in higher bands.
+
+</ans></details> <details class = "faq"> <summary>2.2 (52, 55, 58)</summary>
+<ans>
+
+* A limited attempt to relate the study to previous work (theoretical and empirical) was made.
+
+</ans></details> <details class = "faq"> <summary>3rd (42, 45, 48)</summary>
+<ans>
+
+* Little attempt to relate the results to relevant theoretical background material is apparent.
+
+</ans></details> <details class = "faq"> <summary>Marginal Fail (35, 38)</summary>
+<ans>
+
+* There is a complete lack of theoretical insight.
+
+</ans></details> <details class = "faq"> <summary>Absolute Fail (0, 10, 20, 30)</summary>
+<ans>
+
+* There is a complete lack of theoretical insight.
+
+\ 
+
+## Organisation
+
+* Quality of writing
+* Clear and scientific communication; clear, error-free, efficient R code
+* RMarkdown is a consistently and correctly formatted document
+* Organisation into clearly defined and informative sections
+* Overall logical and narrative flow of concepts and argument
+
+</ans></details> <details class = "faq"> <summary>Outstanding (82, 88) or Exceptional (95) First</summary>
+<ans>
+
+* Outstanding study and write-up that shows initiative, flair, and originality. 
+* The write-up is exceptional in terms of clarity and organisation of material, with little evidence of wandering off on tangents.
+* Few or no errors in format conventions.
+
+</ans></details> <details class = "faq"> <summary>Clear First (72, 75, 78)</summary>
+<ans>
+
+* The write-up is well organised and clearly written. 
+* The discussion may be slightly less focused than for higher marking bands but largely avoids mentioning work not directly relevant to the current research. 
+* There can be minor errors in terms of adherence to project format conventions.
+
+</ans></details> <details class = "faq"> <summary>2.1 (62, 65, 68)</summary>
+<ans>
+
+* The write-up is fairly well organised and clearly written (possibly with some minor lapses of clarity).
+* The discussion may not be as focused as in higher marking bands but the key relevant material is included.
+* Some errors in adherence to project format guidelines will be tolerated.
+
+</ans></details> <details class = "faq"> <summary>2.2 (52, 55, 58)</summary>
+<ans>
+
+* Adequately organised and moderately competent project
+* Some of the following limitations: lack of adherence to standard format, poor organisation of material, poor or clumsy expression.
+
+</ans></details> <details class = "faq"> <summary>3rd (42, 45, 48)</summary>
+<ans>
+
+* Basic information about the research is communicated, but there is little attention to comprehensiveness or clarity in describing the procedures used or the results obtained.
+* Presentation is somewhat scrappy.
+
+</ans></details> <details class = "faq"> <summary>Marginal Fail (35, 38)</summary>
+<ans>
+
+* Incomplete or badly written up. 
+* Very little effort has been put into describing the method, results and relevant background theory and research. 
+* There is incoherence in presentation of background material, procedures, or analysis.
+
+</ans></details> <details class = "faq"> <summary>Absolute Fail (0, 10, 20, 30)</summary>
+<ans>
+
+* There is barely any attempt to mention relevant background theory and research, and to describe the method and results.
+
+\ 
+
+## Research
+
+* Sensible and evidence-based design
+* Clear and detailed explanation of experimental design and variables
+* Breadth and depth of reading
+* Application of readings to ideas and interpretation
+
+</ans></details> <details class = "faq"> <summary>Outstanding (82, 88) or Exceptional (95) First</summary>
+<ans>
+
+* Evidence of independent reading of relevant research (from up-to-date journal articles and books). 
+* The design is very good in terms of originality, methodological rigour, and theoretical significance.
+
+</ans></details> <details class = "faq"> <summary>Clear First (72, 75, 78)</summary>
+<ans>
+
+* Evidence of some independent reading of relevant research (from up-to date-journalarticles and books), supplementing references already provided on the reading list. 
+* The design is good in terms of originality, methodological rigour and theoretical significance.
+
+</ans></details> <details class = "faq"> <summary>2.1 (62, 65, 68)</summary>
+<ans>
+
+* Background material used for the introduction and discussion does not go substantially beyond that mentioned on the reading list. 
+* A competently designed and methodologically rigorous study.
+
+</ans></details> <details class = "faq"> <summary>2.2 (52, 55, 58)</summary>
+<ans>
+
+* Background material used for the discussion is limited to the reading list.
+* The design is adequate in terms of methodological rigour. 
+
+</ans></details> <details class = "faq"> <summary>3rd (42, 45, 48)</summary>
+<ans>
+
+* The design has some merit but has major methodological flaws or limitations that could have been foreseen and avoided.
+
+</ans></details> <details class = "faq"> <summary>Marginal Fail (35, 38)</summary>
+<ans>
+
+* The design is inadequate to address the research issue.
+
+</ans></details> <details class = "faq"> <summary>Absolute Fail (0, 10, 20, 30)</summary>
+<ans>
+
+* Either no study was conducted or it was so poorly conceived as to be of no consequence whatsoever for the research issue.
+
+\ 
