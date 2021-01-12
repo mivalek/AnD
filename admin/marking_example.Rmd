@@ -85,8 +85,8 @@ library(kableExtra)
 table2<- condition_desc %>% kable(col.names = c("Condition", "N", "Mean age", "SD of age"), caption = "Table 2. Descriptive statistics by Condition",
                         digits = 2) %>% kable_styling()
 
-table1 <- age_desc %>% kable(col.names = c("Mean age", "SD of age", "Minimum age", "Maximum age"), caption = "Table 1. Descriptive statistics of Participants", 
-                   digits = 2) %>% kable_styling()
+# table1 <- age_desc %>% kable(col.names = c("Mean age", "SD of age", "Minimum age", "Maximum age"), caption = "Table 1. Descriptive statistics of Participants", 
+#                    digits = 2) %>% kable_styling()
 
 table3<- rate_desc %>% kable(col.names = c("Condition", "Item 1 Mean", "Item 1 SD", "Item 2 Mean", "Item 2 SD", "Item 3 Mean", "Item 3 SD"), caption = "Table 3. Descriptive statistics of Item ratings per condition", 
                     digits = 2) %>% kable_styling()

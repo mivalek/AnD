@@ -65,6 +65,19 @@ remotes::install_github("mivalek/teachR")
 
 If `R` prompts you about updating packages, it's best to update all.
 
+#### The`show.me()` function
+
+The `show.me()` function from `teachR` allows for the integration of marking in a single RStudio window. When called using a report id, it opens up the corresponding [Rmd file][.Rmd files to mark] in RStudio's source editor and displays the corresponding knitted [augmented HTML file][Pre-knitted HTML documents] in the Viewer pane. This saves you having to switch between multiple windows when marking. Obviously, you are not required to use it but if you think this might be useful, you are welcome to.
+
+The best way to use the function involves setting wour working directory (`setwd()`) using the path to the folder where the Rmd files are located on your computer. Then you can just call the function, passing the sutdent id or Rmd file name to the `id=` argument:
+
+```{r, eval = F}
+setwd("C:/work/OneDrive - University of Sussex/marking/AnD/2019-20/Milan")
+show.me(1234)
+# alternatively
+show.me("1234.Rmd")
+```
+
 \ 
 
 ### `adata`
@@ -72,7 +85,7 @@ If `R` prompts you about updating packages, it's best to update all.
 Finally, even though we will check students' results automatically, you might want the ability to have a look at their data yourself. For that, you will need the `adata` package, from where? From GitHub.
 
 ```{r}
-remotes::install_github("mivalek/adata")
+remotes::install_github("mivalek/adata", ref="dev")
 
 red <- adata::red_data(123456)
 green <- adata::green_data(123456)
@@ -88,7 +101,9 @@ And with that, you're all set up for the main event.
 
 ## Marking protocol
 
-You will have received links to a marking master spread sheet hosted on Google Sheets, links to two R scripts, one for knitting marked Rmd files and one for uploading marked HTML files on Canvas, and an email invitation to a OneDrive folder.
+You will have received links to two R scripts (one for knitting marked Rmd files and one for uploading marked HTML files on Canvas), a Quick comment Google spreadsheet, and an email invitation to share the marking OneDrive folder. Please follow the link and sync the folder with your local Uni OneDrive directory. In the folder, you will find the marking spreadsheet, a folder called "knitted" with the pre-processed HTML reports, and a folder with your name containing the submitted .Rmd files checked for word limit.
+
+**You should use the folder with your name to store marked .Rmd files. Do not move them around.**
 
 ### Rubric and grade descriptors
 
@@ -100,32 +115,33 @@ Marking is done according to the following rubric criteria:
 - **Organisation:** This component captures your writing, both of text and of R script, and your ability to communicate clearly and scientifically. To score highly in this area, you must write clear, error-free, efficient R code; submit an RMarkdown file that knits correctly and produces a consistently and correctly formatted document; organise your report into sections, each of which summarises the relevant information accurately and succinctly; and communicate your ideas, findings, and evidence in a logical, scientific, and understandable way.
 - **Research:** This component reflects the design and grounding of the study you are presenting. To score highly in this area, you must read and reference a variety of academic sources, beyond those given as suggested readings or on the reading list; draw on these wider readings to inform your ideas and understanding of the study; and implement a research design that is appropriate to answer the research question.
 
-You should also have a look at [grade descriptors for each criterion](https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37)
-
-
-<span style="color:red; font-weight:bold">[ TO BE COMPLETED ]</span>
+You should also have a look at [grade descriptors for each criterion](https://sussex.app.box.com/s/o5nalmzuj6u26w6hh12dq2ni4bks1a37). For further details on marking rubric and criteria, see the accompanying Analysing Data Report Calibration document.
 
 \ 
 
 ### Marking spreadsheet
 
-Here is where we store the information about students reports, such as file names, candidate numbers, code/knit checks and so on. It is also where you will enter the marks and final grades you are awarding the individual submissions. The candidate numbers in the first column contain hyperlinks to the individual HTML files.
+Here is where we store the information about students reports, such as file names, candidate numbers, code/knit checks and so on. It is also where you will enter the marks and final grades you are awarding the individual submissions.
 
 <div class="warn">**Please do not delete or hide any rows or columns of this spreadsheet as doing so might break the whole thing!**</div>
 
+<div class="solText">
+<title>Note on the "results_ok" column</title>
+
+The spreadsheet contains a "results_ok" column that stores the output of the results-checking function that is run on the reports in pre-processing, before the Rmd files get to you. Because there may be multiple valid ways of analysing the data as well as because of the non-trivial difficulties associated with checking another person's code, the test is **rather conservative**. That means that if the column does not say `FALSE` you can be pretty sure the results are correct. However, the converse is not necessarily true. Therefore **it is important to consider the reports that have `FALSE` in the corresponding cell of the "results_ok" column on a case-by-case basis**.
+</div>
+
 \ 
 
-### OneDrive folder
 
-You will have received an email invitation to share the marking OneDrive folder. Please follow the link and sync the folder with your local Uni OneDrive directory. In the folder, you will find the submitted .Rmd files checked for word limit.
-
-**You should use this folder to store marked .Rmd files. Do not move them around.**
 
 \ 
 
 ### Pre-knitted HTML documents
 
-Before the files get to you, they will be checked for word count and results. The HTML files will be hosted online and linked to from the marking spreadsheet. They will include the correct results and, if the report exceeds the word limit, a note saying so inserted in the appropriate place in the report. In case of a student having reported specific learning difficulties, their report will include a note of this with a link to marking guidelines for SLD.
+Before the files get to you, they will be checked for word count and results. The HTML files are stored in the "knitted" folder in the shared OneDrive folder. They will include the correct results and, if the report exceeds the word limit, a note saying so inserted in the appropriate place in the report. In case of a student having reported specific learning difficulties, their report will include a note of this with a link to marking guidelines for SLD.
+
+To aid you in marking, the knitted HTML files also include three buttons at the top of the screen with rubric/grading details, report flowchart previously given to students for guidance, and the [Quick comments][Quick comments] Google spreadsheet. The latter might need reloading every now and then.
 
 An example of such a file is below (you can see the full-size document with a wider layout [here](https://mivalek.github.io/adata/marking/marking_example.html)).
 
@@ -133,7 +149,7 @@ An example of such a file is below (you can see the full-size document with a wi
 
 ### .Rmd files to mark
 
-The R Markdown files in your OneDrive folder are slightly edited versions of the original students' submissions. The edits are as follows:
+The R Markdown files in your subfolder of the shared OneDrive folder are slightly edited versions of the original students' submissions. The edits are as follows:
 
 - Comments in code are removed
 - All `install.packages()` commands are removed
@@ -191,6 +207,12 @@ Donec egestas mi vitae congue bibendum. Sed purus mi, luctus id malesuada eu, vi
 
 In-text comments are interactive and on hover a box with the criterion description appears on the right hand side edge of the screen (you can try it yourself <a href="#marked-html">below</a>)
 
+#### Quick comments
+
+Apart from the main marking sheet, the Google spreadsheet contains a "Quick_comment" sheet where you can find some redy-in-the-oven comments on issues we expect to reoccur. They comments are organised by marking criterion. You can skim the first column of the sheet for a quick lookup of the issue. When you find a comment you'd like to use, all you need to do is copy the content of the cell in the "markdown" column and paste it directly in the Rmd file you are marking.
+
+If you find yourself reusing a comment that is not in the sheet, please feel free to add it. Insert a new line under the appropriate heading, copy and paste the existing quick comment above, and edit it. The "markdown" column should get populated automatically. Contributing your frequent comments will make marking easier for everyone.
+
 \ 
 
 ### Code chunk comment
@@ -239,22 +261,47 @@ Mark the reports on each of the rubric criteria and award a numeric mark, enteri
 
 ## Knitting marked .Rmd files
 
-Once you have commented all .Rmd files and entered all the partial and total grades in the marking spreadsheet, the module convenor will arrange moderation. Once the marks have been moderated and any necessary changes to marks have been made, you will need to knit the files to produce the augmented HTML documents. The code for this will have been shared with you (marking_script.R).
+Once you have commented **all .Rmd files and entered all the partial and total grades** in the marking spreadsheet, the module convenor will arrange moderation. Once the marks have been moderated and any necessary changes to marks have been made, you will need to knit the files to produce the augmented HTML documents. The code for this will have been shared with you (marking_script.R).
 
-The only thing you need to edit in the script before your run it is the bit towards the beginning:
+The only thing you need to edit in the script before your run it is the bit towards the beginning (but see below for edits for calibration marking):
 
 ```{r, eval=F, echo=T}
 ######################## EDIT AS APPROPRIATE ################################
-# You must use the name in the Google spreadsheet!
-marker <- "Milan"
 # EDIT PATH to the OneDrive folder we shared with you
 marking_path <- "C:/work/OneDrive - University of Sussex/marking/AnD/2019-20/Milan"
-#############################################################################
 ```
+
+<div class="warn">
+The marking_spreadsheet.xlsx **must not be open** when you are running the code, otherwise `R` won't be able to read it in.
+</div>
 
 The path should point to the synced OneDrive folder containing the commented .Rmd files. The files should not be in separate subfolders.
 
 Once you've made these two edits, you can run the code, sit back and watch it do its thing. Or better still, go get a cuppa; with 50+ reports per marker, this can take a while.
+
+<div class="solText">
+<title>Calibration marking</title>
+
+Before actual marking starts, you will receive a small number of selected reports to mark for the purpose of calibration. All markers receive the same reports and mark them independently form one another. Because of this, the .Rmd files are not shared via OneDrive and there is no master marking spreadsheet. Instead, you will be emailed the calibration sample and a link to a Google sheet **you need to download as a CSV file**. You will use this local copy to enter the marks. Please save all files into a single folder on your computer. When you have finished marking the claibration sample, you can use the same marking_script.R file to knit the reports to HTML.
+
+However, because of these differences, you need to slightly change the way you edit the file in two ways:
+
+  1. `marking_path` should point to the folder to which you saved the .Rmd files.
+  1. You need to edit the path to the marking spreadsheet, changing it from the Google sheet URL and pointing it to the CSV file you were sent. Comment out the first of the two commands and uncomment and edit the second:
+  
+  ```{r, eval=F, echo=T}
+  ######################## EDIT AS APPROPRIATE ################################
+  # EDIT PATH to the OneDrive folder we shared with you
+  marking_path <- "path/to/where/you/saved/the/calibration/files"
+
+  marks <- readxl::read_xlsx(file.path(marking_path, "../marking_spreadsheet.xlsx"))
+  # marks <- read.csv("path/to/csv/file.csv", stringsAsFactors = F)
+  #############################################################################
+  ```
+After that, you can simply run the script and, once knitted, save the HTML files into the shared Calibration folder on OneDrive.
+
+**DO NOT FORGET to change the marking script back once you are done, uncommenting the line with the master marking sheet path and commenting out the CSV one!**
+</div>
 
 \ 
 
@@ -272,7 +319,7 @@ To do that, you should run the code in the canvas_upload.R script that will have
 # EDIT PATH to the OneDrive folder we shared with you
 fpath <- "marking/AnD/2019-20"
 # insert your Canvas token
-set_canvas_token("")
+canvas_token <- ""
 #############################################################################
 ```
 
@@ -288,14 +335,16 @@ Now that you are familiar with the individual components of the marking protocol
 1. Complete the setup detailed above.
     - Get and save a [Canvas access token][Get access token]
     - Install the `rcanvas`, `teachR`, and `adata` [packages][Install required `R` packages].
-1. Follow the OneDrive link to get to the .Rmd files (stored in a folder with your name).
+1. Sync the shared OneDrive with your local OneDrive directory. There you will find your allocated .Rmd files (stored in a folder with your name).
 1. Download the marking_script.R and canvas_upload.R files you've been linked to.
-1. Open the marking master Google spreadsheet.
+1. Open the marking_spreadsheet.xlsx in the shared OneDrive folder.
 1. Read the HTML file while commenting on the report inside the .Rmd file as detailed [above][Commenting on .Rmd files].
     - **Do not change the file names!**
-1. [Enter marks][Awarding marks] per each rubric criterion and a total grade into the Google spreadsheet.
+    - The [`show.me()` function][The`show.me()` function] from `teachR` comes in handy here as it allows you to have everything open in a single RStudio window.
+1. [Enter marks][Awarding marks] per each rubric criterion and a total grade into the master marking spreadsheet.
 1. Once the module convenor has notified you that moderation has been completed, run the code inside marking_script.R, [editing as appropriate][Knitting marked .Rmd files].
-1. Make sure all your marked .Rmd and knitted HTML files are in your OneDrive folder.
+    - Make sure you close the marking_spreadsheet.xlsx file before you run the script!
+1. Make sure all your marked .Rmd and knitted HTML files are in your subfolder of the OneDrive folder.
 1. Once you get the thumbs up from the module convenor, run the code inside canvas_upload.R to [upload the files back onto Canvas][Uploading marked HTML files].
 1. Check a few submissions on Canvas to see if the upload went through and that matching files were attached to students' submissions.
 1. Email the module convenor, cc'ing the lecturers, letting them know that you have finished the upload.
@@ -307,5 +356,7 @@ Now that you are familiar with the individual components of the marking protocol
 
 \ 
 
-That is all you need to know to get going on the marking. Thank you so much for all your hard work!
+<font size="4.5">That is all you need to know to get going on the marking. Thank you so much for all your hard work!</font>
+
+\ 
 

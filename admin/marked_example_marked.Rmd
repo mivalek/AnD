@@ -6,7 +6,7 @@ output:
     number_sections: true
 ---
 
-```{r setup, include=T, results='hide'}
+```{r setup, include=T, results='hide', fig.show='hide'}
 knitr::opts_chunk$set(echo = T, message=F, warning=F)
 candidate_number <- 123456
 # Ordinary code comments will render like this. You can use them to point out mistakes in code.
@@ -204,18 +204,11 @@ Nullam varius, nulla eu auctor sollicitudin, libero dolor condimentum urna, in b
 \ 
 
 
+The comments in the text above highlight the elements of your work, both strengths and areas of improvement.
+These points are summarised for you here.
+You can use this feedback, together with the overall mark and mark for each aspect of the rubric, to improve future reports.
 
-First of all, let's focus on the strong points of your report:
-
-
-
-
-
-\ 
-
-
-
-There were, however, also things that lowered the overal quality of your work:
+First, the strengths of your report were the following areas:
 
 
 
@@ -224,8 +217,16 @@ There were, however, also things that lowered the overal quality of your work:
 \ 
 
 
+However, there were parts of your report that leave room for improvement. In particular, these were:
 
-These are some recommendations that will help you produce a better piece of writing:
+
+
+
+
+\ 
+
+
+To improve your mark in the future, make sure you work on the following:
 
 
 

@@ -1,0 +1,68 @@
+---
+title: "Debugging R code"
+author: "Analysing Data"
+date: "23/03/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+set.seed(1234)
+```
+
+
+```{r functions}
+# function for rounding p-values in APA format
+pround <- function(x) {
+  if (x < .001) {
+    return(".001")
+  } else {
+     return(sub("^0", "",
+                format(round(x, 3), nsmall = 3))) 
+    }
+}
+```
+
+```{r packages}
+library(tidyverse)
+library(cowplot)
+```
+
+```{r data}
+# generate mock data
+data <- tibble(id = 1000:1099,
+               height = round(rnorm(100, 164, 7)),
+               group = sample(c("experimental", "control"), 100, replace = T))
+data$height[2] <- "16t"
+```
+
+```{r cleaning}
+data <- data %>%
+  mutate(height = as.numeric(height))
+```
+
+```{r analysis}
+height_desc <- data %>%
+  group_by(group) %>%
+  summarise(m = mean(height, na.rm = T),
+            sd = sd(height, na.rm = T)) %>%
+  mutate_if(is.numeric, round, 2)
+
+group_diff <- t.test(height ~ group, data)
+```
+
+```{r visualisation}
+plot <- data %>%
+  ggplot(aes(x = group, y = height)) +
+  geom_errorbar(stat = "summary", fun.data = "mean_cl_boot", width = .05) +
+  geom_point(stat = "summary", fun = "mean", size = 3, shape = 21, fill = "white") +
+  labs(x = "Condition", y = "Height in cm") +
+  ylim(160, 170) +
+  theme_cowplot()
+```
+
+There was no difference in mean height between the control (*M* = `r height_desc %>% filter(group == "control") %>% pull(m)`) and experimental (*M* = `r height_desc %>% filter(group == "experimental") %>% pull(m)`) group, *t*(`r round(group_diff$parameter, 2)`) = `r round(group_diff$statistic, 2)`, *p* = `r pround(group_diff$p.value)`. This result is illustrated in Fig.\ 1 below.
+
+```{r, fig.height = 5, fig.width = 6, fig.cap = "*Fig 1.* Mean height by condition (errorbars represent 95% bootstrap confidence intervals)"}
+plot
+```

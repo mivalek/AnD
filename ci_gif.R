@@ -129,3 +129,11 @@ system('"C:\\Program Files\\ImageMagick-7.0.9-Q16\\magick.exe" -delay 12 -loop 1
 
 system('"C:\\Program Files\\ImageMagick-7.0.9-Q16\\magick.exe" convert analysing_data\\ci.gif -fuzz 10% -layers Optimize analysing_data\\ci_small.gif')
 
+
+system('"C:\\Program Files\\ImageMagick-7.0.9-Q16\\magick.exe" identify -format "%n\n" analysing_data\\lectures\\pics\\huck.gif')
+
+system('"C:\\Program Files\\ImageMagick-7.0.9-Q16\\magick.exe" convert analysing_data\\lectures\\pics\\huck.gif[0,25-98] analysing_data\\lectures\\pics\\huck_small.gif')
+
+system('"C:\\Program Files\\ImageMagick-7.0.9-Q16\\magick.exe" convert analysing_data\\lectures\\pics\\huck_small.gif -fuzz 5% -layers Optimize analysing_data\\lectures\\pics\\huck_small.gif')
+
+system('"C:\\Program Files\\ImageMagick-7.0.9-Q16\\magick.exe" convert analysing_data\\lectures\\pics\\puppyattack.gif -fuzz 10% -layers Optimize analysing_data\\lectures\\pics\\puppyattack_small.gif')

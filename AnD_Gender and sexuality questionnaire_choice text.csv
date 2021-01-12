@@ -1,0 +1,105 @@
+StartDate,EndDate,Status,IPAddress,Progress,Duration (in seconds),Finished,RecordedDate,ResponseId,RecipientLastName,RecipientFirstName,RecipientEmail,ExternalReference,LocationLatitude,LocationLongitude,DistributionChannel,UserLanguage,Info_consent,Age,Gender,Gender_comfortable_1,Gender_masc_1,Gender_fem_1,Gender_stability_1,Sexual_strength_1,Sexual_fewq_1,Sexual_gender_1,Romantic_strength_1,Romantic_freq_1,Romantic_gender_1,Debrief_1
+Start Date,End Date,Response Type,IP Address,Progress,Duration (in seconds),Finished,Recorded Date,Response ID,Recipient Last Name,Recipient First Name,Recipient Email,External Data Reference,Location Latitude,Location Longitude,Distribution Channel,User Language,"INVITATION TO
+TAKE PARTIt is time for
+us to collect some data so that you can learn how to analyse data using
+something that is actually personally relevant to us all. We really appreciate
+that the topics we chose are complex and delicate but we hope these questions
+will kindle your interest in and critical thinking about the issues relating to gender and sexuality and that, by exploring your responses, we will learn
+something interesting together. You are not
+obliged to take part in this survey and there will be no consequences to your
+assessment on the module whether or not you fill in the form. WHAT WILL I DO?The survey will
+take less than five minutes. During the survey, we will ask you some questions
+concerning gender and sexuality. WHAT WILL HAPPEN
+TO THE RESULTS AND MY PERSONAL INFORMATION?All the
+information that you provide will be anonymous. By submitting your
+responses, you agree to have your anonymous data analysed by students and staff
+on the module for educational purposes. In addition, the anonymous data may
+be published in a scientific journal.   CONSENT• I understand
+that by indicating my consent below, I am agreeing to take part in the
+University of Sussex research described here, and that I have read and
+understood this information sheet. • I understand
+that my participation is entirely voluntary, that I can choose not to
+participate in part or all of the survey, and that I can withdraw at any stage without
+having to give a reason and without being penalised in any way. • I understand
+that since the survey is anonymous, it will be impossible to withdraw my data
+once I have completed and submitted the test.
+
+• I consent to the processing of my personal information for the purposes of
+this research. I understand that such information will be treated as
+strictly confidential (subject to legal limitations) and handled in accordance
+with General Data Protection Regulation (GDPR, 2016).
+
+• I understand that my identity will remain confidential in any written reports
+of this research, and that no information I disclose will lead to the
+identification in those reports of any individual either by the researchers or
+by any other party, without first obtaining my written permission.
+
+
+
+If you require
+further information, contact Dr Mankin (j.mankin@sussex.ac.uk),
+Dr Valášek (M.Valasek@sussex.ac.uk), or Dr Atkinson
+(r.atkinson@sussex.ac.uk). If you have any concerns about the way in
+which the research has been conducted, contact the Chair of the Science and
+Technology Cross-Schools Research Ethics Committee (C-REC), Dr Karen Long
+(crecscitec@sussex.ac.uk). The University of Sussex has insurance in place to
+cover its legal liabilities in respect of this research. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Please indicate
+below whether you consent to participate in this research.",How old are you in years?,Indicate your gender:,How comfortable do you feel with your choice on the question above? - Not at all comfotable:Completely comfortable,"Using your own understanding of masculinity and femininity, how masculine would you say you are? - Not at all masculine:Very strongly masculine","Using your own understanding of masculinity and femininity, how feminine would you say you are? - Not at all feminine:Very strongly feminine",How stable/fluid would you say your sense of your own gender is? - Completely fluid/changing:Completely stable,How strongly can you experience sexual attraction to another person? - Not at all:Very strongly,How frequently would you say you experience sexual attraction to other people? - Never:Often,"If gender can be represented as a linear scale, indicate your sexual preference for gender(s). Leave blank if you don't experience sexual attraction to people.
+i.e. 1 - Women, 5 - Another gender/no preference/gender is not important to me, 9 - Men - Women:Men",How strongly can you experience romantic/emotional attraction to another person? - Not at all:Very strongly,How frequently would you say you experience romantic/emotional attraction to other people? - Never:Often,"If gender can be represented as a linear scale, indicate your romantic/emotional preference for gender(s). Leave blank if you don't experience romantic/emotional attraction to people.
+i.e. 1 - Women, 5 - Another gender/no preference/gender is not important to me, 9 - Men - Women:Men","DEBRIEF INFORMATIONThank you very much for taking part in our research!
+RESEARCH AIMSWe are hoping to learn more about how people define gender and sexuality.
+WHAT WILL HAPPEN TO THE RESULTS AND MY PERSONAL INFORMATION?This data for this research has been collected for the module Analysing data (module code C8891) at the School of Psychology, University of Sussex. As part of the requirements of the module, students will analyse the data during practical classes. In addition, the anonymous data may be published in a scientific journal. 
+As previously stated, all data is entirely anonymous and will be held in strict confidentiality. All of your responses thus far have been recorded and saved, so if you are happy for your data to be included in the analysis, you can close this window at any time.
+OPTION TO WITHDRAWIf at this point you would like to withdraw your responses for any reason so they are not included in any of the analyses, please enter the word ""WITHDRAW"" in the text box below and click ""Next"". We will permanently delete your data before any analysis begins.
+If you would like to withdraw, please enter the word ""WITHDRAW"" in the box below."
+"{""ImportId"":""startDate"",""timeZone"":""Europe/London""}","{""ImportId"":""endDate"",""timeZone"":""Europe/London""}","{""ImportId"":""status""}","{""ImportId"":""ipAddress""}","{""ImportId"":""progress""}","{""ImportId"":""duration""}","{""ImportId"":""finished""}","{""ImportId"":""recordedDate"",""timeZone"":""Europe/London""}","{""ImportId"":""_recordId""}","{""ImportId"":""recipientLastName""}","{""ImportId"":""recipientFirstName""}","{""ImportId"":""recipientEmail""}","{""ImportId"":""externalDataReference""}","{""ImportId"":""locationLatitude""}","{""ImportId"":""locationLongitude""}","{""ImportId"":""distributionChannel""}","{""ImportId"":""userLanguage""}","{""ImportId"":""QID3""}","{""ImportId"":""QID5_TEXT""}","{""ImportId"":""QID6""}","{""ImportId"":""QID17_1""}","{""ImportId"":""QID18_1""}","{""ImportId"":""QID19_1""}","{""ImportId"":""QID20_1""}","{""ImportId"":""QID21_1""}","{""ImportId"":""QID22_1""}","{""ImportId"":""QID23_1""}","{""ImportId"":""QID24_1""}","{""ImportId"":""QID25_1""}","{""ImportId"":""QID26_1""}","{""ImportId"":""QID27_TEXT""}"
+2020-01-07 16:56:56,2020-01-07 17:01:55,Survey Preview,,100,299,True,2020-01-07 17:01:55,R_3PbqQT5Y9M6W2p6,,,,,50.8612060546875,-0.1194000244140625,preview,EN,I consent,34,Female,8,3,7,8,9,8,5,9,3,5,
+2020-01-21 11:17:00,2020-01-21 11:17:24,Survey Preview,,100,24,True,2020-01-21 11:17:25,R_12JW8YEmFx5fBbq,,,,,50.8612060546875,-0.1194000244140625,preview,EN,I consent,55,Male,8,8,8,4,6,1,6,6,2,7,
+2020-01-21 11:19:33,2020-01-21 11:19:57,Survey Preview,,100,23,True,2020-01-21 11:19:57,R_1HbjnIOtX1ITlN7,,,,,50.8612060546875,-0.1194000244140625,preview,EN,I consent,18,Female,9,1,9,9,9,9,9,9,9,9,
+2020-01-21 11:20:02,2020-01-21 11:20:36,Survey Preview,,100,34,True,2020-01-21 11:20:36,R_1dFwpEcOgze9Pht,,,,,50.8612060546875,-0.1194000244140625,preview,EN,I consent,20,Female,4,5,6,3,2,2,4,5,5,5,

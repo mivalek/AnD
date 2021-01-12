@@ -128,10 +128,10 @@ for (i in sort(c(seq(0, 1, length.out = 50), crit))) {
       geom_line(data = tibble(x = rep(c(-i, i), each = 2), y = rep(c(0, t_fun(i, s-1) + 3), 2)),
                 aes(x, y, group = factor(x)), colour = default_col, lty=2) +
             annotate("text", x = -i - .17, y = t_fun(i, s-1) + 5.5,
-                     label = bquote(italic(p)(italic(D)<=phantom()-.(round(i, 2)))==.(paste0(round(pt(i/sd(d), s-1) * 100, 2), "%"))),
+                     label = bquote(italic(p)(italic(D)<=phantom()-.(round(i, 2)))==.(paste0(round((1 - pt(i/sd(d), s-1)) * 100, 2), "%"))),
                      colour = default_col, size = 5) +
             annotate("text", x = i + .17, y = t_fun(i, s-1) + 5.5,
-                     label = bquote(italic(p)(italic(D)>=.(round(i, 2)))==.(paste0(round(pt(i/sd(d), s-1) * 100, 2), "%"))),
+                     label = bquote(italic(p)(italic(D)>=.(round(i, 2)))==.(paste0(round((1 - pt(i/sd(d), s-1)) * 100, 2), "%"))),
                      colour = default_col, size = 5)
   }
   
@@ -182,10 +182,10 @@ for (a in seq(1, 0, length.out = 20)) {
       geom_line(data = tibble(x = rep(c(-i, i), each = 2), y = rep(c(0, t_fun(i, s-1) + 3) * a, 2)),
                 aes(x, y, group = factor(x)), colour = default_col, lty=2) +
       annotate("text", x = -i - .17, y = t_fun(i, s-1) + 5.5,
-               label = bquote(italic(p)(italic(D)<=phantom()-.(round(i, 2)))==.(paste0(round(pt(i/sd(d), s-1) * 100, 2), "%"))),
+               label = bquote(italic(p)(italic(D)<=phantom()-.(round(i, 2)))==.(paste0(round((1 - pt(i/sd(d), s-1)) * 100, 2), "%"))),
                colour = vanish, size = 5) +
       annotate("text", x = i + .17, y = t_fun(i, s-1) + 5.5,
-               label = bquote(italic(p)(italic(D)>=.(round(i, 2)))==.(paste0(round(pt(i/sd(d), s-1) * 100, 2), "%"))),
+               label = bquote(italic(p)(italic(D)>=.(round(i, 2)))==.(paste0(round((1 - pt(i/sd(d), s-1)) * 100, 2), "%"))),
                colour = vanish, size = 5)
   }
   
@@ -232,5 +232,5 @@ for (i in seq(0, 1, length.out = 30)) {
 dev.off()
 
 
-system('"C:\\Program Files\\ImageMagick-7.0.9-Q16\\magick.exe" -delay 1 -loop 1 analysing_data\\gif_pics\\*.png analysing_data\\nhst3.gif')
+system('"C:\\Program Files\\ImageMagick-7.0.9-Q16\\magick.exe" -delay 1 -loop 1 analysing_data\\gif_pics\\*.png analysing_data\\nhst4.gif')
 

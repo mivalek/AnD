@@ -1,0 +1,425 @@
+StartDate,EndDate,Status,Progress,Duration (in seconds),Finished,RecordedDate,ResponseId,DistributionChannel,UserLanguage,Info_consent,Age,Gender,Gender_comfortable_1,Gender_masc_1,Gender_fem_1,Gender_stability_1,Sexual_strength_1,Sexual_fewq_1,Sexual_gender_1,Romantic_strength_1,Romantic_freq_1,Romantic_gender_1,Debrief_1
+Start Date,End Date,Response Type,Progress,Duration (in seconds),Finished,Recorded Date,Response ID,Distribution Channel,User Language,"INVITATION TO
+TAKE PARTIt is time for
+us to collect some data so that you can learn how to analyse data using
+something that is actually personally relevant to us all. We really appreciate
+that the topics we chose are complex and delicate but we hope these questions
+will kindle your interest in and critical thinking about the issues relating to gender and sexuality and that, by exploring your responses, we will learn
+something interesting together. You are not
+obliged to take part in this survey and there will be no consequences to your
+assessment on the module whether or not you fill in the form. WHAT WILL I DO?The survey will
+take less than five minutes. During the survey, we will ask you some questions
+concerning gender and sexuality. WHAT WILL HAPPEN
+TO THE RESULTS AND MY PERSONAL INFORMATION?All the
+information that you provide will be anonymous. By submitting your
+responses, you agree to have your anonymous data analysed by students and staff
+on the module for educational purposes. In addition, the anonymous data may
+be published in a scientific journal.   CONSENT• I understand
+that by indicating my consent below, I am agreeing to take part in the
+University of Sussex research described here, and that I have read and
+understood this information sheet. • I understand
+that my participation is entirely voluntary, that I can choose not to
+participate in part or all of the survey, and that I can withdraw at any stage without
+having to give a reason and without being penalised in any way. • I understand
+that since the survey is anonymous, it will be impossible to withdraw my data
+once I have completed and submitted the test.
+
+• I consent to the processing of my personal information for the purposes of
+this research. I understand that such information will be treated as
+strictly confidential (subject to legal limitations) and handled in accordance
+with General Data Protection Regulation (GDPR, 2016).
+
+
+If you require
+further information, contact Dr Mankin (j.mankin@sussex.ac.uk),
+Dr Valášek (M.Valasek@sussex.ac.uk), or Dr Atkinson
+(r.atkinson@sussex.ac.uk). If you have any concerns about the way in
+which the research has been conducted, contact the Chair of the Science and
+Technology Cross-Schools Research Ethics Committee (C-REC), Dr Karen Long
+(crecscitec@sussex.ac.uk). The University of Sussex has insurance in place to
+cover its legal liabilities in respect of this research. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Please indicate
+below whether you consent to participate in this research.",How old are you in years?,Indicate your gender:,How comfortable do you feel with your choice on the question above? - Not at all comfortable:Completely comfortable,"Using your own understanding of masculinity and femininity, how masculine would you say you are? - Not at all masculine:Very strongly masculine","Using your own understanding of masculinity and femininity, how feminine would you say you are? - Not at all feminine:Very strongly feminine",How stable/fluid would you say your sense of your own gender is? - Completely fluid/changing:Completely stable,How strongly can you experience sexual attraction to another person? - Not at all:Very strongly,How frequently would you say you experience sexual attraction to other people? - Never:Often,"If gender can be represented as a linear scale, indicate your sexual preference for gender(s). Leave blank if you don't experience sexual attraction to people.
+i.e. 1 - Women, 5 - Another gender/no preference/gender is not important to me, 9 - Men - Women:Men",How strongly can you experience romantic/emotional attraction to another person? - Not at all:Very strongly,How frequently would you say you experience romantic/emotional attraction to other people? - Never:Often,"If gender can be represented as a linear scale, indicate your romantic/emotional preference for gender(s). Leave blank if you don't experience romantic/emotional attraction to people.
+i.e. 1 - Women, 5 - Another gender/no preference/gender is not important to me, 9 - Men - Women:Men","DEBRIEF INFORMATIONThank you very much for taking part in our research!
+RESEARCH AIMSWe are hoping to learn more about how people define gender and sexuality.
+WHAT WILL HAPPEN TO THE RESULTS AND MY PERSONAL INFORMATION?This data for this research has been collected for the module Analysing data (module code C8891) at the School of Psychology, University of Sussex. As part of the requirements of the module, students will analyse the data during practical classes. In addition, the anonymous data may be published in a scientific journal. 
+As previously stated, all data is entirely anonymous and will be held in strict confidentiality. All of your responses thus far have been recorded and saved, so if you are happy for your data to be included in the analysis, you can close this window at any time.
+OPTION TO WITHDRAWIf at this point you would like to withdraw your responses for any reason so they are not included in any of the analyses, please enter the word ""WITHDRAW"" in the text box below and click ""Next"". We will permanently delete your data before any analysis begins.
+If you would like to withdraw, please enter the word ""WITHDRAW"" in the box below."
+"{""ImportId"":""startDate"",""timeZone"":""America/Denver""}","{""ImportId"":""endDate"",""timeZone"":""America/Denver""}","{""ImportId"":""status""}","{""ImportId"":""progress""}","{""ImportId"":""duration""}","{""ImportId"":""finished""}","{""ImportId"":""recordedDate"",""timeZone"":""America/Denver""}","{""ImportId"":""_recordId""}","{""ImportId"":""distributionChannel""}","{""ImportId"":""userLanguage""}","{""ImportId"":""QID3""}","{""ImportId"":""QID5_TEXT""}","{""ImportId"":""QID6""}","{""ImportId"":""QID17_1""}","{""ImportId"":""QID18_1""}","{""ImportId"":""QID19_1""}","{""ImportId"":""QID20_1""}","{""ImportId"":""QID21_1""}","{""ImportId"":""QID22_1""}","{""ImportId"":""QID23_1""}","{""ImportId"":""QID24_1""}","{""ImportId"":""QID25_1""}","{""ImportId"":""QID26_1""}","{""ImportId"":""QID27_TEXT""}"
+2020-01-07 09:56:56,2020-01-07 10:01:55,Survey Preview,100,299,True,2020-01-07 10:01:55,R_3PbqQT5Y9M6W2p6,preview,EN,I consent,34,Female,8,3,7,8,9,8,5,9,3,5,
+2020-01-27 07:35:10,2020-01-27 07:37:41,IP Address,100,151,True,2020-01-27 07:37:42,R_27NVAjyjIgZAK38,anonymous,EN,I consent,18,Female,9,5,7,9,5,3,9,8,3,9,
+2020-01-27 07:37:13,2020-01-27 07:38:46,IP Address,100,93,True,2020-01-27 07:38:46,R_1Ed5esz9jWvMl8n,anonymous,EN,I consent,18,Other,3,6,4,2,7,6,1,9,7,1,
+2020-01-27 07:38:26,2020-01-27 07:40:05,IP Address,100,98,True,2020-01-27 07:40:05,R_vdd7nNzkCxZAAw1,anonymous,EN,I consent,31,Female,5,5,3,7,2,2,4,7,5,6,WITHDRAW
+2020-01-27 07:43:16,2020-01-27 07:44:50,IP Address,100,94,True,2020-01-27 07:44:50,R_pzcF06Fq9Wy4UTL,anonymous,EN,I consent,20,Female,9,1,8,6,7,5,8,7,5,8,
+2020-01-27 07:43:03,2020-01-27 07:45:47,IP Address,100,163,True,2020-01-27 07:45:48,R_1geBKuFgN4lSJJb,anonymous,EN,I consent,19,Female,5,6,6,2,4,3,3,5,2,2,
+2020-01-27 07:44:35,2020-01-27 07:45:54,IP Address,100,79,True,2020-01-27 07:45:54,R_2tbU8ayMdlbG8vp,anonymous,EN,I consent,18,Male,9,7,5,8,9,9,8,9,7,9,
+2020-01-27 07:43:24,2020-01-27 07:45:54,IP Address,100,150,True,2020-01-27 07:45:55,R_2c1LJsDHFkWJJ1E,anonymous,EN,I consent,18,Female,9,5,6,7,1,1,,3,2,6,
+2020-01-27 07:43:56,2020-01-27 07:45:58,IP Address,100,122,True,2020-01-27 07:45:58,R_3qQWYvZU4uqg8FI,anonymous,EN,I consent,19,Female,9,4,8,9,7,7,8,9,4,8,
+2020-01-27 07:44:12,2020-01-27 07:46:02,IP Address,100,109,True,2020-01-27 07:46:02,R_2xQw9fa5p8C6Fq4,anonymous,EN,I consent,18,Female,8,4,7,8,9,7,1,9,7,1,
+2020-01-27 07:43:48,2020-01-27 07:46:09,IP Address,100,140,True,2020-01-27 07:46:09,R_1LujHz7XNJyeLPU,anonymous,EN,I consent,19,Female,9,2,8,9,9,7,9,8,8,7,
+2020-01-27 07:45:08,2020-01-27 07:46:20,IP Address,100,71,True,2020-01-27 07:46:20,R_1FnDty9OhsyJH5v,anonymous,EN,I consent,18,Female,9,6,6,9,9,2,6,9,4,6,
+2020-01-27 07:44:35,2020-01-27 07:46:32,IP Address,100,117,True,2020-01-27 07:46:33,R_2aKWqXUvfRhZEtr,anonymous,EN,I consent,19,Female,9,4,6,9,9,3,8,9,3,8,
+2020-01-27 07:43:59,2020-01-27 07:46:38,IP Address,100,159,True,2020-01-27 07:46:39,R_1Kl3B9ifRoDTSRW,anonymous,EN,I consent,19,Female,9,4,7,7,8,6,1,8,7,7,
+2020-01-27 07:43:33,2020-01-27 07:46:39,IP Address,100,185,True,2020-01-27 07:46:39,R_2uX8oBNDYWnGptP,anonymous,EN,I consent,18,Female,9,3,5,6,6,5,8,9,7,5,
+2020-01-27 07:45:09,2020-01-27 07:46:48,IP Address,100,98,True,2020-01-27 07:46:48,R_e9XyxAbC9Z4y91L,anonymous,EN,I consent,20,Female,9,4,8,9,9,6,3,9,5,7,
+2020-01-27 07:44:12,2020-01-27 07:46:50,IP Address,100,157,True,2020-01-27 07:46:50,R_1pFOsjzSB6yIimW,anonymous,EN,I consent,18,Female,9,2,7,9,7,6,9,7,7,9,
+2020-01-27 07:44:37,2020-01-27 07:46:50,IP Address,100,133,True,2020-01-27 07:46:50,R_2cqKqPOwxCeLBj8,anonymous,EN,I consent,19,Male,9,6,4,9,9,5,2,9,6,2,
+2020-01-27 07:44:41,2020-01-27 07:46:50,IP Address,100,128,True,2020-01-27 07:46:50,R_3irQhQbcLj2sUBA,anonymous,EN,I consent,18,Male,9,4,6,5,8,9,9,9,9,9,
+2020-01-27 07:44:17,2020-01-27 07:46:54,IP Address,100,157,True,2020-01-27 07:46:55,R_3CHPErImrS3530z,anonymous,EN,I consent,20,Female,5,6,6,5,9,7,4,9,5,4,
+2020-01-27 07:44:28,2020-01-27 07:46:58,IP Address,100,149,True,2020-01-27 07:46:58,R_2Sjkc5BckZevQdq,anonymous,EN,I consent,18,Male,9,6,3,9,9,7,1,9,5,1,
+2020-01-27 07:44:11,2020-01-27 07:47:02,IP Address,100,170,True,2020-01-27 07:47:02,R_9ZRSuNcSwO76u7T,anonymous,EN,I consent,19,Male,9,9,1,9,9,8,1,8,7,1,
+2020-01-27 07:44:31,2020-01-27 07:47:01,IP Address,100,149,True,2020-01-27 07:47:02,R_e8SxySoPW9qNftD,anonymous,EN,I consent,19,Female,9,5,3,9,7,6,9,6,5,9,
+2020-01-27 07:43:46,2020-01-27 07:47:06,IP Address,100,199,True,2020-01-27 07:47:06,R_25Aa6obi2sB0Jp4,anonymous,EN,I consent,19,Female,9,3,7,9,8,5,3,9,9,3,
+2020-01-27 07:45:11,2020-01-27 07:47:12,IP Address,100,121,True,2020-01-27 07:47:12,R_31GASA4WppIog0x,anonymous,EN,I consent,20,Female,9,2,8,9,7,9,9,9,9,9,
+2020-01-27 07:44:29,2020-01-27 07:47:47,IP Address,100,198,True,2020-01-27 07:47:48,R_r7plRPk6WYAuX0B,anonymous,EN,I consent,19,Female,9,4,7,9,9,8,8,9,9,9,
+2020-01-27 07:46:03,2020-01-27 07:48:42,IP Address,100,158,True,2020-01-27 07:48:42,R_UVIlO8A18B1jtrb,anonymous,EN,I consent,18,Male,6,5,5,5,9,8,6,9,8,5,
+2020-01-27 07:47:38,2020-01-27 07:49:22,IP Address,100,103,True,2020-01-27 07:49:22,R_3nHq81KY9n1Snay,anonymous,EN,I consent,20,Male,9,7,2,9,8,6,1,9,2,1,
+2020-01-27 07:47:24,2020-01-27 07:49:35,IP Address,100,131,True,2020-01-27 07:49:35,R_10NMqC2nm59yPWI,anonymous,EN,I consent,20,Female,9,6,7,9,9,6,8,9,6,9,
+2020-01-27 07:45:58,2020-01-27 07:49:41,IP Address,100,223,True,2020-01-27 07:49:41,R_3HwshDpvPwPmb2G,anonymous,EN,I consent,22,Female,8,4,6,8,6,3,1,9,3,3,
+2020-01-27 07:45:59,2020-01-27 07:50:51,IP Address,100,292,True,2020-01-27 07:50:51,R_21cQugtSciBKLAH,anonymous,EN,I consent,20,Female,9,5,5,9,6,4,6,9,5,6,
+2020-01-27 07:50:45,2020-01-27 07:51:56,IP Address,100,71,True,2020-01-27 07:51:56,R_3KW4KGX4xNJ1FA3,anonymous,EN,I consent,19,Female,9,3,6,9,7,7,9,7,7,9,
+2020-01-27 07:45:26,2020-01-27 07:52:05,IP Address,100,399,True,2020-01-27 07:52:06,R_WlEGupthU2OjYYx,anonymous,EN,I consent,19,Female,9,4,7,9,7,5,9,7,5,9,
+2020-01-27 07:50:10,2020-01-27 07:52:46,IP Address,100,156,True,2020-01-27 07:52:46,R_yOcgkxmbkFmffVf,anonymous,EN,I consent,19,Female,9,1,9,9,8,7,9,9,7,9,
+2020-01-27 07:50:12,2020-01-27 07:53:26,IP Address,100,194,True,2020-01-27 07:53:26,R_3PjEPvoH4k134b1,anonymous,EN,I consent,19,Female,9,3,8,9,8,6,8,9,4,8,
+2020-01-27 07:51:18,2020-01-27 07:54:18,IP Address,100,179,True,2020-01-27 07:54:18,R_wNs31sGIneXQc4F,anonymous,EN,I consent,20,Female,9,3,7,9,9,9,3,9,9,2,
+2020-01-27 07:51:44,2020-01-27 07:54:25,IP Address,100,160,True,2020-01-27 07:54:25,R_Zgh7LgmmFiW25Mt,anonymous,EN,I consent,19,Female,9,4,6,9,6,4,8,8,7,8,
+2020-01-27 07:51:52,2020-01-27 07:54:46,IP Address,100,174,True,2020-01-27 07:54:46,R_2s6xZS1dypHelgB,anonymous,EN,I consent,18,Female,8,4,6,7,7,7,7,6,3,7,
+2020-01-27 07:53:38,2020-01-27 07:55:11,IP Address,100,93,True,2020-01-27 07:55:12,R_2CO44TfRCgVYjaO,anonymous,EN,I consent,20,Female,8,6,6,8,9,9,5,9,9,5,
+2020-01-27 07:53:58,2020-01-27 07:55:38,IP Address,100,99,True,2020-01-27 07:55:38,R_2fEghASCi54g3D8,anonymous,EN,I consent,18,Male,9,8,1,9,9,9,1,9,9,1,
+2020-01-27 07:51:35,2020-01-27 07:56:29,IP Address,100,294,True,2020-01-27 07:56:29,R_5vwxfTVqxytSPD3,anonymous,EN,I consent,20,Female,7,6,7,5,8,6,5,,7,4,
+2020-01-27 07:55:01,2020-01-27 07:57:16,IP Address,100,134,True,2020-01-27 07:57:16,R_3Jmvx7sKUj4O5kB,anonymous,EN,I consent," 20",Female,9,3,7,8,3,3,5,8,8,5,
+2020-01-27 07:54:32,2020-01-27 07:57:29,IP Address,100,176,True,2020-01-27 07:57:29,R_1KxqNrYtpmxqiNr,anonymous,EN,I consent,51,Female,9,5,5,6,2,5,5,5,5,5,
+2020-01-27 07:44:52,2020-01-27 07:57:45,IP Address,100,773,True,2020-01-27 07:57:46,R_10wtftqCDzHti5K,anonymous,EN,I consent,20,Female,9,2,9,9,9,8,9,9,8,9,
+2020-01-27 07:55:30,2020-01-27 07:57:58,IP Address,100,148,True,2020-01-27 07:57:58,R_d6x1iitsb31pwdj,anonymous,EN,I consent,18,Female,9,4,6,9,5,3,8,6,5,8,
+2020-01-27 07:51:34,2020-01-27 07:59:30,IP Address,100,475,True,2020-01-27 07:59:30,R_2vcYyRp4Xt3829q,anonymous,EN,I consent,19,Male,9,8,7,8,9,3,6,9,7,4,
+2020-01-27 07:56:33,2020-01-27 07:59:39,IP Address,100,186,True,2020-01-27 07:59:40,R_0fh4ut8pUEVKdmV,anonymous,EN,I consent,18,Female,9,4,6,7,8,8,7,8,8,8,
+2020-01-27 07:58:33,2020-01-27 08:00:22,IP Address,100,109,True,2020-01-27 08:00:22,R_2uy1mZENkwN57jg,anonymous,EN,I consent,19,Female,9,2,7,9,8,6,8,9,8,9,
+2020-01-27 07:58:43,2020-01-27 08:01:42,IP Address,100,179,True,2020-01-27 08:01:42,R_3qIhSl3QStVtoEH,anonymous,EN,I consent,20,Female,8,5,7,6,7,6,3,8,7,4,
+2020-01-27 08:00:30,2020-01-27 08:02:14,IP Address,100,103,True,2020-01-27 08:02:14,R_3psdidY4aKown6L,anonymous,EN,I consent,20,Female,9,1,8,9,9,7,9,9,7,9,
+2020-01-27 08:00:17,2020-01-27 08:02:23,IP Address,100,126,True,2020-01-27 08:02:23,R_2UWOGxBlCIY9Y6J,anonymous,EN,I consent,19,Male,9,7,1,9,7,3,8,7,3,8,
+2020-01-27 08:01:46,2020-01-27 08:03:39,IP Address,100,113,True,2020-01-27 08:03:40,R_r77hJOAEJjFye3f,anonymous,EN,I consent,19,Female,9,2,7,9,8,7,8,7,6,8,
+2020-01-27 07:56:35,2020-01-27 08:03:46,IP Address,100,430,True,2020-01-27 08:03:46,R_1pMujOdm1fgQj8X,anonymous,EN,I consent,18 years,Female,9,1,9,9,7,6,9,7,6,9,
+2020-01-27 08:01:47,2020-01-27 08:04:24,IP Address,100,157,True,2020-01-27 08:04:24,R_3G2L6oQUR9Zzn0Q,anonymous,EN,I consent,19,Female,9,2,9,9,5,4,9,8,5,9,
+2020-01-27 08:04:21,2020-01-27 08:06:46,IP Address,100,144,True,2020-01-27 08:06:46,R_2QxmbExczU1oh6Z,anonymous,EN,I consent,20,Female,9,3,7,9,9,6,8,9,9,7,
+2020-01-27 08:05:21,2020-01-27 08:08:51,IP Address,100,210,True,2020-01-27 08:08:51,R_ONeX1RXd4dVLeOl,anonymous,EN,I consent,19,Female,9,2,7,9,7,6,9,8,7,9,
+2020-01-27 08:10:01,2020-01-27 08:11:59,IP Address,100,118,True,2020-01-27 08:11:59,R_1dMnqHaSQYTijxW,anonymous,EN,I consent,18,Female,9,2,8,9,6,5,8,9,8,8,
+2020-01-27 08:09:19,2020-01-27 08:13:21,IP Address,100,242,True,2020-01-27 08:13:22,R_20YXLWzlUjuVOhg,anonymous,EN,I consent,21,Male,9,7,2,9,7,6,2,4,4,3,
+2020-01-27 08:10:29,2020-01-27 08:13:28,IP Address,100,178,True,2020-01-27 08:13:28,R_2QRjsEaDkZNLZ0C,anonymous,EN,I consent,19,Female,9,4,7,9,8,7,8,9,6,9,
+2020-01-27 08:12:57,2020-01-27 08:15:01,IP Address,100,123,True,2020-01-27 08:15:01,R_2qyKa6UFQTMRT5s,anonymous,EN,I consent,18,Female,9,3,7,9,8,5,8,8,5,9,
+2020-01-27 08:12:38,2020-01-27 08:15:05,IP Address,100,147,True,2020-01-27 08:15:06,R_YQ7S2Kig5koTr1L,anonymous,EN,I consent,19,Female,5,6,6,4,3,3,6,3,1,6,
+2020-01-27 08:12:51,2020-01-27 08:16:05,IP Address,100,194,True,2020-01-27 08:16:05,R_1kHvFuCupW3Zb7G,anonymous,EN,I consent,18,Female,9,3,9,9,9,9,8,9,9,8,
+2020-01-27 08:13:32,2020-01-27 08:16:06,IP Address,100,154,True,2020-01-27 08:16:06,R_3lyjN52cRJbBLV9,anonymous,EN,I consent,19,Male,7,6,8,4,8,7,8,8,8,8,
+2020-01-27 08:15:51,2020-01-27 08:17:10,IP Address,100,79,True,2020-01-27 08:17:10,R_AB6VXCffHLUntfz,anonymous,EN,I consent,20,Female,9,3,7,8,8,7,9,5,6,9,
+2020-01-27 08:16:15,2020-01-27 08:18:59,IP Address,100,163,True,2020-01-27 08:18:59,R_3s0sbFiPSkMgd96,anonymous,EN,I consent,23,Female,9,2,7,9,8,8,9,8,8,8,
+2020-01-27 08:19:48,2020-01-27 08:21:09,IP Address,100,80,True,2020-01-27 08:21:09,R_3nGDUVSMj0dCVsX,anonymous,EN,I consent,19,Male,9,6,5,9,7,7,1,7,7,1,
+2020-01-27 08:15:33,2020-01-27 08:21:25,IP Address,100,352,True,2020-01-27 08:21:25,R_1Pc5tK0TPBebxTV,anonymous,EN,I consent,20,Female,9,3,7,9,7,5,6,8,6,6,
+2020-01-27 08:21:19,2020-01-27 08:23:06,IP Address,100,107,True,2020-01-27 08:23:07,R_2uqhweVlY0TtE0Q,anonymous,EN,I consent,23,Female,9,4,7,8,8,7,7,9,4,8,
+2020-01-27 08:23:25,2020-01-27 08:25:57,IP Address,100,152,True,2020-01-27 08:25:57,R_1IgEU3OSTwu5gp5,anonymous,EN,I consent,19,Female,9,3,7,3,3,3,,7,4,4,
+2020-01-27 08:22:42,2020-01-27 08:26:24,IP Address,100,222,True,2020-01-27 08:26:24,R_3fQ0bkYaZBlflOd,anonymous,EN,I consent,25,Male,9,3,7,9,7,5,3,9,3,1,
+2020-01-27 08:26:46,2020-01-27 08:30:19,IP Address,100,213,True,2020-01-27 08:30:19,R_3dGJHOJl9PZTT4k,anonymous,EN,I consent,19,Female,9,2,8,9,9,9,6,9,3,6,
+2020-01-27 08:29:23,2020-01-27 08:33:23,IP Address,100,240,True,2020-01-27 08:33:24,R_vxm1yTaMYJYJ1nj,anonymous,EN,I consent,19,Female,7,7,5,8,7,8,2,9,7,2,
+2020-01-27 08:31:31,2020-01-27 08:33:44,IP Address,100,132,True,2020-01-27 08:33:44,R_2c6LcXNXHR0jvat,anonymous,EN,I consent,18,Female,9,2,7,6,7,7,9,9,8,9,
+2020-01-27 08:32:26,2020-01-27 08:34:39,IP Address,100,133,True,2020-01-27 08:34:39,R_1C3ms7U1TJDVnjX,anonymous,EN,I consent,,Female,9,3,6,9,6,5,7,9,6,8,
+2020-01-27 08:35:06,2020-01-27 08:36:35,IP Address,100,88,True,2020-01-27 08:36:35,R_esXpoqQ95Z1vkVb,anonymous,EN,I consent,19,Female,8,7,5,8,7,8,5,8,9,5,
+2020-01-27 08:37:16,2020-01-27 08:39:02,IP Address,100,105,True,2020-01-27 08:39:02,R_1jfDn05whXJ3bkv,anonymous,EN,I consent,19,Female,9,5,7,9,9,9,9,9,9,9,
+2020-01-27 08:37:46,2020-01-27 08:39:10,IP Address,100,84,True,2020-01-27 08:39:10,R_3hhdoXQtBluK3rp,anonymous,EN,I consent,19,Male,9,5,6,9,9,9,5,7,4,3,
+2020-01-27 08:37:37,2020-01-27 08:39:23,IP Address,100,105,True,2020-01-27 08:39:23,R_3mmdXYIq4K28U59,anonymous,EN,I consent,18,Female,9,4,7,9,9,9,9,9,7,9,
+2020-01-27 08:42:20,2020-01-27 08:44:44,IP Address,100,144,True,2020-01-27 08:44:44,R_T5YWMUHNiTsA1vr,anonymous,EN,I consent,19,Female,9,3,6,8,8,5,7,9,3,8,
+2020-01-27 08:43:46,2020-01-27 08:46:38,IP Address,100,171,True,2020-01-27 08:46:38,R_21tSjrJVTPZXHL6,anonymous,EN,I consent,19,Female,9,3,6,6,8,5,6,8,6,5,
+2020-01-27 08:45:02,2020-01-27 08:46:43,IP Address,100,101,True,2020-01-27 08:46:44,R_2dMHDlKY4DLDwcw,anonymous,EN,I consent,20,Female,8,1,9,9,9,6,9,9,6,9,
+2020-01-27 08:41:02,2020-01-27 08:47:06,IP Address,100,364,True,2020-01-27 08:47:06,R_1CyjJMnAa3e1g6U,anonymous,EN,I consent,22,Female,9,6,5,8,9,9,2,9,9,1,
+2020-01-27 08:48:27,2020-01-27 08:50:09,IP Address,100,101,True,2020-01-27 08:50:09,R_2vjZb0s2zEpjAcM,anonymous,EN,I consent,18,Female,9,1,9,9,9,8,8,9,6,9,
+2020-01-27 08:48:13,2020-01-27 08:50:53,IP Address,100,160,True,2020-01-27 08:50:54,R_2aV2bIudtF8CPw5,anonymous,EN,I consent,19,Female,9,2,4,6,9,6,2,9,5,3,
+2020-01-27 08:48:07,2020-01-27 08:51:44,IP Address,100,216,True,2020-01-27 08:51:44,R_2ATgYsLk9bRFTqD,anonymous,EN,I consent,19,Female,9,2,7,8,8,7,9,8,7,8,
+2020-01-27 08:50:26,2020-01-27 08:51:59,IP Address,100,92,True,2020-01-27 08:51:59,R_cOPwRmufCs9nThf,anonymous,EN,I consent,19,Female,9,2,8,9,8,6,8,8,8,7,
+2020-01-27 08:50:05,2020-01-27 08:52:06,IP Address,100,121,True,2020-01-27 08:52:06,R_268swUi2DG1lwgV,anonymous,EN,I consent,20,Female,9,3,7,9,7,6,8,6,6,9,
+2020-01-27 08:52:46,2020-01-27 08:56:59,IP Address,100,252,True,2020-01-27 08:56:59,R_3Egyf0DXbRrBS6l,anonymous,EN,I consent,22,Male,9,7,1,7,8,3,1,8,2,1,
+2020-01-27 08:55:12,2020-01-27 08:57:12,IP Address,100,119,True,2020-01-27 08:57:12,R_2TFqzjBDqv5fHhy,anonymous,EN,I consent,19,Male,9,5,5,9,9,9,9,9,9,9,
+2020-01-27 08:57:00,2020-01-27 08:58:32,IP Address,100,92,True,2020-01-27 08:58:33,R_12gMhFVl51PwxOG,anonymous,EN,I consent,19,Female,9,2,8,9,9,7,9,8,7,9,
+2020-01-27 08:55:46,2020-01-27 09:01:55,IP Address,100,369,True,2020-01-27 09:01:56,R_4GAnre6XFLQilHj,anonymous,EN,I consent,24,Female,9,3,7,9,9,7,8,7,7,8,
+2020-01-27 08:57:22,2020-01-27 09:02:47,IP Address,100,325,True,2020-01-27 09:02:47,R_114UDi0vVtoBF4z,anonymous,EN,I consent,18,Other,3,7,6,1,1,4,3,9,3,5,
+2020-01-27 09:01:40,2020-01-27 09:03:30,IP Address,100,110,True,2020-01-27 09:03:30,R_zfnlssL4kZzwUZH,anonymous,EN,I consent,19,Female,9,2,8,9,9,8,8,9,8,6,
+2020-01-27 09:02:22,2020-01-27 09:06:04,IP Address,100,221,True,2020-01-27 09:06:04,R_2Vk0D98fCPYzwLt,anonymous,EN,I consent,28,Female,9,1,8,9,7,6,9,7,6,9,
+2020-01-27 09:04:02,2020-01-27 09:06:52,IP Address,100,170,True,2020-01-27 09:06:52,R_3MRq2q5zfzSvJVi,anonymous,EN,I consent,19,Female,8,4,6,8,8,5,8,6,4,8,
+2020-01-27 09:05:39,2020-01-27 09:12:05,IP Address,100,386,True,2020-01-27 09:12:05,R_1hW5dHRY21uRRk3,anonymous,EN,I consent,18,Male,9,6,6,9,7,5,2,7,4,1,
+2020-01-27 09:11:14,2020-01-27 09:12:31,IP Address,100,76,True,2020-01-27 09:12:31,R_3RwGhVE4ctWkusY,anonymous,EN,I consent,19,Female,8,3,7,7,9,9,5,9,9,3,
+2020-01-27 09:10:28,2020-01-27 09:13:30,IP Address,100,182,True,2020-01-27 09:13:31,R_1KkgumCwEcajuKz,anonymous,EN,I consent,19,Female,7,6,4,6,8,6,2,8,8,2,
+2020-01-27 09:13:30,2020-01-27 09:14:52,IP Address,100,82,True,2020-01-27 09:14:52,R_2ymB3JAEtWlFLuC,anonymous,EN,I consent,19,Female,9,3,8,9,8,8,8,9,7,9,
+2020-01-27 09:26:03,2020-01-27 09:28:52,IP Address,100,168,True,2020-01-27 09:28:52,R_2vc7a7wJKKafh7r,anonymous,EN,I consent,19,Female,9,1,7,9,9,8,9,9,7,9,
+2020-01-27 09:29:04,2020-01-27 09:31:27,IP Address,100,142,True,2020-01-27 09:31:27,R_cAwWLuydQ1lRXqx,anonymous,EN,I consent,19,Female,9,1,9,9,7,7,9,9,7,6,
+2020-01-27 09:34:27,2020-01-27 09:36:53,IP Address,100,145,True,2020-01-27 09:36:53,R_0AqR67pXrKler2p,anonymous,EN,I consent,18,Female,9,2,7,9,9,6,7,9,5,9,
+2020-01-27 09:34:02,2020-01-27 09:37:32,IP Address,100,209,True,2020-01-27 09:37:32,R_1QDw4iArfvVDh0G,anonymous,EN,I consent,22,Female,9,4,8,9,9,9,9,2,2,9,
+2020-01-27 09:36:40,2020-01-27 09:45:13,IP Address,100,512,True,2020-01-27 09:45:13,R_pEmxDZFiRdNqDg5,anonymous,EN,I consent,18,Female,9,2,7,8,2,2,9,3,2,7,
+2020-01-27 09:40:06,2020-01-27 09:46:36,IP Address,100,390,True,2020-01-27 09:46:37,R_22mjmgdLYkXgbIy,anonymous,EN,I consent,19,Female,9,3,8,9,8,6,7,9,6,9,
+2020-01-27 09:46:46,2020-01-27 09:48:23,IP Address,100,97,True,2020-01-27 09:48:24,R_2dWRkZnaH6W1rfB,anonymous,EN,I consent,19,Female,9,3,6,9,8,6,9,8,6,9,
+2020-01-27 09:53:38,2020-01-27 09:54:57,IP Address,100,79,True,2020-01-27 09:54:57,R_2zwK1Rvul14F6HN,anonymous,EN,I consent,19,Female,9,1,8,9,9,7,8,9,9,8,
+2020-01-27 09:52:32,2020-01-27 09:55:32,IP Address,100,180,True,2020-01-27 09:55:32,R_1luI4tARuakcVlx,anonymous,EN,I consent,18,Female,9,7,3,9,5,5,6,7,6,9,
+2020-01-27 09:53:29,2020-01-27 09:57:46,IP Address,100,257,True,2020-01-27 09:57:47,R_3emMbneCA0UGgBQ,anonymous,EN,I consent,23,Male,7,7,2,8,4,3,6,8,5,3,
+2020-01-27 10:06:14,2020-01-27 10:07:48,IP Address,100,94,True,2020-01-27 10:07:48,R_RFceYu0qXNwtbXP,anonymous,EN,I consent,18,Female,9,3,7,8,8,8,9,8,8,8,
+2020-01-27 10:07:25,2020-01-27 10:09:24,IP Address,100,118,True,2020-01-27 10:09:24,R_3WWgaSlCyikMoJr,anonymous,EN,I consent,19,Female,9,3,8,9,9,9,7,9,9,9,
+2020-01-27 10:07:19,2020-01-27 10:09:35,IP Address,100,136,True,2020-01-27 10:09:36,R_1IAfGreW8FbFAor,anonymous,EN,I consent,20,Female,9,3,8,9,8,7,2,9,9,1,
+2020-01-27 10:07:21,2020-01-27 10:09:46,IP Address,100,144,True,2020-01-27 10:09:46,R_2YXSPtmGLc1Pntc,anonymous,EN,I consent,24,Female,9,2,8,9,7,6,5,7,3,5,
+2020-01-27 10:12:37,2020-01-27 10:14:03,IP Address,100,85,True,2020-01-27 10:14:03,R_3MEetPHCVtobIbc,anonymous,EN,I consent,19,Female,9,2,8,9,8,5,9,8,7,9,
+2020-01-27 10:12:16,2020-01-27 10:23:34,IP Address,100,678,True,2020-01-27 10:23:34,R_6hBWJTm1g5zbJVD,anonymous,EN,I consent,19,Female,9,1,9,9,9,5,6,9,6,6,
+2020-01-27 10:20:59,2020-01-27 10:25:05,IP Address,100,245,True,2020-01-27 10:25:05,R_3n6TXVCcq8nOfAd,anonymous,EN,I consent,20,Female,9,3,7,9,8,7,8,9,7,9,
+2020-01-27 10:22:50,2020-01-27 10:27:06,IP Address,100,256,True,2020-01-27 10:27:07,R_3g6sMkBOCAIF9Tv,anonymous,EN,I consent,19,Female,9,4,8,9,9,7,9,9,7,8,
+2020-01-27 10:26:37,2020-01-27 10:28:51,IP Address,100,134,True,2020-01-27 10:28:51,R_2rN64UhlyWycZfg,anonymous,EN,I consent,20,Female,9,3,7,8,9,9,8,9,4,5,
+2020-01-27 10:29:49,2020-01-27 10:32:47,IP Address,100,177,True,2020-01-27 10:32:48,R_2Xbwvk1mfhQHAW2,anonymous,EN,I consent,19,Female,9,2,7,9,9,7,9,8,6,9,
+2020-01-27 10:34:08,2020-01-27 10:38:21,IP Address,100,252,True,2020-01-27 10:38:22,R_2RX2lqoxdVnyHiT,anonymous,EN,I consent,20,Male,7,5,6,7,7,2,7,9,7,8,
+2020-01-27 10:40:28,2020-01-27 10:43:51,IP Address,100,202,True,2020-01-27 10:43:51,R_30c1pjSi3QIw3CE,anonymous,EN,I consent,22,Female,9,3,7,8,8,7,7,8,8,8,
+2020-01-27 10:44:13,2020-01-27 10:47:58,IP Address,100,225,True,2020-01-27 10:47:58,R_3iqnc7Lg7bb0ECp,anonymous,EN,I consent,,Female,9,2,8,9,7,6,9,8,7,8,
+2020-01-27 10:48:17,2020-01-27 10:51:27,IP Address,100,189,True,2020-01-27 10:51:27,R_PHeUfdin8djSRSp,anonymous,EN,I consent,20,Female,9,2,8,9,9,2,9,9,2,9,
+2020-01-27 10:48:22,2020-01-27 10:51:28,IP Address,100,186,True,2020-01-27 10:51:29,R_3iRqG8C1qBpsNBX,anonymous,EN,I consent,19,Female,9,2,8,9,8,8,9,9,9,9,
+2020-01-27 10:03:33,2020-01-27 10:58:28,IP Address,100,3294,True,2020-01-27 10:58:29,R_2UbZ6rJA46OKfrd,anonymous,EN,I consent,18,Female,7,3,6,8,7,4,8,6,4,6,
+2020-01-27 10:55:54,2020-01-27 10:58:35,IP Address,100,160,True,2020-01-27 10:58:35,R_ujMfmLOWAwSGlwZ,anonymous,EN,I consent,19,Female,9,3,7,9,7,6,3,7,7,3,
+2020-01-27 10:57:21,2020-01-27 11:00:12,IP Address,100,171,True,2020-01-27 11:00:12,R_1E5pndaLFELN69A,anonymous,EN,I consent,19,Female,9,3,8,9,8,4,8,9,3,9,
+2020-01-27 11:00:21,2020-01-27 11:02:30,IP Address,100,128,True,2020-01-27 11:02:30,R_1JXAEiYRh2sCQF6,anonymous,EN,I consent,21,Female,9,1,9,9,9,9,9,8,8,9,
+2020-01-27 11:14:15,2020-01-27 11:17:02,IP Address,100,166,True,2020-01-27 11:17:02,R_2XcGmESfeMHcnT7,anonymous,EN,I consent,19,Female,9,2,7,9,3,2,9,5,2,9,
+2020-01-27 11:04:17,2020-01-27 11:19:21,IP Address,100,903,True,2020-01-27 11:19:21,R_pi4K3AQoPeZEz17,anonymous,EN,I consent,19,Female,9,2,7,8,7,7,5,4,5,4,
+2020-01-27 11:15:29,2020-01-27 11:19:41,IP Address,100,252,True,2020-01-27 11:19:42,R_RPjU1bkfHJ0JSKJ,anonymous,EN,I consent,21,Female,9,2,7,9,9,3,8,9,5,9,
+2020-01-27 11:25:43,2020-01-27 11:27:10,IP Address,100,86,True,2020-01-27 11:27:10,R_XFAyjoOxD5rxsjf,anonymous,EN,I consent,20,Male,8,5,5,3,9,9,9,9,9,9,
+2020-01-27 11:27:32,2020-01-27 11:31:12,IP Address,100,219,True,2020-01-27 11:31:12,R_3Ed5MvN0rMpaPxX,anonymous,EN,I consent,21,Female,9,3,7,8,9,6,9,9,6,9,
+2020-01-27 11:34:14,2020-01-27 11:35:40,IP Address,100,85,True,2020-01-27 11:35:40,R_xyGsOHHH7MC0MBb,anonymous,EN,I consent,18,Female,9,5,7,9,9,9,9,8,5,9,
+2020-01-27 11:42:44,2020-01-27 11:44:42,IP Address,100,117,True,2020-01-27 11:44:42,R_22KyNkpj140rdpW,anonymous,EN,I consent,25,Female,9,2,7,8,8,8,8,8,8,9,
+2020-01-27 11:43:10,2020-01-27 11:44:43,IP Address,100,92,True,2020-01-27 11:44:43,R_8eq0Z1RzWwH0Z33,anonymous,EN,I consent,18,Female,9,3,6,7,6,7,6,8,7,4,
+2020-01-27 11:57:33,2020-01-27 11:59:16,IP Address,100,103,True,2020-01-27 11:59:16,R_9zwkzd8GNWBpPJD,anonymous,EN,I consent,20,Female,9,4,8,9,8,8,8,4,2,8,
+2020-01-27 11:56:53,2020-01-27 11:59:27,IP Address,100,154,True,2020-01-27 11:59:27,R_1reOPCIMZ6wfY59,anonymous,EN,I consent,25,Female,9,2,7,8,8,6,7,9,5,9,
+2020-01-27 11:58:39,2020-01-27 12:01:01,IP Address,100,142,True,2020-01-27 12:01:02,R_1IvmQoD1wAMNH7m,anonymous,EN,I consent,18,Female,9,3,7,9,9,2,9,7,5,9,
+2020-01-27 11:49:36,2020-01-27 12:03:58,IP Address,100,862,True,2020-01-27 12:03:59,R_3HuHHFCr2ctdXrj,anonymous,EN,I consent,21,Female,9,3,6,9,6,5,8,4,3,7,
+2020-01-27 12:04:54,2020-01-27 12:07:27,IP Address,100,153,True,2020-01-27 12:07:28,R_1IrQNfAIvD7JeSb,anonymous,EN,I consent,19,Female,4,7,1,1,1,3,5,9,9,5,
+2020-01-27 12:07:13,2020-01-27 12:08:48,IP Address,100,94,True,2020-01-27 12:08:48,R_268YljuIgy6fQEv,anonymous,EN,I consent,20,Female,9,3,6,9,8,7,9,8,7,9,
+2020-01-27 12:11:49,2020-01-27 12:13:31,IP Address,100,101,True,2020-01-27 12:13:31,R_30cL2ARzhYud5K5,anonymous,EN,I consent,21,Other,7,7,7,3,9,7,7,9,7,8,
+2020-01-27 12:21:19,2020-01-27 12:25:08,IP Address,100,228,True,2020-01-27 12:25:08,R_8IHUbaYcKBQKXjH,anonymous,EN,I consent,19,Female,8,2,8,8,7,7,9,8,7,9,
+2020-01-27 12:21:12,2020-01-27 12:26:47,IP Address,100,335,True,2020-01-27 12:26:48,R_6Xd2lUH6xLYxtMR,anonymous,EN,I consent,20,Female,9,5,6,7,7,6,8,5,7,8,
+2020-01-27 12:27:40,2020-01-27 12:29:06,IP Address,100,85,True,2020-01-27 12:29:06,R_2uEcF0WmN9qZQoy,anonymous,EN,I consent,23,Male,9,6,3,9,7,5,1,8,4,1,
+2020-01-27 12:37:12,2020-01-27 12:40:07,IP Address,100,174,True,2020-01-27 12:40:07,R_smJR7FMKcZFP1gB,anonymous,EN,I consent,19,Female,9,6,5,9,9,9,9,9,9,9,
+2020-01-27 12:43:08,2020-01-27 12:47:02,IP Address,100,234,True,2020-01-27 12:47:02,R_3PStB9EOOqmMrFf,anonymous,EN,I consent,19,Female,9,2,7,9,8,9,8,9,9,5,
+2020-01-27 12:38:40,2020-01-27 12:52:55,IP Address,100,854,True,2020-01-27 12:52:55,R_1EWgUaqT18615K8,anonymous,EN,I consent,18,Female,9,2,7,9,7,5,7,8,6,7,
+2020-01-27 12:51:28,2020-01-27 12:55:23,IP Address,100,235,True,2020-01-27 12:55:24,R_1mqLgf4hqv9zyB8,anonymous,EN,I consent,20,Female,9,3,8,9,7,4,9,9,2,9,
+2020-01-27 12:53:29,2020-01-27 13:04:09,IP Address,100,640,True,2020-01-27 13:04:10,R_2qr7EyN2PWmqph8,anonymous,EN,I consent,17,Female,9,2,7,9,9,8,8,9,6,8,
+2020-01-27 13:07:11,2020-01-27 13:08:51,IP Address,100,99,True,2020-01-27 13:08:51,R_1gN3Y92qyizksRF,anonymous,EN,I consent,19,Female,9,3,8,9,4,3,6,8,8,4,
+2020-01-27 12:59:26,2020-01-27 13:14:17,IP Address,100,890,True,2020-01-27 13:14:17,R_3Dw6g7wO7rAB8GE,anonymous,EN,I consent,20,Female,9,3,7,9,8,7,9,9,9,9,
+2020-01-27 13:17:49,2020-01-27 13:21:57,IP Address,100,248,True,2020-01-27 13:21:57,R_2aQSnDmUOCdb0CC,anonymous,EN,I consent,18,Female,9,3,6,9,9,9,7,8,6,9,
+2020-01-27 14:18:53,2020-01-27 14:21:02,IP Address,100,128,True,2020-01-27 14:21:02,R_scGuxBktWVtAFxL,anonymous,EN,I consent,19,Male,9,4,6,7,8,9,9,5,3,8,
+2020-01-27 14:25:47,2020-01-27 14:28:26,IP Address,100,158,True,2020-01-27 14:28:26,R_3frDeb9y0lKkprJ,anonymous,EN,I consent,19,Female,9,4,7,9,5,2,8,3,3,7,
+2020-01-27 14:52:17,2020-01-27 14:55:40,IP Address,100,203,True,2020-01-27 14:55:41,R_3Kptl7pLzkLyNlo,anonymous,EN,I consent,21,Female,9,6,4,5,2,3,8,3,3,6,
+2020-01-27 15:15:45,2020-01-27 15:19:14,IP Address,100,208,True,2020-01-27 15:19:14,R_2cCUV6X03h7p2fr,anonymous,EN,I consent,18,Female,9,2,8,9,9,9,9,7,8,9,
+2020-01-27 15:21:08,2020-01-27 15:25:00,IP Address,100,232,True,2020-01-27 15:25:01,R_NXXzmHXFlY2Pp97,anonymous,EN,I consent,21,Female,9,2,8,9,7,3,5,9,7,5,
+2020-01-27 15:24:41,2020-01-27 15:27:09,IP Address,100,148,True,2020-01-27 15:27:10,R_2w7xPJSBfwJOrtj,anonymous,EN,I consent,20,Female,9,4,5,8,7,6,7,8,7,8,
+2020-01-27 15:41:41,2020-01-27 15:44:46,IP Address,100,185,True,2020-01-27 15:44:46,R_RjZDTV0ce5GgwEN,anonymous,EN,I consent,20,Female,9,2,7,9,9,8,9,9,9,9,
+2020-01-27 15:45:29,2020-01-27 15:47:52,IP Address,100,143,True,2020-01-27 15:47:53,R_3L078LKlzSr5ehj,anonymous,EN,I consent,19,Female,9,2,7,9,7,7,8,9,7,9,
+2020-01-27 15:47:21,2020-01-27 15:49:41,IP Address,100,140,True,2020-01-27 15:49:42,R_2xLZdPgB43WViWZ,anonymous,EN,I consent,18,Female,9,4,6,8,7,6,6,7,6,7,
+2020-01-27 16:09:35,2020-01-27 16:11:03,IP Address,100,88,True,2020-01-27 16:11:03,R_1jO1mJRVrUW5Bir,anonymous,EN,I consent,18,Female,9,2,8,9,9,7,9,9,7,9,
+2020-01-27 16:22:02,2020-01-27 16:23:33,IP Address,100,91,True,2020-01-27 16:23:34,R_2dRsoBHGknYINCh,anonymous,EN,I consent,18,Female,9,2,8,9,9,8,9,8,8,9,
+2020-01-27 16:40:47,2020-01-27 16:42:56,IP Address,100,128,True,2020-01-27 16:42:56,R_25ygy00bKF0vJEB,anonymous,EN,I consent,19,Female,9,4,7,9,6,2,7,6,2,8,
+2020-01-27 16:46:10,2020-01-27 16:47:57,IP Address,100,107,True,2020-01-27 16:47:57,R_Oxw6OmH56f0u2xH,anonymous,EN,I consent,20,Female,9,6,7,9,9,9,9,9,9,9,
+2020-01-27 17:02:14,2020-01-27 17:03:37,IP Address,100,82,True,2020-01-27 17:03:38,R_3qWks5vsF9Ou7H6,anonymous,EN,I consent,18,Female,9,4,6,9,5,3,9,9,7,9,
+2020-01-27 17:08:14,2020-01-27 17:10:03,IP Address,100,108,True,2020-01-27 17:10:03,R_3hiNEUKJvimt7GZ,anonymous,EN,I consent,19,Female,6,5,3,5,9,9,3,9,9,1,
+2020-01-27 17:23:15,2020-01-27 17:25:50,IP Address,100,154,True,2020-01-27 17:25:50,R_30veSmYdnG3b9wf,anonymous,EN,I consent,18,Female,9,1,7,8,8,5,8,9,3,8,
+2020-01-27 18:21:28,2020-01-27 18:23:34,IP Address,100,125,True,2020-01-27 18:23:34,R_3n7T9vuy3AbbINx,anonymous,EN,I consent,"21 ",Female,9,3,7,9,9,7,7,9,7,7,
+2020-01-27 08:16:16,2020-01-28 03:03:28,IP Address,100,67632,True,2020-01-28 03:03:28,R_2RQ7Qcn2oBTAiWG,anonymous,EN,I consent,18,Female,9,4,5,9,7,3,6,5,4,4,
+2020-01-28 03:19:30,2020-01-28 03:20:57,IP Address,100,87,True,2020-01-28 03:20:58,R_2RPxKd2HbfDcOzO,anonymous,EN,I consent,18,Female,9,2,8,9,5,6,9,7,7,8,
+2020-01-28 03:40:29,2020-01-28 03:57:50,IP Address,100,1041,True,2020-01-28 03:57:50,R_C1rIvCnJdIADAY1,anonymous,EN,I consent,27,Female,9,3,8,8,6,6,4,6,6,5,
+2020-01-28 04:36:52,2020-01-28 04:39:03,IP Address,100,131,True,2020-01-28 04:39:04,R_ZgitLUut6K0bgtP,anonymous,EN,I consent,20,Male,9,6,4,9,9,8,9,9,7,7,
+2020-01-28 05:04:33,2020-01-28 05:06:11,IP Address,100,98,True,2020-01-28 05:06:12,R_Xv3VLp7XJWkV6dH,anonymous,EN,I consent,19,Female,9,2,8,9,9,3,9,9,6,9,
+2020-01-28 05:26:52,2020-01-28 05:28:35,IP Address,100,102,True,2020-01-28 05:28:35,R_1KeQyp6N2ktlUHQ,anonymous,EN,I consent,19,Female,9,3,6,8,4,3,4,7,6,4,
+2020-01-28 06:20:28,2020-01-28 06:22:11,IP Address,100,103,True,2020-01-28 06:22:11,R_WujPF2H5Tp2UvyF,anonymous,EN,I consent,22,Female,9,4,6,7,7,6,7,4,3,5,
+2020-01-28 06:23:17,2020-01-28 06:25:24,IP Address,100,127,True,2020-01-28 06:25:24,R_12ceiEkSdrYQz8m,anonymous,EN,I consent,19,Female,9,5,6,9,8,9,9,7,6,9,
+2020-01-28 06:23:55,2020-01-28 06:25:44,IP Address,100,108,True,2020-01-28 06:25:44,R_UtMimbc954YM1fX,anonymous,EN,I consent,21,Male,9,6,4,9,6,9,2,8,7,2,
+2020-01-28 06:43:41,2020-01-28 06:46:35,IP Address,100,174,True,2020-01-28 06:46:36,R_AzW1zS75MvtR1zr,anonymous,EN,I consent,20,Female,9,3,6,9,8,6,8,6,5,9,
+2020-01-28 07:12:44,2020-01-28 07:14:15,IP Address,100,90,True,2020-01-28 07:14:15,R_PTzSwBY8CG28k3T,anonymous,EN,I consent,21,Female,9,1,9,1,9,5,9,9,5,9,
+2020-01-28 07:13:26,2020-01-28 07:18:29,IP Address,100,303,True,2020-01-28 07:18:29,R_2E4ZfKWMMudMlO5,anonymous,EN,I consent,23,Female,3,4,6,8,8,8,3,3,2,7,
+2020-01-28 07:22:17,2020-01-28 07:25:14,IP Address,100,177,True,2020-01-28 07:25:15,R_vNN3FW0nzPdEs25,anonymous,EN,I consent,19,Male,9,7,3,9,7,4,2,6,3,1,
+2020-01-28 07:42:59,2020-01-28 07:44:45,IP Address,100,105,True,2020-01-28 07:44:45,R_2xF6VeXPdFTrYVn,anonymous,EN,I consent,19,Female,9,3,8,8,7,5,5,8,8,5,
+2020-01-28 07:43:39,2020-01-28 07:45:00,IP Address,100,81,True,2020-01-28 07:45:00,R_3Oiziv6w7LSxYV7,anonymous,EN,I consent,22,Female,9,1,9,9,9,7,8,9,7,8,
+2020-01-28 07:33:17,2020-01-28 07:46:35,IP Address,100,798,True,2020-01-28 07:46:36,R_1Dpxh96nyn6ecF0,anonymous,EN,I consent,20,Female,9,3,7,9,8,4,2,9,4,6,
+2020-01-28 07:51:29,2020-01-28 07:53:45,IP Address,100,135,True,2020-01-28 07:53:45,R_vJfsBXNYjEu3ylX,anonymous,EN,I consent,20,Female,9,1,7,9,9,5,7,9,6,7,
+2020-01-28 07:49:06,2020-01-28 08:11:53,IP Address,100,1366,True,2020-01-28 08:11:53,R_3RwHJsUc1PlEGdK,anonymous,EN,I consent,18,Female,9,4,5,9,2,1,,8,3,5,
+2020-01-28 08:10:32,2020-01-28 08:14:00,IP Address,100,208,True,2020-01-28 08:14:00,R_2fQ0tDs5UwYtC5X,anonymous,EN,I consent,20,Female,9,2,8,9,6,6,8,7,6,8,
+2020-01-28 08:06:42,2020-01-28 08:14:16,IP Address,100,454,True,2020-01-28 08:14:17,R_1CxXWGUYoA6ystX,anonymous,EN,I consent,19,Female,9,4,6,8,9,8,9,9,7,9,
+2020-01-28 08:26:42,2020-01-28 08:32:38,IP Address,100,356,True,2020-01-28 08:32:38,R_2VD5W5xfw3r6roN,anonymous,EN,I consent,21,Female,9,5,5,9,9,2,7,9,4,7,
+2020-01-28 08:46:24,2020-01-28 08:49:47,IP Address,100,202,True,2020-01-28 08:49:47,R_2TNnKs9c1NOe6Qy,anonymous,EN,I consent,21,Female,9,5,5,9,5,4,5,6,4,4,
+2020-01-28 09:48:39,2020-01-28 09:49:54,IP Address,100,74,True,2020-01-28 09:49:54,R_3MoFRuSXi0sHiR3,anonymous,EN,I consent,18,Female,9,2,7,8,9,9,6,9,9,8,
+2020-01-28 09:58:59,2020-01-28 10:06:13,IP Address,100,433,True,2020-01-28 10:06:13,R_1LU7yjya1Bq0pTM,anonymous,EN,I consent,20,Female,9,4,5,9,9,6,9,8,6,9,
+2020-01-28 11:02:10,2020-01-28 11:04:14,IP Address,100,124,True,2020-01-28 11:04:14,R_3CPJOk6XtFiua4d,anonymous,EN,I consent,19,Female,9,2,6,9,5,4,8,3,2,8,
+2020-01-28 11:16:37,2020-01-28 11:19:50,IP Address,100,192,True,2020-01-28 11:19:50,R_2OPSYEXowakmVQo,anonymous,EN,I consent,20,Female,8,7,8,7,9,7,4,8,6,2,
+2020-01-28 11:22:22,2020-01-28 11:26:41,IP Address,100,259,True,2020-01-28 11:26:42,R_aYv3MSqtPxH83MB,anonymous,EN,I consent,,Female,5,3,7,6,2,2,5,8,7,5,
+2020-01-28 11:53:43,2020-01-28 11:55:43,IP Address,100,119,True,2020-01-28 11:55:43,R_VI0jv4iMrle66it,anonymous,EN,I consent,18,Female,9,2,8,9,7,6,7,8,6,8,
+2020-01-28 12:07:00,2020-01-28 12:09:59,IP Address,100,178,True,2020-01-28 12:09:59,R_3G18n6wWYyria8K,anonymous,EN,I consent,19,Female,9,2,5,8,8,8,6,8,8,8,
+2020-01-28 13:19:42,2020-01-28 13:23:17,IP Address,100,214,True,2020-01-28 13:23:17,R_33xTWBJYKmkP4pZ,anonymous,EN,I consent,20,Female,9,3,7,8,7,5,8,9,4,7,
+2020-01-28 13:51:32,2020-01-28 13:53:30,IP Address,100,117,True,2020-01-28 13:53:30,R_3qro5b9i66oYL2a,anonymous,EN,I consent,20,Male,9,7,3,9,8,7,1,8,7,1,
+2020-01-28 16:17:28,2020-01-28 16:27:21,IP Address,100,592,True,2020-01-28 16:27:21,R_2fewaqBMiPQVTqZ,anonymous,EN,I consent,18,Female,8,6,5,9,9,8,7,9,8,5,
+2020-01-29 04:01:56,2020-01-29 04:03:24,IP Address,100,87,True,2020-01-29 04:03:24,R_1l059nnto4lzGJL,anonymous,EN,I consent,18,Female,9,2,8,9,2,1,5,7,6,5,
+2020-01-29 04:06:15,2020-01-29 04:07:42,IP Address,100,86,True,2020-01-29 04:07:42,R_2V2UGWCGxBlIuK2,anonymous,EN,I consent,21,Male,9,6,3,9,7,6,2,7,4,1,
+2020-01-29 04:41:47,2020-01-29 04:42:51,IP Address,100,64,True,2020-01-29 04:42:52,R_39Hn3IBdB5DhD7b,anonymous,EN,I consent,,,,,,,,,9,8,8,7,
+2020-01-29 05:10:38,2020-01-29 05:12:20,IP Address,100,101,True,2020-01-29 05:12:20,R_2R8qwbWmdEOp8fD,anonymous,EN,I consent,18,Female,9,4,7,7,7,5,9,8,5,9,
+2020-01-29 05:34:51,2020-01-29 05:47:33,IP Address,100,762,True,2020-01-29 05:47:33,R_2Wwo0AVysNZUPOJ,anonymous,EN,I consent,18,Female,8,2,8,7,7,7,8,8,6,8,
+2020-01-29 06:15:28,2020-01-29 06:18:33,IP Address,100,185,True,2020-01-29 06:18:33,R_3dKEaZCMs85GonQ,anonymous,EN,I consent,24,Female,9,5,5,4,6,6,6,3,3,7,
+2020-01-29 06:17:57,2020-01-29 06:21:14,IP Address,100,197,True,2020-01-29 06:21:14,R_2xWZyQn77zmXdJo,anonymous,EN,I consent,,Male,9,7,3,9,9,9,1,6,5,1,
+2020-01-29 06:43:11,2020-01-29 06:45:42,IP Address,100,151,True,2020-01-29 06:45:43,R_1oHHBio3398rvI9,anonymous,EN,I consent,19,Female,9,1,8,9,9,8,9,9,8,9,
+2020-01-29 06:58:59,2020-01-29 07:01:29,IP Address,100,149,True,2020-01-29 07:01:29,R_8wvj7F70sGxX8KB,anonymous,EN,I consent,20,Female,9,2,8,9,7,3,9,8,2,9,
+2020-01-29 08:24:47,2020-01-29 08:29:15,IP Address,100,268,True,2020-01-29 08:29:16,R_2EhJszr7ZldDG6x,anonymous,EN,I consent,18,Female,9,2,7,9,8,5,8,8,4,8,
+2020-01-29 06:01:55,2020-01-29 08:41:02,IP Address,100,9546,True,2020-01-29 08:41:02,R_232cYq6qIw3wDET,anonymous,EN,I consent,21,Male,6,7,4,7,9,8,5,9,7,4,
+2020-01-29 09:00:57,2020-01-29 09:03:07,IP Address,100,129,True,2020-01-29 09:03:07,R_2EAaYyU1mnnrVaC,anonymous,EN,I consent,20,Female,8,3,7,7,9,9,8,9,7,7,
+2020-01-29 09:56:10,2020-01-29 09:58:33,IP Address,100,142,True,2020-01-29 09:58:33,R_2zYlf9x7Z6ffDTI,anonymous,EN,I consent,18,Female,9,2,7,9,8,7,9,6,5,8,
+2020-01-29 10:29:38,2020-01-29 10:32:43,IP Address,100,184,True,2020-01-29 10:32:43,R_1ZwxioAYGH6PTrj,anonymous,EN,I consent,19,Female,9,5,5,9,9,7,8,9,3,8,
+2020-01-29 10:44:07,2020-01-29 10:46:19,IP Address,100,132,True,2020-01-29 10:46:19,R_1jBA4CA5kqTACc6,anonymous,EN,I consent,19,Female,9,2,8,9,7,6,9,8,8,9,
+2020-01-29 11:16:28,2020-01-29 11:18:22,IP Address,100,113,True,2020-01-29 11:18:22,R_2P22Hrd7pjVGOM5,anonymous,EN,I consent,20,Female,9,6,5,9,8,6,7,9,6,5,
+2020-01-29 11:47:31,2020-01-29 11:49:52,IP Address,100,141,True,2020-01-29 11:49:52,R_3PFhdXQamlj53TH,anonymous,EN,I consent,21,Male,9,7,3,8,7,5,2,8,5,3,
+2020-01-29 12:01:48,2020-01-29 12:04:04,IP Address,100,135,True,2020-01-29 12:04:04,R_u9C2r6TVYoIlthT,anonymous,EN,I consent,19,Female,9,5,5,9,6,4,5,7,3,5,
+2020-01-29 13:03:55,2020-01-29 13:05:54,IP Address,100,119,True,2020-01-29 13:05:55,R_2S8jpdMytxVMmtc,anonymous,EN,I consent,19,Female,9,4,6,9,5,5,6,5,4,6,
+2020-01-29 13:24:58,2020-01-29 13:29:46,IP Address,100,288,True,2020-01-29 13:29:47,R_3RmRmR2BxWduN1v,anonymous,EN,I consent,19,Male,9,8,4,9,9,9,2,9,7,1,
+2020-01-29 14:13:00,2020-01-29 14:15:48,IP Address,100,167,True,2020-01-29 14:15:48,R_V44wd1gBb98NLr3,anonymous,EN,I consent,20,Female,9,1,6,9,9,7,9,9,6,6,
+2020-01-29 15:38:01,2020-01-29 15:39:11,IP Address,100,69,True,2020-01-29 15:39:11,R_1Hi5a6KYl4qpbnz,anonymous,EN,I consent,19,Female,9,1,8,9,9,9,9,9,2,9,
+2020-01-29 16:33:45,2020-01-29 16:45:14,IP Address,100,688,True,2020-01-29 16:45:14,R_5bzw7TypkjoGcIV,anonymous,EN,I consent,18,Female,9,2,7,9,8,5,9,9,7,9,
+2020-01-29 18:05:25,2020-01-29 18:10:11,IP Address,100,285,True,2020-01-29 18:10:11,R_1rlCcF9Ep60cL1k,anonymous,EN,I consent,19,Female,9,3,8,8,8,5,9,7,6,9,
+2020-01-29 18:08:37,2020-01-29 18:10:57,IP Address,100,140,True,2020-01-29 18:10:57,R_3nPJdnZ0wGggeM6,anonymous,EN,I consent,18,Female,9,4,7,9,8,6,8,8,7,8,
+2020-01-29 19:14:31,2020-01-29 19:15:50,IP Address,100,79,True,2020-01-29 19:15:50,R_29mPrpz7RZSGZvd,anonymous,EN,I consent,20,Male,9,3,6,5,6,2,8,9,5,6,
+2020-01-29 22:26:59,2020-01-29 22:28:40,IP Address,100,100,True,2020-01-29 22:28:40,R_2UeVSdKuMHm8YvS,anonymous,EN,I consent,20,Female,9,2,8,9,8,6,9,8,6,9,
+2020-01-30 00:51:05,2020-01-30 00:54:54,IP Address,100,228,True,2020-01-30 00:54:54,R_xEImsIzOSymql9f,anonymous,EN,I consent,19,Female,9,2,7,9,9,4,1,9,1,9,
+2020-01-30 01:39:07,2020-01-30 01:41:50,IP Address,100,162,True,2020-01-30 01:41:50,R_2e4gZ7YKQuweQeX,anonymous,EN,I consent,20,Female,8,4,6,5,9,8,5,9,8,6,
+2020-01-30 03:13:15,2020-01-30 03:15:20,IP Address,100,125,True,2020-01-30 03:15:20,R_VI5jAWM1lppHB3X,anonymous,EN,I consent,19,Other,6,6,7,2,9,7,4,9,6,5,
+2020-01-30 03:42:47,2020-01-30 03:43:35,IP Address,100,48,True,2020-01-30 03:43:36,R_1pAHKS9lu45Drkx,anonymous,EN,I consent,25,Female,9,4,6,9,2,1,5,3,2,7,
+2020-01-30 03:41:29,2020-01-30 03:43:52,IP Address,100,143,True,2020-01-30 03:43:52,R_1n1S904g9l6M5I3,anonymous,EN,I consent,18,Female,9,3,7,9,8,5,8,9,7,9,
+2020-01-30 03:47:32,2020-01-30 03:49:32,IP Address,100,120,True,2020-01-30 03:49:32,R_8AiUF93k4mu4PaF,anonymous,EN,I consent,19,Female,9,2,8,8,8,7,8,8,6,7,
+2020-01-30 03:51:01,2020-01-30 03:54:36,IP Address,100,214,True,2020-01-30 03:54:36,R_3JC7k04Ag46B1ES,anonymous,EN,I consent,19,Female,9,2,8,9,7,8,8,8,6,9,
+2020-01-30 03:43:08,2020-01-30 04:27:50,IP Address,100,2682,True,2020-01-30 04:27:50,R_10qQUuUxCrvMhve,anonymous,EN,I consent,18,Female,9,3,7,8,6,8,8,7,8,8,
+2020-01-30 04:31:20,2020-01-30 04:33:43,IP Address,100,143,True,2020-01-30 04:33:43,R_23uZ76CZIM5Xktj,anonymous,EN,I consent,19,Female,9,4,6,8,8,6,8,8,9,9,
+2020-01-30 04:01:17,2020-01-30 04:41:30,IP Address,100,2412,True,2020-01-30 04:41:30,R_bHQq55ZmVNFmJvH,anonymous,EN,I consent,19,Female,9,3,6,9,7,4,9,9,7,7,
+2020-01-30 04:51:44,2020-01-30 04:55:18,IP Address,100,214,True,2020-01-30 04:55:18,R_1IaezJqPYOHEQL2,anonymous,EN,I consent,19,Female,9,4,8,9,9,6,6,9,5,4,
+2020-01-30 04:58:07,2020-01-30 05:02:31,IP Address,100,264,True,2020-01-30 05:02:31,R_2YaiZFnGPRlA4lA,anonymous,EN,I consent,,Female,9,1,9,9,9,9,9,9,7,9,
+2020-01-30 05:07:57,2020-01-30 05:10:55,IP Address,100,177,True,2020-01-30 05:10:55,R_1kGN6WI2mrBFuHA,anonymous,EN,I consent,19,Male,9,8,2,9,7,7,1,7,7,1,
+2020-01-30 05:10:38,2020-01-30 05:12:23,IP Address,100,104,True,2020-01-30 05:12:23,R_2VvTRTG387CmSOJ,anonymous,EN,I consent,18,Male,8,5,5,6,7,6,2,7,4,1,
+2020-01-30 05:24:32,2020-01-30 05:26:04,IP Address,100,92,True,2020-01-30 05:26:04,R_3fI7K48nDcDF6UP,anonymous,EN,I consent,19,Female,8,6,5,8,9,7,9,8,6,9,
+2020-01-30 05:37:54,2020-01-30 05:40:16,IP Address,100,141,True,2020-01-30 05:40:16,R_2CBUA3OreXqs3DL,anonymous,EN,I consent,18,Male,7,7,6,4,7,8,5,9,8,5,
+2020-01-30 06:06:39,2020-01-30 06:08:18,IP Address,100,98,True,2020-01-30 06:08:18,R_W8z8IUVLR2x6yXL,anonymous,EN,I consent,20,Male,9,7,3,9,9,8,1,8,9,1,
+2020-01-30 06:34:03,2020-01-30 06:43:37,IP Address,100,574,True,2020-01-30 06:43:37,R_3h5hlgG4BRK83YN,anonymous,EN,I consent,20,Female,9,2,8,9,8,7,9,8,8,9,
+2020-01-30 07:01:30,2020-01-30 07:03:46,IP Address,100,135,True,2020-01-30 07:03:46,R_1DGCNqvpvRzcjiv,anonymous,EN,I consent,20,Female,9,4,7,9,9,7,6,9,9,9,
+2020-01-30 07:22:09,2020-01-30 07:23:42,IP Address,100,93,True,2020-01-30 07:23:42,R_zdOhhy9kDoRakOR,anonymous,EN,I consent,20,Female,9,3,7,9,8,5,8,9,3,9,
+2020-01-30 07:47:46,2020-01-30 07:50:27,IP Address,100,161,True,2020-01-30 07:50:27,R_qODimla5D2ZjaVP,anonymous,EN,I consent,20,Female,9,1,8,9,7,5,9,5,4,9,
+2020-01-30 07:50:16,2020-01-30 07:55:05,IP Address,100,289,True,2020-01-30 07:55:05,R_1OPMs8TKjub3a5n,anonymous,EN,I consent,19,Female,9,2,8,9,7,5,7,8,6,7,
+2020-01-30 08:05:41,2020-01-30 08:07:59,IP Address,100,138,True,2020-01-30 08:07:59,R_3foXeunYIwm8kMm,anonymous,EN,I consent,19,Female,9,5,5,7,8,8,1,7,4,1,
+2020-01-30 08:07:45,2020-01-30 08:10:08,IP Address,100,143,True,2020-01-30 08:10:08,R_43inbXZlr6YPiuJ,anonymous,EN,I consent,18,Female,9,3,7,9,8,5,9,8,6,9,
+2020-01-30 08:27:58,2020-01-30 08:31:19,IP Address,100,201,True,2020-01-30 08:31:19,R_w13tzXtQ4hXhB7j,anonymous,EN,I consent,20,Female,9,3,9,9,9,9,5,6,2,2,
+2020-01-30 08:52:43,2020-01-30 08:55:08,IP Address,100,144,True,2020-01-30 08:55:08,R_1flv3qZ21mACZHE,anonymous,EN,I consent,21,Female,9,2,8,9,9,6,8,,8,8,
+2020-01-30 09:18:16,2020-01-30 09:21:13,IP Address,100,177,True,2020-01-30 09:21:14,R_3Jn2365fCFFv3Sr,anonymous,EN,I consent,20,Male,9,5,5,9,8,6,2,9,3,1,
+2020-01-30 09:22:25,2020-01-30 09:23:59,IP Address,100,93,True,2020-01-30 09:23:59,R_pfQpnAFiY3ro1Al,anonymous,EN,I consent,19,Female,9,2,9,9,9,7,9,9,7,9,
+2020-01-30 09:42:12,2020-01-30 09:45:58,IP Address,100,226,True,2020-01-30 09:45:58,R_1Lcd6gUdEujHRHv,anonymous,EN,I consent,23,Male,9,7,4,9,9,9,1,9,8,1,
+2020-01-30 09:55:11,2020-01-30 09:57:38,IP Address,100,147,True,2020-01-30 09:57:38,R_2UW4nhaSz1v6VCq,anonymous,EN,I consent,19,Female,9,4,6,6,7,7,6,8,7,5,
+2020-01-30 11:11:13,2020-01-30 11:14:17,IP Address,100,184,True,2020-01-30 11:14:17,R_cSAaleEKpZlXoc1,anonymous,EN,I consent,18,Female,9,2,9,9,6,6,9,6,5,9,
+2020-01-30 11:31:30,2020-01-30 11:36:35,IP Address,100,304,True,2020-01-30 11:36:35,R_3J4WZ42QAKhwa8h,anonymous,EN,I consent,19,Female,9,5,6,8,4,4,9,3,4,9,
+2020-01-30 11:52:18,2020-01-30 11:56:53,IP Address,100,275,True,2020-01-30 11:56:53,R_3EbCv1HjyHKb07z,anonymous,EN,I consent,18,Female,9,4,6,9,8,4,8,8,6,8,
+2020-01-30 15:23:08,2020-01-30 15:24:56,IP Address,100,108,True,2020-01-30 15:24:56,R_Xj6caJRb14dsY5b,anonymous,EN,I consent,21,Female,9,2,7,9,7,4,9,7,6,9,
+2020-01-30 17:11:20,2020-01-30 17:14:25,IP Address,100,184,True,2020-01-30 17:14:25,R_2xQpRbE1IipVbgY,anonymous,EN,I consent,19 years old,Female,9,2,7,7,9,6,9,7,5,9,
+2020-01-31 01:58:04,2020-01-31 01:59:48,IP Address,100,104,True,2020-01-31 01:59:48,R_3NQzjYjDSgw2rUx,anonymous,EN,I consent,18,Female,9,3,6,8,7,8,3,7,5,6,
+2020-01-31 01:59:03,2020-01-31 02:02:19,IP Address,100,196,True,2020-01-31 02:02:19,R_1d4YXvttGNqUHo3,anonymous,EN,I consent,19,Female,9,2,8,9,9,9,6,9,9,9,
+2020-01-31 08:39:55,2020-01-31 08:41:34,IP Address,100,99,True,2020-01-31 08:41:34,R_2EdhaYWrGL9SeDx,anonymous,EN,I consent,21,Female,9,5,4,6,8,4,3,9,7,3,
+2020-01-31 09:13:49,2020-01-31 09:16:40,IP Address,100,170,True,2020-01-31 09:16:40,R_Ut4OvAtCYOoStKV,anonymous,EN,I consent,18,Female,9,2,8,9,8,5,8,6,2,8,
+2020-01-31 10:29:50,2020-01-31 10:32:05,IP Address,100,134,True,2020-01-31 10:32:05,R_3Pi8nc4xf72RseM,anonymous,EN,I consent,19,Female,9,1,8,9,9,6,8,9,5,9,
+2020-01-31 12:17:08,2020-01-31 12:29:57,IP Address,100,769,True,2020-01-31 12:29:57,R_3FVizHvozudocXV,anonymous,EN,I consent,19,Female,9,2,7,9,9,9,7,4,3,8,
+2020-01-31 16:26:24,2020-01-31 16:28:07,IP Address,100,103,True,2020-01-31 16:28:07,R_3PoROihUyzLwXw7,anonymous,EN,I consent,18,Female,9,5,2,9,9,7,9,7,5,9,
+2020-02-01 03:16:00,2020-02-01 03:18:16,IP Address,100,136,True,2020-02-01 03:18:16,R_2wo8Q2g2mbtjCmF,anonymous,EN,I consent,20,Male,9,9,3,9,9,9,9,9,3,1,
+2020-02-01 10:38:51,2020-02-01 10:40:18,IP Address,100,86,True,2020-02-01 10:40:18,R_1NDQ8uH89ONkaid,anonymous,EN,I consent,19,Female,9,4,5,6,3,3,5,2,2,7,
+2020-02-01 17:36:51,2020-02-01 17:41:00,IP Address,100,249,True,2020-02-01 17:41:01,R_WxLaBSjjbT2yknv,anonymous,EN,I consent,19,Female,9,6,8,7,8,7,7,8,7,7,
+2020-02-02 07:25:13,2020-02-02 07:26:42,IP Address,100,88,True,2020-02-02 07:26:42,R_WlBNaM7LN2flJ85,anonymous,EN,I consent,19,Female,9,1,8,9,8,7,9,8,6,9,
+2020-02-02 12:17:14,2020-02-02 12:20:35,IP Address,100,201,True,2020-02-02 12:20:36,R_1NykPrlIQTewikQ,anonymous,EN,I consent,19,Male,9,6,5,5,6,8,2,6,3,2,
+2020-02-02 12:30:32,2020-02-02 12:32:20,IP Address,100,107,True,2020-02-02 12:32:20,R_3D0EfbtxruVrj0P,anonymous,EN,I consent,18,Female,9,3,7,9,8,8,9,8,8,9,
+2020-02-02 16:31:41,2020-02-02 16:33:19,IP Address,100,97,True,2020-02-02 16:33:19,R_wSEr0FwB81Mi6iJ,anonymous,EN,I consent,19,Female,9,1,9,9,9,6,9,9,7,9,
+2020-02-02 17:16:22,2020-02-02 17:19:35,IP Address,100,192,True,2020-02-02 17:19:35,R_2q8JpjEzTJ2VoaB,anonymous,EN,I consent,20,Female,9,3,7,9,8,6,9,6,6,9,
+2020-02-03 02:52:51,2020-02-03 02:55:07,IP Address,100,135,True,2020-02-03 02:55:07,R_1GIDBMDWG4b1Rkg,anonymous,EN,I consent,19,Male,9,6,4,9,5,7,2,2,1,5,
+2020-02-03 06:16:35,2020-02-03 06:19:14,IP Address,100,159,True,2020-02-03 06:19:15,R_2uyZG6fLXdjWV1O,anonymous,EN,I consent,,Male,9,5,3,9,9,6,2,9,5,2,
+2020-02-03 06:36:47,2020-02-03 06:41:19,IP Address,100,272,True,2020-02-03 06:41:19,R_1FwEqU4rutjDWlD,anonymous,EN,I consent,20,Female,9,5,6,9,8,6,7,9,7,9,
+2020-02-03 06:44:34,2020-02-03 06:48:38,IP Address,100,243,True,2020-02-03 06:48:38,R_xtj8RUpLwKTHt8R,anonymous,EN,I consent,19,Female,9,6,6,,7,4,9,9,9,7,
+2020-02-03 07:10:04,2020-02-03 07:11:10,IP Address,100,66,True,2020-02-03 07:11:10,R_VPTcFi6uDUph62l,anonymous,EN,I consent,20,Other,9,7,3,3,2,2,6,9,6,6,
+2020-02-03 07:24:28,2020-02-03 07:26:11,IP Address,100,103,True,2020-02-03 07:26:11,R_0etnSNV0eIdgIXD,anonymous,EN,I consent,20,Male,9,7,2,9,9,9,1,9,6,1,
+2020-01-27 07:43:43,2020-01-27 07:43:54,IP Address,7,11,False,2020-02-03 07:43:55,R_2aEofxmKyE6x2dV,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 07:43:58,2020-01-27 07:44:08,IP Address,7,10,False,2020-02-03 07:44:11,R_12gzITi18jpMZsx,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 07:44:06,2020-01-27 07:44:21,Spam,7,14,False,2020-02-03 07:44:43,R_2bUmYsdlTMnxa6A,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 07:44:17,2020-01-27 07:44:38,IP Address,7,20,False,2020-02-03 07:45:12,R_vGkaBUhg48IhgRj,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 07:44:45,2020-01-27 07:46:28,IP Address,93,102,False,2020-02-03 07:46:58,R_3p9FIaPgk4NRt7V,anonymous,EN,I consent,23,Male,8,7,3,8,7,6,4,6,6,4,
+2020-01-27 07:47:08,2020-01-27 07:49:52,Spam,7,163,False,2020-02-03 07:50:00,R_xyeKjdXES3StWRb,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 07:54:46,2020-01-27 07:57:12,IP Address,93,146,False,2020-02-03 07:57:36,R_1JOtHJO4xovCskg,anonymous,EN,I consent,,,,,,,8,8,9,8,8,9,
+2020-01-27 08:09:12,2020-01-27 08:09:20,IP Address,7,7,False,2020-02-03 08:10:15,R_1CDRUxzlHdtcxgK,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 08:10:41,2020-01-27 08:12:28,IP Address,93,106,False,2020-02-03 08:12:52,R_eXo9J4HARzwvpxn,anonymous,EN,I consent,18,Female,9,3,7,9,9,7,9,8,8,7,
+2020-01-27 08:15:41,2020-01-27 08:18:15,IP Address,87,154,False,2020-02-03 08:18:20,R_xzURdi3cXZA7mVj,anonymous,EN,I consent,18,Female,9,2,9,8,8,8,8,8,7,9,
+2020-01-27 08:28:12,2020-01-27 08:28:28,IP Address,7,15,False,2020-02-03 08:28:32,R_3JJctuZtOCWLcKE,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 08:28:25,2020-01-27 08:32:05,IP Address,93,220,False,2020-02-03 08:32:39,R_3MLkuMPPsikqknx,anonymous,EN,I consent,19,Female,7,4,5,7,9,9,6,7,8,5,
+2020-01-27 08:34:51,2020-01-27 08:35:07,Spam,7,16,False,2020-02-03 08:35:29,R_31iW7uNCuvGcqM4,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 08:43:46,2020-01-27 08:46:08,IP Address,93,142,False,2020-02-03 08:46:55,R_3dS3EZ7hS2wGyDn,anonymous,EN,I consent,21,Female,7,4,7,8,9,9,7,9,9,8,
+2020-01-27 08:55:30,2020-01-27 08:57:20,IP Address,93,109,False,2020-02-03 08:57:44,R_vZxre224gfbaWwV,anonymous,EN,I consent,20,Female,9,2,8,9,8,8,9,9,9,9,
+2020-01-27 08:58:38,2020-01-27 09:01:18,IP Address,7,160,False,2020-02-03 09:01:21,R_08pmrSZAun3dual,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 08:58:00,2020-01-27 09:12:29,IP Address,93,868,False,2020-02-03 09:12:52,R_1ITrq0jZHR54ZJh,anonymous,EN,I consent,21,Female,9,4,7,6,8,8,2,7,8,1,
+2020-01-27 09:13:52,2020-01-27 09:16:59,IP Address,93,186,False,2020-02-03 09:17:10,R_2PhSiSqRApus2EU,anonymous,EN,I consent,20,Female,9,5,5,8,6,4,7,7,3,8,
+2020-01-27 09:27:39,2020-01-27 09:27:45,IP Address,7,6,False,2020-02-03 09:27:51,R_1FIMM4rujADjLhQ,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 09:31:12,2020-01-27 09:33:16,IP Address,87,123,False,2020-02-03 09:33:20,R_z1Zvt0xEQqXr4Qx,anonymous,EN,I consent,19,Male,9,6,2,9,4,2,5,3,3,5,
+2020-01-27 09:33:31,2020-01-27 09:35:44,IP Address,93,132,False,2020-02-03 09:36:06,R_3g6jB4mwzx5Xt0u,anonymous,EN,I consent,18,Female,9,3,7,9,8,6,7,9,7,9,
+2020-01-27 09:43:59,2020-01-27 09:44:04,IP Address,7,5,False,2020-02-03 09:44:44,R_T5XQNi1m4hqICvD,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 09:49:17,2020-01-27 09:52:18,IP Address,93,181,False,2020-02-03 09:52:19,R_3qxOW56FrfFZYzU,anonymous,EN,I consent,18,Female,9,5,7,9,9,7,5,9,6,5,
+2020-01-27 10:10:48,2020-01-27 10:10:57,IP Address,7,8,False,2020-02-03 10:11:25,R_3nJhwFX4DXTf3zU,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 10:17:59,2020-01-27 10:18:12,IP Address,7,12,False,2020-02-03 10:18:30,R_2v1cN4kF0tBo2yE,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 10:21:31,2020-01-27 10:22:01,IP Address,7,29,False,2020-02-03 10:22:06,R_8hUpnf7KA5YGtBD,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 07:57:51,2020-01-27 11:06:54,IP Address,87,11342,False,2020-02-03 11:07:45,R_3j3uFh1Eynh6ggr,anonymous,EN,I consent,20,Female,9,3,7,8,9,5,7,9,5,9,
+2020-02-03 11:09:48,2020-02-03 11:11:42,IP Address,100,114,True,2020-02-03 11:11:42,R_2DY8noIcDZf2e4A,anonymous,EN,I consent,20,Female,8,4,8,7,9,9,5,9,6,5,
+2020-02-03 11:10:32,2020-02-03 11:12:09,IP Address,100,96,True,2020-02-03 11:12:09,R_3s1yT9VcI7YWyvO,anonymous,EN,I consent,20,Male,9,6,6,8,9,7,3,8,7,2,
+2020-01-27 11:20:21,2020-01-27 11:23:04,IP Address,87,163,False,2020-02-03 11:23:38,R_xmHCOeyD0eikEDf,anonymous,EN,I consent,18,Female,9,2,8,9,7,9,7,9,8,7,
+2020-01-27 11:47:21,2020-01-27 11:48:21,IP Address,7,59,False,2020-02-03 11:48:55,R_C9zSJenGwyEuhZ7,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 11:50:57,2020-01-27 11:51:30,IP Address,7,33,False,2020-02-03 11:51:30,R_2dGAHl0Lg3gfSFQ,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 12:25:18,2020-01-27 12:27:05,IP Address,87,107,False,2020-02-03 12:27:47,R_eEv3UvBExmTXcxr,anonymous,EN,I consent,19,Female,9,3,6,9,4,3,8,2,1,9,
+2020-01-27 12:30:35,2020-01-27 12:31:36,IP Address,93,60,False,2020-02-03 12:31:36,R_2EEMaqccPSb5cwy,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-27 12:44:10,2020-01-27 12:48:58,IP Address,87,287,False,2020-02-03 12:49:12,R_3fxD70bNEVOZjnb,anonymous,EN,I consent,19,Female,9,2,8,9,5,3,9,8,7,9,
+2020-01-27 14:03:07,2020-01-27 14:06:37,IP Address,87,210,False,2020-02-03 14:06:56,R_21zUaX0sjuIQFTx,anonymous,EN,I consent,20,Male,9,6,3,9,7,4,1,7,7,1,
+2020-01-28 04:37:44,2020-01-28 04:37:54,IP Address,7,9,False,2020-02-04 04:38:03,R_yL6iQPFIMnXfOpP,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-28 05:19:31,2020-01-28 05:28:45,IP Address,93,553,False,2020-02-04 05:28:52,R_30oTjpfEEo4DUBL,anonymous,EN,I consent,20,Male,9,7,3,9,9,7,1,9,3,2,
+2020-02-04 05:09:26,2020-02-04 05:47:53,IP Address,100,2306,True,2020-02-04 05:47:53,R_1mUVWJeyDVlxcgP,anonymous,EN,I consent,19,Female,9,6,9,9,5,2,8,9,5,7,
+2020-01-28 06:25:39,2020-01-28 06:27:55,IP Address,93,135,False,2020-02-04 06:28:31,R_zUNLxCB1deKYeFX,anonymous,EN,I consent,20,Male,9,5,3,9,8,9,2,7,9,1,
+2020-01-28 07:05:52,2020-01-28 07:07:47,IP Address,93,115,False,2020-02-04 07:07:51,R_1FkNl9uFVC6hfOU,anonymous,EN,I consent,,Male,9,8,3,9,9,7,2,9,6,1,
+2020-02-04 10:20:21,2020-02-04 10:22:21,IP Address,100,120,True,2020-02-04 10:22:22,R_2BA1skvgrFHLMSs,anonymous,EN,I consent,20,Female,9,2,6,8,9,8,8,9,8,8,
+2020-01-28 11:49:51,2020-01-28 11:50:10,IP Address,7,19,False,2020-02-04 12:53:15,R_3PjiAxlPdaSz9Ri,anonymous,EN,I consent,,,,,,,,,,,,,
+2020-01-28 14:53:03,2020-01-28 14:56:38,IP Address,93,215,False,2020-02-04 14:57:21,R_Z3omEbYFXvpyzJf,anonymous,EN,I consent,18,Female,9,3,6,8,8,6,7,8,3,7,

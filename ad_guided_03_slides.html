@@ -510,7 +510,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
     <link href="https://mivalek.github.io/slides_files/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 </head>
 <body>
-<div class="banner"><div class = "header"><a href="/"></a></div></div>
+<div class="banner"><div class = "header msc"><a href="/">Analysing<strong>data</strong></a></div></div>
   <div class="reveal">
     <div class="slides">
 
@@ -523,8 +523,8 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <h2>Today</h2>
 <style>
 :root {
---theme-col: var(--other-col1);
---hover-col: var(--other-col2);
+--theme-col: #b38ed2;
+--hover-col: #ADD28E;
 }
 </style>
 <!-- To knit this .Rmd do the following -->
@@ -539,20 +539,20 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <h2>Guided part</h2>
 <p>First of all, let’s make sure we’re all set up:</p>
 <ul>
-<li>Create a new R project in the AD folder, call it week_3</li>
+<li>Create a new R project in the AD folder, call it week_03</li>
 <li>Log into Canvas and go to this week’s practical</li>
 <li>Download the “01_basic_desc.Rmd” file into your project folder</li>
-<li>Open R Studio</li>
+<li>Open RStudio</li>
 </ul>
 </section>
 <section id="read-in-data" class="slide level2">
 <h2>Read in data</h2>
 <ul>
-<li>Data from the form you filled in in the previous lecture are here: <a href="https://" class="uri">https://</a>…</li>
-<li>We <em>could</em> download the file to our folder and then read it into R Studio</li>
+<li>Data from the form you filled in in the previous lecture are here: <a href="https://mivalek.github.io/adata/gen_sex_q.csv" class="uri">https://mivalek.github.io/adata/gen_sex_q.csv</a></li>
+<li>We <em>could</em> download the file to our folder and then read it into RStudio</li>
 <li>However, we can also read it directly from the URL like this:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">read_csv</span>(<span class="st">&quot;https://...&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">read_csv</span>(<span class="st">&quot;https://mivalek.github.io/adata/gen_sex_q.csv&quot;</span>)</a></code></pre></div>
 </section>
 <section id="time-to-think" class="slide level2">
 <h2>Time to think</h2>
@@ -565,21 +565,45 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </section>
 <section id="read-in-data-1" class="slide level2">
 <h2>Read in data</h2>
-<p>Let’s read the data into R Studio so that we can start working with them</p>
+<p>Let’s read the data into RStudio so that we can start working with them</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb2-2" title="2">my_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://...&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" title="2">gensex &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://mivalek.github.io/adata/gen_sex_q.csv&quot;</span>)</a></code></pre></div>
 </section>
 <section id="first-glance" class="slide level2">
 <h2>First glance</h2>
 <ul>
-<li>Now that we have our data in R Studio, we should familiarise ourselves with it</li>
+<li>Now that we have our data in RStudio, we should familiarise ourselves with it</li>
 <li>Start by looking at the structure of the data set</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">my_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()</a>
-<a class="sourceLine" id="cb3-2" title="2">Classes <span class="st">&#39;tbl_df&#39;</span>, <span class="st">&#39;tbl&#39;</span> and <span class="st">&#39;data.frame&#39;</span><span class="op">:</span><span class="st">   </span><span class="dv">427</span> obs. of  <span class="dv">3</span> variables<span class="op">:</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="st"> </span><span class="er">$</span><span class="st"> </span>id       <span class="op">:</span><span class="st"> </span>chr  <span class="st">&quot;YD601&quot;</span> <span class="st">&quot;WK120&quot;</span> <span class="st">&quot;UU958&quot;</span> <span class="st">&quot;JG849&quot;</span> ...</a>
-<a class="sourceLine" id="cb3-4" title="4"> <span class="op">$</span><span class="st"> </span>age      <span class="op">:</span><span class="st"> </span>num  <span class="dv">18</span> <span class="dv">18</span> <span class="dv">20</span> <span class="dv">20</span> <span class="dv">19</span> <span class="dv">23</span> <span class="dv">18</span> <span class="dv">18</span> <span class="dv">19</span> <span class="dv">17</span> ...</a>
-<a class="sourceLine" id="cb3-5" title="5"> <span class="op">$</span><span class="st"> </span>breakfast<span class="op">:</span><span class="st"> </span>chr  <span class="st">&quot;only cofee&quot;</span> <span class="st">&quot;sweet&quot;</span> <span class="st">&quot;only cofee&quot;</span> <span class="st">&quot;only cofee&quot;</span> ...</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">gensex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()</a>
+<a class="sourceLine" id="cb3-2" title="2">Classes <span class="st">&#39;spec_tbl_df&#39;</span>, <span class="st">&#39;tbl_df&#39;</span>, <span class="st">&#39;tbl&#39;</span> and <span class="st">&#39;data.frame&#39;</span><span class="op">:</span><span class="st">    </span><span class="dv">4</span> obs. of  <span class="dv">12</span> variables<span class="op">:</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="st"> </span><span class="er">$</span><span class="st"> </span>Age                 <span class="op">:</span><span class="st"> </span>num  <span class="dv">34</span> <span class="dv">55</span> <span class="dv">18</span> <span class="dv">20</span></a>
+<a class="sourceLine" id="cb3-4" title="4"> <span class="op">$</span><span class="st"> </span>Gender              <span class="op">:</span><span class="st"> </span>chr  <span class="st">&quot;Female&quot;</span> <span class="st">&quot;Male&quot;</span> <span class="st">&quot;Female&quot;</span> <span class="st">&quot;Female&quot;</span></a>
+<a class="sourceLine" id="cb3-5" title="5"> <span class="op">$</span><span class="st"> </span>Gender_comfortable_<span class="dv">1</span><span class="op">:</span><span class="st"> </span>num  <span class="dv">8</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb3-6" title="6"> <span class="op">$</span><span class="st"> </span>Gender_masc_<span class="dv">1</span>       <span class="op">:</span><span class="st"> </span>num  <span class="dv">3</span> <span class="dv">8</span> <span class="dv">1</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb3-7" title="7"> <span class="op">$</span><span class="st"> </span>Gender_fem_<span class="dv">1</span>        <span class="op">:</span><span class="st"> </span>num  <span class="dv">7</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">6</span></a>
+<a class="sourceLine" id="cb3-8" title="8"> <span class="op">$</span><span class="st"> </span>Gender_stability_<span class="dv">1</span>  <span class="op">:</span><span class="st"> </span>num  <span class="dv">8</span> <span class="dv">4</span> <span class="dv">9</span> <span class="dv">3</span></a>
+<a class="sourceLine" id="cb3-9" title="9"> <span class="op">$</span><span class="st"> </span>Sexual_strength_<span class="dv">1</span>   <span class="op">:</span><span class="st"> </span>num  <span class="dv">9</span> <span class="dv">6</span> <span class="dv">9</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb3-10" title="10"> <span class="op">$</span><span class="st"> </span>Sexual_fewq_<span class="dv">1</span>       <span class="op">:</span><span class="st"> </span>num  <span class="dv">8</span> <span class="dv">1</span> <span class="dv">9</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb3-11" title="11"> <span class="op">$</span><span class="st"> </span>Sexual_gender_<span class="dv">1</span>     <span class="op">:</span><span class="st"> </span>num  <span class="dv">5</span> <span class="dv">6</span> <span class="dv">9</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb3-12" title="12"> <span class="op">$</span><span class="st"> </span>Romantic_strength_<span class="dv">1</span> <span class="op">:</span><span class="st"> </span>num  <span class="dv">9</span> <span class="dv">6</span> <span class="dv">9</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb3-13" title="13"> <span class="op">$</span><span class="st"> </span>Romantic_freq_<span class="dv">1</span>     <span class="op">:</span><span class="st"> </span>num  <span class="dv">3</span> <span class="dv">2</span> <span class="dv">9</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb3-14" title="14"> <span class="op">$</span><span class="st"> </span>Romantic_gender_<span class="dv">1</span>   <span class="op">:</span><span class="st"> </span>num  <span class="dv">5</span> <span class="dv">7</span> <span class="dv">9</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb3-15" title="15"> <span class="op">-</span><span class="st"> </span><span class="kw">attr</span>(<span class="op">*</span>, <span class="st">&quot;spec&quot;</span>)=</a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="st">  </span>.. <span class="kw">cols</span>(</a>
+<a class="sourceLine" id="cb3-17" title="17">  ..   <span class="dt">Age =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-18" title="18">  ..   <span class="dt">Gender =</span> <span class="kw">col_character</span>(),</a>
+<a class="sourceLine" id="cb3-19" title="19">  ..   <span class="dt">Gender_comfortable_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-20" title="20">  ..   <span class="dt">Gender_masc_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-21" title="21">  ..   <span class="dt">Gender_fem_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-22" title="22">  ..   <span class="dt">Gender_stability_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-23" title="23">  ..   <span class="dt">Sexual_strength_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-24" title="24">  ..   <span class="dt">Sexual_fewq_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-25" title="25">  ..   <span class="dt">Sexual_gender_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-26" title="26">  ..   <span class="dt">Romantic_strength_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-27" title="27">  ..   <span class="dt">Romantic_freq_1 =</span> <span class="kw">col_double</span>(),</a>
+<a class="sourceLine" id="cb3-28" title="28">  ..   <span class="dt">Romantic_gender_1 =</span> <span class="kw">col_double</span>()</a>
+<a class="sourceLine" id="cb3-29" title="29">  .. )</a></code></pre></div>
 </section>
 <section id="categorical-vars-factors" class="slide level2">
 <h2>Categorical vars → factors</h2>
@@ -587,73 +611,75 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>Good to set categorical variables as factors</li>
 <li>Factors are handy for plotting and some statistics</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">my_data &lt;-<span class="st"> </span>my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">factor</span>(id), <span class="dt">breakfast =</span> <span class="kw">factor</span>(breakfast))</a>
-<a class="sourceLine" id="cb4-3" title="3">my_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()</a>
-<a class="sourceLine" id="cb4-4" title="4">Classes <span class="st">&#39;tbl_df&#39;</span>, <span class="st">&#39;tbl&#39;</span> and <span class="st">&#39;data.frame&#39;</span><span class="op">:</span><span class="st">   </span><span class="dv">427</span> obs. of  <span class="dv">3</span> variables<span class="op">:</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="st"> </span><span class="er">$</span><span class="st"> </span>id       <span class="op">:</span><span class="st"> </span>Factor w<span class="op">/</span><span class="st"> </span><span class="dv">427</span> levels <span class="st">&quot;AB254&quot;</span>,<span class="st">&quot;AB804&quot;</span>,..<span class="op">:</span><span class="st"> </span><span class="dv">393</span> <span class="dv">370</span> <span class="dv">339</span> <span class="dv">136</span> <span class="dv">129</span> <span class="dv">143</span> <span class="dv">80</span> <span class="dv">315</span> <span class="dv">92</span> <span class="dv">380</span> ...</a>
-<a class="sourceLine" id="cb4-6" title="6"> <span class="op">$</span><span class="st"> </span>age      <span class="op">:</span><span class="st"> </span>num  <span class="dv">18</span> <span class="dv">18</span> <span class="dv">20</span> <span class="dv">20</span> <span class="dv">19</span> <span class="dv">23</span> <span class="dv">18</span> <span class="dv">18</span> <span class="dv">19</span> <span class="dv">17</span> ...</a>
-<a class="sourceLine" id="cb4-7" title="7"> <span class="op">$</span><span class="st"> </span>breakfast<span class="op">:</span><span class="st"> </span>Factor w<span class="op">/</span><span class="st"> </span><span class="dv">7</span> levels <span class="st">&quot;both sweet and savoury&quot;</span>,..<span class="op">:</span><span class="st"> </span><span class="dv">3</span> <span class="dv">7</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">3</span> <span class="dv">7</span> <span class="dv">7</span> <span class="dv">4</span> <span class="dv">3</span> <span class="dv">7</span> ...</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">gensex &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Gender =</span> <span class="kw">factor</span>(Gender))</a>
+<a class="sourceLine" id="cb4-3" title="3">gensex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()</a>
+<a class="sourceLine" id="cb4-4" title="4">Classes <span class="st">&#39;spec_tbl_df&#39;</span>, <span class="st">&#39;tbl_df&#39;</span>, <span class="st">&#39;tbl&#39;</span> and <span class="st">&#39;data.frame&#39;</span><span class="op">:</span><span class="st">    </span><span class="dv">4</span> obs. of  <span class="dv">12</span> variables<span class="op">:</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="st"> </span><span class="er">$</span><span class="st"> </span>Age                 <span class="op">:</span><span class="st"> </span>num  <span class="dv">34</span> <span class="dv">55</span> <span class="dv">18</span> <span class="dv">20</span></a>
+<a class="sourceLine" id="cb4-6" title="6"> <span class="op">$</span><span class="st"> </span>Gender              <span class="op">:</span><span class="st"> </span>Factor w<span class="op">/</span><span class="st"> </span><span class="dv">2</span> levels <span class="st">&quot;Female&quot;</span>,<span class="st">&quot;Male&quot;</span><span class="op">:</span><span class="st"> </span><span class="dv">1</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb4-7" title="7"> <span class="op">$</span><span class="st"> </span>Gender_comfortable_<span class="dv">1</span><span class="op">:</span><span class="st"> </span>num  <span class="dv">8</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb4-8" title="8"> <span class="op">$</span><span class="st"> </span>Gender_masc_<span class="dv">1</span>       <span class="op">:</span><span class="st"> </span>num  <span class="dv">3</span> <span class="dv">8</span> <span class="dv">1</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb4-9" title="9"> <span class="op">$</span><span class="st"> </span>Gender_fem_<span class="dv">1</span>        <span class="op">:</span><span class="st"> </span>num  <span class="dv">7</span> <span class="dv">8</span> <span class="dv">9</span> <span class="dv">6</span></a>
+<a class="sourceLine" id="cb4-10" title="10"> <span class="op">$</span><span class="st"> </span>Gender_stability_<span class="dv">1</span>  <span class="op">:</span><span class="st"> </span>num  <span class="dv">8</span> <span class="dv">4</span> <span class="dv">9</span> <span class="dv">3</span></a>
+<a class="sourceLine" id="cb4-11" title="11"> <span class="op">$</span><span class="st"> </span>Sexual_strength_<span class="dv">1</span>   <span class="op">:</span><span class="st"> </span>num  <span class="dv">9</span> <span class="dv">6</span> <span class="dv">9</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-12" title="12"> <span class="op">$</span><span class="st"> </span>Sexual_fewq_<span class="dv">1</span>       <span class="op">:</span><span class="st"> </span>num  <span class="dv">8</span> <span class="dv">1</span> <span class="dv">9</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-13" title="13"> <span class="op">$</span><span class="st"> </span>Sexual_gender_<span class="dv">1</span>     <span class="op">:</span><span class="st"> </span>num  <span class="dv">5</span> <span class="dv">6</span> <span class="dv">9</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb4-14" title="14"> <span class="op">$</span><span class="st"> </span>Romantic_strength_<span class="dv">1</span> <span class="op">:</span><span class="st"> </span>num  <span class="dv">9</span> <span class="dv">6</span> <span class="dv">9</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb4-15" title="15"> <span class="op">$</span><span class="st"> </span>Romantic_freq_<span class="dv">1</span>     <span class="op">:</span><span class="st"> </span>num  <span class="dv">3</span> <span class="dv">2</span> <span class="dv">9</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb4-16" title="16"> <span class="op">$</span><span class="st"> </span>Romantic_gender_<span class="dv">1</span>   <span class="op">:</span><span class="st"> </span>num  <span class="dv">5</span> <span class="dv">7</span> <span class="dv">9</span> <span class="dv">5</span></a></code></pre></div>
 </section>
 <section id="summary" class="slide level2">
 <h2><code>summary()</code></h2>
 <p>Let’s look at the roughest summary of our data</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">my_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</a>
-<a class="sourceLine" id="cb5-2" title="2">       id           age                         breakfast  </a>
-<a class="sourceLine" id="cb5-3" title="3"> AB254  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Min.   <span class="op">:</span><span class="fl">17.00</span>   sweet                 <span class="op">:</span><span class="dv">146</span>  </a>
-<a class="sourceLine" id="cb5-4" title="4"> AB804  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   1st Qu.<span class="op">:</span><span class="fl">18.00</span>   only cofee            <span class="op">:</span><span class="st"> </span><span class="dv">98</span>  </a>
-<a class="sourceLine" id="cb5-5" title="5"> AC614  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Median <span class="op">:</span><span class="fl">19.00</span>   savoury               <span class="op">:</span><span class="st"> </span><span class="dv">45</span>  </a>
-<a class="sourceLine" id="cb5-6" title="6"> AE174  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Mean   <span class="op">:</span><span class="fl">18.97</span>   nothing               <span class="op">:</span><span class="st"> </span><span class="dv">44</span>  </a>
-<a class="sourceLine" id="cb5-7" title="7"> AF702  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   3rd Qu.<span class="op">:</span><span class="fl">20.00</span>   both sweet and savoury<span class="op">:</span><span class="st"> </span><span class="dv">35</span>  </a>
-<a class="sourceLine" id="cb5-8" title="8"> AG537  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Max.   <span class="op">:</span><span class="fl">24.00</span>   (Other)               <span class="op">:</span><span class="st"> </span><span class="dv">48</span>  </a>
-<a class="sourceLine" id="cb5-9" title="9"> (Other)<span class="op">:</span><span class="dv">421</span>   NA<span class="st">&#39;s   :6       NA&#39;</span>s                  <span class="op">:</span><span class="st"> </span><span class="dv">11</span>  </a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">gensex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</a>
+<a class="sourceLine" id="cb5-2" title="2">      Age           Gender  Gender_comfortable_<span class="dv">1</span> Gender_masc_<span class="dv">1</span>   Gender_fem_<span class="dv">1</span> </a>
+<a class="sourceLine" id="cb5-3" title="3"> Min.   <span class="op">:</span><span class="fl">18.00</span>   Female<span class="op">:</span><span class="dv">3</span>   Min.   <span class="op">:</span><span class="fl">4.00</span>         Min.   <span class="op">:</span><span class="fl">1.00</span>   Min.   <span class="op">:</span><span class="fl">6.00</span>  </a>
+<a class="sourceLine" id="cb5-4" title="4"> 1st Qu.<span class="op">:</span><span class="fl">19.50</span>   Male  <span class="op">:</span><span class="dv">1</span>   1st Qu.<span class="op">:</span><span class="fl">7.00</span>         1st Qu.<span class="op">:</span><span class="fl">2.50</span>   1st Qu.<span class="op">:</span><span class="fl">6.75</span>  </a>
+<a class="sourceLine" id="cb5-5" title="5"> Median <span class="op">:</span><span class="fl">27.00</span>              Median <span class="op">:</span><span class="fl">8.00</span>         Median <span class="op">:</span><span class="fl">4.00</span>   Median <span class="op">:</span><span class="fl">7.50</span>  </a>
+<a class="sourceLine" id="cb5-6" title="6"> Mean   <span class="op">:</span><span class="fl">31.75</span>              Mean   <span class="op">:</span><span class="fl">7.25</span>         Mean   <span class="op">:</span><span class="fl">4.25</span>   Mean   <span class="op">:</span><span class="fl">7.50</span>  </a>
+<a class="sourceLine" id="cb5-7" title="7"> 3rd Qu.<span class="op">:</span><span class="fl">39.25</span>              3rd Qu.<span class="op">:</span><span class="fl">8.25</span>         3rd Qu.<span class="op">:</span><span class="fl">5.75</span>   3rd Qu.<span class="op">:</span><span class="fl">8.25</span>  </a>
+<a class="sourceLine" id="cb5-8" title="8"> Max.   <span class="op">:</span><span class="fl">55.00</span>              Max.   <span class="op">:</span><span class="fl">9.00</span>         Max.   <span class="op">:</span><span class="fl">8.00</span>   Max.   <span class="op">:</span><span class="fl">9.00</span>  </a>
+<a class="sourceLine" id="cb5-9" title="9"> Gender_stability_<span class="dv">1</span> Sexual_strength_<span class="dv">1</span> Sexual_fewq_<span class="dv">1</span>  Sexual_gender_<span class="dv">1</span> Romantic_strength_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb5-10" title="10"> Min.   <span class="op">:</span><span class="fl">3.00</span>       Min.   <span class="op">:</span><span class="fl">2.0</span>       Min.   <span class="op">:</span><span class="fl">1.00</span>   Min.   <span class="op">:</span><span class="fl">4.00</span>    Min.   <span class="op">:</span><span class="fl">5.00</span>       </a>
+<a class="sourceLine" id="cb5-11" title="11"> 1st Qu.<span class="op">:</span><span class="fl">3.75</span>       1st Qu.<span class="op">:</span><span class="fl">5.0</span>       1st Qu.<span class="op">:</span><span class="fl">1.75</span>   1st Qu.<span class="op">:</span><span class="fl">4.75</span>    1st Qu.<span class="op">:</span><span class="fl">5.75</span>       </a>
+<a class="sourceLine" id="cb5-12" title="12"> Median <span class="op">:</span><span class="fl">6.00</span>       Median <span class="op">:</span><span class="fl">7.5</span>       Median <span class="op">:</span><span class="fl">5.00</span>   Median <span class="op">:</span><span class="fl">5.50</span>    Median <span class="op">:</span><span class="fl">7.50</span>       </a>
+<a class="sourceLine" id="cb5-13" title="13"> Mean   <span class="op">:</span><span class="fl">6.00</span>       Mean   <span class="op">:</span><span class="fl">6.5</span>       Mean   <span class="op">:</span><span class="fl">5.00</span>   Mean   <span class="op">:</span><span class="fl">6.00</span>    Mean   <span class="op">:</span><span class="fl">7.25</span>       </a>
+<a class="sourceLine" id="cb5-14" title="14"> 3rd Qu.<span class="op">:</span><span class="fl">8.25</span>       3rd Qu.<span class="op">:</span><span class="fl">9.0</span>       3rd Qu.<span class="op">:</span><span class="fl">8.25</span>   3rd Qu.<span class="op">:</span><span class="fl">6.75</span>    3rd Qu.<span class="op">:</span><span class="fl">9.00</span>       </a>
+<a class="sourceLine" id="cb5-15" title="15"> Max.   <span class="op">:</span><span class="fl">9.00</span>       Max.   <span class="op">:</span><span class="fl">9.0</span>       Max.   <span class="op">:</span><span class="fl">9.00</span>   Max.   <span class="op">:</span><span class="fl">9.00</span>    Max.   <span class="op">:</span><span class="fl">9.00</span>       </a>
+<a class="sourceLine" id="cb5-16" title="16"> Romantic_freq_<span class="dv">1</span> Romantic_gender_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb5-17" title="17"> Min.   <span class="op">:</span><span class="fl">2.00</span>    Min.   <span class="op">:</span><span class="fl">5.0</span>      </a>
+<a class="sourceLine" id="cb5-18" title="18"> 1st Qu.<span class="op">:</span><span class="fl">2.75</span>    1st Qu.<span class="op">:</span><span class="fl">5.0</span>      </a>
+<a class="sourceLine" id="cb5-19" title="19"> Median <span class="op">:</span><span class="fl">4.00</span>    Median <span class="op">:</span><span class="fl">6.0</span>      </a>
+<a class="sourceLine" id="cb5-20" title="20"> Mean   <span class="op">:</span><span class="fl">4.75</span>    Mean   <span class="op">:</span><span class="fl">6.5</span>      </a>
+<a class="sourceLine" id="cb5-21" title="21"> 3rd Qu.<span class="op">:</span><span class="fl">6.00</span>    3rd Qu.<span class="op">:</span><span class="fl">7.5</span>      </a>
+<a class="sourceLine" id="cb5-22" title="22"> Max.   <span class="op">:</span><span class="fl">9.00</span>    Max.   <span class="op">:</span><span class="fl">9.0</span>      </a></code></pre></div>
 </section>
 <section id="what-to-notice" class="slide level2">
 <h2>What to notice</h2>
 <ul>
-<li>Missing values in the <code>age</code> and <code>breakfast</code>
+<li>Missing values in the <code>Age</code> and <code>Gender</code>
 <ul>
 <li>Missing data happen, no reason to panic</li>
 </ul></li>
 <li><code>id</code> was a required variable, we don’t need to worry about <code>NA</code>s</li>
 </ul>
-</section>
-<section id="sanity-check" class="slide level2">
-<h2>Sanity check</h2>
-<ul>
-<li><code>id</code> should be a unique code so it’s good to check if there are no duplicates</li>
-<li>The <code>duplicated()</code> function takes a vector and returns a vector of <code>TRUE</code>s and <code>FLASE</code>s of equal length</li>
-</ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">duplicated</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>)) <span class="co"># unique -&gt; all FALSE</span></a>
-<a class="sourceLine" id="cb6-2" title="2">[<span class="dv">1</span>] <span class="ot">FALSE</span> <span class="ot">FALSE</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="kw">duplicated</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>)) <span class="co"># not unique -&gt; some TRUE</span></a>
-<a class="sourceLine" id="cb6-4" title="4">[<span class="dv">1</span>] <span class="ot">FALSE</span> <span class="ot">FALSE</span>  <span class="ot">TRUE</span></a></code></pre></div>
-</section>
-<section id="sanity-check-1" class="slide level2">
-<h2>Sanity check</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id_check =</span> <span class="kw">duplicated</span>(id)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">summary</span>()</a>
-<a class="sourceLine" id="cb7-4" title="4">       id           age                         breakfast  </a>
-<a class="sourceLine" id="cb7-5" title="5"> AB254  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Min.   <span class="op">:</span><span class="fl">17.00</span>   sweet                 <span class="op">:</span><span class="dv">146</span>  </a>
-<a class="sourceLine" id="cb7-6" title="6"> AB804  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   1st Qu.<span class="op">:</span><span class="fl">18.00</span>   only cofee            <span class="op">:</span><span class="st"> </span><span class="dv">98</span>  </a>
-<a class="sourceLine" id="cb7-7" title="7"> AC614  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Median <span class="op">:</span><span class="fl">19.00</span>   savoury               <span class="op">:</span><span class="st"> </span><span class="dv">45</span>  </a>
-<a class="sourceLine" id="cb7-8" title="8"> AE174  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Mean   <span class="op">:</span><span class="fl">18.97</span>   nothing               <span class="op">:</span><span class="st"> </span><span class="dv">44</span>  </a>
-<a class="sourceLine" id="cb7-9" title="9"> AF702  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   3rd Qu.<span class="op">:</span><span class="fl">20.00</span>   both sweet and savoury<span class="op">:</span><span class="st"> </span><span class="dv">35</span>  </a>
-<a class="sourceLine" id="cb7-10" title="10"> AG537  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Max.   <span class="op">:</span><span class="fl">24.00</span>   (Other)               <span class="op">:</span><span class="st"> </span><span class="dv">48</span>  </a>
-<a class="sourceLine" id="cb7-11" title="11"> (Other)<span class="op">:</span><span class="dv">421</span>   NA<span class="st">&#39;s   :6       NA&#39;</span>s                  <span class="op">:</span><span class="st"> </span><span class="dv">11</span>  </a>
-<a class="sourceLine" id="cb7-12" title="12">  id_check      </a>
-<a class="sourceLine" id="cb7-13" title="13"> Mode <span class="op">:</span>logical  </a>
-<a class="sourceLine" id="cb7-14" title="14"> <span class="ot">FALSE</span><span class="op">:</span><span class="dv">427</span>      </a>
-<a class="sourceLine" id="cb7-15" title="15">                </a>
-<a class="sourceLine" id="cb7-16" title="16">                </a>
-<a class="sourceLine" id="cb7-17" title="17">                </a>
-<a class="sourceLine" id="cb7-18" title="18">                </a>
-<a class="sourceLine" id="cb7-19" title="19">                </a></code></pre></div>
-<aside class="notes" data-markdown>
-<p>Cool, there are only <code>FALSE</code>s which means no duplicates!</p>
-<em>Note. </em>We don’t really need the <code>id_check</code> column permanently in our data set so we don’t need to modify it by doing <code>my_data &lt;- my_data %&gt;% mutate(...</code>.
-</aside>
+<!-- ### Sanity check -->
+<!-- - `id` should be a unique code so it's good to check if there are no duplicates -->
+<!-- - The `duplicated()` function takes a vector and returns a vector of `TRUE`s and `FLASE`s of equal length -->
+<!-- ```{r} -->
+<!-- duplicated(c(1, 2, 5)) # unique -> all FALSE -->
+<!-- duplicated(c(1, 2, 2)) # not unique -> some TRUE -->
+<!-- ``` -->
+<!-- ### Sanity check -->
+<!-- ```{r} -->
+<!-- gensex %>% -->
+<!--   mutate(id_check = duplicated(id)) %>% -->
+<!--   summary() -->
+<!-- ``` -->
+<!-- <aside class="notes" data-markdown> -->
+<!-- Cool, there are only `FALSE`s which means no duplicates! -->
+<!-- *Note. *We don't really need the `id_check` column permanently in our data set so we don't need to modify it by doing `gensex <- gensex %>% mutate(...`. -->
+<!-- </aside> -->
 </section>
 <section id="basic-descriptive-stats" class="slide level2">
 <h2>Basic descriptive stats</h2>
@@ -661,17 +687,17 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li>We can now make tibbles of relevant summary statistics</li>
 <li>First of all, age</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">age_desc &lt;-<span class="st"> </span>my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">age_mean =</span> <span class="kw">mean</span>(age),</a>
-<a class="sourceLine" id="cb8-3" title="3">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(age),</a>
-<a class="sourceLine" id="cb8-4" title="4">            <span class="dt">min_age =</span> <span class="kw">min</span>(age),</a>
-<a class="sourceLine" id="cb8-5" title="5">            <span class="dt">max_age =</span> <span class="kw">max</span>(age),</a>
-<a class="sourceLine" id="cb8-6" title="6">            <span class="dt">na_age =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(age)))</a>
-<a class="sourceLine" id="cb8-7" title="7">age_desc</a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co"># A tibble: 1 x 5</span></a>
-<a class="sourceLine" id="cb8-9" title="9">  age_mean sd_age min_age max_age na_age</a>
-<a class="sourceLine" id="cb8-10" title="10">     <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>int<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="dv">1</span>       <span class="ot">NA</span>    <span class="ot">NaN</span>      <span class="ot">NA</span>      <span class="ot">NA</span>      <span class="dv">6</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">age_mean =</span> <span class="kw">mean</span>(Age),</a>
+<a class="sourceLine" id="cb6-3" title="3">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(Age),</a>
+<a class="sourceLine" id="cb6-4" title="4">            <span class="dt">min_age =</span> <span class="kw">min</span>(Age),</a>
+<a class="sourceLine" id="cb6-5" title="5">            <span class="dt">max_age =</span> <span class="kw">max</span>(Age),</a>
+<a class="sourceLine" id="cb6-6" title="6">            <span class="dt">na_age =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(Age)))</a>
+<a class="sourceLine" id="cb6-7" title="7">age_desc</a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co"># A tibble: 1 x 5</span></a>
+<a class="sourceLine" id="cb6-9" title="9">  age_mean sd_age min_age max_age na_age</a>
+<a class="sourceLine" id="cb6-10" title="10">     <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">   </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>int<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="dv">1</span>     <span class="fl">31.8</span>   <span class="fl">17.1</span>      <span class="dv">18</span>      <span class="dv">55</span>      <span class="dv">0</span></a></code></pre></div>
 </section>
 <section id="time-to-think-1" class="slide level2">
 <h2>Time to think</h2>
@@ -682,88 +708,80 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </section>
 <section id="remove-nas" class="slide level2">
 <h2>Remove <code>NA</code>s</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">age_desc &lt;-<span class="st"> </span>my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb9-3" title="3">            <span class="dt">sd =</span> <span class="kw">sd</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb9-4" title="4">            <span class="dt">min =</span> <span class="kw">min</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb9-5" title="5">            <span class="dt">max =</span> <span class="kw">max</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb9-6" title="6">            <span class="dt">na =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(age)))</a>
-<a class="sourceLine" id="cb9-7" title="7">age_desc</a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co"># A tibble: 1 x 5</span></a>
-<a class="sourceLine" id="cb9-9" title="9">   mean    sd   min   max    na</a>
-<a class="sourceLine" id="cb9-10" title="10">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="dv">1</span>  <span class="fl">19.0</span>  <span class="fl">1.32</span>    <span class="dv">17</span>    <span class="dv">24</span>     <span class="dv">6</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb7-3" title="3">            <span class="dt">sd =</span> <span class="kw">sd</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb7-4" title="4">            <span class="dt">min =</span> <span class="kw">min</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb7-5" title="5">            <span class="dt">max =</span> <span class="kw">max</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb7-6" title="6">            <span class="dt">na =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(Age)))</a>
+<a class="sourceLine" id="cb7-7" title="7">age_desc</a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co"># A tibble: 1 x 5</span></a>
+<a class="sourceLine" id="cb7-9" title="9">   mean    sd   min   max    na</a>
+<a class="sourceLine" id="cb7-10" title="10">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="dv">1</span>  <span class="fl">31.8</span>  <span class="fl">17.1</span>    <span class="dv">18</span>    <span class="dv">55</span>     <span class="dv">0</span></a></code></pre></div>
 </section>
 <section id="round-up" class="slide level2">
 <h2>Round up</h2>
 <aside class="notes" data-markdown>
 We only ever need to report these kinds of numbers to 2 decimal places so let’s round things up.
 </aside>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">age_desc &lt;-<span class="st"> </span>age_desc <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span><span class="kw">modify</span>(round, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb10-3" title="3">age_desc</a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="co"># A tibble: 1 x 5</span></a>
-<a class="sourceLine" id="cb10-5" title="5">   mean    sd   min   max    na</a>
-<a class="sourceLine" id="cb10-6" title="6">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="dv">1</span>  <span class="fl">19.0</span>  <span class="fl">1.32</span>    <span class="dv">17</span>    <span class="dv">24</span>     <span class="dv">6</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">age_desc &lt;-<span class="st"> </span>age_desc <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">modify</span>(round, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb8-3" title="3">age_desc</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co"># A tibble: 1 x 5</span></a>
+<a class="sourceLine" id="cb8-5" title="5">   mean    sd   min   max    na</a>
+<a class="sourceLine" id="cb8-6" title="6">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="dv">1</span>  <span class="fl">31.8</span>  <span class="fl">17.1</span>    <span class="dv">18</span>    <span class="dv">55</span>     <span class="dv">0</span></a></code></pre></div>
 </section>
 <section id="use-pipelines" class="slide level2">
 <h2>Use pipelines</h2>
 <p>We can doo all of the above in a single <em>pipeline</em>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">age_desc &lt;-<span class="st"> </span>my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb11-3" title="3">            <span class="dt">sd =</span> <span class="kw">sd</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb11-4" title="4">            <span class="dt">min =</span> <span class="kw">min</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb11-5" title="5">            <span class="dt">max =</span> <span class="kw">max</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb11-6" title="6">            <span class="dt">na =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(age))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-7" title="7"><span class="st">  </span><span class="kw">modify</span>(round, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb11-8" title="8">age_desc</a>
-<a class="sourceLine" id="cb11-9" title="9"><span class="co"># A tibble: 1 x 5</span></a>
-<a class="sourceLine" id="cb11-10" title="10">   mean    sd   min   max    na</a>
-<a class="sourceLine" id="cb11-11" title="11">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb11-12" title="12"><span class="dv">1</span>  <span class="fl">19.0</span>  <span class="fl">1.32</span>    <span class="dv">17</span>    <span class="dv">24</span>     <span class="dv">6</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb9-3" title="3">            <span class="dt">sd =</span> <span class="kw">sd</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb9-4" title="4">            <span class="dt">min =</span> <span class="kw">min</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb9-5" title="5">            <span class="dt">max =</span> <span class="kw">max</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb9-6" title="6">            <span class="dt">na =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(Age))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="st">  </span><span class="kw">modify</span>(round, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb9-8" title="8">age_desc</a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="co"># A tibble: 1 x 5</span></a>
+<a class="sourceLine" id="cb9-10" title="10">   mean    sd   min   max    na</a>
+<a class="sourceLine" id="cb9-11" title="11">  <span class="op">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="dv">1</span>  <span class="fl">31.8</span>  <span class="fl">17.1</span>    <span class="dv">18</span>    <span class="dv">55</span>     <span class="dv">0</span></a></code></pre></div>
 </section>
 <section id="reporting" class="slide level2">
 <h2>Reporting</h2>
 <ul>
 <li>This <code>age_desc</code> tibble enables us to report descriptive statistics in text</li>
 <li>We can just type “<code>`r age_desc %&gt;% pull(mean)`</code>” in R Markdown</li>
-<li>Generated document will read “18.97”</li>
+<li>Generated document will read “31.75”</li>
 </ul>
 </section>
 <section id="more-descriptives" class="slide level2">
 <h2>More descriptives</h2>
 <ul>
-<li>Tibble of age breakdown by breakfast</li>
+<li>Tibble of age breakdown by gender</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">brekky_desc &lt;-<span class="st"> </span>my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(breakfast) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(),</a>
-<a class="sourceLine" id="cb12-4" title="4">            <span class="dt">perc =</span> <span class="kw">n</span>()<span class="op">/</span><span class="kw">nrow</span>(my_data) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb12-5" title="5">            <span class="dt">mean_age =</span> <span class="kw">mean</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb12-6" title="6">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(age, <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="st">  </span><span class="kw">modify_if</span>(is.numeric, round, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb12-8" title="8">Warning<span class="op">:</span><span class="st"> </span>Factor <span class="st">`</span><span class="dt">breakfast</span><span class="st">`</span> contains implicit <span class="ot">NA</span>, consider using</a>
-<a class="sourceLine" id="cb12-9" title="9"><span class="st">`</span><span class="dt">forcats::fct_explicit_na</span><span class="st">`</span></a>
-<a class="sourceLine" id="cb12-10" title="10">brekky_desc</a>
-<a class="sourceLine" id="cb12-11" title="11"><span class="co"># A tibble: 8 x 5</span></a>
-<a class="sourceLine" id="cb12-12" title="12">  breakfast                  n  perc mean_age sd_age</a>
-<a class="sourceLine" id="cb12-13" title="13">  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">                  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb12-14" title="14"><span class="dv">1</span> both sweet and savoury    <span class="dv">35</span>  <span class="fl">8.2</span>      <span class="fl">18.9</span>   <span class="fl">1.22</span></a>
-<a class="sourceLine" id="cb12-15" title="15"><span class="dv">2</span> nothing                   <span class="dv">44</span> <span class="fl">10.3</span>      <span class="fl">19.1</span>   <span class="fl">1.33</span></a>
-<a class="sourceLine" id="cb12-16" title="16"><span class="dv">3</span> only cofee                <span class="dv">98</span> <span class="fl">23.0</span>      <span class="fl">19.0</span>   <span class="fl">1.45</span></a>
-<a class="sourceLine" id="cb12-17" title="17"><span class="dv">4</span> only other drink          <span class="dv">23</span>  <span class="fl">5.39</span>     <span class="fl">18.7</span>   <span class="fl">1.11</span></a>
-<a class="sourceLine" id="cb12-18" title="18"><span class="dv">5</span> only tea                  <span class="dv">25</span>  <span class="fl">5.85</span>     <span class="fl">18.9</span>   <span class="fl">1.09</span></a>
-<a class="sourceLine" id="cb12-19" title="19"><span class="dv">6</span> savoury                   <span class="dv">45</span> <span class="fl">10.5</span>      <span class="fl">19.1</span>   <span class="fl">1.48</span></a>
-<a class="sourceLine" id="cb12-20" title="20"><span class="dv">7</span> sweet                    <span class="dv">146</span> <span class="fl">34.2</span>      <span class="fl">18.9</span>   <span class="fl">1.25</span></a>
-<a class="sourceLine" id="cb12-21" title="21"><span class="dv">8</span> <span class="op">&lt;</span><span class="ot">NA</span><span class="op">&gt;</span><span class="st">                      </span><span class="dv">11</span>  <span class="fl">2.58</span>     <span class="dv">19</span>     <span class="fl">1.84</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">gen_age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(Gender) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(),</a>
+<a class="sourceLine" id="cb10-4" title="4">            <span class="dt">perc =</span> <span class="kw">n</span>()<span class="op">/</span><span class="kw">nrow</span>(gensex) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb10-5" title="5">            <span class="dt">mean_age =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb10-6" title="6">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(Age, <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="st">  </span><span class="kw">modify_if</span>(is.numeric, round, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb10-8" title="8">gen_age_desc</a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="co"># A tibble: 2 x 5</span></a>
+<a class="sourceLine" id="cb10-10" title="10">  Gender     n  perc mean_age sd_age</a>
+<a class="sourceLine" id="cb10-11" title="11">  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="dv">1</span> Female     <span class="dv">3</span>    <span class="dv">75</span>       <span class="dv">24</span>   <span class="fl">8.72</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="dv">2</span> Male       <span class="dv">1</span>    <span class="dv">25</span>       <span class="dv">55</span>  <span class="ot">NA</span>   </a></code></pre></div>
 </section>
 <section id="warnings" class="slide level2">
 <h2>Warnings</h2>
 <p>The command returns the following warning:</p>
-<p>“Factor <code>breakfast</code> contains implicit NA, consider using <code>forcats::fct_explicit_na</code>”</p>
+<p>“Factor <code>Gender</code> contains implicit NA, consider using <code>forcats::fct_explicit_na</code>”</p>
 <aside class="notes" data-markdown>
-This is not technically a problem, we can just have a row for <code>NA</code> in the tibble. However, using the <code>fct_explicit_na()</code> function suggested by the warning creates an additional level <code>(Missing)</code> in the <code>breakfast</code> variable, instead of the <code>NA</code>s.
+This is not technically a problem, we can just have a row for <code>NA</code> in the tibble. However, using the <code>fct_explicit_na()</code> function suggested by the warning creates an additional level <code>(Missing)</code> in the <code>Gender</code> variable, instead of the <code>NA</code>s.
 </aside>
 </section>
 <section id="explicit-nas" class="slide level2">
@@ -771,26 +789,20 @@ This is not technically a problem, we can just have a row for <code>NA</code> in
 <ul>
 <li>We can use the function inside of <code>mutate()</code></li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">brekky_desc &lt;-<span class="st"> </span>my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">breakfast =</span> <span class="kw">fct_explicit_na</span>(breakfast)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(breakfast) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(),</a>
-<a class="sourceLine" id="cb13-5" title="5">            <span class="dt">perc =</span> <span class="kw">n</span>()<span class="op">/</span><span class="kw">nrow</span>(my_data) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb13-6" title="6">            <span class="dt">mean_age =</span> <span class="kw">mean</span>(age, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb13-7" title="7">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(age, <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-8" title="8"><span class="st">  </span><span class="kw">modify_if</span>(is.numeric, round, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb13-9" title="9">brekky_desc</a>
-<a class="sourceLine" id="cb13-10" title="10"><span class="co"># A tibble: 8 x 5</span></a>
-<a class="sourceLine" id="cb13-11" title="11">  breakfast                  n  perc mean_age sd_age</a>
-<a class="sourceLine" id="cb13-12" title="12">  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">                  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb13-13" title="13"><span class="dv">1</span> both sweet and savoury    <span class="dv">35</span>  <span class="fl">8.2</span>      <span class="fl">18.9</span>   <span class="fl">1.22</span></a>
-<a class="sourceLine" id="cb13-14" title="14"><span class="dv">2</span> nothing                   <span class="dv">44</span> <span class="fl">10.3</span>      <span class="fl">19.1</span>   <span class="fl">1.33</span></a>
-<a class="sourceLine" id="cb13-15" title="15"><span class="dv">3</span> only cofee                <span class="dv">98</span> <span class="fl">23.0</span>      <span class="fl">19.0</span>   <span class="fl">1.45</span></a>
-<a class="sourceLine" id="cb13-16" title="16"><span class="dv">4</span> only other drink          <span class="dv">23</span>  <span class="fl">5.39</span>     <span class="fl">18.7</span>   <span class="fl">1.11</span></a>
-<a class="sourceLine" id="cb13-17" title="17"><span class="dv">5</span> only tea                  <span class="dv">25</span>  <span class="fl">5.85</span>     <span class="fl">18.9</span>   <span class="fl">1.09</span></a>
-<a class="sourceLine" id="cb13-18" title="18"><span class="dv">6</span> savoury                   <span class="dv">45</span> <span class="fl">10.5</span>      <span class="fl">19.1</span>   <span class="fl">1.48</span></a>
-<a class="sourceLine" id="cb13-19" title="19"><span class="dv">7</span> sweet                    <span class="dv">146</span> <span class="fl">34.2</span>      <span class="fl">18.9</span>   <span class="fl">1.25</span></a>
-<a class="sourceLine" id="cb13-20" title="20"><span class="dv">8</span> (Missing)                 <span class="dv">11</span>  <span class="fl">2.58</span>     <span class="dv">19</span>     <span class="fl">1.84</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">gen_age_desc &lt;-<span class="st"> </span>gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Gender =</span> <span class="kw">fct_explicit_na</span>(Gender)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(Gender) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(),</a>
+<a class="sourceLine" id="cb11-5" title="5">            <span class="dt">perc =</span> <span class="kw">n</span>()<span class="op">/</span><span class="kw">nrow</span>(gensex) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb11-6" title="6">            <span class="dt">mean_age =</span> <span class="kw">mean</span>(Age, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb11-7" title="7">            <span class="dt">sd_age =</span> <span class="kw">sd</span>(Age, <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw">modify_if</span>(is.numeric, round, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb11-9" title="9">gen_age_desc</a>
+<a class="sourceLine" id="cb11-10" title="10"><span class="co"># A tibble: 2 x 5</span></a>
+<a class="sourceLine" id="cb11-11" title="11">  Gender     n  perc mean_age sd_age</a>
+<a class="sourceLine" id="cb11-12" title="12">  <span class="op">&lt;</span>fct<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb11-13" title="13"><span class="dv">1</span> Female     <span class="dv">3</span>    <span class="dv">75</span>       <span class="dv">24</span>   <span class="fl">8.72</span></a>
+<a class="sourceLine" id="cb11-14" title="14"><span class="dv">2</span> Male       <span class="dv">1</span>    <span class="dv">25</span>       <span class="dv">55</span>  <span class="ot">NA</span>   </a></code></pre></div>
 <aside class="notes" data-markdown>
 I think this looks better and there are also minor advantages of having explicitly labelled missing data when it comes to plotting. More on that later…
 </aside>
@@ -798,13 +810,13 @@ I think this looks better and there are also minor advantages of having explicit
 <section id="tables-in-documents" class="slide level2">
 <h2>Tables in documents</h2>
 <p>Tibbles can be turned into nice tables using <code>knitr::kable()</code></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">library</span>(knitr)</a>
-<a class="sourceLine" id="cb14-2" title="2">brekky_desc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">library</span>(knitr)</a>
+<a class="sourceLine" id="cb12-2" title="2">gen_age_desc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr>
 <th style="text-align:left;">
-breakfast
+Gender
 </th>
 <th style="text-align:right;">
 n
@@ -823,138 +835,36 @@ sd_age
 <tbody>
 <tr>
 <td style="text-align:left;">
-both sweet and savoury
+Female
 </td>
 <td style="text-align:right;">
-35
+3
 </td>
 <td style="text-align:right;">
-8.20
+75
 </td>
 <td style="text-align:right;">
-18.86
+24
 </td>
 <td style="text-align:right;">
-1.22
+8.72
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-nothing
+Male
 </td>
 <td style="text-align:right;">
-44
-</td>
-<td style="text-align:right;">
-10.30
-</td>
-<td style="text-align:right;">
-19.12
-</td>
-<td style="text-align:right;">
-1.33
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-only cofee
-</td>
-<td style="text-align:right;">
-98
-</td>
-<td style="text-align:right;">
-22.95
-</td>
-<td style="text-align:right;">
-19.05
-</td>
-<td style="text-align:right;">
-1.45
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-only other drink
-</td>
-<td style="text-align:right;">
-23
-</td>
-<td style="text-align:right;">
-5.39
-</td>
-<td style="text-align:right;">
-18.70
-</td>
-<td style="text-align:right;">
-1.11
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-only tea
+1
 </td>
 <td style="text-align:right;">
 25
 </td>
 <td style="text-align:right;">
-5.85
+55
 </td>
 <td style="text-align:right;">
-18.88
-</td>
-<td style="text-align:right;">
-1.09
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-savoury
-</td>
-<td style="text-align:right;">
-45
-</td>
-<td style="text-align:right;">
-10.54
-</td>
-<td style="text-align:right;">
-19.11
-</td>
-<td style="text-align:right;">
-1.48
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sweet
-</td>
-<td style="text-align:right;">
-146
-</td>
-<td style="text-align:right;">
-34.19
-</td>
-<td style="text-align:right;">
-18.92
-</td>
-<td style="text-align:right;">
-1.25
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-(Missing)
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-2.58
-</td>
-<td style="text-align:right;">
-19.00
-</td>
-<td style="text-align:right;">
-1.84
+NA
 </td>
 </tr>
 </tbody>
@@ -963,11 +873,11 @@ sweet
 <p>Granted, the table isn’t formatted perfectly… Let’s do it then!</p>
 <p>There are basically only three things we want to edit</p>
 <ol type="1">
-<li>It would be good to capitalise the first letters in each breakfast option</li>
+<li>It would be good to capitalise the first letters in each Gender option</li>
 <li>The table header could look better</li>
 <li>The table should have a caption</li>
 </ol>
-With respect to the first point, we could laboriously change the first column of <code>brekky_desc</code>. Fortunately, there is a function in the <code>stringr</code> package that turns a string into a sentence, <em>i.e.,</em> capitalises the first letter:
+With respect to the first point, we could laboriously change the first column of <code>gen_age_desc</code>. Fortunately, there is a function in the <code>stringr</code> package that turns a string into a sentence, <em>i.e.,</em> capitalises the first letter:
 </aside>
 </section>
 <section id="formatting" class="slide level2">
@@ -975,44 +885,38 @@ With respect to the first point, we could laboriously change the first column of
 <ul>
 <li>To capitalise character stings, use <code>stringr::str_to_sentence()</code></li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">library</span>(stringr)</a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="kw">str_to_sentence</span>(<span class="st">&quot;some string we want to edit&quot;</span>)</a>
-<a class="sourceLine" id="cb15-3" title="3">[<span class="dv">1</span>] <span class="st">&quot;Some string we want to edit&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="kw">str_to_sentence</span>(<span class="st">&quot;some string we want to edit&quot;</span>)</a>
+<a class="sourceLine" id="cb13-3" title="3">[<span class="dv">1</span>] <span class="st">&quot;Some string we want to edit&quot;</span></a></code></pre></div>
 </section>
 <section id="formatting-1" class="slide level2">
 <h2>Formatting</h2>
-<p>We can use this function in <code>mutate()</code> to change the first column of our <code>brekky_desc</code> tibble</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">brekky_desc <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">breakfast =</span> <span class="kw">str_to_sentence</span>(breakfast))</a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="co"># A tibble: 8 x 5</span></a>
-<a class="sourceLine" id="cb16-4" title="4">  breakfast                  n  perc mean_age sd_age</a>
-<a class="sourceLine" id="cb16-5" title="5">  <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">                  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb16-6" title="6"><span class="dv">1</span> Both sweet and savoury    <span class="dv">35</span>  <span class="fl">8.2</span>      <span class="fl">18.9</span>   <span class="fl">1.22</span></a>
-<a class="sourceLine" id="cb16-7" title="7"><span class="dv">2</span> Nothing                   <span class="dv">44</span> <span class="fl">10.3</span>      <span class="fl">19.1</span>   <span class="fl">1.33</span></a>
-<a class="sourceLine" id="cb16-8" title="8"><span class="dv">3</span> Only cofee                <span class="dv">98</span> <span class="fl">23.0</span>      <span class="fl">19.0</span>   <span class="fl">1.45</span></a>
-<a class="sourceLine" id="cb16-9" title="9"><span class="dv">4</span> Only other drink          <span class="dv">23</span>  <span class="fl">5.39</span>     <span class="fl">18.7</span>   <span class="fl">1.11</span></a>
-<a class="sourceLine" id="cb16-10" title="10"><span class="dv">5</span> Only tea                  <span class="dv">25</span>  <span class="fl">5.85</span>     <span class="fl">18.9</span>   <span class="fl">1.09</span></a>
-<a class="sourceLine" id="cb16-11" title="11"><span class="dv">6</span> Savoury                   <span class="dv">45</span> <span class="fl">10.5</span>      <span class="fl">19.1</span>   <span class="fl">1.48</span></a>
-<a class="sourceLine" id="cb16-12" title="12"><span class="dv">7</span> Sweet                    <span class="dv">146</span> <span class="fl">34.2</span>      <span class="fl">18.9</span>   <span class="fl">1.25</span></a>
-<a class="sourceLine" id="cb16-13" title="13"><span class="dv">8</span> (Missing)                 <span class="dv">11</span>  <span class="fl">2.58</span>     <span class="dv">19</span>     <span class="fl">1.84</span></a></code></pre></div>
+<p>We can use this function in <code>mutate()</code> to change the first column of our <code>gen_age_desc</code> tibble</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">gen_age_desc <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Gender =</span> <span class="kw">str_to_sentence</span>(Gender))</a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="co"># A tibble: 2 x 5</span></a>
+<a class="sourceLine" id="cb14-4" title="4">  Gender     n  perc mean_age sd_age</a>
+<a class="sourceLine" id="cb14-5" title="5">  <span class="op">&lt;</span>chr<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="dv">1</span> Female     <span class="dv">3</span>    <span class="dv">75</span>       <span class="dv">24</span>   <span class="fl">8.72</span></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="dv">2</span> Male       <span class="dv">1</span>    <span class="dv">25</span>       <span class="dv">55</span>  <span class="ot">NA</span>   </a></code></pre></div>
 <aside class="notes" data-markdown>
 The remaining two edits can be done using arguments to <code>kable()</code>, namely <code>col.names=</code> and <code>caption=</code>. We can use R Markdown within these arguments to get things like subscripts or italics:
 </aside>
 </section>
 <section id="formatting-2" class="slide level2">
 <h2>Formatting</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">brekky_desc <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">breakfast =</span> <span class="kw">str_to_sentence</span>(breakfast)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Breakfast&quot;</span>, <span class="st">&quot;*N*&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;*M*~age~&quot;</span>, <span class="st">&quot;*SD*~age~&quot;</span>),</a>
-<a class="sourceLine" id="cb17-4" title="4">        <span class="dt">caption =</span> <span class="st">&quot;Table 1 *Descriptive statistics by breakfast*&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">gen_age_desc <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Gender =</span> <span class="kw">str_to_sentence</span>(Gender)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;*N*&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;*M*~age~&quot;</span>, <span class="st">&quot;*SD*~age~&quot;</span>),</a>
+<a class="sourceLine" id="cb15-4" title="4">        <span class="dt">caption =</span> <span class="st">&quot;Table 1 *Descriptive statistics by Gender*&quot;</span>)</a></code></pre></div>
 <table>
 <caption>
-Table 1 <em>Descriptive statistics by breakfast</em>
+Table 1 <em>Descriptive statistics by Gender</em>
 </caption>
 <thead>
 <tr>
 <th style="text-align:left;">
-Breakfast
+Gender
 </th>
 <th style="text-align:right;">
 <em>N</em>
@@ -1031,138 +935,36 @@ Breakfast
 <tbody>
 <tr>
 <td style="text-align:left;">
-Both sweet and savoury
+Female
 </td>
 <td style="text-align:right;">
-35
+3
 </td>
 <td style="text-align:right;">
-8.20
+75
 </td>
 <td style="text-align:right;">
-18.86
+24
 </td>
 <td style="text-align:right;">
-1.22
+8.72
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nothing
+Male
 </td>
 <td style="text-align:right;">
-44
-</td>
-<td style="text-align:right;">
-10.30
-</td>
-<td style="text-align:right;">
-19.12
-</td>
-<td style="text-align:right;">
-1.33
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Only cofee
-</td>
-<td style="text-align:right;">
-98
-</td>
-<td style="text-align:right;">
-22.95
-</td>
-<td style="text-align:right;">
-19.05
-</td>
-<td style="text-align:right;">
-1.45
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Only other drink
-</td>
-<td style="text-align:right;">
-23
-</td>
-<td style="text-align:right;">
-5.39
-</td>
-<td style="text-align:right;">
-18.70
-</td>
-<td style="text-align:right;">
-1.11
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Only tea
+1
 </td>
 <td style="text-align:right;">
 25
 </td>
 <td style="text-align:right;">
-5.85
+55
 </td>
 <td style="text-align:right;">
-18.88
-</td>
-<td style="text-align:right;">
-1.09
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Savoury
-</td>
-<td style="text-align:right;">
-45
-</td>
-<td style="text-align:right;">
-10.54
-</td>
-<td style="text-align:right;">
-19.11
-</td>
-<td style="text-align:right;">
-1.48
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sweet
-</td>
-<td style="text-align:right;">
-146
-</td>
-<td style="text-align:right;">
-34.19
-</td>
-<td style="text-align:right;">
-18.92
-</td>
-<td style="text-align:right;">
-1.25
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-(Missing)
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-2.58
-</td>
-<td style="text-align:right;">
-19.00
-</td>
-<td style="text-align:right;">
-1.84
+NA
 </td>
 </tr>
 </tbody>
@@ -1185,28 +987,41 @@ While some descriptive statistics and results are best summarised in a table, it
 </section>
 <section id="histogram" class="slide level2">
 <h2>Histogram</h2>
-<p>Let’s look at a simple histogram of our <code>age</code> variable</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">my_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="st">`</span><span class="dt">stat_bin()</span><span class="st">`</span> using <span class="st">`</span><span class="dt">bins = 30</span><span class="st">`</span>. Pick better value with <span class="st">`</span><span class="dt">binwidth</span><span class="st">`</span>.</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-19-1.png" width="480" /></p>
+<p>Let’s look at a simple histogram of our <code>Age</code> variable</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">gensex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="st">`</span><span class="dt">stat_bin()</span><span class="st">`</span> using <span class="st">`</span><span class="dt">bins = 30</span><span class="st">`</span>. Pick better value with <span class="st">`</span><span class="dt">binwidth</span><span class="st">`</span>.</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-17-1.png" width="480" /></p>
 <aside class="notes" data-markdown>
 OK, this histogram gives us a visual representation of the distribution of ages in the sample: The vast majority of participants are 18-19 years old. This is not news as we can read this from the first summary we ran
 </aside>
 </section>
 <section id="histogram-1" class="slide level2">
 <h2>Histogram</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">my_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</a>
-<a class="sourceLine" id="cb19-2" title="2">       id           age                         breakfast  </a>
-<a class="sourceLine" id="cb19-3" title="3"> AB254  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Min.   <span class="op">:</span><span class="fl">17.00</span>   sweet                 <span class="op">:</span><span class="dv">146</span>  </a>
-<a class="sourceLine" id="cb19-4" title="4"> AB804  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   1st Qu.<span class="op">:</span><span class="fl">18.00</span>   only cofee            <span class="op">:</span><span class="st"> </span><span class="dv">98</span>  </a>
-<a class="sourceLine" id="cb19-5" title="5"> AC614  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Median <span class="op">:</span><span class="fl">19.00</span>   savoury               <span class="op">:</span><span class="st"> </span><span class="dv">45</span>  </a>
-<a class="sourceLine" id="cb19-6" title="6"> AE174  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Mean   <span class="op">:</span><span class="fl">18.97</span>   nothing               <span class="op">:</span><span class="st"> </span><span class="dv">44</span>  </a>
-<a class="sourceLine" id="cb19-7" title="7"> AF702  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   3rd Qu.<span class="op">:</span><span class="fl">20.00</span>   both sweet and savoury<span class="op">:</span><span class="st"> </span><span class="dv">35</span>  </a>
-<a class="sourceLine" id="cb19-8" title="8"> AG537  <span class="op">:</span><span class="st">  </span><span class="dv">1</span>   Max.   <span class="op">:</span><span class="fl">24.00</span>   (Other)               <span class="op">:</span><span class="st"> </span><span class="dv">48</span>  </a>
-<a class="sourceLine" id="cb19-9" title="9"> (Other)<span class="op">:</span><span class="dv">421</span>   NA<span class="st">&#39;s   :6       NA&#39;</span>s                  <span class="op">:</span><span class="st"> </span><span class="dv">11</span>  </a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">gensex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</a>
+<a class="sourceLine" id="cb17-2" title="2">      Age           Gender  Gender_comfortable_<span class="dv">1</span> Gender_masc_<span class="dv">1</span>   Gender_fem_<span class="dv">1</span> </a>
+<a class="sourceLine" id="cb17-3" title="3"> Min.   <span class="op">:</span><span class="fl">18.00</span>   Female<span class="op">:</span><span class="dv">3</span>   Min.   <span class="op">:</span><span class="fl">4.00</span>         Min.   <span class="op">:</span><span class="fl">1.00</span>   Min.   <span class="op">:</span><span class="fl">6.00</span>  </a>
+<a class="sourceLine" id="cb17-4" title="4"> 1st Qu.<span class="op">:</span><span class="fl">19.50</span>   Male  <span class="op">:</span><span class="dv">1</span>   1st Qu.<span class="op">:</span><span class="fl">7.00</span>         1st Qu.<span class="op">:</span><span class="fl">2.50</span>   1st Qu.<span class="op">:</span><span class="fl">6.75</span>  </a>
+<a class="sourceLine" id="cb17-5" title="5"> Median <span class="op">:</span><span class="fl">27.00</span>              Median <span class="op">:</span><span class="fl">8.00</span>         Median <span class="op">:</span><span class="fl">4.00</span>   Median <span class="op">:</span><span class="fl">7.50</span>  </a>
+<a class="sourceLine" id="cb17-6" title="6"> Mean   <span class="op">:</span><span class="fl">31.75</span>              Mean   <span class="op">:</span><span class="fl">7.25</span>         Mean   <span class="op">:</span><span class="fl">4.25</span>   Mean   <span class="op">:</span><span class="fl">7.50</span>  </a>
+<a class="sourceLine" id="cb17-7" title="7"> 3rd Qu.<span class="op">:</span><span class="fl">39.25</span>              3rd Qu.<span class="op">:</span><span class="fl">8.25</span>         3rd Qu.<span class="op">:</span><span class="fl">5.75</span>   3rd Qu.<span class="op">:</span><span class="fl">8.25</span>  </a>
+<a class="sourceLine" id="cb17-8" title="8"> Max.   <span class="op">:</span><span class="fl">55.00</span>              Max.   <span class="op">:</span><span class="fl">9.00</span>         Max.   <span class="op">:</span><span class="fl">8.00</span>   Max.   <span class="op">:</span><span class="fl">9.00</span>  </a>
+<a class="sourceLine" id="cb17-9" title="9"> Gender_stability_<span class="dv">1</span> Sexual_strength_<span class="dv">1</span> Sexual_fewq_<span class="dv">1</span>  Sexual_gender_<span class="dv">1</span> Romantic_strength_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb17-10" title="10"> Min.   <span class="op">:</span><span class="fl">3.00</span>       Min.   <span class="op">:</span><span class="fl">2.0</span>       Min.   <span class="op">:</span><span class="fl">1.00</span>   Min.   <span class="op">:</span><span class="fl">4.00</span>    Min.   <span class="op">:</span><span class="fl">5.00</span>       </a>
+<a class="sourceLine" id="cb17-11" title="11"> 1st Qu.<span class="op">:</span><span class="fl">3.75</span>       1st Qu.<span class="op">:</span><span class="fl">5.0</span>       1st Qu.<span class="op">:</span><span class="fl">1.75</span>   1st Qu.<span class="op">:</span><span class="fl">4.75</span>    1st Qu.<span class="op">:</span><span class="fl">5.75</span>       </a>
+<a class="sourceLine" id="cb17-12" title="12"> Median <span class="op">:</span><span class="fl">6.00</span>       Median <span class="op">:</span><span class="fl">7.5</span>       Median <span class="op">:</span><span class="fl">5.00</span>   Median <span class="op">:</span><span class="fl">5.50</span>    Median <span class="op">:</span><span class="fl">7.50</span>       </a>
+<a class="sourceLine" id="cb17-13" title="13"> Mean   <span class="op">:</span><span class="fl">6.00</span>       Mean   <span class="op">:</span><span class="fl">6.5</span>       Mean   <span class="op">:</span><span class="fl">5.00</span>   Mean   <span class="op">:</span><span class="fl">6.00</span>    Mean   <span class="op">:</span><span class="fl">7.25</span>       </a>
+<a class="sourceLine" id="cb17-14" title="14"> 3rd Qu.<span class="op">:</span><span class="fl">8.25</span>       3rd Qu.<span class="op">:</span><span class="fl">9.0</span>       3rd Qu.<span class="op">:</span><span class="fl">8.25</span>   3rd Qu.<span class="op">:</span><span class="fl">6.75</span>    3rd Qu.<span class="op">:</span><span class="fl">9.00</span>       </a>
+<a class="sourceLine" id="cb17-15" title="15"> Max.   <span class="op">:</span><span class="fl">9.00</span>       Max.   <span class="op">:</span><span class="fl">9.0</span>       Max.   <span class="op">:</span><span class="fl">9.00</span>   Max.   <span class="op">:</span><span class="fl">9.00</span>    Max.   <span class="op">:</span><span class="fl">9.00</span>       </a>
+<a class="sourceLine" id="cb17-16" title="16"> Romantic_freq_<span class="dv">1</span> Romantic_gender_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb17-17" title="17"> Min.   <span class="op">:</span><span class="fl">2.00</span>    Min.   <span class="op">:</span><span class="fl">5.0</span>      </a>
+<a class="sourceLine" id="cb17-18" title="18"> 1st Qu.<span class="op">:</span><span class="fl">2.75</span>    1st Qu.<span class="op">:</span><span class="fl">5.0</span>      </a>
+<a class="sourceLine" id="cb17-19" title="19"> Median <span class="op">:</span><span class="fl">4.00</span>    Median <span class="op">:</span><span class="fl">6.0</span>      </a>
+<a class="sourceLine" id="cb17-20" title="20"> Mean   <span class="op">:</span><span class="fl">4.75</span>    Mean   <span class="op">:</span><span class="fl">6.5</span>      </a>
+<a class="sourceLine" id="cb17-21" title="21"> 3rd Qu.<span class="op">:</span><span class="fl">6.00</span>    3rd Qu.<span class="op">:</span><span class="fl">7.5</span>      </a>
+<a class="sourceLine" id="cb17-22" title="22"> Max.   <span class="op">:</span><span class="fl">9.00</span>    Max.   <span class="op">:</span><span class="fl">9.0</span>      </a></code></pre></div>
 <aside class="notes" data-markdown>
 <ul>
-<li>1<sup>st</sup> quartile of <code>age</code> is 18 and 3<sup>rd</sup> quartile is 19
+<li>1<sup>st</sup> quartile of <code>Age</code> is 18 and 3<sup>rd</sup> quartile is 19
 <ul>
 <li>At least the middle 50% of the sample’s age falls within 18 and 19</li>
 </ul></li>
@@ -1221,16 +1036,16 @@ OK, this histogram gives us a visual representation of the distribution of ages 
 <li>The <code>cowplot</code> package contains a nice clean theme for publication-style <code>ggplot()</code> plots</li>
 <li>Let’s install it</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;cowplot&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;cowplot&quot;</span>)</a></code></pre></div>
 </section>
 <section id="customising-plots-1" class="slide level2">
 <h2>Customising plots</h2>
 <ul>
 <li>Once we load <code>cowplot</code>, we can add <code>theme_cowplot()</code> to our plot to make it look a little better</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">my_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>()</a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="st">`</span><span class="dt">stat_bin()</span><span class="st">`</span> using <span class="st">`</span><span class="dt">bins = 30</span><span class="st">`</span>. Pick better value with <span class="st">`</span><span class="dt">binwidth</span><span class="st">`</span>.</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-23-1.png" width="480" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">gensex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>()</a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="st">`</span><span class="dt">stat_bin()</span><span class="st">`</span> using <span class="st">`</span><span class="dt">bins = 30</span><span class="st">`</span>. Pick better value with <span class="st">`</span><span class="dt">binwidth</span><span class="st">`</span>.</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-21-1.png" width="480" /></p>
 <aside class="notes" data-markdown>
 <ul>
 <li><code>R</code> warns us that the histogram plots values by default into 30 bins</li>
@@ -1252,42 +1067,39 @@ OK, this histogram gives us a visual representation of the distribution of ages 
 <section id="customising-plots-3" class="slide level2">
 <h2>Customising plots</h2>
 <p><br></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">8</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="kw">theme_cowplot</span>()</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-24-1.png" width="480" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">8</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">theme_cowplot</span>()</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-22-1.png" width="480" /></p>
 </section>
 <section id="customising-plots-4" class="slide level2">
 <h2>Customising plots</h2>
 <ul>
 <li>Let’s give our axes proper labels</li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">8</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>()</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-25-1.png" width="480" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">8</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age in years&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Frequency&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>()</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-23-1.png" width="480" /></p>
 </section>
 <section id="barchart" class="slide level2">
 <h2>Barchart</h2>
 <ul>
-<li>We can plot a single categorical variable (<code>breakfast</code>) on a barchart</li>
+<li>We can plot a single categorical variable (<code>Gender</code>) on a barchart</li>
 </ul>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">my_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> breakfast)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-26-1.png" width="480" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">gensex <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Gender)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-24-1.png" width="480" /></p>
 </section>
 <section id="order-of-bars" class="slide level2">
 <h2>Order of bars</h2>
 <ul>
 <li>Bars are ordered alphabetically</li>
-<li>Labels are the same as the levels of <code>breakfast</code> variable</li>
+<li>Labels are the same as the levels of <code>Gender</code> variable</li>
 </ul>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span><span class="kw">pull</span>(breakfast) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw">levels</span>()</a>
-<a class="sourceLine" id="cb25-4" title="4">[<span class="dv">1</span>] <span class="st">&quot;both sweet and savoury&quot;</span> <span class="st">&quot;nothing&quot;</span>               </a>
-<a class="sourceLine" id="cb25-5" title="5">[<span class="dv">3</span>] <span class="st">&quot;only cofee&quot;</span>             <span class="st">&quot;only other drink&quot;</span>      </a>
-<a class="sourceLine" id="cb25-6" title="6">[<span class="dv">5</span>] <span class="st">&quot;only tea&quot;</span>               <span class="st">&quot;savoury&quot;</span>               </a>
-<a class="sourceLine" id="cb25-7" title="7">[<span class="dv">7</span>] <span class="st">&quot;sweet&quot;</span>                 </a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span><span class="kw">pull</span>(Gender) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span><span class="kw">levels</span>()</a>
+<a class="sourceLine" id="cb23-4" title="4">[<span class="dv">1</span>] <span class="st">&quot;Female&quot;</span> <span class="st">&quot;Male&quot;</span>  </a></code></pre></div>
 </section>
 <section id="make-it-pretty" class="slide level2">
 <h2>Make it pretty</h2>
@@ -1295,24 +1107,24 @@ OK, this histogram gives us a visual representation of the distribution of ages 
 <li>Capitalise x-axis labels (<code>str_to_sentence()</code>)</li>
 <li>Order levels of the variable according to frequency
 <ul>
-<li>Most popular breakfast option is on one end of the plot and the least popular on the other</li>
+<li>Most frequent category of gender is on one end of the plot and the rarest on the other</li>
 <li>Add the <code>fct_infreq()</code> function to the <code>mutate()</code> command</li>
 </ul></li>
 </ul>
 </section>
 <section id="make-it-pretty-1" class="slide level2">
 <h2>Make it pretty</h2>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">breakfast =</span> <span class="kw">str_to_sentence</span>(breakfast),</a>
-<a class="sourceLine" id="cb26-3" title="3">         <span class="dt">breakfast =</span> <span class="kw">fct_infreq</span>(breakfast)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> breakfast)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb26-5" title="5"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-28-1.png" width="480" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Gender =</span> <span class="kw">str_to_sentence</span>(Gender),</a>
+<a class="sourceLine" id="cb24-3" title="3">         <span class="dt">Gender =</span> <span class="kw">fct_infreq</span>(Gender)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Gender)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-26-1.png" width="480" /></p>
 <aside class="notes" data-markdown>
 <ul>
 <li>The two functions inside the <code>mutate()</code> commands come before the data are pushed into <code>ggplot()</code></li>
-<li>We aren’t really changing the plot itself but the <code>my_data</code> tibble.</li>
-<li>We’re telling <code>R</code> to change the <code>breakfast</code> variable in the tibble so that its levels are capitalised and then change it again so that the levels are ordered according to their frequencies.</li>
+<li>We aren’t really changing the plot itself but the <code>gensex</code> tibble.</li>
+<li>We’re telling <code>R</code> to change the <code>Gender</code> variable in the tibble so that its levels are capitalised and then change it again so that the levels are ordered according to their frequencies.</li>
 </ul>
 </aside>
 </section>
@@ -1322,36 +1134,31 @@ OK, this histogram gives us a visual representation of the distribution of ages 
 </section>
 <section id="make-it-pretty-3" class="slide level2">
 <h2>Make it pretty</h2>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">breakfast =</span> <span class="kw">str_to_sentence</span>(breakfast),</a>
-<a class="sourceLine" id="cb27-3" title="3">         <span class="dt">breakfast =</span> <span class="kw">fct_infreq</span>(breakfast)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> breakfast)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb27-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Breakfast&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;N&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>()</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-29-1.png" width="480" /></p>
-</section>
-<section id="make-it-pretty-4" class="slide level2">
-<h2>Make it pretty</h2>
-<aside class="notes" data-markdown>
-<ul>
-<li>We have overlapping labels - That’s not great</li>
-<li>There are several ways around this issue
-<ul>
-<li>Rotate the labels 45° to stop them from overlapping.</li>
-<li>Flip the plot on its side. The <code>coord_flip()</code> command does exactly that</li>
-</ul></li>
-</ul>
-</aside>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb28-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">breakfast =</span> <span class="kw">str_to_sentence</span>(breakfast),</a>
-<a class="sourceLine" id="cb28-3" title="3">         <span class="dt">breakfast =</span> <span class="kw">fct_infreq</span>(breakfast)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb28-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> breakfast)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb28-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Breakfast&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;N&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_flip</span>()</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-30-1.png" width="480" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Gender =</span> <span class="kw">str_to_sentence</span>(Gender),</a>
+<a class="sourceLine" id="cb25-3" title="3">         <span class="dt">Gender =</span> <span class="kw">fct_infreq</span>(Gender)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Gender)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Gender&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;N&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>()</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-27-1.png" width="480" /></p>
+<!-- ### Make it pretty -->
+<!-- <aside class="notes" data-markdown> -->
+<!-- - We have overlapping labels - That's not great -->
+<!-- - There are several ways around this issue -->
+<!--     - Rotate the labels 45° to stop them from overlapping. -->
+<!--     - Flip the plot on its side. The `coord_flip()` command does exactly that -->
+<!-- </aside> -->
+<!-- ```{r} -->
+<!-- gensex %>% -->
+<!--   mutate(Gender = str_to_sentence(Gender), -->
+<!--          Gender = fct_infreq(Gender)) %>% -->
+<!--   ggplot(aes(x = Gender)) + geom_bar(color = "black", fill = "grey") + -->
+<!--   labs(x = "Gender", y = "N") + theme_cowplot() + coord_flip() -->
+<!-- ``` -->
 </section>
 <section id="plotting-relationships" class="slide level2">
 <h2>Plotting relationships</h2>
 <ul>
-<li>We can visualise the age breakdown by breakfast choice using boxplots</li>
+<li>We can visualise the age breakdown by gender choice using boxplots</li>
 <li>Need to map each variable on its own axis inside <code>aes()</code>
 <ul>
 <li>Categorical variable belongs on the x axis</li>
@@ -1361,10 +1168,10 @@ OK, this histogram gives us a visual representation of the distribution of ages 
 </section>
 <section id="plotting-relationships-1" class="slide level2">
 <h2>Plotting relationships</h2>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> breakfast, <span class="dt">y =</span> age)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-31-1.png" width="480" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Gender, <span class="dt">y =</span> Age)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-28-1.png" width="480" /></p>
 </section>
 <section id="plotting-relationships-2" class="slide level2">
 <h2>Plotting relationships</h2>
@@ -1372,12 +1179,12 @@ OK, this histogram gives us a visual representation of the distribution of ages 
 </section>
 <section id="plotting-relationships-3" class="slide level2">
 <h2>Plotting relationships</h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">my_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb30-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">breakfast =</span> <span class="kw">str_to_sentence</span>(breakfast),</a>
-<a class="sourceLine" id="cb30-3" title="3">         <span class="dt">breakfast =</span> <span class="kw">fct_rev</span>(breakfast)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb30-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> breakfast, <span class="dt">y =</span> age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Breakfast&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Age&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_flip</span>()</a></code></pre></div>
-<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-32-1.png" width="480" /></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">gensex <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Gender =</span> <span class="kw">str_to_sentence</span>(Gender),</a>
+<a class="sourceLine" id="cb27-3" title="3">         <span class="dt">Gender =</span> <span class="kw">fct_rev</span>(Gender)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Gender, <span class="dt">y =</span> Age)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Gender&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Age in years&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_cowplot</span>()</a></code></pre></div>
+<p><img src="ad_guided_03_slides_files/figure-revealjs/unnamed-chunk-29-1.png" width="480" /></p>
 <aside class="notes" data-markdown>
 And that’s pretty much all we can do with out data in the way of visualisation. There are many more plots <code>ggplot()</code> is capable of creating and many more ways in which to customise plots but, for the time boing, this is plenty.
 </aside>
@@ -1397,25 +1204,25 @@ Now that we are familiar with our data, we can start writing up. Obviously, we d
 <section id="participants" class="slide level2">
 <h2>Participants</h2>
 <blockquote>
-<p>Data from 427 first year Psychology students at the University of Sussex (<em>M</em><sub>age</sub> = 18.97, <em>SD</em><sub>age</sub> = 1.32) were collected anonymously in class as part of the Analysing Data module.</p>
+<p>Data from 4 first year Psychology students at the University of Sussex (<em>M</em><sub>age</sub> = 31.75, <em>SD</em><sub>age</sub> = 17.06) were collected anonymously as part of the Analysing Data module.</p>
 </blockquote>
 </section>
 <section id="materials-and-procedure" class="slide level2">
 <h2>Materials and procedure</h2>
 <blockquote>
-<p>Participants filled in a questionnaire hosted via Google Forms. The form was accessed using a URL given in lecture. Each participant was given a unique ID code they then entered into the form. They also provided their age and information on what they had had for breakfast on the day. The latter was done by means of a multiple choice item and the response options available, along with age breakdown by response, are given in Table 1.</p>
+<p>Participants filled in a questionnaire hosted via Qualtrics. The form was accessed using a URL given in lecture. The questionnaire contained ten Likert-type items on topics relating to gender and sexuality. Data on participants’ own age and gender were also collected. The age breakdown by gender is given in Table 1.</p>
 </blockquote>
 </section>
 <section id="table-1" class="slide level2">
 <h2>Table 1</h2>
 <table>
 <caption>
-Table 1 <em>Descriptive statistics by breakfast</em>
+Table 1 <em>Descriptive statistics by Gender</em>
 </caption>
 <thead>
 <tr>
 <th style="text-align:left;">
-Breakfast
+Gender
 </th>
 <th style="text-align:right;">
 <em>N</em>
@@ -1434,138 +1241,36 @@ Breakfast
 <tbody>
 <tr>
 <td style="text-align:left;">
-Both sweet and savoury
+Female
 </td>
 <td style="text-align:right;">
-35
+3
 </td>
 <td style="text-align:right;">
-8.20
+75
 </td>
 <td style="text-align:right;">
-18.86
+24
 </td>
 <td style="text-align:right;">
-1.22
+8.72
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Nothing
+Male
 </td>
 <td style="text-align:right;">
-44
-</td>
-<td style="text-align:right;">
-10.30
-</td>
-<td style="text-align:right;">
-19.12
-</td>
-<td style="text-align:right;">
-1.33
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Only cofee
-</td>
-<td style="text-align:right;">
-98
-</td>
-<td style="text-align:right;">
-22.95
-</td>
-<td style="text-align:right;">
-19.05
-</td>
-<td style="text-align:right;">
-1.45
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Only other drink
-</td>
-<td style="text-align:right;">
-23
-</td>
-<td style="text-align:right;">
-5.39
-</td>
-<td style="text-align:right;">
-18.70
-</td>
-<td style="text-align:right;">
-1.11
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Only tea
+1
 </td>
 <td style="text-align:right;">
 25
 </td>
 <td style="text-align:right;">
-5.85
+55
 </td>
 <td style="text-align:right;">
-18.88
-</td>
-<td style="text-align:right;">
-1.09
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Savoury
-</td>
-<td style="text-align:right;">
-45
-</td>
-<td style="text-align:right;">
-10.54
-</td>
-<td style="text-align:right;">
-19.11
-</td>
-<td style="text-align:right;">
-1.48
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sweet
-</td>
-<td style="text-align:right;">
-146
-</td>
-<td style="text-align:right;">
-34.19
-</td>
-<td style="text-align:right;">
-18.92
-</td>
-<td style="text-align:right;">
-1.25
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-(Missing)
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-2.58
-</td>
-<td style="text-align:right;">
-19.00
-</td>
-<td style="text-align:right;">
-1.84
+NA
 </td>
 </tr>
 </tbody>
@@ -1580,7 +1285,7 @@ Sweet
 </ul></li>
 <li>Right amount of detail
 <ul>
-<li>You want to report all the info about your sample that we did. If we knew the gender composition, we would also include it. We <em>could</em> also have reported the range of ages but it’s not crucial.</li>
+<li>You want to report all the info about your sample that we did. We <em>could</em> also have reported the range of ages but it’s not crucial.</li>
 <li>In <em>Material and procedure</em> we need to give the reader enough information so that they get a good idea of what exactly it is that we did.</li>
 </ul></li>
 <li>You can refer to tables and figures if it’s helpful</li>
@@ -1610,9 +1315,9 @@ Sweet
         // Vertical centering of slides
         center: false,
         // Transition style
-        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        transition: 'none', // none/fade/slide/convex/concave/zoom
         // Transition style for full page slide backgrounds
-        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+        backgroundTransition: 'none', // none/fade/slide/convex/concave/zoom
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.

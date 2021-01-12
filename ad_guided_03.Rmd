@@ -9,7 +9,7 @@ author: "Analysing data"
 
 ```{r setup_how_to_knit, include=F, eval=F}
 remotes::install_github("mivalek/teachR")
-teachR::slidify("[path to file]/ad_guided_03.Rmd", "other")
+teachR::slidify("[path to file]/ad_guided_03.Rmd", "and")
 ```
 
 - Read in and check data
@@ -22,31 +22,24 @@ teachR::slidify("[path to file]/ad_guided_03.Rmd", "other")
 ```{r setup_data, echo = F}
 set.seed(1)
 library(tidyverse)
-n <- 427
-my_data <- tibble(id = replicate(n, paste(c(sample(LETTERS, 2, T), sample(0:9, 3)), collapse = "")),
-                  age = round(abs(rnorm(n, 0, 2)) + 17.3),
-                  breakfast = sample(c("sweet", "savoury", "only tea", "only cofee",
-                                      "only other drink", "both sweet and savoury", "nothing"),
-                                    n, replace = T, prob = c(.32, .14, .05, .21, .07, .11, .1)))
-my_data[sample(n, 6), 2] <- NA
-my_data[sample(n, 11), 3] <- NA
+gensex <- read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
 ```
 
 First of all, let's make sure we're all set up:
 
-- Create a new R project in the AD folder, call it week_3
+- Create a new R project in the AD folder, call it week_03
 - Log into Canvas and go to this week's practical
 - Download the "01_basic_desc.Rmd" file into your project folder
-- Open R Studio
+- Open RStudio
 
 ### Read in data
 
-- Data from the form you filled in in the previous lecture are here: https://...
-- We *could* download the file to our folder and then read it into R Studio
+- Data from the form you filled in in the previous lecture are here: https://mivalek.github.io/adata/gen_sex_q.csv
+- We *could* download the file to our folder and then read it into RStudio
 - However, we can also read it directly from the URL like this:
 
 ```{r, eval=F}
-read_csv("https://...")
+read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
 ```
 
 ### Time to think
@@ -59,20 +52,20 @@ read_csv("https://...")
 
 ### Read in data
 
-Let's read the data into R Studio so that we can start working with them
+Let's read the data into RStudio so that we can start working with them
 
 ```{r, eval=F}
 library(tidyverse)
-my_data <- read_csv("https://...")
+gensex <- read_csv("https://mivalek.github.io/adata/gen_sex_q.csv")
 ```
 
 ### First glance
 
-- Now that we have our data in R Studio, we should familiarise ourselves with it
+- Now that we have our data in RStudio, we should familiarise ourselves with it
 - Start by looking at the structure of the data set
 
 ```{r}
-my_data %>% str()
+gensex %>% str()
 ```
 
 ### Categorical vars &rarr; factors
@@ -81,9 +74,9 @@ my_data %>% str()
 - Factors are handy for plotting and some statistics
 
 ```{r}
-my_data <- my_data %>%
-  mutate(id = factor(id), breakfast = factor(breakfast))
-my_data %>% str()
+gensex <- gensex %>%
+  mutate(Gender = factor(Gender))
+gensex %>% str()
 ```
 
 ### `summary()` 
@@ -91,38 +84,38 @@ my_data %>% str()
 Let's look at the roughest summary of our data
 
 ```{r}
-my_data %>% summary()
+gensex %>% summary()
 ```
 
 ### What to notice
 
-- Missing values in the `age` and `breakfast`
+- Missing values in the `Age` and `Gender`
   - Missing data happen, no reason to panic
 - `id` was a required variable, we don't need to worry about `NA`s
 
-### Sanity check
+<!-- ### Sanity check -->
 
-- `id` should be a unique code so it's good to check if there are no duplicates
-- The `duplicated()` function takes a vector and returns a vector of `TRUE`s and `FLASE`s of equal length
+<!-- - `id` should be a unique code so it's good to check if there are no duplicates -->
+<!-- - The `duplicated()` function takes a vector and returns a vector of `TRUE`s and `FLASE`s of equal length -->
 
-```{r}
-duplicated(c(1, 2, 5)) # unique -> all FALSE
-duplicated(c(1, 2, 2)) # not unique -> some TRUE
-```
+<!-- ```{r} -->
+<!-- duplicated(c(1, 2, 5)) # unique -> all FALSE -->
+<!-- duplicated(c(1, 2, 2)) # not unique -> some TRUE -->
+<!-- ``` -->
 
-### Sanity check
+<!-- ### Sanity check -->
 
-```{r}
-my_data %>%
-  mutate(id_check = duplicated(id)) %>%
-  summary()
-```
+<!-- ```{r} -->
+<!-- gensex %>% -->
+<!--   mutate(id_check = duplicated(id)) %>% -->
+<!--   summary() -->
+<!-- ``` -->
 
-<aside class="notes" data-markdown>
-Cool, there are only `FALSE`s which means no duplicates!
+<!-- <aside class="notes" data-markdown> -->
+<!-- Cool, there are only `FALSE`s which means no duplicates! -->
 
-*Note. *We don't really need the `id_check` column permanently in our data set so we don't need to modify it by doing `my_data <- my_data %>% mutate(...`.
-</aside>
+<!-- *Note. *We don't really need the `id_check` column permanently in our data set so we don't need to modify it by doing `gensex <- gensex %>% mutate(...`. -->
+<!-- </aside> -->
 
 
 ### Basic descriptive stats
@@ -131,12 +124,12 @@ Cool, there are only `FALSE`s which means no duplicates!
 - First of all, age
 
 ```{r}
-age_desc <- my_data %>%
-  summarise(age_mean = mean(age),
-            sd_age = sd(age),
-            min_age = min(age),
-            max_age = max(age),
-            na_age = sum(is.na(age)))
+age_desc <- gensex %>%
+  summarise(age_mean = mean(Age),
+            sd_age = sd(Age),
+            min_age = min(Age),
+            max_age = max(Age),
+            na_age = sum(is.na(Age)))
 age_desc
 ```
 
@@ -148,12 +141,12 @@ age_desc
 ### Remove `NA`s
 
 ```{r}
-age_desc <- my_data %>%
-  summarise(mean = mean(age, na.rm = T),
-            sd = sd(age, na.rm = T),
-            min = min(age, na.rm = T),
-            max = max(age, na.rm = T),
-            na = sum(is.na(age)))
+age_desc <- gensex %>%
+  summarise(mean = mean(Age, na.rm = T),
+            sd = sd(Age, na.rm = T),
+            min = min(Age, na.rm = T),
+            max = max(Age, na.rm = T),
+            na = sum(is.na(Age)))
 age_desc
 ```
 
@@ -171,15 +164,15 @@ age_desc
 
 ### Use pipelines
 
-We can doo all of the above in a single *pipeline*:
+We can do all of the above in a single *pipeline*:
 
 ```{r}
-age_desc <- my_data %>%
-  summarise(mean = mean(age, na.rm = T),
-            sd = sd(age, na.rm = T),
-            min = min(age, na.rm = T),
-            max = max(age, na.rm = T),
-            na = sum(is.na(age))) %>%
+age_desc <- gensex %>%
+  summarise(mean = mean(Age, na.rm = T),
+            sd = sd(Age, na.rm = T),
+            min = min(Age, na.rm = T),
+            max = max(Age, na.rm = T),
+            na = sum(is.na(Age))) %>%
   modify(round, 2)
 age_desc
 ```
@@ -192,27 +185,27 @@ age_desc
 
 ### More descriptives
 
-- Tibble of age breakdown by breakfast
+- Tibble of age breakdown by gender
 
 ```{r, warning=T}
-brekky_desc <- my_data %>%
-  group_by(breakfast) %>%
+gen_age_desc <- gensex %>%
+  group_by(Gender) %>%
   summarise(n = n(),
-            perc = n()/nrow(my_data) * 100,
-            mean_age = mean(age, na.rm = T),
-            sd_age = sd(age, na.rm = T)) %>%
+            perc = n()/nrow(gensex) * 100,
+            mean_age = mean(Age, na.rm = T),
+            sd_age = sd(Age, na.rm = T)) %>%
   modify_if(is.numeric, round, 2)
-brekky_desc
+gen_age_desc
 ```
 
 ### Warnings
 
 The command returns the following warning:
 
-"Factor `breakfast` contains implicit NA, consider using `forcats::fct_explicit_na`"
+"Factor `Gender` contains implicit NA, consider using `forcats::fct_explicit_na`"
 
 <aside class="notes" data-markdown>
-This is not technically a problem, we can just have a row for `NA` in the tibble. However, using the `fct_explicit_na()` function suggested by the warning creates an additional level `(Missing)` in the `breakfast` variable, instead of the `NA`s.
+This is not technically a problem, we can just have a row for `NA` in the tibble. However, using the `fct_explicit_na()` function suggested by the warning creates an additional level `(Missing)` in the `Gender` variable, instead of the `NA`s.
 </aside>
 
 ### Explicit `NA`s
@@ -220,15 +213,15 @@ This is not technically a problem, we can just have a row for `NA` in the tibble
 - We can use the function inside of `mutate()`
 
 ```{r}
-brekky_desc <- my_data %>%
-  mutate(breakfast = fct_explicit_na(breakfast)) %>%
-  group_by(breakfast) %>%
+gen_age_desc <- gensex %>%
+  mutate(Gender = fct_explicit_na(Gender)) %>%
+  group_by(Gender) %>%
   summarise(n = n(),
-            perc = n()/nrow(my_data) * 100,
-            mean_age = mean(age, na.rm = T),
-            sd_age = sd(age, na.rm = T)) %>%
+            perc = n()/nrow(gensex) * 100,
+            mean_age = mean(Age, na.rm = T),
+            sd_age = sd(Age, na.rm = T)) %>%
   modify_if(is.numeric, round, 2)
-brekky_desc
+gen_age_desc
 ```
 
 <aside class="notes" data-markdown>
@@ -241,7 +234,7 @@ Tibbles can be turned into nice tables using `knitr::kable()`
 
 ```{r}
 library(knitr)
-brekky_desc %>% kable()
+gen_age_desc %>% kable()
 ```
 
 <aside class="notes" data-markdown>
@@ -249,11 +242,11 @@ Granted, the table isn't formatted perfectly... Let's do it then!
 
 There are basically only three things we want to edit
 
-1. It would be good to capitalise the first letters in each breakfast option
-2. The table header could look better
-3. The table should have a caption
+1. It would be good to capitalise the first letters in each Gender option
+1. The table header could look better
+1. The table should have a caption
 
-With respect to the first point, we could laboriously change the first column of `brekky_desc`. Fortunately, there is a function in the `stringr` package that turns a string into a sentence, *i.e.,* capitalises the first letter:
+With respect to the first point, we could laboriously change the first column of `gen_age_desc`. Fortunately, there is a function in the `stringr` package that turns a string into a sentence, *i.e.,* capitalises the first letter:
 </aside>
 
 ### Formatting
@@ -267,11 +260,11 @@ str_to_sentence("some string we want to edit")
 
 ### Formatting
 
-We can use this function in `mutate()` to change the first column of our `brekky_desc` tibble
+We can use this function in `mutate()` to change the first column of our `gen_age_desc` tibble
 
 ```{r}
-brekky_desc %>%
-  mutate(breakfast = str_to_sentence(breakfast))
+gen_age_desc %>%
+  mutate(Gender = str_to_sentence(Gender))
 ```
 
 <aside class="notes" data-markdown>
@@ -281,10 +274,10 @@ The remaining two edits can be done using arguments to `kable()`, namely `col.na
 ### Formatting
 
 ```{r}
-brekky_desc %>%
-  mutate(breakfast = str_to_sentence(breakfast)) %>%
-  kable(col.names = c("Breakfast", "*N*", "%", "*M*~age~", "*SD*~age~"),
-        caption = "Table 1 *Descriptive statistics by breakfast*")
+gen_age_desc %>%
+  mutate(Gender = str_to_sentence(Gender)) %>%
+  kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~age~"),
+        caption = "Table 1 *Descriptive statistics by Gender*")
 ```
 
 
@@ -305,10 +298,10 @@ While some descriptive statistics and results are best summarised in a table, it
 
 ### Histogram
 
-Let's look at a simple histogram of our `age` variable
+Let's look at a simple histogram of our `Age` variable
 
 ```{r, message=T}
-my_data %>% ggplot(aes(x = age)) + geom_histogram()
+gensex %>% ggplot(aes(x = Age)) + geom_histogram()
 ```
 
 <aside class="notes" data-markdown>
@@ -319,11 +312,11 @@ OK, this histogram gives us a visual representation of the distribution of ages 
 ### Histogram
 
 ```{r}
-my_data %>% summary()
+gensex %>% summary()
 ```
 
 <aside class="notes" data-markdown>
-- 1^st^ quartile of `age` is 18 and 3^rd^ quartile is 19
+- 1^st^ quartile of `Age` is 18 and 3^rd^ quartile is 19
   - At least the middle 50% of the sample's age falls within 18 and 19
 - Seeing the distribution plotted is still useful!
 </aside>
@@ -347,12 +340,12 @@ library(cowplot)
 ```
 
 ```{r, message=T}
-my_data %>% ggplot(aes(x = age)) + geom_histogram() + theme_cowplot()
+gensex %>% ggplot(aes(x = Age)) + geom_histogram() + theme_cowplot()
 ```
 
 <aside class="notes" data-markdown>
 - `R` warns us that the histogram plots values by default into 30 bins
-- We only have 8 distincs ages (17-24)
+- We only have 8 distinct ages (17-24)
 </aside>
 
 ### Customising plots
@@ -367,8 +360,8 @@ my_data %>% ggplot(aes(x = age)) + geom_histogram() + theme_cowplot()
 <br>
 
 ```{r}
-my_data %>%
-  ggplot(aes(x = age)) + geom_histogram(bins = 8, color = "black", fill = "grey") +
+gensex %>%
+  ggplot(aes(x = Age)) + geom_histogram(bins = 8, color = "black", fill = "grey") +
   theme_cowplot()
 ```
 
@@ -377,27 +370,27 @@ my_data %>%
 - Let's give our axes proper labels
 
 ```{r}
-my_data %>%
-  ggplot(aes(x = age)) + geom_histogram(bins = 8, color = "black", fill = "grey") +
-  labs(x = "Age", y = "Frequency") + theme_cowplot()
+gensex %>%
+  ggplot(aes(x = Age)) + geom_histogram(bins = 8, color = "black", fill = "grey") +
+  labs(x = "Age in years", y = "Frequency") + theme_cowplot()
 ```
 
 ### Barchart
 
-- We can plot a single categorical variable (`breakfast`) on a barchart
+- We can plot a single categorical variable (`Gender`) on a barchart
 
 ```{r}
-my_data %>% ggplot(aes(x = breakfast)) + geom_bar()
+gensex %>% ggplot(aes(x = Gender)) + geom_bar()
 ```
 
 ### Order of bars
 
 - Bars are ordered alphabetically
-- Labels are the same as the levels of `breakfast` variable
+- Labels are the same as the levels of `Gender` variable
 
 ```{r}
-my_data %>%
-  pull(breakfast) %>%
+gensex %>%
+  pull(Gender) %>%
   levels()
 ```
 
@@ -405,24 +398,24 @@ my_data %>%
 
 - Capitalise x-axis labels (`str_to_sentence()`)
 - Order levels of the variable according to frequency
-  - Most popular breakfast option is on one end of the plot and the least popular on the other
+  - Most frequent category of gender is on one end of the plot and the rarest on the other
   - Add the `fct_infreq()` function to the `mutate()` command
 
 
 ### Make it pretty
 
 ```{r}
-my_data %>%
-  mutate(breakfast = str_to_sentence(breakfast),
-         breakfast = fct_infreq(breakfast)) %>%
-  ggplot(aes(x = breakfast)) +
+gensex %>%
+  mutate(Gender = str_to_sentence(Gender),
+         Gender = fct_infreq(Gender)) %>%
+  ggplot(aes(x = Gender)) +
   geom_bar()
 ```
 
 <aside class="notes" data-markdown>
 - The two functions inside the `mutate()` commands come before the data are pushed into `ggplot()`
-- We aren't really changing the plot itself but the `my_data` tibble.
-- We're telling `R` to change the `breakfast` variable in the tibble so that its levels are capitalised and then change it again so that the levels are ordered according to their frequencies.
+- We aren't really changing the plot itself but the `gensex` tibble.
+- We're telling `R` to change the `Gender` variable in the tibble so that its levels are capitalised and then change it again so that the levels are ordered according to their frequencies.
 </aside>
 
 ### Make it pretty
@@ -432,33 +425,33 @@ Let's tweak the appearance of our plot using what we already know
 ### Make it pretty
 
 ```{r}
-my_data %>%
-  mutate(breakfast = str_to_sentence(breakfast),
-         breakfast = fct_infreq(breakfast)) %>%
-  ggplot(aes(x = breakfast)) + geom_bar(color = "black", fill = "grey") +
-  labs(x = "Breakfast", y = "N") + theme_cowplot()
+gensex %>%
+  mutate(Gender = str_to_sentence(Gender),
+         Gender = fct_infreq(Gender)) %>%
+  ggplot(aes(x = Gender)) + geom_bar(color = "black", fill = "grey") +
+  labs(x = "Gender", y = "N") + theme_cowplot()
 ```
 
-### Make it pretty
+<!-- ### Make it pretty -->
 
-<aside class="notes" data-markdown>
-- We have overlapping labels - That's not great
-- There are several ways around this issue
-    - Rotate the labels 45° to stop them from overlapping.
-    - Flip the plot on its side. The `coord_flip()` command does exactly that
-</aside>
+<!-- <aside class="notes" data-markdown> -->
+<!-- - We have overlapping labels - That's not great -->
+<!-- - There are several ways around this issue -->
+<!--     - Rotate the labels 45° to stop them from overlapping. -->
+<!--     - Flip the plot on its side. The `coord_flip()` command does exactly that -->
+<!-- </aside> -->
 
-```{r}
-my_data %>%
-  mutate(breakfast = str_to_sentence(breakfast),
-         breakfast = fct_infreq(breakfast)) %>%
-  ggplot(aes(x = breakfast)) + geom_bar(color = "black", fill = "grey") +
-  labs(x = "Breakfast", y = "N") + theme_cowplot() + coord_flip()
-```
+<!-- ```{r} -->
+<!-- gensex %>% -->
+<!--   mutate(Gender = str_to_sentence(Gender), -->
+<!--          Gender = fct_infreq(Gender)) %>% -->
+<!--   ggplot(aes(x = Gender)) + geom_bar(color = "black", fill = "grey") + -->
+<!--   labs(x = "Gender", y = "N") + theme_cowplot() + coord_flip() -->
+<!-- ``` -->
 
 ### Plotting relationships
 
-- We can visualise the age breakdown by breakfast choice using boxplots
+- We can visualise the age breakdown by gender choice using boxplots
 - Need to map each variable on its own axis inside `aes()`
   - Categorical variable belongs on the x axis
   - Continuous on the y axis
@@ -467,8 +460,8 @@ my_data %>%
 ### Plotting relationships
 
 ```{r}
-my_data %>%
-  ggplot(aes(x = breakfast, y = age)) +
+gensex %>%
+  ggplot(aes(x = Gender, y = Age)) +
   geom_boxplot()
 ```
 
@@ -480,11 +473,11 @@ We can re-use essentially all the commands from our previous plot to make this b
 ### Plotting relationships
 
 ```{r}
-my_data %>%
-  mutate(breakfast = str_to_sentence(breakfast),
-         breakfast = fct_rev(breakfast)) %>%
-  ggplot(aes(x = breakfast, y = age)) + geom_boxplot(color = "black", fill = "grey") +
-  labs(x = "Breakfast", y = "Age") + theme_cowplot() + coord_flip()
+gensex %>%
+  mutate(Gender = str_to_sentence(Gender),
+         Gender = fct_rev(Gender)) %>%
+  ggplot(aes(x = Gender, y = Age)) + geom_boxplot(color = "black", fill = "grey") +
+  labs(x = "Gender", y = "Age in years") + theme_cowplot()
 ```
 
 
@@ -498,24 +491,26 @@ And that's pretty much all we can do with out data in the way of visualisation. 
   - Contains subsections on *Participants*, *Materials*, and *Procedure* (and maybe others)
   
 <aside class="notes" data-markdown>
-Now that we are familiar with our data, we can start writing up. Obviously, we don'treally have any results yet but we can at least describe our sample. This is normally done in the *Participants* subsection of the *Method* section. On top of that, we can give a description of what data were collected and how in the *Materials* and *Procedure* subsections, respectively. Here, coth would be very shor so we can collapse them into a single subsection:
+Now that we are familiar with our data, we can start writing up. Obviously, we don't really have any results yet but we can at least describe our sample. This is normally done in the *Participants* subsection of the *Method* section. On top of that, we can give a description of what data were collected and how in the *Materials* and *Procedure* subsections, respectively. Here, both would be very short so we can collapse them into a single subsection:
 </aside>
 
 ### Participants
 
-> Data from `r nrow(my_data)` first year Psychology students at the University of Sussex (*M*~age~ = `r age_desc %>% pull(mean)`, *SD*~age~ = `r age_desc %>% pull(sd)`) were collected anonymously in class as part of the Analysing Data module.
+> Data from `r nrow(gensex)` first year Psychology students at the University of Sussex (*M*~age~ = `r age_desc %>% pull(mean)`, *SD*~age~ = `r age_desc %>% pull(sd)`) were collected anonymously as part of the Analysing Data module.
 
 ### Materials and procedure
 
-> Participants filled in a questionnaire hosted via Google Forms. The form was accessed using a URL given in lecture. Each participant was given a unique ID code they then entered into the form. They also provided their age and information on what they had had for breakfast on the day. The latter was done by means of a multiple choice item and the response options available, along with age breakdown by response, are given in Table 1.
+> Participants filled in a questionnaire hosted via Qualtrics.
+The form was accessed using a URL given in lecture.
+The questionnaire contained ten Likert-type items on topics relating to gender and sexuality. Data on participants' own age and gender were also collected. The age breakdown by gender is given in Table 1.
 
 ### Table 1
 
 ```{r, echo=F}
-brekky_desc %>%
-  mutate(breakfast = str_to_sentence(breakfast)) %>%
-  kable(col.names = c("Breakfast", "*N*", "%", "*M*~age~", "*SD*~age~"),
-        caption = "Table 1 *Descriptive statistics by breakfast*")
+gen_age_desc %>%
+  mutate(Gender = str_to_sentence(Gender)) %>%
+  kable(col.names = c("Gender", "*N*", "%", "*M*~age~", "*SD*~age~"),
+        caption = "Table 1 *Descriptive statistics by Gender*")
 ```
 
 ### Points to notice
@@ -524,7 +519,7 @@ brekky_desc %>%
   - Make it short and sweet. Above, we only needed one sentence to tell the reader who our participants were, how many there were in our sample, what the basic descriptives of their age were, how they were recruited and where and how it all happened.
 
 - Right amount of detail
-  - You want to report all the info about your sample that we did. If we knew the gender composition, we would also include it. We *could* also have reported the range of ages but it's not crucial.
+  - You want to report all the info about your sample that we did. We *could* also have reported the range of ages but it's not crucial.
   - In *Material and procedure* we need to give the reader enough information so that they get a good idea of what exactly it is that we did.
       
 - You can refer to tables and figures if it's helpful

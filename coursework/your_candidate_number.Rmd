@@ -1,12 +1,15 @@
 ---
-title: "Coursework report"
-author: "Analysing Data"
+title: "Coursework Report"
+subtitle: "Analysing Data, Spring 2020"
 output:
   html_document:
     number_sections: true
 ---
 
 ```{r setup, include=FALSE}
+### Set up default code chunk behaviour inside the ()
+# See the Week 2 tutorial and practical for help with RMarkdown
+
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -14,12 +17,10 @@ knitr::opts_chunk$set(echo = FALSE)
 #########################################################
 ########## COMPLETE AND RUN THIS CHUNK FIRST ############
 #########################################################
-
 ## put your candidate number below, for example:
 ## candidate_number <- 123456
-candidate_number <- 
+candidate_number <- 123
   
-
 #################  DO NOT CHANGE THIS  #################
 if (!"adata" %in% installed.packages()[ , 1]) {
   if (!"remotes" %in% installed.packages()[ , 1])
@@ -35,70 +36,65 @@ if (!"adata" %in% installed.packages()[ , 1]) {
 ```
 
 ```{r data}
-## pick whether you want to use the data from the RED study or the GREEN study.
+## Pick whether you want to use data based on the RED study or the GREEN study.
 data <- adata::green_data() # delete this line if you chose the RED study
 data <- adata::red_data() # delete this line if you chose the GREEN study
 ```
 
+```{r checking}
+# check classes of your columns and number of NAs by looking at the summary of the data
+# fix any problems or change data classes here
 
+```
 
-```{r data_cleaning, include = F}
-## put code to inspect/clean/process your data here
-# check for invalid/impossible values
-# deal with missing values
-# IF NEEDED create new variables
+```{r cleaning}
+# clean data to change or remove strange values or cases
+# IF NECESSARY create new variables
 
 ```
 
 ```{r descriptives}
-### create any descriptive statistics objects you might need for reporting here
-
-### If you want to include any tables in the report, create the objects from which
-### the tables will be created
+### Create any descriptives and/or tables you want to review or include in the report and save each inside an object:
+# table_name <- ...table code...
 # To make a table appear in a particular place in your report,
 # create a code chunk in the corresponding place in this Rmd file
 # and put the name of the table object there
+
 ```
 
 ```{r plots}
-### Create any plots you want to include in report and save each inside an object:
+### Create any plots you want to review or include in the report and save each inside an object:
 # plot_name <- ...plot code...
 # To make a plot appear in a particular place in your report,
 # create a code chunk in the corresponding place in this Rmd file
 # and put the name of the plot object there
-
 ```
 
 ```{r analysis}
+### Perform your statistical analysis here and save inside an object for inline reporting
 
 ```
 
-## Methods
+# Methods
 
-<!-- Keep it simple, concise and accurate -->
+## Participants
 
-### Participants
+<!-- Keep it simple, concise and accurate. See the Lab Report Information and Resources page for guidance on how to complete this section -->
 
+## Design
 
-### Design
+<!-- Keep it simple, concise and accurate. See the Lab Report Information and Resources page for guidance on how to complete this section -->
 
+# Results
 
+<!-- Complete this section in your own words, using inline reporting from your saved analysis output. For help with running these analyses, see the Week 5 tutorial if you are doing the Green study and the Week 6 tutorial if you are doing the Red study -->
 
+<!-- Add code chunks if necessary to insert and format tables and figures. For help with doing this, see the Weeks 3 and 4 tutorials and practicals -->
 
-## Results
+# Discussion
 
+<!-- Complete this section in your own words. For help with writing a good discussion, see the Week 7 lecture and the How To Get A First page on Canvas -->
 
+# References
 
-
-## Discussion
-
-
-
-<!-- Including appendices (e.g., extra tables/figures) is not necessary. If you are not doing so, delete the section below -->
-
-## APPENDIX
-
-
-
-
-
+<!-- Insert a complete reference list here. See the Lab Report Information and Resources page for guidance on how to complete this section -->
